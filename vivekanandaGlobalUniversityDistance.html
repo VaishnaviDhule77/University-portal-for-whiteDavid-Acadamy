@@ -111,14 +111,27 @@
                         border-color .4s ease;
         }
 
+        /* --- STEP CARD: override overflow for visible number circle --- */
+        .step-card{
+            overflow:visible;
+        }
+
         /* --- GRADIENT TOP LINE (hidden default, shows on hover) --- */
         .home-feature::before,.stat-card::before,.program-card::before,
         .platform-card::before,.campus-card::before,.facility-card::before,
-        .info-card::before,.placement-stat-card::before,.step-card::before,
+        .info-card::before,.placement-stat-card::before,
         .testimonial-card::before,.recruiter-card::before{
             content:'';position:absolute;top:0;left:0;right:0;height:3px;
             background:var(--neon-gradient);opacity:0;transition:opacity .4s;z-index:2;
         }
+
+        /* Step card top line at bottom (since number circle uses top space) */
+        .step-card::before{
+            content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+            background:var(--neon-gradient);opacity:0;transition:opacity .4s;z-index:2;
+            border-radius:0 0 20px 20px;
+        }
+
         .facility-card::after{
             content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
             background:var(--neon-gradient);opacity:0;transition:opacity .4s;z-index:2;
@@ -148,11 +161,12 @@
             border-color:rgba(0,224,255,.35);
         }
 
-        /* Show top gradient line on card hover */
+        /* Show gradient line on card hover */
         .home-feature:hover::before,.stat-card:hover::before,.program-card:hover::before,
         .platform-card:hover::before,.campus-card:hover::before,.facility-card:hover::before,
-        .info-card:hover::before,.placement-stat-card:hover::before,.step-card:hover::before,
+        .info-card:hover::before,.placement-stat-card:hover::before,
         .testimonial-card:hover::before,.recruiter-card:hover::before{opacity:1}
+        .step-card:hover::before{opacity:1}
         .facility-card:hover::after{opacity:1}
 
         .facility-highlight{background:linear-gradient(135deg,rgba(0,224,255,.06),rgba(44,230,194,.04));border:2px solid rgba(0,224,255,.3);transform:scale(1.03);box-shadow:0 0 20px rgba(0,224,255,.1)}
@@ -487,9 +501,11 @@
         .recruiter-card img{max-width:100%;max-height:60px}
 
         .admission{padding:5rem 0;background:var(--dark-bg-1);overflow:hidden}
-        .steps-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin-bottom:3rem}
-        .step-card{padding:2rem;text-align:center}
-        .step-number{position:absolute;top:-15px;left:50%;transform:translateX(-50%);width:40px;height:40px;background:var(--neon-gradient);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;color:var(--darker);box-shadow:0 0 15px rgba(0,224,255,.4);z-index:2}
+        /* Fixed: Add top padding so protruding step-number circles aren't clipped */
+        .steps-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin-bottom:3rem;padding-top:20px}
+        .step-card{padding:2.5rem 2rem 2rem;text-align:center}
+        /* Fixed: Center the circle on card edge (40px height / 2 = 20px) */
+        .step-number{position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:40px;height:40px;background:var(--neon-gradient);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;color:var(--darker);box-shadow:0 0 15px rgba(0,224,255,.4);z-index:2}
         .step-icon{font-size:3rem;color:var(--neon-cyan);margin:1rem 0;display:inline-block}
         .step-card h4{font-size:1.3rem;margin-bottom:1rem;color:var(--light)}
         .step-card p{color:var(--secondary-muted);line-height:1.8;word-break:break-word}
@@ -578,8 +594,11 @@
             .placement-stat-card{padding:1.5rem 1rem}.placement-number{font-size:1.6rem}
             .recruiters-grid{grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:.8rem}
             .recruiter-card{height:80px;padding:1rem}
-            .steps-container{grid-template-columns:1fr;gap:2.5rem;margin-bottom:2rem}
-            .step-card{max-width:400px;margin:0 auto;padding:1.5rem}.step-icon{font-size:2.4rem}
+            /* Fixed: Responsive step cards with proper spacing */
+            .steps-container{grid-template-columns:1fr;gap:2.5rem;margin-bottom:2rem;padding-top:22px}
+            .step-card{max-width:400px;margin:0 auto;padding:2rem 1.5rem 1.5rem}.step-icon{font-size:2.4rem}
+            /* Fixed: Adjusted number position for 32px size */
+            .step-number{width:32px;height:32px;font-size:1rem;top:-16px}
             .testimonials-grid{grid-template-columns:1fr;gap:1.2rem}.testimonial-card{padding:1.5rem}
             .cta-section{padding:2rem 1.5rem;margin-top:2rem}
             .cta-content h2{font-size:1.35rem}.cta-content p{font-size:.95rem;margin-bottom:1.5rem}
@@ -608,7 +627,10 @@
             .placement-stat-card{padding:1.2rem .8rem}.placement-number{font-size:1.4rem}.placement-label{font-size:.85rem}
             .recruiters-grid{grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:.6rem}
             .recruiter-card{height:65px;padding:.7rem}.recruiter-card img{max-height:40px}
-            .step-card{padding:1.2rem}.step-number{width:32px;height:32px;font-size:1rem;top:-12px}
+            /* Fixed: Responsive step cards for 576px */
+            .steps-container{padding-top:18px}
+            .step-card{padding:1.5rem 1.2rem 1.2rem}
+            .step-number{width:32px;height:32px;font-size:1rem;top:-16px}
             .step-icon{font-size:2rem}.step-card h4{font-size:1.1rem}.step-card p{font-size:.88rem}
             .testimonial-card{padding:1.2rem}.testimonial-text{font-size:.9rem}
             .author-avatar{width:42px;height:42px;font-size:.85rem}.author-info h5{font-size:.92rem}.author-info p{font-size:.8rem}
@@ -634,7 +656,11 @@
             .testimonial-text{font-size:.85rem}.author-info h5{font-size:.88rem}.author-info p{font-size:.75rem}
             .campus-image{height:120px;font-size:1.8rem}
             .recruiter-card{height:55px;padding:.5rem}.recruiter-card img{max-height:32px}
-            .step-number{width:28px;height:28px;font-size:.85rem;top:-10px}.step-icon{font-size:1.8rem}.step-card h4{font-size:1rem}
+            /* Fixed: Responsive step cards for 380px */
+            .steps-container{padding-top:16px}
+            .step-card{padding:1.2rem 1rem 1rem}
+            .step-number{width:28px;height:28px;font-size:.85rem;top:-14px}
+            .step-icon{font-size:1.8rem}.step-card h4{font-size:1rem}
         }
         @media(max-width:320px){
             .hero-text h1{font-size:1.35rem}.hero-text p{font-size:.8rem}
@@ -649,6 +675,10 @@
             .placement-number{font-size:1.1rem}.placement-label{font-size:.75rem}
             .footer-section h3{font-size:.9rem}.footer-section p,.footer-section a{font-size:.78rem}.footer-bottom p{font-size:.68rem}
             .testimonial-text{font-size:.8rem}.author-info h5{font-size:.85rem}.author-info p{font-size:.72rem}
+            /* Fixed: Responsive step cards for 320px */
+            .steps-container{padding-top:14px}
+            .step-number{width:26px;height:26px;font-size:.8rem;top:-13px}
+            .step-icon{font-size:1.6rem}.step-card h4{font-size:.95rem}
         }
         @media(max-height:500px) and (orientation:landscape){
             .hero{min-height:auto;height:auto;padding:90px 5% 30px}
@@ -656,6 +686,7 @@
             .home,.stats,.programs,.platform,.campus,.facilities,.placements,.admission,.testimonials,.contact{padding:2.5rem 5% 0}
             .section-title{font-size:1.8rem}.section-subtitle{margin-bottom:1.5rem}
             .cta-section{padding:1.5rem;margin-top:1.5rem}.quick-nav{display:none}
+            .steps-container{padding-top:16px}
         }
         @media(prefers-reduced-motion:reduce){
             .particle,.hero-text h1,.loader{animation:none}
