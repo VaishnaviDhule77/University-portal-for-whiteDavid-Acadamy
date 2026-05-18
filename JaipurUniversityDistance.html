@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaipur National University - Distance Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --dark:#040614;--dark-light:#070A1F;--dark-medium:#0B0F2A;--dark-heavy:#111A3A;
+            --elevated:#0F172A;--elevated-light:#13203A;--elevated-lighter:#1A2E4A;
+            --primary:#00E0FF;--primary-dark:#00B8D4;--secondary:#2CE6C2;--accent:#14B8A6;--accent-light:#2DD4BF;
+            --cta:#FF6A3D;--cta-light:#FF8A50;
+            --accent-blue:#3B82F6;--accent-blue-light:#60A5FA;
+            --accent-purple:#A855F7;--accent-purple-light:#EC4899;
+            --accent-green:#22C55E;--accent-green-light:#4ADE80;
+            --accent-amber:#F59E0B;--accent-amber-light:#FBBF24;
+            --accent-orange:#FF6A3D;--accent-orange-light:#FF8A50;
+            --accent-teal:#14B8A6;--accent-teal-light:#2DD4BF;
+            --text:#FFFFFF;--text-dim:#B0B8D1;--text-muted:#94A3B8;
+            --border:rgba(148,163,184,0.1);--border-light:rgba(148,163,184,0.15);
+            --border-accent:rgba(0,224,255,0.15);
+            --glow:rgba(0,224,255,0.15);--glow-accent:rgba(44,230,194,0.15);--glow-cta:rgba(255,106,61,0.2);
+            --glass-bg:rgba(255,255,255,0.03);--glass-bg-hover:rgba(255,255,255,0.06);
+            --glass-border:rgba(255,255,255,0.06);--glass-blur:blur(20px);
+            --gradient:linear-gradient(135deg,var(--primary),var(--secondary));
+            --gradient-alt:linear-gradient(135deg,var(--accent),var(--primary));
+            --cta-gradient:linear-gradient(135deg,var(--cta),var(--cta-light));
+        }
+        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:var(--dark);color:var(--text);line-height:1.6;overflow-x:hidden}
+
+        #loading{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--dark);display:flex;justify-content:center;align-items:center;z-index:10000;transition:opacity .5s,visibility .5s}
+        #loading.hide{opacity:0;visibility:hidden}
+        .loader{width:60px;height:60px;border:3px solid rgba(0,224,255,.1);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite;box-shadow:0 0 20px var(--glow)}
+        @keyframes spin{to{transform:rotate(360deg)}}
+
+        #progressBar{position:fixed;top:0;left:0;height:3px;background:var(--gradient);z-index:9999;transition:width .2s ease;box-shadow:0 0 10px var(--glow)}
+
+        #particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
+        .particle{position:absolute;width:2px;height:2px;border-radius:50%;opacity:.4;animation:float 20s infinite linear;backface-visibility:hidden;will-change:transform,opacity;transform:translate3d(0,0,0)}
+        @keyframes float{from{transform:translate3d(0,100vh,0);opacity:0}10%{opacity:.4}90%{opacity:.4}to{transform:translate3d(100px,-100vh,0);opacity:0}}
+
+        #navbar{position:fixed;top:0;width:100%;background:rgba(4,6,20,.85);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);z-index:1000;padding:1rem 0;transition:all .3s ease;border-bottom:1px solid var(--border)}
+        #navbar.scrolled{padding:.5rem 0;background:rgba(4,6,20,.95);box-shadow:0 4px 30px rgba(0,0,0,.3)}
+        .container{max-width:1200px;margin:0 auto;padding:0 20px}
+        .nav-content{display:flex;justify-content:space-between;align-items:center}
+        .logo{font-size:1.5rem;font-weight:bold;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        #navLinks{display:flex;list-style:none;gap:2rem}
+        #navLinks a{color:var(--text-dim);text-decoration:none;transition:all .3s ease;position:relative;padding:.5rem 0}
+        #navLinks a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--gradient);transition:width .3s ease;box-shadow:0 0 8px var(--glow)}
+        #navLinks a:hover::after{width:100%}
+        #navLinks a:hover{color:var(--primary);text-shadow:0 0 10px var(--glow)}
+        #menuToggle{display:none;flex-direction:column;cursor:pointer;z-index:1001;gap:6px}
+        #menuToggle span{width:28px;height:3px;background:var(--gradient);transition:.3s;border-radius:3px}
+        .nav-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:998;opacity:0;visibility:hidden;transition:all .3s ease}
+        .nav-overlay.active{opacity:1;visibility:visible}
+
+        .quick-nav{position:fixed;right:20px;top:70%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:12px}
+        .quick-nav-item{position:relative;width:45px;height:45px;background:rgba(15,23,42,.85);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s ease;backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur)}
+        .quick-nav-item i{color:var(--text-muted);font-size:18px;transition:all .3s ease}
+        .quick-nav-item:hover{border-color:var(--primary);transform:scale(1.1);box-shadow:0 0 20px var(--glow)}
+        .quick-nav-item:hover i{color:var(--primary);text-shadow:0 0 10px var(--glow)}
+        .quick-nav-item.active{background:var(--gradient);border-color:transparent;box-shadow:0 0 20px var(--glow)}
+        .quick-nav-item.active i{color:var(--text)}
+        .quick-nav-item .tooltip{position:absolute;right:60px;top:50%;transform:translateY(-50%);background:var(--elevated);color:var(--text-dim);padding:8px 12px;border-radius:8px;white-space:nowrap;font-size:14px;opacity:0;visibility:hidden;transition:all .3s ease;border:1px solid var(--border);box-shadow:0 5px 15px rgba(0,0,0,.3);pointer-events:none}
+        .quick-nav-item .tooltip::after{content:'';position:absolute;left:100%;top:50%;transform:translateY(-50%);border:6px solid transparent;border-left-color:var(--elevated)}
+        .quick-nav-item:hover .tooltip{opacity:1;visibility:visible;right:65px}
+
+        .hero{min-height:100vh;display:flex;align-items:center;position:relative;background:radial-gradient(ellipse at 20% 80%,rgba(0,224,255,.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(44,230,194,.04) 0%,transparent 50%),radial-gradient(ellipse at 50% 50%,rgba(59,130,246,.03) 0%,transparent 60%),linear-gradient(135deg,var(--dark),var(--dark-medium),var(--dark));overflow:hidden}
+        .hero-content{position:relative;z-index:2;text-align:center;padding:2rem;animation:fadeInUp 1s ease}
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        .hero h1{font-size:3.5rem;margin-bottom:1rem;background:linear-gradient(135deg,var(--primary),var(--secondary),var(--accent-blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(0,224,255,.15))}
+        .hero p{font-size:1.25rem;color:var(--text-dim);margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}
+        .btn-group{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+        .btn{padding:12px 30px;border:none;border-radius:50px;font-size:1rem;cursor:pointer;transition:all .3s ease;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;position:relative;overflow:hidden}
+        .btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);transition:left .5s ease}
+        .btn:hover::before{left:100%}
+        .btn-primary{background:var(--cta-gradient);color:#fff;box-shadow:0 4px 20px var(--glow-cta)}
+        .btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(255,106,61,.35)}
+        .btn-secondary{background:transparent;color:var(--text-dim);border:2px solid var(--border-light)}
+        .btn-secondary:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-3px);box-shadow:0 8px 30px var(--glow)}
+
+        .section{padding:80px 0;position:relative;z-index:2}
+        .section-title{text-align:center;font-size:2.5rem;margin-bottom:1rem;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}
+        .section-subtitle{text-align:center;color:var(--text-muted);margin-bottom:3rem;font-size:1.1rem}
+
+        /* ======================================================================
+           CARD BASE STYLES
+           ====================================================================== */
+        .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:1.5rem;margin-top:3rem}
+        .info-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;padding:2rem;backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden}
+        .info-card h3{color:var(--primary);margin-bottom:1rem;font-size:1.3rem;display:flex;align-items:center;gap:.5rem;font-weight:600;position:relative;z-index:2;transition:all .35s ease}
+        .info-card h3 i{filter:drop-shadow(0 0 6px var(--glow));transition:all .35s ease}
+        .info-card ul{list-style:none}
+        .info-card ul li{padding:.5rem 0;color:var(--text-dim);display:flex;align-items:center;gap:.5rem;font-size:.95rem;transition:all .3s ease;position:relative;z-index:2;border-radius:6px;margin:0 -8px;padding-left:8px;padding-right:8px}
+        .info-card ul li i{color:var(--secondary);font-size:.8rem;flex-shrink:0;filter:drop-shadow(0 0 4px var(--glow-accent));transition:all .3s ease}
+
+        .highlight-box{background:linear-gradient(135deg,rgba(0,224,255,.05),rgba(44,230,194,.03));border:1px solid var(--border-accent);border-radius:16px;padding:2rem;margin:3rem 0;backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden}
+        .highlight-box h4{color:var(--primary);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;font-weight:600;position:relative;z-index:2;transition:all .35s ease}
+        .highlight-box h4 i{transition:all .35s ease}
+        .highlight-box ul{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.5rem}
+        .highlight-box ul li{color:var(--text-dim);padding:.5rem 0;position:relative;padding-left:1.5rem;font-size:.95rem;transition:all .3s ease;z-index:2;border-radius:6px;margin:0 -8px;padding-right:8px}
+        .highlight-box ul li::before{content:'▸';position:absolute;left:0;color:var(--secondary);transition:all .3s ease}
+
+        .cta-section{background:radial-gradient(ellipse at 30% 50%,rgba(255,106,61,.06) 0%,transparent 50%),radial-gradient(ellipse at 70% 50%,rgba(0,224,255,.04) 0%,transparent 50%),var(--glass-bg);border:1px solid var(--border-accent);border-radius:20px;padding:3rem;text-align:center;backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden}
+        .cta-content h2{font-size:2.5rem;margin-bottom:1rem;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;position:relative;z-index:2;transition:all .35s ease}
+        .cta-content p{color:var(--text-dim);margin-bottom:2rem;font-size:1.1rem;position:relative;z-index:2;transition:all .35s ease}
+        .cta-content .btn-group{position:relative;z-index:2}
+
+        .course-categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem}
+        .course-category{background:linear-gradient(135deg,var(--elevated),var(--elevated-light));border:1px solid var(--border);border-radius:16px;padding:2rem;text-align:center;transition:all .4s cubic-bezier(.25,.46,.45,.94);cursor:pointer;position:relative;overflow:hidden;backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur)}
+        .course-category::before{content:'';position:absolute;top:0;left:0;right:0;height:100px;opacity:.06;transition:all .4s ease;border-radius:16px 16px 0 0}
+        .course-category i{font-size:3rem;margin-bottom:1rem;position:relative;z-index:2;transition:all .35s ease}
+        .course-category h3{color:var(--text);margin-bottom:.5rem;font-weight:600;position:relative;z-index:2;transition:all .35s ease}
+        .course-category p{color:var(--text-muted);font-size:.9rem;position:relative;z-index:2;transition:all .35s ease}
+        .course-category.c-blue::before{background:linear-gradient(135deg,var(--accent-blue),var(--accent-blue-light))}.course-category.c-blue i{color:var(--accent-blue);filter:drop-shadow(0 0 10px rgba(59,130,246,.4))}
+        .course-category.c-cyan::before{background:linear-gradient(135deg,var(--primary),var(--secondary))}.course-category.c-cyan i{color:var(--primary);filter:drop-shadow(0 0 10px var(--glow))}
+        .course-category.c-green::before{background:linear-gradient(135deg,var(--accent-green),var(--accent-green-light))}.course-category.c-green i{color:var(--accent-green);filter:drop-shadow(0 0 10px rgba(34,197,94,.4))}
+        .course-category.c-amber::before{background:linear-gradient(135deg,var(--accent-amber),var(--accent-amber-light))}.course-category.c-amber i{color:var(--accent-amber);filter:drop-shadow(0 0 10px rgba(245,158,11,.4))}
+        .course-category.c-orange::before{background:linear-gradient(135deg,var(--accent-orange),var(--accent-orange-light))}.course-category.c-orange i{color:var(--accent-orange);filter:drop-shadow(0 0 10px rgba(255,106,61,.4))}
+        .course-category.c-purple::before{background:linear-gradient(135deg,var(--accent-purple),var(--accent-purple-light))}.course-category.c-purple i{color:var(--accent-purple);filter:drop-shadow(0 0 10px rgba(168,85,247,.4))}
+        .course-category.c-teal::before{background:linear-gradient(135deg,var(--accent-teal),var(--accent-teal-light))}.course-category.c-teal i{color:var(--accent-teal);filter:drop-shadow(0 0 10px rgba(20,184,166,.4))}
+        .course-category.c-pink::before{background:linear-gradient(135deg,var(--accent-purple-light),var(--accent-purple))}.course-category.c-pink i{color:var(--accent-purple-light);filter:drop-shadow(0 0 10px rgba(236,72,153,.4))}
+
+        .comparison-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem}
+        .comparison-card{background:linear-gradient(135deg,var(--elevated),var(--elevated-light));border:1px solid var(--border);border-radius:16px;padding:2rem;text-align:center;transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden;backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur)}
+        .comparison-card::before{content:'';position:absolute;top:0;left:0;right:0;height:120px;background:linear-gradient(135deg,rgba(0,224,255,.06),transparent);opacity:0;transition:all .4s ease}
+        .comparison-card h3{color:var(--text);margin-bottom:1rem;font-size:1.5rem;font-weight:600;position:relative;z-index:2;transition:all .35s ease}
+        .price{font-size:2rem;color:var(--primary);margin-bottom:1rem;position:relative;z-index:2;transition:all .35s ease}
+        .price span{font-size:1rem;color:var(--text-muted);transition:all .35s ease}
+        .comparison-card ul{list-style:none;margin:2rem 0;position:relative;z-index:2}
+        .comparison-card ul li{padding:.5rem 0;color:var(--text-dim);font-size:.95rem;transition:all .3s ease;border-radius:6px;margin:0 -8px;padding-left:8px;padding-right:8px}
+        .comparison-card .btn{position:relative;z-index:2}
+        .comparison-card.featured{border-color:var(--border-accent);box-shadow:0 10px 40px var(--glow);transform:scale(1.05)}
+        .comparison-card.featured::before{background:linear-gradient(135deg,rgba(0,224,255,.1),rgba(44,230,194,.05));opacity:1}
+
+        .timeline{position:relative;padding:2rem 0}
+        .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--primary),var(--secondary),transparent);transform:translateX(-50%);box-shadow:0 0 15px var(--glow)}
+        .timeline-item{position:relative;margin:2rem 0;display:flex;align-items:center}
+        .timeline-item:nth-child(odd){flex-direction:row-reverse}
+        .timeline-content{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;margin:0 2rem;padding:1.5rem;backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden}
+        .timeline-content h4{color:var(--text);font-weight:600;transition:all .35s ease;position:relative;z-index:2}
+        .timeline-content .date{color:var(--primary);font-size:.9rem;margin-bottom:.5rem;position:relative;z-index:2;transition:all .35s ease}
+        .timeline-content p{color:var(--text-dim);font-size:.95rem;transition:all .35s ease;position:relative;z-index:2}
+        .timeline-dot{position:absolute;left:50%;transform:translateX(-50%);width:20px;height:20px;background:var(--gradient);border-radius:50%;box-shadow:0 0 20px var(--glow)}
+
+        .campus-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:1.5rem;margin-top:3rem}
+        .campus-card{background:linear-gradient(135deg,var(--elevated),var(--elevated-light));border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative}
+        .campus-card-img{position:relative;overflow:hidden}
+        .campus-card-img img{width:100%;height:200px;object-fit:cover;display:block;transition:transform .4s ease}
+        .campus-card-img::after{content:'';position:absolute;top:0;left:0;right:0;height:100%;background:linear-gradient(180deg,transparent 40%,rgba(15,23,42,.5) 100%);transition:opacity .4s ease;pointer-events:none}
+        .campus-card-content{padding:1.5rem;position:relative;z-index:2}
+        .campus-card-content h4{color:var(--primary);margin-bottom:.5rem;font-weight:600;transition:all .35s ease}
+        .campus-card-content p{color:var(--text-muted);font-size:.9rem;transition:all .35s ease}
+
+        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:3rem}
+        .stat-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;padding:2rem;text-align:center;backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden}
+        .stat-number{font-size:2.5rem;color:var(--primary);font-weight:bold;margin-bottom:.5rem;filter:drop-shadow(0 0 10px var(--glow));transition:all .35s ease;position:relative;z-index:2}
+        .stat-label{color:var(--text-muted);transition:all .35s ease;position:relative;z-index:2}
+
+        .facilities-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem}
+        .facility-item{background:linear-gradient(135deg,var(--elevated),var(--elevated-light));border:1px solid var(--border);border-radius:16px;padding:2rem;text-align:center;transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden;backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur)}
+        .facility-item::before{content:'';position:absolute;top:0;left:0;right:0;height:80px;opacity:.06;transition:all .4s ease;border-radius:16px 16px 0 0}
+        .facility-item i{font-size:3rem;margin-bottom:1rem;position:relative;z-index:2;transition:all .35s ease}
+        .facility-item h4{color:var(--text);margin-bottom:1rem;font-weight:600;position:relative;z-index:2;transition:all .35s ease}
+        .facility-item p{color:var(--text-muted);font-size:.9rem;position:relative;z-index:2;transition:all .35s ease}
+        .facility-item.f-blue::before{background:linear-gradient(135deg,var(--accent-blue),var(--accent-blue-light))}.facility-item.f-blue i{color:var(--accent-blue);filter:drop-shadow(0 0 8px rgba(59,130,246,.4))}
+        .facility-item.f-cyan::before{background:linear-gradient(135deg,var(--primary),var(--secondary))}.facility-item.f-cyan i{color:var(--primary);filter:drop-shadow(0 0 8px var(--glow))}
+        .facility-item.f-green::before{background:linear-gradient(135deg,var(--accent-green),var(--accent-green-light))}.facility-item.f-green i{color:var(--accent-green);filter:drop-shadow(0 0 8px rgba(34,197,94,.4))}
+        .facility-item.f-amber::before{background:linear-gradient(135deg,var(--accent-amber),var(--accent-amber-light))}.facility-item.f-amber i{color:var(--accent-amber);filter:drop-shadow(0 0 8px rgba(245,158,11,.4))}
+        .facility-item.f-orange::before{background:linear-gradient(135deg,var(--accent-orange),var(--accent-orange-light))}.facility-item.f-orange i{color:var(--accent-orange);filter:drop-shadow(0 0 8px rgba(255,106,61,.4))}
+        .facility-item.f-purple::before{background:linear-gradient(135deg,var(--accent-purple),var(--accent-purple-light))}.facility-item.f-purple i{color:var(--accent-purple);filter:drop-shadow(0 0 8px rgba(168,85,247,.4))}
+        .facility-item.f-teal::before{background:linear-gradient(135deg,var(--accent-teal),var(--accent-teal-light))}.facility-item.f-teal i{color:var(--accent-teal);filter:drop-shadow(0 0 8px rgba(20,184,166,.4))}
+        .facility-item.f-pink::before{background:linear-gradient(135deg,var(--accent-purple-light),var(--accent-purple))}.facility-item.f-pink i{color:var(--accent-purple-light);filter:drop-shadow(0 0 8px rgba(236,72,153,.4))}
+
+        .placement-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin:3rem 0}
+        .placement-stat{background:linear-gradient(135deg,rgba(0,224,255,.05),rgba(44,230,194,.03));border:1px solid var(--border-accent);border-radius:16px;padding:2rem;text-align:center;backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden}
+        .placement-number{font-size:2.5rem;color:var(--primary);font-weight:bold;margin-bottom:.5rem;filter:drop-shadow(0 0 10px var(--glow));transition:all .35s ease;position:relative;z-index:2}
+        .placement-label{color:var(--text-muted);transition:all .35s ease;position:relative;z-index:2}
+
+        .companies-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-top:2rem}
+        .company-item{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:10px;padding:1rem;text-align:center;color:var(--text-muted);font-weight:600;font-size:.9rem;transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden}
+
+        .table-container{overflow-x:auto;margin-top:2rem;border-radius:12px;border:1px solid var(--border);-webkit-overflow-scrolling:touch}
+        table{width:100%;border-collapse:collapse;background:var(--glass-bg);min-width:500px}
+        th,td{padding:1rem;text-align:left;border-bottom:1px solid var(--border)}
+        th{background:rgba(0,224,255,.08);color:var(--primary);font-weight:600;font-size:.9rem;letter-spacing:.5px}
+        tr:hover{background:rgba(0,224,255,.03)}
+        tr:hover td{color:var(--primary);text-shadow:0 0 5px var(--glow)}
+        td{color:var(--text-dim);font-size:.95rem;transition:all .3s ease}
+
+        footer{background:linear-gradient(135deg,var(--dark-medium),var(--dark));padding:3rem 0 1rem;border-top:1px solid var(--border);position:relative;z-index:2}
+        footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--primary),transparent);box-shadow:0 0 15px var(--glow)}
+        .footer-content{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin-bottom:2rem}
+        .footer-section h3{color:var(--primary);margin-bottom:1rem;font-weight:600}
+        .footer-section p{color:var(--text-muted);margin-bottom:.5rem;font-size:.9rem}
+        .footer-section p i{color:var(--secondary);margin-right:8px;width:16px;text-align:center}
+        .footer-section ul{list-style:none}
+        .footer-section ul li{margin-bottom:.5rem}
+        .footer-section ul li a{color:var(--text-muted);text-decoration:none;transition:all .3s ease;font-size:.9rem}
+        .footer-section ul li a:hover{color:var(--primary);text-shadow:0 0 8px var(--glow)}
+        .footer-bottom{text-align:center;padding-top:2rem;border-top:1px solid var(--border);color:var(--text-muted)}
+        .footer-bottom p{margin-bottom:.5rem;font-size:.85rem}
+
+        /* ======================================================================
+           FEATURE 4 — TOP ACCENT LINE on ALL 11 card types
+           ====================================================================== */
+        .info-card::after,.highlight-box::after,.cta-section::after,.course-category::after,
+        .comparison-card::after,.timeline-content::after,.campus-card::after,.stat-card::after,
+        .facility-item::after,.placement-stat::after,.company-item::after{
+            content:'';position:absolute;top:0;left:20%;right:20%;height:2px;
+            background:var(--gradient);border-radius:0 0 4px 4px;
+            opacity:.35;transition:all .4s cubic-bezier(.25,.46,.45,.94);
+            box-shadow:0 0 12px var(--glow);z-index:10;
+        }
+        .info-card:hover::after,.highlight-box:hover::after,.cta-section:hover::after,
+        .course-category:hover::after,.comparison-card:hover::after,.timeline-content:hover::after,
+        .campus-card:hover::after,.stat-card:hover::after,.facility-item:hover::after,
+        .placement-stat:hover::after,.company-item:hover::after{
+            left:3%;right:3%;opacity:1;box-shadow:0 0 30px var(--glow),0 0 60px var(--glow-accent);
+        }
+
+        /* ======================================================================
+           FEATURE 1 — INNER RADIAL GLOW
+           ====================================================================== */
+        .info-card::before,.highlight-box::before,.cta-section::before,.timeline-content::before,
+        .stat-card::before,.placement-stat::before,.company-item::before{
+            content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+            background:radial-gradient(ellipse at 50% 0%,rgba(0,224,255,.05),transparent 60%);
+            opacity:0;transition:opacity .4s ease;pointer-events:none;border-radius:inherit;z-index:0;
+        }
+        .info-card:hover::before,.highlight-box:hover::before,.cta-section:hover::before,
+        .timeline-content:hover::before,.stat-card:hover::before,.placement-stat:hover::before,
+        .company-item:hover::before{opacity:1}
+        .course-category:hover::before{opacity:.15}
+        .facility-item:hover::before{opacity:.15}
+        .comparison-card:hover::before{opacity:1}
+
+        /* ======================================================================
+           CARD-LEVEL HOVER ELEVATION + GLOW
+           ====================================================================== */
+        .info-card:hover{transform:translateY(-8px);border-color:var(--border-accent);background:var(--glass-bg-hover);box-shadow:0 20px 60px var(--glow),0 0 40px var(--glow-accent)}
+        .highlight-box:hover{transform:translateY(-6px);border-color:rgba(0,224,255,.25);box-shadow:0 20px 60px var(--glow),0 0 40px var(--glow-accent)}
+        .cta-section:hover{transform:translateY(-6px);box-shadow:0 20px 60px var(--glow),0 0 40px var(--glow-accent),0 0 60px var(--glow-cta)}
+        .course-category:hover{transform:translateY(-8px);border-color:var(--border-light)}
+        .course-category.c-blue:hover{box-shadow:0 20px 60px rgba(59,130,246,.12),0 0 40px rgba(59,130,246,.06);border-color:rgba(59,130,246,.25)}
+        .course-category.c-cyan:hover{box-shadow:0 20px 60px var(--glow),0 0 40px var(--glow-accent);border-color:rgba(0,224,255,.25)}
+        .course-category.c-green:hover{box-shadow:0 20px 60px rgba(34,197,94,.12),0 0 40px rgba(34,197,94,.06);border-color:rgba(34,197,94,.25)}
+        .course-category.c-amber:hover{box-shadow:0 20px 60px rgba(245,158,11,.12),0 0 40px rgba(245,158,11,.06);border-color:rgba(245,158,11,.25)}
+        .course-category.c-orange:hover{box-shadow:0 20px 60px rgba(255,106,61,.12),0 0 40px rgba(255,106,61,.06);border-color:rgba(255,106,61,.25)}
+        .course-category.c-purple:hover{box-shadow:0 20px 60px rgba(168,85,247,.12),0 0 40px rgba(168,85,247,.06);border-color:rgba(168,85,247,.25)}
+        .course-category.c-teal:hover{box-shadow:0 20px 60px rgba(20,184,166,.12),0 0 40px rgba(20,184,166,.06);border-color:rgba(20,184,166,.25)}
+        .course-category.c-pink:hover{box-shadow:0 20px 60px rgba(236,72,153,.12),0 0 40px rgba(236,72,153,.06);border-color:rgba(236,72,153,.25)}
+        .comparison-card:hover{transform:translateY(-8px);box-shadow:0 20px 60px var(--glow),0 0 40px var(--glow-accent);border-color:var(--border-accent)}
+        .comparison-card.featured:hover{transform:scale(1.05) translateY(-8px);box-shadow:0 25px 70px var(--glow),0 0 50px var(--glow-accent)}
+        .timeline-content:hover{transform:translateY(-6px);border-color:var(--border-accent);box-shadow:0 20px 60px var(--glow),0 0 40px var(--glow-accent)}
+        .campus-card:hover{transform:translateY(-8px);box-shadow:0 20px 60px var(--glow),0 0 40px var(--glow-accent);border-color:var(--border-accent)}
+        .stat-card:hover{transform:translateY(-8px);border-color:var(--border-accent);background:var(--glass-bg-hover);box-shadow:0 20px 60px var(--glow),0 0 40px var(--glow-accent)}
+        .facility-item:hover{transform:translateY(-8px);border-color:var(--border-light)}
+        .facility-item.f-blue:hover{box-shadow:0 20px 60px rgba(59,130,246,.1),0 0 40px rgba(59,130,246,.05);border-color:rgba(59,130,246,.25)}
+        .facility-item.f-cyan:hover{box-shadow:0 20px 60px var(--glow),0 0 40px var(--glow-accent);border-color:rgba(0,224,255,.25)}
+        .facility-item.f-green:hover{box-shadow:0 20px 60px rgba(34,197,94,.1),0 0 40px rgba(34,197,94,.05);border-color:rgba(34,197,94,.25)}
+        .facility-item.f-amber:hover{box-shadow:0 20px 60px rgba(245,158,11,.1),0 0 40px rgba(245,158,11,.05);border-color:rgba(245,158,11,.25)}
+        .facility-item.f-orange:hover{box-shadow:0 20px 60px rgba(255,106,61,.1),0 0 40px rgba(255,106,61,.05);border-color:rgba(255,106,61,.25)}
+        .facility-item.f-purple:hover{box-shadow:0 20px 60px rgba(168,85,247,.1),0 0 40px rgba(168,85,247,.05);border-color:rgba(168,85,247,.25)}
+        .facility-item.f-teal:hover{box-shadow:0 20px 60px rgba(20,184,166,.1),0 0 40px rgba(20,184,166,.05);border-color:rgba(20,184,166,.25)}
+        .facility-item.f-pink:hover{box-shadow:0 20px 60px rgba(236,72,153,.1),0 0 40px rgba(236,72,153,.05);border-color:rgba(236,72,153,.25)}
+        .placement-stat:hover{transform:translateY(-8px);box-shadow:0 20px 60px var(--glow),0 0 40px var(--glow-accent);background:linear-gradient(135deg,rgba(0,224,255,.1),rgba(44,230,194,.06))}
+        .company-item:hover{transform:translateY(-5px);background:var(--glass-bg-hover);border-color:var(--border-accent);color:var(--primary);text-shadow:0 0 15px var(--glow);box-shadow:0 15px 45px var(--glow),0 0 30px var(--glow-accent)}
+
+        /* ======================================================================
+           INDIVIDUAL TEXT HOVER — Each text element highlights INDEPENDENTLY
+           when you hover directly over it (not just the parent card)
+           ====================================================================== */
+
+        /* ── INFO CARD: each li highlights on its own ───────────────────── */
+        .info-card ul li:hover{color:var(--text);background:rgba(0,224,255,.04);padding-left:12px;text-shadow:0 0 12px rgba(0,224,255,.15)}
+        .info-card ul li:hover i{color:var(--primary);text-shadow:0 0 10px var(--glow);transform:scale(1.25) translateX(2px)}
+        .info-card h3:hover{text-shadow:0 0 20px var(--glow);filter:brightness(1.15)}
+        .info-card h3:hover i{color:var(--secondary);text-shadow:0 0 14px var(--glow-accent);transform:scale(1.15) rotate(-5deg)}
+
+        /* ── HIGHLIGHT BOX: each li highlights on its own ───────────────── */
+        .highlight-box ul li:hover{color:var(--text);background:rgba(0,224,255,.04);padding-left:20px;text-shadow:0 0 12px rgba(0,224,255,.15)}
+        .highlight-box ul li:hover::before{color:var(--primary);text-shadow:0 0 10px var(--glow);transform:translateX(4px)}
+        .highlight-box h4:hover{text-shadow:0 0 20px var(--glow);filter:brightness(1.15)}
+        .highlight-box h4:hover i{color:var(--secondary);text-shadow:0 0 14px var(--glow-accent);transform:scale(1.15) rotate(-5deg)}
+
+        /* ── CTA SECTION: each text highlights on its own ──────────────── */
+        .cta-content h2:hover{filter:brightness(1.25) drop-shadow(0 0 20px var(--glow))}
+        .cta-content p:hover{color:var(--text);text-shadow:0 0 16px rgba(0,224,255,.15)}
+
+        /* ── COURSE CATEGORY: each text highlights on its own ──────────── */
+        .course-category i:hover{transform:scale(1.2) translateY(-5px) rotate(-3deg)}
+        .course-category h3:hover{color:var(--primary);text-shadow:0 0 20px var(--glow);transform:scale(1.03)}
+        .course-category p:hover{color:var(--text-dim);text-shadow:0 0 14px rgba(0,224,255,.12)}
+
+        /* ── COMPARISON CARD: each text highlights on its own ──────────── */
+        .comparison-card h3:hover{text-shadow:0 0 20px var(--glow);filter:brightness(1.15)}
+        .comparison-card .price:hover{filter:drop-shadow(0 0 22px var(--glow));transform:scale(1.05)}
+        .comparison-card .price span:hover{color:var(--text-dim);text-shadow:0 0 12px rgba(0,224,255,.12)}
+        .comparison-card ul li:hover{color:var(--text);background:rgba(0,224,255,.04);padding-left:12px;text-shadow:0 0 12px rgba(0,224,255,.15)}
+
+        /* ── TIMELINE: each text highlights on its own ──────────────────── */
+        .timeline-content h4:hover{color:var(--primary);text-shadow:0 0 20px var(--glow)}
+        .timeline-content .date:hover{text-shadow:0 0 16px var(--glow);filter:brightness(1.15)}
+        .timeline-content p:hover{color:var(--text);text-shadow:0 0 14px rgba(0,224,255,.15)}
+
+        /* ── CAMPUS CARD: each text highlights on its own ──────────────── */
+        .campus-card-content h4:hover{text-shadow:0 0 20px var(--glow);filter:brightness(1.15)}
+        .campus-card-content p:hover{color:var(--text-dim);text-shadow:0 0 14px rgba(0,224,255,.12)}
+
+        /* ── STAT CARD: each text highlights on its own ─────────────────── */
+        .stat-number:hover{filter:drop-shadow(0 0 25px var(--glow));transform:scale(1.08)}
+        .stat-label:hover{color:var(--text-dim);text-shadow:0 0 12px rgba(0,224,255,.12)}
+
+        /* ── FACILITY ITEM: each text highlights on its own ─────────────── */
+        .facility-item i:hover{transform:scale(1.2) translateY(-5px) rotate(-3deg)}
+        .facility-item h4:hover{color:var(--primary);text-shadow:0 0 20px var(--glow);transform:scale(1.03)}
+        .facility-item p:hover{color:var(--text-dim);text-shadow:0 0 14px rgba(0,224,255,.12)}
+
+        /* ── PLACEMENT STAT: each text highlights on its own ────────────── */
+        .placement-number:hover{filter:drop-shadow(0 0 25px var(--glow));transform:scale(1.08)}
+        .placement-label:hover{color:var(--text-dim);text-shadow:0 0 12px rgba(0,224,255,.12)}
+
+        /* ======================================================================
+           RESPONSIVE DESIGN
+           ====================================================================== */
+        @media(max-width:1024px){
+            .hero h1{font-size:3rem}.section-title{font-size:2.2rem}.cta-content h2{font-size:2.2rem}
+            .quick-nav{right:15px;gap:10px}.quick-nav-item{width:42px;height:42px}.quick-nav-item i{font-size:16px}.quick-nav-item .tooltip{display:none}
+            .comparison-card.featured{transform:scale(1)}.comparison-card.featured:hover{transform:translateY(-8px)}
+        }
+        @media(max-width:768px){
+            #menuToggle{display:flex}
+            #navLinks{position:fixed;top:0;right:-100%;width:280px;height:100vh;background:rgba(4,6,20,.98);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);flex-direction:column;padding:80px 30px 30px;transition:right .3s ease;border-left:1px solid var(--border);overflow-y:auto;-webkit-overflow-scrolling:touch;gap:0}
+            #navLinks.active{right:0}#navLinks li{border-bottom:1px solid var(--border)}#navLinks li:last-child{border-bottom:none}#navLinks a{display:block;padding:15px 0;font-size:1rem}#navLinks a::after{display:none}
+            .hero h1{font-size:2.5rem}.hero p{font-size:1.1rem}.section{padding:60px 0}.section-title{font-size:2rem}.section-subtitle{font-size:1rem;margin-bottom:2rem}.cta-content h2{font-size:1.8rem}.cta-content p{font-size:1rem}
+            .info-grid{grid-template-columns:1fr;gap:1.5rem;margin-top:2rem}.course-categories{grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:2rem}.comparison-grid{grid-template-columns:1fr;gap:1.5rem;margin-top:2rem}.campus-grid{grid-template-columns:1fr;gap:1.5rem;margin-top:2rem}.stats-grid{grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:2rem}.placement-stats{grid-template-columns:repeat(2,1fr);gap:1rem;margin:2rem 0}.companies-grid{grid-template-columns:repeat(3,1fr);gap:.75rem}
+            .highlight-box{padding:1.5rem;margin:2rem 0}.highlight-box ul{grid-template-columns:1fr}
+            .timeline::before{left:20px}.timeline-item{flex-direction:column!important;margin-left:50px;margin-bottom:1.5rem}.timeline-content{margin:0;padding:1.25rem}.timeline-dot{left:20px;width:16px;height:16px}
+            .quick-nav{right:10px;gap:8px}.quick-nav-item{width:38px;height:38px}.quick-nav-item i{font-size:14px}.quick-nav-item .tooltip{display:none}
+            .cta-section{padding:2rem 1.5rem}.footer-content{grid-template-columns:1fr;gap:1.5rem}.facilities-grid{grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:2rem}
+        }
+        @media(max-width:576px){
+            .container{padding:0 15px}.logo{font-size:1.2rem}.hero{min-height:100vh;padding:100px 0 60px}.hero h1{font-size:2rem;line-height:1.2}.hero p{font-size:1rem;margin-bottom:1.5rem}
+            .btn{padding:10px 20px;font-size:.9rem;width:100%;justify-content:center}.btn-group{flex-direction:column;gap:.75rem}
+            .section{padding:50px 0}.section-title{font-size:1.75rem;padding:0 10px}.section-subtitle{font-size:.95rem;padding:0 10px;margin-bottom:1.5rem}
+            .info-card{padding:1.25rem}.info-card h3{font-size:1.1rem;flex-wrap:wrap}.info-card ul li{font-size:.9rem}
+            .course-categories{grid-template-columns:1fr;gap:1rem;margin-top:1.5rem}.course-category{padding:1.5rem}.course-category i{font-size:2.5rem}
+            .comparison-card{padding:1.5rem}.price{font-size:1.75rem}.stat-number{font-size:2rem}.placement-number{font-size:2rem}
+            .companies-grid{grid-template-columns:repeat(2,1fr);gap:.5rem}.company-item{padding:.75rem .5rem;font-size:.85rem}
+            .highlight-box{padding:1.25rem;margin:1.5rem 0}.cta-section{padding:1.5rem 1rem;border-radius:15px}.cta-content h2{font-size:1.5rem}.cta-content p{font-size:.95rem;margin-bottom:1.5rem}
+            .timeline::before{left:15px}.timeline-item{margin-left:40px}.timeline-dot{left:15px;width:14px;height:14px}.timeline-content h4{font-size:1rem}.timeline-content p{font-size:.9rem}
+            .quick-nav{right:8px;gap:6px}.quick-nav-item{width:34px;height:34px;border-width:1px}.quick-nav-item i{font-size:12px}
+            .campus-card-img img{height:180px}.campus-card-content{padding:1.25rem}
+            .facilities-grid{grid-template-columns:1fr;gap:1rem;margin-top:1.5rem}.facility-item{padding:1.5rem}.facility-item i{font-size:2.5rem}
+            .footer-content{gap:1.25rem}.footer-section p{font-size:.9rem}.footer-bottom p{font-size:.85rem}
+            .table-container{position:relative}.table-container::after{content:'\2190 Scroll \2192';position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--primary);font-size:.75rem;background:var(--dark-medium);padding:4px 8px;border-radius:4px;pointer-events:none;opacity:.7}
+        }
+        @media(max-width:375px){
+            .hero h1{font-size:1.75rem}.hero p{font-size:.9rem}.section-title{font-size:1.5rem}.section-subtitle{font-size:.9rem}
+            .info-card h3{font-size:1rem}.info-card ul li{font-size:.85rem;padding:.4rem 0}
+            .stats-grid{grid-template-columns:repeat(2,1fr);gap:.75rem}.stat-card{padding:1.25rem}.stat-number{font-size:1.75rem}.stat-label{font-size:.85rem}
+            .placement-stats{grid-template-columns:repeat(2,1fr);gap:.75rem}.placement-stat{padding:1.25rem}.placement-number{font-size:1.75rem}
+            .companies-grid{grid-template-columns:repeat(2,1fr)}.company-item{font-size:.8rem}.quick-nav{display:none}.logo{font-size:1rem}
+        }
+        @media(max-height:500px) and (orientation:landscape){
+            .hero{min-height:auto;padding:80px 0 40px}.hero h1{font-size:2rem}.hero p{font-size:.95rem;margin-bottom:1rem}.section{padding:40px 0}.section-title{font-size:1.75rem}
+        }
+        @media(hover:none) and (pointer:coarse){
+            .btn:hover{transform:none}.btn:active{transform:scale(.98)}
+            .info-card:hover{transform:none}.info-card:active{transform:scale(.99)}
+            .info-card ul li:hover{background:transparent;padding-left:8px}
+            .highlight-box:hover{transform:none}.highlight-box ul li:hover{background:transparent;padding-left:1.5rem}
+            .cta-section:hover{transform:none}.course-category:hover{transform:none}.comparison-card:hover{transform:none}.comparison-card.featured:hover{transform:none}
+            .comparison-card ul li:hover{background:transparent;padding-left:8px}
+            .timeline-content:hover{transform:none}.campus-card:hover{transform:none}.campus-card:hover .campus-card-img img{transform:none}
+            .stat-card:hover{transform:none}.facility-item:hover{transform:none}.placement-stat:hover{transform:none}.company-item:hover{transform:none}
+            .quick-nav-item:hover{transform:none}.quick-nav-item.active{transform:none}
+        }
+        @media(prefers-reduced-motion:reduce){
+            *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+            .particle{display:none}
+        }
+        @media(prefers-contrast:high){
+            .info-card,.course-category,.comparison-card,.campus-card,.stat-card,.facility-item,.placement-stat,.company-item,.highlight-box,.cta-section,.timeline-content{border-width:2px}
+            .quick-nav-item{border-width:2px}
+        }
+    </style>
+</head>
+<body>
+    <div id="loading"><div class="loader"></div></div>
+    <div id="progressBar"></div>
+    <div id="particles"></div>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">JNU Distance Education</div>
+                <ul id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#courses">Programs</a></li>
+                    <li><a href="#admission">Admission</a></li>
+                    <li><a href="#learning">Learning</a></li>
+                    <li><a href="#campus">Campus</a></li>
+                    <li><a href="#facilities">Facilities</a></li>
+                    <li><a href="#placements">Placements</a></li>
+                    <li><a href="#support">Support</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div id="menuToggle"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="quick-nav">
+        <div class="quick-nav-item active"><i class="fas fa-home"></i><span class="tooltip">Home</span></div>
+        <div class="quick-nav-item"><i class="fas fa-info-circle"></i><span class="tooltip">About Us</span></div>
+        <div class="quick-nav-item"><i class="fas fa-graduation-cap"></i><span class="tooltip">Programs</span></div>
+        <div class="quick-nav-item"><i class="fas fa-edit"></i><span class="tooltip">Admission</span></div>
+        <div class="quick-nav-item"><i class="fas fa-laptop"></i><span class="tooltip">Learning System</span></div>
+        <div class="quick-nav-item"><i class="fas fa-university"></i><span class="tooltip">Campus Life</span></div>
+        <div class="quick-nav-item"><i class="fas fa-building"></i><span class="tooltip">Facilities</span></div>
+        <div class="quick-nav-item"><i class="fas fa-briefcase"></i><span class="tooltip">Placements</span></div>
+        <div class="quick-nav-item"><i class="fas fa-headset"></i><span class="tooltip">Student Support</span></div>
+        <div class="quick-nav-item"><i class="fas fa-phone"></i><span class="tooltip">Contact</span></div>
+    </div>
+
+    <section class="hero section" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Jaipur National University</h1>
+                <p>Distance Education - Empowering careers through quality education since 2007</p>
+                <div class="btn-group">
+                    <a href="#courses" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Explore Programs</a>
+                    <a href="#contact" class="btn btn-secondary"><i class="fas fa-phone"></i> Call Now: +91 88289 33999</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">About JNU Distance Education</h2>
+            <p class="section-subtitle">Excellence in Distance Learning Since 2007</p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-award"></i> Recognitions</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> UGC-DEB Approved University</li>
+                        <li><i class="fas fa-check"></i> NAAC 'A' Grade Accredited</li>
+                        <li><i class="fas fa-check"></i> ISO 9001:2015 Certified</li>
+                        <li><i class="fas fa-check"></i> AICTE Approved Programs</li>
+                        <li><i class="fas fa-check"></i> Member of AIU</li>
+                        <li><i class="fas fa-check"></i> Government Recognized</li>
+                        <li><i class="fas fa-check"></i> Industry-Academia Collaboration</li>
+                        <li><i class="fas fa-check"></i> National & International Accolades</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-star"></i> Why Choose JNU</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Flexible Learning Schedule</li>
+                        <li><i class="fas fa-check"></i> Affordable Fee Structure</li>
+                        <li><i class="fas fa-check"></i> Industry-Relevant Curriculum</li>
+                        <li><i class="fas fa-check"></i> Experienced Faculty</li>
+                        <li><i class="fas fa-check"></i> Digital Learning Platform</li>
+                        <li><i class="fas fa-check"></i> Extensive Study Material</li>
+                        <li><i class="fas fa-check"></i> Placement Assistance</li>
+                        <li><i class="fas fa-check"></i> Alumni Network</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-chart-line"></i> Achievements</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 50,000+ Successful Alumni</li>
+                        <li><i class="fas fa-check"></i> 100+ Study Centers Nationwide</li>
+                        <li><i class="fas fa-check"></i> 85% Placement Rate</li>
+                        <li><i class="fas fa-check"></i> 500+ Recruiting Partners</li>
+                        <li><i class="fas fa-check"></i> 30+ Programs Offered</li>
+                        <li><i class="fas fa-check"></i> 15+ Years of Excellence</li>
+                        <li><i class="fas fa-check"></i> Award-Winning Institution</li>
+                        <li><i class="fas fa-check"></i> Research Excellence</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <h4><i class="fas fa-trophy"></i> Our Commitment:</h4>
+                <ul>
+                    <li>Quality education accessible to all</li>
+                    <li>Continuous curriculum improvement</li>
+                    <li>Student-centric approach</li>
+                    <li>Technology-enabled learning</li>
+                    <li>Career-oriented programs</li>
+                    <li>Lifelong learning support</li>
+                    <li>Industry integration</li>
+                    <li>Global recognition</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="courses">
+        <div class="container">
+            <h2 class="section-title">Our Programs</h2>
+            <p class="section-subtitle">Wide Range of Career-Focused Distance Education Programs</p>
+            <div class="course-categories">
+                <div class="course-category c-blue"><i class="fas fa-briefcase"></i><h3>Management</h3><p>MBA, BBA, PGDM, Executive Programs</p></div>
+                <div class="course-category c-cyan"><i class="fas fa-laptop-code"></i><h3>Computer Applications</h3><p>BCA, MCA, PGDCA, Computer Science</p></div>
+                <div class="course-category c-green"><i class="fas fa-flask"></i><h3>Sciences</h3><p>B.Sc., M.Sc., Biotechnology, Chemistry</p></div>
+                <div class="course-category c-amber"><i class="fas fa-gavel"></i><h3>Law</h3><p>LLB, LLM, BA LLB, Corporate Law</p></div>
+                <div class="course-category c-orange"><i class="fas fa-heartbeat"></i><h3>Healthcare</h3><p>B.Pharma, M.Pharma, Public Health</p></div>
+                <div class="course-category c-purple"><i class="fas fa-palette"></i><h3>Arts & Humanities</h3><p>BA, MA, English, Psychology</p></div>
+                <div class="course-category c-teal"><i class="fas fa-calculator"></i><h3>Commerce</h3><p>B.Com, M.Com, Accountancy, Finance</p></div>
+                <div class="course-category c-pink"><i class="fas fa-cogs"></i><h3>Engineering</h3><p>B.Tech, M.Tech, Diploma Programs</p></div>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Program Level</th><th>Duration</th><th>Eligibility</th><th>Fee Range</th></tr></thead>
+                    <tbody>
+                        <tr><td>Undergraduate</td><td>3 Years</td><td>10+2 Pass</td><td>₹8,000 - 15,000/year</td></tr>
+                        <tr><td>Postgraduate</td><td>2 Years</td><td>Graduation</td><td>₹12,000 - 25,000/year</td></tr>
+                        <tr><td>Diploma</td><td>1 Year</td><td>10+2/Graduation</td><td>₹10,000 - 20,000</td></tr>
+                        <tr><td>Certificate</td><td>6 Months</td><td>10th Pass</td><td>₹5,000 - 10,000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="admission">
+        <div class="container">
+            <h2 class="section-title">Admission Process</h2>
+            <p class="section-subtitle">Simple and Transparent Admission Procedure</p>
+            <div class="timeline">
+                <div class="timeline-item"><div class="timeline-content"><h4>Step 1: Choose Program</h4><div class="date">Browse our programs</div><p>Select the program that best suits your career goals and eligibility criteria from our wide range of courses.</p></div><div class="timeline-dot"></div></div>
+                <div class="timeline-item"><div class="timeline-content"><h4>Step 2: Fill Application</h4><div class="date">Online or Offline</div><p>Fill the application form with required details and upload necessary documents. Apply online or visit our center.</p></div><div class="timeline-dot"></div></div>
+                <div class="timeline-item"><div class="timeline-content"><h4>Step 3: Document Verification</h4><div class="date">Submit required documents</div><p>Submit self-attested copies of required documents for verification. Original documents to be produced if required.</p></div><div class="timeline-dot"></div></div>
+                <div class="timeline-item"><div class="timeline-content"><h4>Step 4: Fee Payment</h4><div class="date">Pay program fee</div><p>Pay the program fee through online payment gateway, demand draft, or cash at our admission counter.</p></div><div class="timeline-dot"></div></div>
+                <div class="timeline-item"><div class="timeline-content"><h4>Step 5: Confirmation</h4><div class="date">Receive admission confirmation</div><p>Receive your admission confirmation, student ID, and study materials. Start your learning journey!</p></div><div class="timeline-dot"></div></div>
+            </div>
+            <div class="comparison-grid">
+                <div class="comparison-card"><h3>Basic</h3><div class="price">₹8,000 <span>/year</span></div><ul><li>Study Materials</li><li>Online LMS Access</li><li>Email Support</li><li>Exam Centers</li></ul><a href="#contact" class="btn btn-secondary">Apply Now</a></div>
+                <div class="comparison-card featured"><h3>Standard</h3><div class="price">₹12,000 <span>/year</span></div><ul><li>Everything in Basic</li><li>Live Classes</li><li>Phone Support</li><li>Assignment Help</li><li>Placement Assistance</li></ul><a href="#contact" class="btn btn-primary">Apply Now</a></div>
+                <div class="comparison-card"><h3>Premium</h3><div class="price">₹20,000 <span>/year</span></div><ul><li>Everything in Standard</li><li>1-on-1 Mentoring</li><li>Priority Support</li><li>Internship Opportunities</li><li>Job Guarantee*</li></ul><a href="#contact" class="btn btn-secondary">Apply Now</a></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="learning">
+        <div class="container">
+            <h2 class="section-title">Learning Management System</h2>
+            <p class="section-subtitle">Advanced Digital Learning Platform</p>
+            <div class="info-grid">
+                <div class="info-card"><h3><i class="fas fa-laptop"></i> Online Learning Portal</h3><ul><li><i class="fas fa-check"></i> 24/7 Access to Study Materials</li><li><i class="fas fa-check"></i> Video Lectures & E-Books</li><li><i class="fas fa-check"></i> Interactive Assignments</li><li><i class="fas fa-check"></i> Online Assessments</li><li><i class="fas fa-check"></i> Progress Tracking</li><li><i class="fas fa-check"></i> Discussion Forums</li><li><i class="fas fa-check"></i> Mobile App Support</li><li><i class="fas fa-check"></i> Offline Download Option</li></ul></div>
+                <div class="info-card"><h3><i class="fas fa-chalkboard-teacher"></i> Academic Support</h3><ul><li><i class="fas fa-check"></i> Expert Faculty Guidance</li><li><i class="fas fa-check"></i> Doubt Clearing Sessions</li><li><i class="fas fa-check"></i> Live Interactive Classes</li><li><i class="fas fa-check"></i> Peer Learning Groups</li><li><i class="fas fa-check"></i> Mentorship Programs</li><li><i class="fas fa-check"></i> Webinars & Workshops</li><li><i class="fas fa-check"></i> Academic Counseling</li><li><i class="fas fa-check"></i> Study Schedule Planner</li></ul></div>
+                <div class="info-card"><h3><i class="fas fa-clipboard-check"></i> Evaluation System</h3><ul><li><i class="fas fa-check"></i> Continuous Assessment</li><li><i class="fas fa-check"></i> Online Examinations</li><li><i class="fas fa-check"></i> Assignment Submissions</li><li><i class="fas fa-check"></i> Project Work Evaluation</li><li><i class="fas fa-check"></i> Instant Result Declaration</li><li><i class="fas fa-check"></i> Grade Improvement Options</li><li><i class="fas fa-check"></i> Digital Certificates</li><li><i class="fas fa-check"></i> Transcript Services</li></ul></div>
+            </div>
+            <div class="highlight-box">
+                <h4><i class="fas fa-star"></i> Key Features:</h4>
+                <ul>
+                    <li>User-friendly interface with easy navigation</li>
+                    <li>Compatible with all devices - desktop, tablet, mobile</li>
+                    <li>Low bandwidth requirement for smooth access</li>
+                    <li>Regular content updates and improvements</li>
+                    <li>Secure payment gateway integration</li>
+                    <li>Data privacy and protection</li>
+                    <li>Multi-language support</li>
+                    <li>AI-powered personalized learning recommendations</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="campus">
+        <div class="container">
+            <h2 class="section-title">Campus Life</h2>
+            <p class="section-subtitle">Vibrant and Inclusive Learning Environment</p>
+            <div class="campus-grid">
+                <div class="campus-card"><div class="campus-card-img"><img src="https://picsum.photos/seed/library/400/200.jpg" alt="Library" loading="lazy"></div><div class="campus-card-content"><h4>Central Library</h4><p>State-of-the-art library with over 100,000 books, journals, and digital resources. Open access for all distance education students during campus visits.</p></div></div>
+                <div class="campus-card"><div class="campus-card-img"><img src="https://picsum.photos/seed/labs/400/200.jpg" alt="Laboratories" loading="lazy"></div><div class="campus-card-content"><h4>Modern Laboratories</h4><p>Well-equipped science and computer labs with latest equipment and software. Practical sessions arranged for distance students.</p></div></div>
+                <div class="campus-card"><div class="campus-card-img"><img src="https://picsum.photos/seed/sports/400/200.jpg" alt="Sports" loading="lazy"></div><div class="campus-card-content"><h4>Sports Facilities</h4><p>Extensive sports infrastructure including grounds for cricket, football, basketball, volleyball, and indoor sports facilities.</p></div></div>
+                <div class="campus-card"><div class="campus-card-img"><img src="https://picsum.photos/seed/hostel/400/200.jpg" alt="Hostel" loading="lazy"></div><div class="campus-card-content"><h4>Hostel Accommodation</h4><p>Separate hostels for boys and girls with all modern amenities. Accommodation available for distance students during exams and contact programs.</p></div></div>
+                <div class="campus-card"><div class="campus-card-img"><img src="https://picsum.photos/seed/cafeteria/400/200.jpg" alt="Cafeteria" loading="lazy"></div><div class="campus-card-content"><h4>Cafeteria & Food Court</h4><p>Hygienic and spacious cafeteria serving variety of nutritious food items at reasonable prices for all students and staff.</p></div></div>
+                <div class="campus-card"><div class="campus-card-img"><img src="https://picsum.photos/seed/auditorium/400/200.jpg" alt="Auditorium" loading="lazy"></div><div class="campus-card-content"><h4>Auditorium & Conference Halls</h4><p>Modern auditorium with 1000+ seating capacity and multiple conference halls for seminars, workshops, and cultural events.</p></div></div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-number">50+</div><div class="stat-label">Student Clubs</div></div>
+                <div class="stat-card"><div class="stat-number">100+</div><div class="stat-label">Annual Events</div></div>
+                <div class="stat-card"><div class="stat-number">25+</div><div class="stat-label">Sports Activities</div></div>
+                <div class="stat-card"><div class="stat-number">15+</div><div class="stat-label">Cultural Programs</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="facilities">
+        <div class="container">
+            <h2 class="section-title">World-Class Facilities</h2>
+            <p class="section-subtitle">Modern Infrastructure for Enhanced Learning Experience</p>
+            <div class="facilities-grid">
+                <div class="facility-item f-cyan"><i class="fas fa-book-reader"></i><h4>Central Library</h4><p>50,000+ books, digital resources, e-journals, and 24/7 study spaces for distance students during campus visits.</p></div>
+                <div class="facility-item f-blue"><i class="fas fa-laptop"></i><h4>Computer Labs</h4><p>500+ high-end computers with latest software, high-speed internet, and technical support available.</p></div>
+                <div class="facility-item f-green"><i class="fas fa-microscope"></i><h4>Science Labs</h4><p>Well-equipped physics, chemistry, and biology laboratories with modern equipment and safety measures.</p></div>
+                <div class="facility-item f-teal"><i class="fas fa-wifi"></i><h4>Wi-Fi Campus</h4><p>High-speed wireless internet connectivity across the entire campus including hostels and libraries.</p></div>
+                <div class="facility-item f-purple"><i class="fas fa-bed"></i><h4>Hostels</h4><p>Separate hostels for boys and girls with 24/7 security, mess facilities, and recreational areas.</p></div>
+                <div class="facility-item f-orange"><i class="fas fa-utensils"></i><h4>Cafeteria</h4><p>Hygienic multi-cuisine food court serving nutritious meals at subsidized rates for all students.</p></div>
+                <div class="facility-item f-pink"><i class="fas fa-ambulance"></i><h4>Medical Center</h4><p>24/7 medical facility with qualified doctors, nurses, and ambulance services for emergency care.</p></div>
+                <div class="facility-item f-amber"><i class="fas fa-bus"></i><h4>Transportation</h4><p>Fleet of buses covering major routes in Jaipur for convenient commuting to and from campus.</p></div>
+                <div class="facility-item f-blue"><i class="fas fa-shopping-cart"></i><h4>Stationery Store</h4><p>On-campus store for books, stationery, and other essential items at reasonable prices.</p></div>
+                <div class="facility-item f-teal"><i class="fas fa-atm"></i><h4>Banking Services</h4><p>On-campus ATM and banking facilities for convenient financial transactions.</p></div>
+                <div class="facility-item f-green"><i class="fas fa-parking"></i><h4>Parking</h4><p>Ample parking space for two-wheelers and four-wheelers with proper security arrangements.</p></div>
+                <div class="facility-item f-cyan"><i class="fas fa-video"></i><h4>Video Conferencing</h4><p>Modern video conferencing facilities for guest lectures and interactive sessions with remote experts.</p></div>
+            </div>
+            <div class="highlight-box">
+                <h4><i class="fas fa-star"></i> Additional Facilities:</h4>
+                <ul>
+                    <li>Auditorium with 1000+ seating capacity</li>
+                    <li>Conference halls and seminar rooms</li>
+                    <li>Gymnasium and fitness center</li>
+                    <li>Yoga and meditation center</li>
+                    <li>Playgrounds and sports courts</li>
+                    <li>Photocopy and printing services</li>
+                    <li>Student counseling center</li>
+                    <li>Prayer room for all religions</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="placements">
+        <div class="container">
+            <h2 class="section-title">Training & Placements</h2>
+            <p class="section-subtitle">Building Successful Careers Through Industry Connections</p>
+            <div class="placement-stats">
+                <div class="placement-stat"><div class="placement-number">85%</div><div class="placement-label">Placement Rate</div></div>
+                <div class="placement-stat"><div class="placement-number">500+</div><div class="placement-label">Recruiting Companies</div></div>
+                <div class="placement-stat"><div class="placement-number">8LPA</div><div class="placement-label">Highest Package</div></div>
+                <div class="placement-stat"><div class="placement-number">4LPA</div><div class="placement-label">Average Package</div></div>
+            </div>
+            <div class="info-grid">
+                <div class="info-card"><h3><i class="fas fa-briefcase"></i> Placement Support</h3><ul><li><i class="fas fa-check"></i> Dedicated Placement Cell</li><li><i class="fas fa-check"></i> Resume Building Workshops</li><li><i class="fas fa-check"></i> Mock Interviews</li><li><i class="fas fa-check"></i> Group Discussion Practice</li><li><i class="fas fa-check"></i> Aptitude Training</li><li><i class="fas fa-check"></i> Soft Skills Development</li><li><i class="fas fa-check"></i> Technical Skill Enhancement</li><li><i class="fas fa-check"></i> Career Counseling Sessions</li></ul></div>
+                <div class="info-card"><h3><i class="fas fa-industry"></i> Industry Interface</h3><ul><li><i class="fas fa-check"></i> Industry Expert Visits</li><li><i class="fas fa-check"></i> Company Tours</li><li><i class="fas fa-check"></i> Internship Programs</li><li><i class="fas fa-check"></i> Live Projects</li><li><i class="fas fa-check"></i> Guest Lectures</li><li><i class="fas fa-check"></i> Industry Seminars</li><li><i class="fas fa-check"></i> Job Fairs</li><li><i class="fas fa-check"></i> Alumni Networking</li></ul></div>
+                <div class="info-card"><h3><i class="fas fa-chart-line"></i> Training Programs</h3><ul><li><i class="fas fa-check"></i> Personality Development</li><li><i class="fas fa-check"></i> Communication Skills</li><li><i class="fas fa-check"></i> Leadership Training</li><li><i class="fas fa-check"></i> Time Management</li><li><i class="fas fa-check"></i> Team Building</li><li><i class="fas fa-check"></i> Problem Solving</li><li><i class="fas fa-check"></i> Innovation Workshops</li><li><i class="fas fa-check"></i> Entrepreneurship Development</li></ul></div>
+            </div>
+            <h3 style="text-align:center;margin:3rem 0 2rem;color:var(--primary);font-weight:600">Top Recruiting Companies</h3>
+            <div class="companies-grid">
+                <div class="company-item">TCS</div><div class="company-item">Infosys</div><div class="company-item">Wipro</div><div class="company-item">HCL</div><div class="company-item">IBM</div><div class="company-item">Accenture</div><div class="company-item">Capgemini</div><div class="company-item">Cognizant</div><div class="company-item">Amazon</div><div class="company-item">Flipkart</div><div class="company-item">Byju's</div><div class="company-item">Reliance</div>
+            </div>
+            <div class="highlight-box">
+                <h4><i class="fas fa-trophy"></i> Placement Highlights:</h4>
+                <ul>
+                    <li>85%+ placement rate for eligible students</li>
+                    <li>500+ companies visit campus annually</li>
+                    <li>Multiple job offers for meritorious students</li>
+                    <li>International placement opportunities</li>
+                    <li>Entrepreneurship support for startups</li>
+                    <li>Lifelong career assistance</li>
+                    <li>Strong alumni network for referrals</li>
+                    <li>Regular industry interaction programs</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="support">
+        <div class="container">
+            <h2 class="section-title">Student Support Services</h2>
+            <p class="section-subtitle">Complete Support for Distance Learners</p>
+            <div class="info-grid">
+                <div class="info-card"><h3><i class="fas fa-headset"></i> Helpdesk Support</h3><ul><li><i class="fas fa-check"></i> 24/7 Helpline Number</li><li><i class="fas fa-check"></i> Email Support</li><li><i class="fas fa-check"></i> WhatsApp Support</li><li><i class="fas fa-check"></i> Live Chat Facility</li><li><i class="fas fa-check"></i> Query Resolution</li><li><i class="fas fa-check"></i> Grievance Redressal</li><li><i class="fas fa-check"></i> FAQ Section</li><li><i class="fas fa-check"></i> Dedicated Support Team</li></ul></div>
+                <div class="info-card"><h3><i class="fas fa-map-marker-alt"></i> Study Centers</h3><ul><li><i class="fas fa-check"></i> 100+ Centers Nationwide</li><li><i class="fas fa-check"></i> Regional Offices</li><li><i class="fas fa-check"></i> City Centers</li><li><i class="fas fa-check"></i> Local Support</li><li><i class="fas fa-check"></i> Counseling Services</li><li><i class="fas fa-check"></i> Material Collection</li><li><i class="fas fa-check"></i> Exam Centers</li><li><i class="fas fa-check"></i> Contact Programs</li></ul></div>
+                <div class="info-card"><h3><i class="fas fa-certificate"></i> Additional Services</h3><ul><li><i class="fas fa-check"></i> Certificate Verification</li><li><i class="fas fa-check"></i> Transcript Services</li><li><i class="fas fa-check"></i> Migration Certificate</li><li><i class="fas fa-check"></i> Duplicate Marksheet</li><li><i class="fas fa-check"></i> Name Correction</li><li><i class="fas fa-check"></i> Course Change</li><li><i class="fas fa-check"></i> Re-Admission</li><li><i class="fas fa-check"></i> Alumni Services</li></ul></div>
+            </div>
+            <div class="highlight-box">
+                <h4><i class="fas fa-star"></i> Student Benefits:</h4>
+                <ul>
+                    <li>Learn while earning - flexible for working professionals</li>
+                    <li>Same degree value as regular programs</li>
+                    <li>Cost-effective education</li>
+                    <li>No need to relocate</li>
+                    <li>Study at your own pace</li>
+                    <li>Access to university resources</li>
+                    <li>Placement assistance</li>
+                    <li>Lifetime alumni membership</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Start Your Distance Learning Journey!</h2>
+                    <p>Join 50,000+ successful distance learners at Jaipur National University</p>
+                    <div class="btn-group">
+                        <a href="tel:+918828933999" class="btn btn-primary"><i class="fas fa-phone"></i> Call: +91 88289 33999</a>
+                        <a href="mailto:admissions@jnujaipur.ac.in" class="btn btn-secondary"><i class="fas fa-envelope"></i> Email Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section"><h3>Jaipur National University</h3><p>Distance Education - Empowering careers through quality education since 2007.</p><p>UGC-DEB Approved | NAAC 'A' Grade | ISO 9001:2015 Certified</p></div>
+                <div class="footer-section"><h3>Quick Links</h3><ul><li><a href="#home">Home</a></li><li><a href="#about">About Us</a></li><li><a href="#courses">Programs</a></li><li><a href="#admission">Admission</a></li><li><a href="#learning">Learning System</a></li><li><a href="#campus">Campus Life</a></li></ul></div>
+                <div class="footer-section"><h3>More Info</h3><ul><li><a href="#facilities">Facilities</a></li><li><a href="#placements">Placements</a></li><li><a href="#support">Student Support</a></li><li><a href="#">UGC-DEB Approval</a></li><li><a href="#">Fee Structure</a></li><li><a href="#">Academic Calendar</a></li></ul></div>
+                <div class="footer-section"><h3>Contact Info</h3><p><i class="fas fa-map-marker-alt"></i> Jagatpura, Jaipur - 302017, Rajasthan</p><p><i class="fas fa-phone"></i> +91 88289 33999</p><p><i class="fas fa-envelope"></i> distance@jnujaipur.ac.in</p><p><i class="fas fa-globe"></i> www.jnujaipur.ac.in</p></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2024 Jaipur National University - Distance Education. All Rights Reserved.</p><p>Recognized by UGC | Approved by DEB | Accredited by NAAC</p></div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded',function(){
+        var pc=document.getElementById('particles'),cl=['#00E0FF','#2CE6C2','#3B82F6','#A855F7'];
+        for(var i=0;i<40;i++){var p=document.createElement('div');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDelay=Math.random()*15+'s';p.style.animationDuration=(15+Math.random()*10)+'s';var c=cl[Math.floor(Math.random()*cl.length)];p.style.background=c;p.style.boxShadow='0 0 6px '+c;pc.appendChild(p)}
+        setTimeout(function(){document.getElementById('loading').classList.add('hide')},1000);
+        var qni=document.querySelectorAll('.quick-nav-item'),secs=document.querySelectorAll('section[id]');
+        window.addEventListener('scroll',function(){
+            var sy=window.pageYOffset;
+            secs.forEach(function(s){var sh=s.offsetHeight,st=s.offsetTop-100,sid=s.getAttribute('id');if(sy>st&&sy<=st+sh){qni.forEach(function(q){q.classList.remove('active')})}});
+            var wt=document.body.scrollTop||document.documentElement.scrollTop,ht=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+            document.getElementById('progressBar').style.width=(wt/ht)*100+'%';
+            document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);
+        });
+        qni.forEach(function(q){q.addEventListener('click',function(e){e.preventDefault();var t=this.querySelector('.tooltip');if(!t)return;
+            var m={'Home':'home','About Us':'about','Programs':'courses','Admission':'admission','Learning System':'learning','Campus Life':'campus','Facilities':'facilities','Placements':'placements','Student Support':'support','Contact':'contact'};
+            var id=m[t.textContent];if(id){var el=document.getElementById(id);if(el)window.scrollTo({top:el.offsetTop-80,behavior:'smooth'})}
+        })});
+        var mt=document.getElementById('menuToggle'),nl=document.getElementById('navLinks'),no=document.getElementById('navOverlay'),sp=mt.querySelectorAll('span');
+        function openM(){nl.classList.add('active');no.classList.add('active');document.body.style.overflow='hidden';sp[0].style.transform='rotate(45deg) translate(6px,6px)';sp[1].style.opacity='0';sp[2].style.transform='rotate(-45deg) translate(7px,-7px)'}
+        function closeM(){nl.classList.remove('active');no.classList.remove('active');document.body.style.overflow='';sp.forEach(function(s){s.style.transform='none';s.style.opacity='1'})}
+        mt.addEventListener('click',function(){nl.classList.contains('active')?closeM():openM()});
+        no.addEventListener('click',closeM);
+        document.querySelectorAll('#navLinks a').forEach(function(l){l.addEventListener('click',closeM)});
+        document.addEventListener('keydown',function(e){if(e.key==='Escape'&&nl.classList.contains('active'))closeM()});
+        document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(this.getAttribute('href'));if(t)window.scrollTo({top:t.offsetTop-80,behavior:'smooth'})})});
+        var obs=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){en.target.style.opacity='1';en.target.style.transform='translateY(0)'}})},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+        document.querySelectorAll('.info-card,.cta-section,.course-category,.highlight-box,.stat-card,.timeline-item,.campus-card,.facility-item,.placement-stat,.company-item,.comparison-card').forEach(function(el,i){
+            el.style.opacity='0';el.style.transform='translateY(30px)';el.style.transition='opacity 0.6s ease '+(i*0.05)+'s, transform 0.6s ease '+(i*0.05)+'s';obs.observe(el);
+        });
+        window.addEventListener('resize',function(){if(window.innerWidth>768&&nl.classList.contains('active'))closeM()});
+    });
+    </script>
+</body>
+</html>

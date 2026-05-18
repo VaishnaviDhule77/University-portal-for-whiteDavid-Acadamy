@@ -1,0 +1,2750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mangalmay Group of Institutions - Greater Noida | Delhi NCR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #00E0FF;
+            --secondary-color: #2CE6C2;
+            --accent-color: #FF6A3D;
+            --accent-color-light: #FF8A50;
+            --dark-bg: #0B0F2A;
+            --dark-bg-2: #111A3A;
+            --dark-bg-3: #1A2B5C;
+            --text-light: #FFFFFF;
+            --text-dim: #B0B8D1;
+            --text-muted: #94A3B8;
+            --card-bg: rgba(15, 23, 42, 0.6);
+            --card-bg-hover: rgba(15, 23, 42, 0.85);
+            --border-color: rgba(0, 224, 255, 0.12);
+            --border-subtle: rgba(148, 163, 184, 0.1);
+            --glow-cyan: rgba(0, 224, 255, 0.25);
+            --glow-orange: rgba(255, 106, 61, 0.25);
+            --ghost-border: #6C7A9A;
+        }
+
+        #programs {
+            --section-accent: #A855F7;
+            --section-accent-end: #EC4899;
+            --section-glow: rgba(168, 85, 247, 0.25);
+            --section-glow-strong: rgba(168, 85, 247, 0.4);
+        }
+
+        #campus-life {
+            --section-accent: #22C55E;
+            --section-accent-end: #4ADE80;
+            --section-glow: rgba(34, 197, 94, 0.25);
+            --section-glow-strong: rgba(34, 197, 94, 0.4);
+        }
+
+        #facilities {
+            --section-accent: #3B82F6;
+            --section-accent-end: #60A5FA;
+            --section-glow: rgba(59, 130, 246, 0.25);
+            --section-glow-strong: rgba(59, 130, 246, 0.4);
+        }
+
+        #placements {
+            --section-accent: #F59E0B;
+            --section-accent-end: #FBBF24;
+            --section-glow: rgba(245, 158, 11, 0.25);
+            --section-glow-strong: rgba(245, 158, 11, 0.4);
+        }
+
+        #admission {
+            --section-accent: #FF6A3D;
+            --section-accent-end: #FF8A50;
+            --section-glow: rgba(255, 106, 61, 0.25);
+            --section-glow-strong: rgba(255, 106, 61, 0.4);
+        }
+
+        #contact {
+            --section-accent: #14B8A6;
+            --section-accent-end: #2DD4BF;
+            --section-glow: rgba(20, 184, 166, 0.25);
+            --section-glow-strong: rgba(20, 184, 166, 0.4);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-2) 50%, var(--dark-bg-3) 100%);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(0, 224, 255, 0.2);
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+            z-index: 9999;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary-color);
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 0;
+            background: rgba(11, 15, 42, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .navbar.scrolled {
+            padding: 10px 0;
+            background: rgba(11, 15, 42, 0.95);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-light);
+            margin: 3px 0;
+            transition: 0.3s;
+            display: block;
+        }
+
+        .quick-nav {
+            position: fixed;
+            right: 30px;
+            top: 60%;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .quick-nav-item {
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 224, 255, 0.06);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            color: var(--text-dim);
+        }
+
+        .quick-nav-item:hover {
+            background: rgba(0, 224, 255, 0.15);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--glow-cyan);
+            color: var(--primary-color);
+        }
+
+        .quick-nav-item.active {
+            background: var(--primary-color);
+            box-shadow: 0 0 20px var(--glow-cyan);
+            color: var(--dark-bg);
+        }
+
+        .quick-nav-item::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: 60px;
+            background: var(--dark-bg-2);
+            color: var(--text-light);
+            padding: 5px 10px;
+            border-radius: 5px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .quick-nav-item:hover::before {
+            opacity: 1;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(0, 224, 255, 0.08) 0%, transparent 70%);
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-animation 3s ease infinite;
+        }
+
+        @keyframes gradient-animation {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin-bottom: 30px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-color-light));
+            color: white;
+            box-shadow: 0 4px 15px var(--glow-orange);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px var(--section-glow-strong, var(--glow-orange));
+        }
+
+        .btn-white {
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--ghost-border);
+        }
+
+        .btn-white:hover {
+            background: rgba(0, 224, 255, 0.08);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--glow-cyan);
+        }
+
+        .section {
+            padding: 80px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            padding: 0 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+            padding: 0 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--border-subtle);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            background: rgba(0, 224, 255, 0.08);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+
+        .tab-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--dark-bg);
+            box-shadow: 0 0 15px var(--glow-cyan);
+        }
+
+        /* ==============================================
+           ENHANCED PROGRAM CARDS — All 14 Features
+           ============================================== */
+        .program-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .program-card {
+            /* 1. Glassmorphism */
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.04) 0%,
+                rgba(15, 23, 42, 0.65) 40%,
+                rgba(26, 43, 92, 0.35) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            /* 2. Gradient Background — layered depth */
+            /* 4. Gradient Border via subtle border + highlight */
+            border: 1px solid var(--border-subtle);
+            /* 5. Rounded Corners */
+            border-radius: 20px;
+            padding: 28px 25px 25px;
+            /* 11. Hover Interaction base */
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.4s ease,
+                        border-color 0.4s ease,
+                        background 0.4s ease;
+            /* Position for pseudo-element */
+            position: relative;
+            overflow: hidden;
+            /* 10. Spacing */
+        }
+
+        /* 4. Top Gradient Highlight Line — Hidden by default */
+        .program-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                var(--section-accent, var(--primary-color)) 30%,
+                var(--section-accent-end, var(--secondary-color)) 70%,
+                transparent 100%
+            );
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+
+        /* Subtle inner glow at bottom */
+        .program-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                var(--section-accent, var(--primary-color)),
+                transparent
+            );
+            opacity: 0;
+            transition: opacity 0.4s ease 0.05s;
+            z-index: 2;
+        }
+
+        /* 11. Interactive Hover — Elevation + Glow + Text Highlight */
+        .program-card:hover {
+            transform: translateY(-8px);
+            /* 2. Enhanced gradient bg on hover */
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.07) 0%,
+                rgba(15, 23, 42, 0.88) 40%,
+                rgba(26, 43, 92, 0.6) 100%
+            );
+            /* 3. Neon Glow + 12. Shadow Elevation */
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 30px var(--section-glow, var(--glow-cyan)),
+                0 0 60px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-color: var(--section-accent, var(--primary-color));
+        }
+
+        /* 4. Show top highlight on hover */
+        .program-card:hover::before {
+            opacity: 1;
+        }
+
+        .program-card:hover::after {
+            opacity: 0.4;
+        }
+
+        /* 8. Typography Hierarchy — Title glow on hover */
+        .program-card h4 {
+            color: var(--section-accent, var(--primary-color));
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            transition: text-shadow 0.4s ease, color 0.3s ease;
+        }
+
+        .program-card:hover h4 {
+            text-shadow: 0 0 18px var(--section-glow, var(--glow-cyan)),
+                         0 0 40px var(--section-glow, var(--glow-cyan));
+        }
+
+        /* 9. Text highlight on hover — brighter paragraphs */
+        .program-card p {
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .program-card:hover p {
+            color: var(--text-light);
+        }
+
+        /* ==============================================
+           ENHANCED INFO CARDS — All 14 Features
+           ============================================== */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .info-card {
+            /* 1. Glassmorphism */
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.04) 0%,
+                rgba(15, 23, 42, 0.65) 40%,
+                rgba(26, 43, 92, 0.35) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            /* 4. Gradient Border */
+            border: 1px solid var(--border-subtle);
+            /* 5. Rounded Corners */
+            border-radius: 20px;
+            padding: 30px;
+            /* 11. Hover base */
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.4s ease,
+                        border-color 0.4s ease,
+                        background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 4. Top Gradient Highlight Line */
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                var(--section-accent, var(--primary-color)) 30%,
+                var(--section-accent-end, var(--secondary-color)) 70%,
+                transparent 100%
+            );
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+
+        .info-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                var(--section-accent, var(--primary-color)),
+                transparent
+            );
+            opacity: 0;
+            transition: opacity 0.4s ease 0.05s;
+            z-index: 2;
+        }
+
+        /* 11. Interactive Hover */
+        .info-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.07) 0%,
+                rgba(15, 23, 42, 0.88) 40%,
+                rgba(26, 43, 92, 0.6) 100%
+            );
+            /* 3. Neon Glow + 12. Shadow Elevation */
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 30px var(--section-glow, var(--glow-cyan)),
+                0 0 60px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-color: var(--section-accent, var(--primary-color));
+        }
+
+        .info-card:hover::before {
+            opacity: 1;
+        }
+
+        .info-card:hover::after {
+            opacity: 0.4;
+        }
+
+        /* 8. Title with icon — Flexbox alignment + glow on hover */
+        .info-card h3 {
+            color: var(--section-accent, var(--primary-color));
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: text-shadow 0.4s ease;
+        }
+
+        .info-card h3 i {
+            flex-shrink: 0;
+        }
+
+        .info-card:hover h3 {
+            text-shadow: 0 0 18px var(--section-glow, var(--glow-cyan)),
+                         0 0 40px var(--section-glow, var(--glow-cyan));
+        }
+
+        /* 7. Icon-Based List */
+        .info-card ul {
+            list-style: none;
+        }
+
+        .info-card li {
+            color: var(--text-dim);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            /* Microinteraction on list items */
+            transition: color 0.3s ease, transform 0.25s ease;
+        }
+
+        .info-card li i {
+            color: var(--section-accent-end, var(--secondary-color));
+            flex-shrink: 0;
+            margin-top: 4px;
+            transition: text-shadow 0.3s ease, transform 0.25s ease;
+        }
+
+        /* 9. Text Highlight — list items brighten on card hover */
+        .info-card:hover li {
+            color: var(--text-light);
+        }
+
+        .info-card:hover li i {
+            text-shadow: 0 0 10px var(--section-glow, var(--glow-cyan));
+        }
+
+        /* Individual list item hover microinteraction */
+        .info-card li:hover {
+            transform: translateX(5px);
+        }
+
+        .info-card li:hover i {
+            transform: scale(1.15);
+        }
+
+        /* 9. Paragraph text highlight */
+        .info-card p {
+            color: var(--text-dim);
+            line-height: 1.7;
+            transition: color 0.3s ease;
+        }
+
+        .info-card:hover p {
+            color: var(--text-light);
+        }
+
+        /* ==============================================
+           ENHANCED STEP CARDS — All 14 Features
+           ============================================== */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .step-card {
+            /* 1. Glassmorphism */
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.04) 0%,
+                rgba(15, 23, 42, 0.65) 40%,
+                rgba(26, 43, 92, 0.35) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            /* 4. Gradient Border */
+            border: 1px solid var(--border-subtle);
+            /* 5. Rounded Corners */
+            border-radius: 20px;
+            padding: 35px 30px 30px;
+            text-align: center;
+            /* 11. Hover base */
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.4s ease,
+                        border-color 0.4s ease,
+                        background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 4. Top Gradient Highlight Line (using ::after since step-number uses top space) */
+        .step-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                var(--section-accent, var(--primary-color)) 30%,
+                var(--section-accent-end, var(--secondary-color)) 70%,
+                transparent 100%
+            );
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+
+        .step-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                var(--section-accent, var(--primary-color)),
+                transparent
+            );
+            opacity: 0;
+            transition: opacity 0.4s ease 0.05s;
+            z-index: 2;
+        }
+
+        /* 11. Interactive Hover */
+        .step-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.07) 0%,
+                rgba(15, 23, 42, 0.88) 40%,
+                rgba(26, 43, 92, 0.6) 100%
+            );
+            /* 3. Neon Glow + 12. Shadow Elevation */
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 30px var(--section-glow, var(--glow-cyan)),
+                0 0 60px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-color: var(--section-accent, var(--primary-color));
+        }
+
+        .step-card:hover::before {
+            opacity: 1;
+        }
+
+        .step-card:hover::after {
+            opacity: 0.4;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--section-accent, var(--primary-color)), var(--section-accent-end, var(--secondary-color)));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 0 20px var(--section-glow, var(--glow-cyan));
+            color: var(--dark-bg);
+            transition: box-shadow 0.4s ease, transform 0.4s ease;
+            z-index: 3;
+        }
+
+        .step-card:hover .step-number {
+            box-shadow: 0 0 30px var(--section-glow-strong, var(--glow-cyan)),
+                         0 0 60px var(--section-glow, var(--glow-cyan));
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            color: var(--section-accent, var(--primary-color));
+            margin-bottom: 20px;
+            transition: text-shadow 0.4s ease, transform 0.4s ease, filter 0.4s ease;
+        }
+
+        .step-card:hover .step-icon {
+            text-shadow: 0 0 20px var(--section-glow, var(--glow-cyan)),
+                         0 0 45px var(--section-glow, var(--glow-cyan));
+            filter: drop-shadow(0 0 12px var(--section-glow, var(--glow-cyan)));
+            transform: scale(1.08);
+        }
+
+        .step-card h4 {
+            color: var(--section-accent, var(--primary-color));
+            margin-bottom: 10px;
+            transition: text-shadow 0.4s ease;
+        }
+
+        .step-card:hover h4 {
+            text-shadow: 0 0 15px var(--section-glow, var(--glow-cyan));
+        }
+
+        .step-card p {
+            color: var(--text-dim);
+            transition: color 0.3s ease;
+        }
+
+        .step-card:hover p {
+            color: var(--text-light);
+        }
+
+        /* ==============================================
+           ENHANCED CTA SECTION — All 14 Features
+           ============================================== */
+        .cta-section {
+            /* 1. Glassmorphism */
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.03) 0%,
+                rgba(15, 23, 42, 0.5) 40%,
+                rgba(26, 43, 92, 0.3) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            /* 4. Gradient Border */
+            border: 1px solid var(--border-subtle);
+            /* 5. Rounded Corners */
+            border-radius: 24px;
+            padding: 50px;
+            text-align: center;
+            margin-top: 50px;
+            /* 11. Hover base */
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.4s ease,
+                        border-color 0.4s ease,
+                        background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 4. Top Gradient Highlight Line — centered accent */
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                var(--section-accent, var(--primary-color)) 30%,
+                var(--section-accent-end, var(--secondary-color)) 70%,
+                transparent 100%
+            );
+            opacity: 0.6;
+            transition: opacity 0.4s ease, left 0.4s ease, right 0.4s ease;
+            z-index: 2;
+        }
+
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 15%;
+            right: 15%;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                var(--section-accent, var(--primary-color)),
+                transparent
+            );
+            opacity: 0;
+            transition: opacity 0.4s ease 0.05s;
+            z-index: 2;
+        }
+
+        /* 11. Interactive Hover */
+        .cta-section:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.06) 0%,
+                rgba(15, 23, 42, 0.7) 40%,
+                rgba(26, 43, 92, 0.5) 100%
+            );
+            /* 3. Neon Glow + 12. Shadow Elevation */
+            box-shadow:
+                0 8px 40px rgba(0, 0, 0, 0.35),
+                0 0 35px var(--section-glow, var(--glow-cyan)),
+                0 0 70px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            border-color: var(--section-accent, var(--primary-color));
+        }
+
+        .cta-section:hover::before {
+            opacity: 1;
+            left: 5%;
+            right: 5%;
+        }
+
+        .cta-section:hover::after {
+            opacity: 0.5;
+        }
+
+        .cta-content h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--section-accent, var(--primary-color)), var(--section-accent-end, var(--secondary-color)));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: filter 0.4s ease;
+        }
+
+        .cta-section:hover .cta-content h2 {
+            filter: drop-shadow(0 0 18px var(--section-glow, var(--glow-cyan)));
+        }
+
+        .cta-content p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .cta-section:hover .cta-content p {
+            color: var(--text-dim);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: radial-gradient(circle at center, rgba(20, 184, 166, 0.08) 0%, transparent 70%);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 50px 20px 20px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .footer-section p {
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .footer-bottom p {
+            margin-bottom: 0.25rem;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN
+           ======================================== */
+
+        @media (max-width: 1400px) {
+            .container {
+                max-width: 1140px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 960px;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.95rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2.3rem;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                max-width: 720px;
+            }
+
+            .nav-links {
+                gap: 1.2rem;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 120px 20px 60px;
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+
+            .section-title {
+                font-size: 2.1rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+                margin-bottom: 40px;
+            }
+
+            .quick-nav {
+                right: 15px;
+                gap: 12px;
+            }
+
+            .quick-nav-item {
+                width: 40px;
+                height: 40px;
+            }
+
+            .quick-nav-item::before {
+                display: none;
+            }
+
+            .program-cards {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 20px;
+            }
+
+            .info-grid {
+                gap: 20px;
+            }
+
+            .steps {
+                gap: 20px;
+            }
+
+            .cta-section {
+                padding: 40px 30px;
+            }
+
+            .cta-content h2 {
+                font-size: 1.8rem;
+            }
+
+            .cta-content p {
+                font-size: 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                max-width: 540px;
+                padding: 0 15px;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(11, 15, 42, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 80px 20px 20px;
+                gap: 0;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                border-bottom: none;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 1rem;
+                font-size: 1.1rem;
+                width: 100%;
+                border-bottom: 1px solid rgba(26, 43, 92, 0.5);
+            }
+
+            .nav-links a::after {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 100px 20px 50px;
+            }
+
+            .hero p {
+                font-size: 1.05rem;
+                margin-bottom: 25px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .quick-nav {
+                display: none;
+            }
+
+            .section {
+                padding: 50px 15px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.95rem;
+                margin-bottom: 30px;
+            }
+
+            .tabs {
+                gap: 8px;
+                margin-bottom: 30px;
+            }
+
+            .tab-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            .program-cards {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .program-card {
+                padding: 20px;
+            }
+
+            .program-card h4 {
+                font-size: 1.05rem;
+            }
+
+            .program-card p {
+                font-size: 0.9rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .info-card {
+                padding: 25px;
+            }
+
+            .info-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .info-card li {
+                font-size: 0.95rem;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+                gap: 25px;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .step-card {
+                padding: 35px 25px 30px;
+            }
+
+            .step-icon {
+                font-size: 2.5rem;
+            }
+
+            .cta-section {
+                padding: 30px 20px;
+                border-radius: 18px;
+                margin-top: 40px;
+            }
+
+            .cta-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .cta-content p {
+                font-size: 0.95rem;
+                margin-bottom: 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+
+            footer {
+                padding: 40px 15px 15px;
+                margin-top: 50px;
+            }
+
+            .footer-bottom p {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                max-width: 100%;
+                padding: 0 12px;
+            }
+
+            .logo {
+                font-size: 1rem;
+            }
+
+            .navbar {
+                padding: 12px 0;
+            }
+
+            .hero {
+                padding: 85px 15px 40px;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                max-width: 280px;
+                padding: 11px 24px;
+                font-size: 0.95rem;
+            }
+
+            .btn i {
+                font-size: 0.85rem;
+            }
+
+            .section {
+                padding: 40px 12px;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.9rem;
+                margin-bottom: 25px;
+            }
+
+            .tabs {
+                gap: 6px;
+                margin-bottom: 25px;
+            }
+
+            .tab-btn {
+                padding: 7px 14px;
+                font-size: 0.85rem;
+            }
+
+            .program-cards {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .program-card {
+                padding: 18px;
+            }
+
+            .program-card h4 {
+                font-size: 1rem;
+            }
+
+            .program-card p {
+                font-size: 0.88rem;
+            }
+
+            .info-grid {
+                gap: 15px;
+            }
+
+            .info-card {
+                padding: 20px;
+            }
+
+            .info-card h3 {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+
+            .info-card li {
+                font-size: 0.9rem;
+                margin-bottom: 8px;
+            }
+
+            .info-card p {
+                font-size: 0.9rem;
+            }
+
+            .steps {
+                gap: 20px;
+                max-width: 100%;
+            }
+
+            .step-card {
+                padding: 30px 20px 25px;
+            }
+
+            .step-number {
+                width: 36px;
+                height: 36px;
+                font-size: 1.1rem;
+                top: -13px;
+            }
+
+            .step-icon {
+                font-size: 2.2rem;
+                margin-bottom: 15px;
+            }
+
+            .step-card h4 {
+                font-size: 1.05rem;
+            }
+
+            .step-card p {
+                font-size: 0.9rem;
+            }
+
+            .cta-section {
+                padding: 25px 15px;
+                margin-top: 35px;
+            }
+
+            .cta-content h2 {
+                font-size: 1.35rem;
+            }
+
+            .cta-content p {
+                font-size: 0.9rem;
+                margin-bottom: 18px;
+            }
+
+            .btn {
+                max-width: 260px;
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .footer-section h3 {
+                font-size: 1.1rem;
+            }
+
+            .footer-section p,
+            .footer-section a {
+                font-size: 0.9rem;
+            }
+
+            .footer-bottom p {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            .logo {
+                font-size: 0.9rem;
+            }
+
+            .navbar {
+                padding: 10px 0;
+            }
+
+            .hero {
+                padding: 75px 10px 35px;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+                margin-bottom: 18px;
+            }
+
+            .section-title {
+                font-size: 1.45rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.85rem;
+                margin-bottom: 20px;
+            }
+
+            .tab-btn {
+                padding: 6px 12px;
+                font-size: 0.82rem;
+            }
+
+            .program-card {
+                padding: 15px;
+            }
+
+            .program-card h4 {
+                font-size: 0.95rem;
+            }
+
+            .program-card p {
+                font-size: 0.85rem;
+            }
+
+            .info-card {
+                padding: 18px;
+            }
+
+            .info-card h3 {
+                font-size: 1.05rem;
+            }
+
+            .info-card li {
+                font-size: 0.88rem;
+                margin-bottom: 6px;
+            }
+
+            .info-card p {
+                font-size: 0.88rem;
+            }
+
+            .step-card {
+                padding: 25px 15px 20px;
+            }
+
+            .step-icon {
+                font-size: 2rem;
+                margin-bottom: 12px;
+            }
+
+            .step-card h4 {
+                font-size: 1rem;
+            }
+
+            .step-card p {
+                font-size: 0.88rem;
+            }
+
+            .cta-section {
+                padding: 20px 12px;
+            }
+
+            .cta-content h2 {
+                font-size: 1.2rem;
+            }
+
+            .cta-content p {
+                font-size: 0.88rem;
+                margin-bottom: 15px;
+            }
+
+            .btn {
+                max-width: 100%;
+                padding: 9px 16px;
+                font-size: 0.88rem;
+            }
+        }
+
+        @media (max-width: 350px) {
+            .logo {
+                font-size: 0.82rem;
+            }
+
+            .hero {
+                padding: 65px 8px 30px;
+            }
+
+            .hero p {
+                font-size: 0.85rem;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.82rem;
+            }
+
+            .tab-btn {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+
+            .btn {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+            }
+
+            .btn i {
+                font-size: 0.8rem;
+            }
+
+            .program-card h4 {
+                font-size: 0.9rem;
+            }
+
+            .program-card p {
+                font-size: 0.82rem;
+            }
+
+            .info-card h3 {
+                font-size: 1rem;
+            }
+
+            .info-card li {
+                font-size: 0.85rem;
+            }
+
+            .info-card p {
+                font-size: 0.85rem;
+            }
+
+            .step-card h4 {
+                font-size: 0.95rem;
+            }
+
+            .step-card p {
+                font-size: 0.85rem;
+            }
+
+            .cta-content h2 {
+                font-size: 1.1rem;
+            }
+
+            .footer-section h3 {
+                font-size: 1rem;
+            }
+
+            .footer-section p,
+            .footer-section a {
+                font-size: 0.85rem;
+            }
+
+            .footer-bottom p {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .hero {
+                min-height: auto;
+                padding: 80px 20px 30px;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+                margin-bottom: 15px;
+            }
+
+            .btn-group {
+                gap: 8px;
+            }
+
+            .btn {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) and (orientation: landscape) {
+            .hero {
+                min-height: auto;
+                padding: 75px 20px 25px;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+                margin-bottom: 12px;
+            }
+
+            .section {
+                padding: 30px 15px;
+            }
+
+            .btn-group {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .btn {
+                width: auto;
+                max-width: none;
+                padding: 8px 18px;
+                font-size: 0.88rem;
+            }
+
+            .cta-section {
+                padding: 20px 15px;
+            }
+
+            .cta-content h2 {
+                font-size: 1.35rem;
+            }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .btn:hover {
+                transform: none;
+            }
+
+            .info-card:hover,
+            .program-card:hover,
+            .step-card:hover,
+            .cta-section:hover {
+                transform: none;
+            }
+
+            .quick-nav-item:hover {
+                transform: none;
+            }
+        }
+
+        @media print {
+            .navbar,
+            .progress-bar,
+            #particles,
+            .loading,
+            .quick-nav {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                color: black;
+            }
+
+            .section {
+                page-break-inside: avoid;
+                padding: 15px 0;
+                z-index: auto;
+            }
+
+            .info-card,
+            .program-card,
+            .step-card,
+            .cta-section {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ccc;
+                transform: none;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                background: #f9f9f9;
+            }
+
+            .info-card::before,
+            .info-card::after,
+            .program-card::before,
+            .program-card::after,
+            .step-card::before,
+            .step-card::after,
+            .cta-section::before,
+            .cta-section::after {
+                display: none !important;
+            }
+
+            .btn,
+            .btn-group {
+                display: none;
+            }
+
+            .tabs {
+                display: none;
+            }
+
+            .section-title,
+            .logo,
+            .cta-content h2 {
+                -webkit-text-fill-color: initial;
+                color: #333;
+            }
+
+            .hero h1 {
+                -webkit-text-fill-color: initial;
+                color: #333;
+            }
+
+            .info-card h3,
+            .step-card h4,
+            .program-card h4 {
+                color: #555;
+            }
+
+            .info-card li,
+            .info-card p,
+            .program-card p,
+            .step-card p,
+            .cta-content p,
+            .hero p,
+            .section-subtitle {
+                color: #666;
+            }
+
+            .info-card li i {
+                color: #0a8;
+            }
+
+            .step-number {
+                background: #666;
+            }
+
+            .step-icon {
+                color: #666;
+            }
+
+            footer {
+                background: #f5f5f5;
+                border-top-color: #ccc;
+            }
+
+            .footer-section h3 {
+                color: #555;
+            }
+
+            .footer-section p,
+            .footer-section a,
+            .footer-bottom p {
+                color: #666;
+            }
+
+            .step-card {
+                padding-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Particles Background -->
+    <div id="particles"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">Mangalmay Group of Institutions</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#programs">Programs</a></li>
+                <li><a href="#campus-life">Campus Life</a></li>
+                <li><a href="#facilities">Facilities</a></li>
+                <li><a href="#placements">Placements</a></li>
+                <li><a href="#admission">Admission</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Quick Navigation -->
+    <div class="quick-nav">
+        <div class="quick-nav-item active" data-tooltip="Home">
+            <i class="fas fa-home"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Programs">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Campus Life">
+            <i class="fas fa-users"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Facilities">
+            <i class="fas fa-building"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Placements">
+            <i class="fas fa-briefcase"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Admission">
+            <i class="fas fa-user-plus"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Contact">
+            <i class="fas fa-phone"></i>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Welcome to Mangalmay Group of Institutions</h1>
+            <p>Excellence in Education | Innovation in Learning | Success in Life</p>
+            <div class="btn-group">
+                <a href="#admission" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    Start Your Journey
+                </a>
+                <a href="#programs" class="btn btn-white">
+                    <i class="fas fa-book"></i>
+                    Explore Programs
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="section" id="programs">
+        <div class="container">
+            <h2 class="section-title">Academic Programs</h2>
+            <p class="section-subtitle">Choose Your Path to Success</p>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-category="all">All Programs</button>
+                <button class="tab-btn" data-category="engineering">Engineering</button>
+                <button class="tab-btn" data-category="management">Management</button>
+                <button class="tab-btn" data-category="computer">Computer</button>
+                <button class="tab-btn" data-category="pharmacy">Pharmacy</button>
+                <button class="tab-btn" data-category="education">Education</button>
+            </div>
+
+            <div class="program-cards">
+                <div class="program-card" data-category="engineering">
+                    <h4>B.Tech Computer Science Engineering</h4>
+                    <p>4 Years | 8 Semesters</p>
+                    <p>AI, Machine Learning, Cloud Computing</p>
+                </div>
+                <div class="program-card" data-category="engineering">
+                    <h4>B.Tech Information Technology</h4>
+                    <p>4 Years | 8 Semesters</p>
+                    <p>Cybersecurity, Data Science, IoT</p>
+                </div>
+                <div class="program-card" data-category="engineering">
+                    <h4>B.Tech Mechanical Engineering</h4>
+                    <p>4 Years | 8 Semesters</p>
+                    <p>Automobile, Robotics, CAD/CAM</p>
+                </div>
+                <div class="program-card" data-category="engineering">
+                    <h4>B.Tech Civil Engineering</h4>
+                    <p>4 Years | 8 Semesters</p>
+                    <p>Smart Cities, Infrastructure</p>
+                </div>
+                <div class="program-card" data-category="engineering">
+                    <h4>B.Tech Electronics & Communication</h4>
+                    <p>4 Years | 8 Semesters</p>
+                    <p>VLSI, Embedded Systems, 5G</p>
+                </div>
+                <div class="program-card" data-category="engineering">
+                    <h4>B.Tech Electrical Engineering</h4>
+                    <p>4 Years | 8 Semesters</p>
+                    <p>Power Systems, Renewable Energy</p>
+                </div>
+                <div class="program-card" data-category="management">
+                    <h4>BBA (Bachelor of Business Admin)</h4>
+                    <p>3 Years | 6 Semesters</p>
+                    <p>Marketing, Finance, HR</p>
+                </div>
+                <div class="program-card" data-category="management">
+                    <h4>MBA (Master of Business Admin)</h4>
+                    <p>2 Years | 4 Semesters</p>
+                    <p>Business Analytics, Digital Marketing</p>
+                </div>
+                <div class="program-card" data-category="computer">
+                    <h4>BCA (Bachelor of Computer Apps)</h4>
+                    <p>3 Years | 6 Semesters</p>
+                    <p>Web Development, App Development</p>
+                </div>
+                <div class="program-card" data-category="computer">
+                    <h4>MCA (Master of Computer Apps)</h4>
+                    <p>2 Years | 4 Semesters</p>
+                    <p>Advanced Computing, AI/ML</p>
+                </div>
+                <div class="program-card" data-category="pharmacy">
+                    <h4>B.Pharm (Bachelor of Pharmacy)</h4>
+                    <p>4 Years | 8 Semesters</p>
+                    <p>Pharmaceutical Sciences</p>
+                </div>
+                <div class="program-card" data-category="pharmacy">
+                    <h4>M.Pharm (Master of Pharmacy)</h4>
+                    <p>2 Years | 4 Semesters</p>
+                    <p>Pharmacology, Clinical Research</p>
+                </div>
+                <div class="program-card" data-category="pharmacy">
+                    <h4>D.Pharm (Diploma in Pharmacy)</h4>
+                    <p>2 Years | 4 Semesters</p>
+                    <p>Clinical Pharmacy, Patient Care</p>
+                </div>
+                <div class="program-card" data-category="education">
+                    <h4>B.Ed (Bachelor of Education)</h4>
+                    <p>2 Years | 4 Semesters</p>
+                    <p>Teacher Training, Pedagogy</p>
+                </div>
+                <div class="program-card" data-category="education">
+                    <h4>M.Ed (Master of Education)</h4>
+                    <p>2 Years | 4 Semesters</p>
+                    <p>Educational Leadership</p>
+                </div>
+                <div class="program-card" data-category="education">
+                    <h4>D.El.Ed (Diploma in Elementary Education)</h4>
+                    <p>2 Years | 4 Semesters</p>
+                    <p>Primary Education</p>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Find Your Perfect Program!</h2>
+                    <p>15+ Programs to Choose From</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-download"></i>
+                            Download Brochure
+                        </a>
+                        <a href="#admission" class="btn btn-white">
+                            <i class="fas fa-info-circle"></i>
+                            Program Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campus Life Section -->
+    <section class="section" id="campus-life">
+        <div class="container">
+            <h2 class="section-title">Vibrant Campus Life</h2>
+            <p class="section-subtitle">Experience the Best College Life in Delhi NCR</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-users"></i> Student Activities</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 25+ Student Clubs</li>
+                        <li><i class="fas fa-check"></i> Technical Fest - TechFest</li>
+                        <li><i class="fas fa-check"></i> Cultural Fest - Mangal Utsav</li>
+                        <li><i class="fas fa-check"></i> Sports Tournament</li>
+                        <li><i class="fas fa-check"></i> Hackathons & Workshops</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-home"></i> Hostel Facilities</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> AC & Non-AC Rooms</li>
+                        <li><i class="fas fa-check"></i> 24/7 Security & WiFi</li>
+                        <li><i class="fas fa-check"></i> Mess with Multi-Cuisine</li>
+                        <li><i class="fas fa-check"></i> Gym & Recreation Room</li>
+                        <li><i class="fas fa-check"></i> Laundry & Housekeeping</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-trophy"></i> Sports & Recreation</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Cricket & Football Ground</li>
+                        <li><i class="fas fa-check"></i> Basketball & Volleyball Courts</li>
+                        <li><i class="fas fa-check"></i> Indoor Sports Complex</li>
+                        <li><i class="fas fa-check"></i> Badminton Courts</li>
+                        <li><i class="fas fa-check"></i> Fitness Center & Gym</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Join Our Thriving Community!</h2>
+                    <p>5000+ Happy Students</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-video"></i>
+                            Virtual Campus Tour
+                        </a>
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-calendar"></i>
+                            Upcoming Events
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section class="section" id="facilities">
+        <div class="container">
+            <h2 class="section-title">State-of-the-Art Facilities</h2>
+            <p class="section-subtitle">World-Class Infrastructure for Learning</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-flask"></i> Advanced Laboratories</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Computer Science Labs</li>
+                        <li><i class="fas fa-check"></i> Physics & Chemistry Labs</li>
+                        <li><i class="fas fa-check"></i> Electronics Workshops</li>
+                        <li><i class="fas fa-check"></i> Mechanical Workshops</li>
+                        <li><i class="fas fa-check"></i> Pharmacy Research Labs</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-book-open"></i> Digital Library</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 50,000+ Books Collection</li>
+                        <li><i class="fas fa-check"></i> E-Library & Digital Resources</li>
+                        <li><i class="fas fa-check"></i> International Journals Access</li>
+                        <li><i class="fas fa-check"></i> Online Learning Platforms</li>
+                        <li><i class="fas fa-check"></i> 24/7 Study Halls</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-university"></i> Academic Infrastructure</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Smart Digital Classrooms</li>
+                        <li><i class="fas fa-check"></i> 500-Seater Auditorium</li>
+                        <li><i class="fas fa-check"></i> Conference & Seminar Halls</li>
+                        <li><i class="fas fa-check"></i> Innovation & Incubation Center</li>
+                        <li><i class="fas fa-check"></i> Research & Development Labs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Explore Our Modern Campus!</h2>
+                    <p>Experience Premium Learning Environment</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-tour"></i>
+                            360° Campus Tour
+                        </a>
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-info-circle"></i>
+                            Know More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Placements Section -->
+    <section class="section" id="placements">
+        <div class="container">
+            <h2 class="section-title">Campus Placements & Careers</h2>
+            <p class="section-subtitle">200+ Companies Recruit from Our Campus</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-handshake"></i> Placement Assistance</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Dedicated Training & Placement Cell</li>
+                        <li><i class="fas fa-check"></i> Professional Resume Building</li>
+                        <li><i class="fas fa-check"></i> GD & PI Preparation</li>
+                        <li><i class="fas fa-check"></i> Aptitude & Technical Training</li>
+                        <li><i class="fas fa-check"></i> Industry Internship Programs</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-chart-bar"></i> Top Recruiters</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> TCS, Infosys, Wipro, HCL</li>
+                        <li><i class="fas fa-check"></i> Tech Mahindra, Capgemini</li>
+                        <li><i class="fas fa-check"></i> Amazon, Microsoft, IBM</li>
+                        <li><i class="fas fa-check"></i> Deloitte, KPMG, EY</li>
+                        <li><i class="fas fa-check"></i> Pharma & Healthcare Companies</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-rupee-sign"></i> Placement Statistics</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 95% Placement Rate</li>
+                        <li><i class="fas fa-check"></i> Average Package: 6-12 LPA</li>
+                        <li><i class="fas fa-check"></i> Highest Package: 35+ LPA</li>
+                        <li><i class="fas fa-check"></i> 500+ Job Offers Annually</li>
+                        <li><i class="fas fa-check"></i> Startup Incubation Support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Build Your Career with Mangalmay!</h2>
+                    <p>Get Placed in Top Companies</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-briefcase"></i>
+                            View Placement Report
+                        </a>
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-phone-alt"></i>
+                            Contact Placement Cell
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admission Section -->
+    <section class="section" id="admission">
+        <div class="container">
+            <h2 class="section-title">Admission Process</h2>
+            <p class="section-subtitle">Your Gateway to Excellence</p>
+            
+            <div class="steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h4>Online Application</h4>
+                    <p>Fill the application form with accurate details</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h4>Entrance Examination</h4>
+                    <p>Appear for UPSEE/JEE/University Entrance</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h4>Counseling & Admission</h4>
+                    <p>Document verification and fee payment</p>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-list-check"></i> Eligibility Criteria</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 10+2 with 60% for UG Programs</li>
+                        <li><i class="fas fa-check"></i> Bachelor's Degree for PG Programs</li>
+                        <li><i class="fas fa-check"></i> Valid Entrance Score Required</li>
+                        <li><i class="fas fa-check"></i> Age Limit: 17-25 Years</li>
+                        <li><i class="fas fa-check"></i> Open for All Indian States</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-file-upload"></i> Documents Required</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 10th & 12th Mark Sheets</li>
+                        <li><i class="fas fa-check"></i> Transfer & Migration Certificates</li>
+                        <li><i class="fas fa-check"></i> Entrance Exam Score Card</li>
+                        <li><i class="fas fa-check"></i> Character Certificate</li>
+                        <li><i class="fas fa-check"></i> Recent Passport Photos</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-rupee-sign"></i> Fee Structure</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Affordable Fee Structure</li>
+                        <li><i class="fas fa-check"></i> Merit-Based Scholarships</li>
+                        <li><i class="fas fa-check"></i> Education Loan Assistance</li>
+                        <li><i class="fas fa-check"></i> Special Discounts for Toppers</li>
+                        <li><i class="fas fa-check"></i> Transparent Fee Policy</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Begin Your Journey at Mangalmay!</h2>
+                    <p>Admissions Open for 2024-25 Session</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-user-plus"></i>
+                            Apply Now
+                        </a>
+                        <a href="tel:01204111222" class="btn btn-white">
+                            <i class="fas fa-phone"></i>
+                            Call: 0120-4111222
+                        </a>
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-download"></i>
+                            Download Brochure
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="section-subtitle">We're Here to Guide You</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-phone-alt"></i> Contact Numbers</h3>
+                    <p>Admissions: 0120-4111222<br>
+                    Campus Office: 0120-4111333<br>
+                    WhatsApp: +91-9876543210</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-envelope"></i> Email Addresses</h3>
+                    <p>Admissions: admissions@mangalmay.in<br>
+                    Information: info@mangalmay.in<br>
+                    Support: support@mangalmay.in</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Campus Location</h3>
+                    <p>Mangalmay Group of Institutions<br>
+                    Plot No. 8, Knowledge Park-II<br>
+                    Greater Noida, UP - 201306</p>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Visit Our Premier Campus!</h2>
+                    <p>Experience World-Class Education</p>
+                    <div class="btn-group">
+                        <a href="tel:01204111222" class="btn btn-primary">
+                            <i class="fas fa-phone"></i>
+                            Call Now: 0120-4111222
+                        </a>
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-calendar"></i>
+                            Schedule Campus Visit
+                        </a>
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-map"></i>
+                            Get Directions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Mangalmay Group of Institutions</h3>
+                    <p>Knowledge Park-II, Greater Noida</p>
+                    <p>AKTU Affiliated University</p>
+                    <p>AICTE Approved Programs</p>
+                    <p>NAAC Accredited Institution</p>
+                    <p>#1 College in Greater Noida</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#campus-life">Campus Life</a></li>
+                        <li><a href="#facilities">Facilities</a></li>
+                        <li><a href="#placements">Placements</a></li>
+                        <li><a href="#admission">Admission</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Popular Courses</h3>
+                    <ul>
+                        <li><a href="#">B.Tech Computer Science</a></li>
+                        <li><a href="#">B.Tech Information Technology</a></li>
+                        <li><a href="#">Bachelor of Business Admin</a></li>
+                        <li><a href="#">Master of Business Admin</a></li>
+                        <li><a href="#">Bachelor of Computer Apps</a></li>
+                        <li><a href="#">Bachelor of Pharmacy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <p><i class="fab fa-facebook"></i> Facebook</p>
+                    <p><i class="fab fa-youtube"></i> YouTube</p>
+                    <p><i class="fab fa-linkedin"></i> LinkedIn</p>
+                    <p><i class="fab fa-instagram"></i> Instagram</p>
+                    <p><i class="fab fa-twitter"></i> Twitter</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mangalmay Group of Institutions, Greater Noida. All Rights Reserved.</p>
+                <p>Premier Institution in Delhi NCR | Excellence in Education | Bright Future Ahead</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Generate particles
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+
+            // Hide loading screen
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hide');
+            }, 1000);
+
+            // Quick Navigation Active State
+            const quickNavItems = document.querySelectorAll('.quick-nav-item');
+            const sections = document.querySelectorAll('section[id]');
+
+            function updateQuickNavActive() {
+                const scrollY = window.pageYOffset;
+                
+                sections.forEach(section => {
+                    const sectionHeight = section.offsetHeight;
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                        quickNavItems.forEach(item => {
+                            item.classList.remove('active');
+                            const tooltipMap = {
+                                'home': 'Home',
+                                'programs': 'Programs',
+                                'campus-life': 'Campus Life',
+                                'facilities': 'Facilities',
+                                'placements': 'Placements',
+                                'admission': 'Admission',
+                                'contact': 'Contact'
+                            };
+                            
+                            if (item.getAttribute('data-tooltip') === tooltipMap[sectionId]) {
+                                item.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateQuickNavActive);
+
+            // Quick Navigation Smooth Scroll
+            quickNavItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tooltip = this.getAttribute('data-tooltip');
+                    
+                    const sectionMap = {
+                        'Home': 'home',
+                        'Programs': 'programs',
+                        'Campus Life': 'campus-life',
+                        'Facilities': 'facilities',
+                        'Placements': 'placements',
+                        'Admission': 'admission',
+                        'Contact': 'contact'
+                    };
+                    
+                    const targetId = sectionMap[tooltip];
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        const offsetTop = targetSection.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+            
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                const spans = this.querySelectorAll('span');
+                spans.forEach((span, index) => {
+                    if (navLinks.classList.contains('active')) {
+                        if (index === 0) span.style.transform = 'rotate(45deg) translate(5px, 5px)';
+                        if (index === 1) span.style.opacity = '0';
+                        if (index === 2) span.style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                    } else {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    }
+                });
+            });
+
+            // Close mobile menu on link click
+            document.querySelectorAll('#navLinks a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    const spans = menuToggle.querySelectorAll('span');
+                    spans.forEach(span => {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    });
+                });
+            });
+
+            // Close mobile menu on outside click
+            document.addEventListener('click', function(e) {
+                if (navLinks.classList.contains('active') && 
+                    !navLinks.contains(e.target) && 
+                    !menuToggle.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                    const spans = menuToggle.querySelectorAll('span');
+                    spans.forEach(span => {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    });
+                }
+            });
+
+            // Close mobile menu on resize to desktop
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    const spans = menuToggle.querySelectorAll('span');
+                    spans.forEach(span => {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    });
+                }
+            });
+
+            // Prevent body scroll when mobile menu is open
+            function lockBodyScroll() {
+                if (navLinks.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            }
+
+            navLinks.addEventListener('transitionend', lockBodyScroll);
+            menuToggle.addEventListener('click', function() {
+                setTimeout(lockBodyScroll, 10);
+            });
+
+            // Scroll progress bar
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const offsetTop = target.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Program Tabs
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const programCards = document.querySelectorAll('.program-card');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    programCards.forEach(card => {
+                        if (card.getAttribute('data-category') === category || category === 'all') {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 10);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            const animatedElements = document.querySelectorAll('.info-card, .cta-section, .program-card, .step-card');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(element);
+            });
+
+            // Initialize first tab
+            tabBtns[0].click();
+        });
+    </script>
+</body>
+</html>

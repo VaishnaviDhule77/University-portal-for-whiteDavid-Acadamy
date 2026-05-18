@@ -1,0 +1,2199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B.Ed Admission 2024 - Whitedavid Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Primary Background Tones - Deep Navy/Indigo */
+            --dark: #0B0F2A;
+            --darker: #080C22;
+            --darkest: #050819;
+            --light: #111A3A;
+            --lighter: #1A2E4A;
+            
+            /* Neon Cyan/Teal Accent */
+            --primary: #00E0FF;
+            --primary-dark: #00B8D4;
+            --secondary: #2CE6C2;
+            
+            /* Warm CTA Gradient */
+            --cta-start: #FF6A3D;
+            --cta-end: #FF8A50;
+            
+            /* Multi-Accent System */
+            --accent-orange: linear-gradient(135deg, #FF6A3D, #FF8A50);
+            --accent-blue: linear-gradient(135deg, #3B82F6, #60A5FA);
+            --accent-purple: linear-gradient(135deg, #A855F7, #EC4899);
+            --accent-green: linear-gradient(135deg, #22C55E, #4ADE80);
+            --accent-amber: linear-gradient(135deg, #F59E0B, #FBBF24);
+            --accent-teal: linear-gradient(135deg, #14B8A6, #2DD4BF);
+            
+            /* Text Colors - Soft White */
+            --text: #FFFFFF;
+            --text-dim: #B0B8D1;
+            --text-muted: #94A3B8;
+            
+            /* Border Colors - Low Contrast */
+            --border: rgba(148,163,184,0.1);
+            --border-hover: rgba(148,163,184,0.25);
+            
+            /* Glow Colors - Soft Blue */
+            --glow: rgba(0, 224, 255, 0.3);
+            --glow-secondary: rgba(44, 230, 194, 0.3);
+            --glow-cta: rgba(255, 106, 61, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--darkest);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Loading Screen */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darkest);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Particles Background */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--glow);
+            animation: float 15s infinite linear;
+        }
+
+        /* Scroll Progress Bar */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--cta-start));
+            z-index: 10000;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(11, 15, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border);
+        }
+
+        header.scrolled {
+            background: rgba(8, 12, 34, 0.98);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 3s ease infinite;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        /* Quick Navigation */
+        .quick-nav {
+            position: fixed;
+            right: 20px;
+            top: 60%;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .quick-nav-item {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(17, 26, 58, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .quick-nav-item:hover {
+            background: rgba(0, 224, 255, 0.1);
+            border-color: rgba(0, 224, 255, 0.3);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        .quick-nav-item.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: var(--primary);
+            box-shadow: 0 0 30px var(--glow);
+        }
+
+        .quick-nav-item i {
+            color: var(--text-dim);
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .quick-nav-item.active i {
+            color: white;
+        }
+
+        .quick-nav-tooltip {
+            position: absolute;
+            right: 60px;
+            background: var(--light);
+            padding: 5px 10px;
+            border-radius: 5px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+        }
+
+        .quick-nav-item:hover .quick-nav-tooltip {
+            opacity: 1;
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 2;
+            padding-top: 80px;
+            padding-bottom: 20px;
+        }
+
+        /* Hero Section - Dark Gradient */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 224, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(44, 230, 194, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 106, 61, 0.05) 0%, transparent 50%),
+                linear-gradient(180deg, var(--darkest) 0%, var(--dark) 50%, var(--darker) 100%);
+            overflow: hidden;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 224, 255, 0.06) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--cta-start));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-animation 3s ease infinite;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            font-size: 1rem;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        /* Primary CTA - Warm Orange Gradient */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cta-start), var(--cta-end));
+            color: white;
+            border: none;
+            box-shadow: 0 5px 20px var(--glow-cta);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--glow-cta);
+        }
+
+        /* Secondary - Outline/Ghost Button */
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid #6C7A9A;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 224, 255, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--glow);
+        }
+
+        /* White Ghost Button */
+        .btn-white {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            border: 1px solid rgba(148,163,184,0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-white:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(148,163,184,0.4);
+            box-shadow: 0 10px 30px rgba(148,163,184,0.1);
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Info Cards - Glassmorphism + Dark Card Gradient */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 46, 74, 0.6));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.05), rgba(44, 230, 194, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .info-card:hover::before {
+            opacity: 1;
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--glow);
+            border-color: var(--border-hover);
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .info-card h3 i {
+            font-size: 1.3rem;
+        }
+
+        .info-card ul {
+            list-style: none;
+        }
+
+        .info-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .info-card li:hover {
+            padding-left: 10px;
+            color: var(--primary);
+        }
+
+        .info-card li:last-child {
+            border-bottom: none;
+        }
+
+        .info-card li i {
+            color: var(--cta-start);
+            width: 20px;
+        }
+
+        /* Course Cards - Multi-Accent System */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .course-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 46, 74, 0.6));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 224, 255, 0.05), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .course-card:hover::after {
+            animation: gradient-rotate 2s linear infinite;
+            opacity: 1;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px var(--glow);
+            border-color: var(--border-hover);
+        }
+
+        /* Multi-Accent Icon Colors */
+        .course-card:nth-child(1) i { 
+            font-size: 3rem; 
+            margin-bottom: 1rem; 
+            display: block;
+            background: var(--accent-orange);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .course-card:nth-child(2) i { 
+            font-size: 3rem; 
+            margin-bottom: 1rem; 
+            display: block;
+            background: var(--accent-blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .course-card:nth-child(3) i { 
+            font-size: 3rem; 
+            margin-bottom: 1rem; 
+            display: block;
+            background: var(--accent-purple);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .course-card:nth-child(4) i { 
+            font-size: 3rem; 
+            margin-bottom: 1rem; 
+            display: block;
+            background: var(--accent-amber);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .course-card:nth-child(5) i { 
+            font-size: 3rem; 
+            margin-bottom: 1rem; 
+            display: block;
+            background: var(--accent-green);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .course-card:nth-child(6) i { 
+            font-size: 3rem; 
+            margin-bottom: 1rem; 
+            display: block;
+            background: var(--accent-teal);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .course-card h3 {
+            color: var(--text);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .course-card p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+            margin-bottom: 3rem;
+        }
+
+        .column-content {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 46, 74, 0.6));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .column-content:hover {
+            box-shadow: 0 20px 40px var(--glow);
+            border-color: var(--border-hover);
+        }
+
+        .column-content h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .column-content ul {
+            list-style: none;
+        }
+
+        .column-content li {
+            padding: 0.5rem 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .column-content li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--cta-start);
+            font-size: 0.8rem;
+            animation: bounce 2s infinite;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 46, 74, 0.6));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 2rem;
+            overflow-x: auto;
+            margin-bottom: 3rem;
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--darkest);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(0, 224, 255, 0.05);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.08), rgba(44, 230, 194, 0.08));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 224, 255, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 224, 255, 0.1) 0%, transparent 70%);
+            animation: pulse-bg 4s ease-in-out infinite;
+        }
+
+        .highlight-box h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .highlight-box ul {
+            list-style: none;
+        }
+
+        .highlight-box li {
+            padding: 0.5rem 0;
+            color: var(--text);
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .highlight-box li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--cta-start);
+        }
+
+        /* What is B.Ed Section */
+        .what-is-bed {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 46, 74, 0.6));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 3rem;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .what-is-bed::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.03), rgba(44, 230, 194, 0.03));
+            pointer-events: none;
+        }
+
+        .what-is-bed h3 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .what-is-bed h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            animation: expand 2s ease-in-out infinite;
+        }
+
+        .what-is-bed p {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .what-is-bed ul {
+            list-style: none;
+            margin-left: 20px;
+        }
+
+        .what-is-bed li {
+            color: var(--text);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .what-is-bed li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-size: 1.2rem;
+            animation: bounce 2s infinite;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(255, 106, 61, 0.15), rgba(0, 224, 255, 0.1));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 106, 61, 0.2);
+            border-radius: 20px;
+            padding: 4rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255, 106, 61, 0.08) 0%, transparent 70%);
+            animation: pulse-bg 3s ease-in-out infinite;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--cta-start), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--darker), var(--darkest));
+            padding: 3rem 0 1rem;
+            border-top: 1px solid var(--border);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p {
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 5px var(--glow);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 5px;
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--glow);
+            background: rgba(26, 46, 74, 0.8);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, #22C55E, #4ADE80);
+            color: var(--darkest);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 10000;
+            animation: slideInRight 0.5s ease;
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(15deg); }
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes expand {
+            0%, 100% { width: 60px; }
+            50% { width: 100px; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+
+        @keyframes gradient-rotate {
+            0% { transform: rotate(45deg); }
+            100% { transform: rotate(405deg); }
+        }
+
+        @keyframes pulse-bg {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+        }
+
+        @keyframes gradient-animation {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* =========================================
+           RESPONSIVE DESIGN
+           ========================================= */
+
+        /* Tablet Adjustments */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            .section-title {
+                font-size: 2.2rem;
+            }
+            .info-grid, .course-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+
+        /* Mobile Portrait & Landscape */
+        @media (max-width: 768px) {
+            /* Nav Links (Hamburger) */
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(11, 15, 42, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 2rem;
+                transition: right 0.3s ease;
+                gap: 1.5rem;
+                text-align: center;
+                border-top: 1px solid var(--border);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            /* Quick Nav -> Bottom Dock */
+            .quick-nav {
+                top: auto;
+                bottom: 20px;
+                right: 50%;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 90%;
+                max-width: 400px;
+                flex-direction: row;
+                justify-content: space-around;
+                padding: 10px 15px;
+                border-radius: 50px;
+                overflow-x: auto;
+                background: rgba(15, 23, 42, 0.95);
+                border: 1px solid var(--border);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                z-index: 998;
+            }
+
+            .quick-nav-item {
+                width: 40px;
+                height: 40px;
+            }
+
+            .quick-nav-item i {
+                font-size: 1rem;
+            }
+            
+            .quick-nav-tooltip {
+                display: none;
+            }
+
+            /* Main Content Padding to avoid bottom nav overlap */
+            main {
+                padding-bottom: 100px;
+            }
+
+            /* Hero Adjustments */
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            /* Grids */
+            .info-grid,
+            .course-grid,
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            /* Cards */
+            .info-card, .course-card, .column-content {
+                padding: 1.5rem;
+            }
+
+            .what-is-bed {
+                padding: 1.5rem;
+            }
+
+            /* Footer */
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .cta-section {
+                padding: 3rem 1.5rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Very Small Screens */
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .info-card h3, .course-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+            
+            .quick-nav {
+                padding: 8px;
+                gap: 8px;
+            }
+            
+            .quick-nav-item {
+                width: 35px;
+                height: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div id="progressBar"></div>
+
+    <!-- Particles Background -->
+    <div id="particles"></div>
+
+    <!-- Header -->
+    <header id="navbar">
+        <nav>
+            <div class="logo">Whitedavid Academy</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#courses">Courses</a></li>
+                <li><a href="index.html#universities">Universities</a></li>
+                <li><a href="index.html#support">Support</a></li>
+                <li><a href="tel:+919876543210">Call Now</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Quick Navigation -->
+    <div class="quick-nav">
+        <div class="quick-nav-item" data-section="home">
+            <i class="fas fa-home"></i>
+            <span class="quick-nav-tooltip">Home</span>
+        </div>
+        <div class="quick-nav-item" data-section="what-is-bed">
+            <i class="fas fa-book"></i>
+            <span class="quick-nav-tooltip">About B.Ed</span>
+        </div>
+        <div class="quick-nav-item" data-section="courses">
+            <i class="fas fa-graduation-cap"></i>
+            <span class="quick-nav-tooltip">Courses</span>
+        </div>
+        <div class="quick-nav-item" data-section="subjects">
+            <i class="fas fa-book-open"></i>
+            <span class="quick-nav-tooltip">Subjects</span>
+        </div>
+        <div class="quick-nav-item" data-section="eligibility">
+            <i class="fas fa-check-circle"></i>
+            <span class="quick-nav-tooltip">Eligibility</span>
+        </div>
+        <div class="quick-nav-item" data-section="admission">
+            <i class="fas fa-user-plus"></i>
+            <span class="quick-nav-tooltip">Admission</span>
+        </div>
+        <div class="quick-nav-item" data-section="colleges">
+            <i class="fas fa-university"></i>
+            <span class="quick-nav-tooltip">Colleges</span>
+        </div>
+        <div class="quick-nav-item" data-section="higher-studies">
+            <i class="fas fa-microscope"></i>
+            <span class="quick-nav-tooltip">Higher Studies</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero section" id="home">
+            <div class="hero-content">
+                <h1>B.Ed Admission 2024</h1>
+                <p>Your Gateway to a Rewarding Teaching Career</p>
+                <div class="btn-group">
+                    <a href="#admission" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i>
+                        Apply Now
+                    </a>
+                    <a href="tel:+919876543210" class="btn btn-secondary">
+                        <i class="fas fa-phone"></i>
+                        Call: +91 98765 43210
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- What is B.Ed Section -->
+        <section class="section" id="what-is-bed">
+            <div class="container">
+                <div class="what-is-bed">
+                    <h3>What is B.Ed?</h3>
+                    <p>Bachelor of Education (B.Ed) is a professional undergraduate degree program that prepares students for a career in teaching. It is a mandatory qualification for those who wish to teach at secondary and higher secondary levels in schools.</p>
+                    <p>The B.Ed program focuses on developing teaching skills, educational psychology, classroom management, and pedagogical knowledge. It combines theoretical knowledge with practical teaching experience through internships and teaching practice sessions.</p>
+                    <ul>
+                        <li><strong>Duration:</strong> 2 years (4 semesters)</li>
+                        <li><strong>Eligibility:</strong> Graduation with 50% marks</li>
+                        <li><strong>Recognition:</strong> NCTE approved</li>
+                        <li><strong>Career Scope:</strong> Teaching in schools, education consultancy, curriculum development</li>
+                        <li><strong>Specializations:</strong> Various subjects based on graduation</li>
+                        <li><strong>Practical Training:</strong> 16 weeks teaching internship</li>
+                        <li><strong>Job Security:</strong> Government and private school opportunities</li>
+                        <li><strong>Growth Path:</strong> Teacher → HOD → Principal → Director</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section class="section" id="courses">
+            <div class="container">
+                <h2 class="section-title">B.Ed Courses Available</h2>
+                <p class="section-subtitle">Choose from various specializations based on your expertise</p>
+                
+                <div class="course-grid">
+                    <div class="course-card">
+                        <i class="fas fa-calculator"></i>
+                        <h3>B.Ed Mathematics</h3>
+                        <p>Specialize in teaching mathematics with advanced pedagogical techniques and problem-solving approaches.</p>
+                        <a href="#admission" class="btn btn-secondary">Learn More</a>
+                    </div>
+                    
+                    <div class="course-card">
+                        <i class="fas fa-flask"></i>
+                        <h3>B.Ed Science</h3>
+                        <p>Focus on physics, chemistry, and biology teaching with practical experiments and modern teaching aids.</p>
+                        <a href="#admission" class="btn btn-secondary">Learn More</a>
+                    </div>
+                    
+                    <div class="course-card">
+                        <i class="fas fa-language"></i>
+                        <h3>B.Ed English</h3>
+                        <p>Master art of teaching English language and literature with communication skills development.</p>
+                        <a href="#admission" class="btn btn-secondary">Learn More</a>
+                    </div>
+                    
+                    <div class="course-card">
+                        <i class="fas fa-globe-asia"></i>
+                        <h3>B.Ed Social Studies</h3>
+                        <p>Teach history, geography, political science, and economics with interactive learning methods.</p>
+                        <a href="#admission" class="btn btn-secondary">Learn More</a>
+                    </div>
+                    
+                    <div class="course-card">
+                        <i class="fas fa-coins"></i>
+                        <h3>B.Ed Commerce</h3>
+                        <p>Specialize in accounting, business studies, and economics teaching for commerce students.</p>
+                        <a href="#admission" class="btn btn-secondary">Learn More</a>
+                    </div>
+                    
+                    <div class="course-card">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>B.Ed Computer Science</h3>
+                        <p>Teach computer science, programming, and digital literacy with modern technology integration.</p>
+                        <a href="#admission" class="btn btn-secondary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subjects Section -->
+        <section class="section" id="subjects">
+            <div class="container">
+                <h2 class="section-title">B.Ed Subjects & Curriculum</h2>
+                <p class="section-subtitle">Comprehensive curriculum covering all aspects of teacher education</p>
+                
+                <div class="two-column">
+                    <div class="column-content">
+                        <h3>Core Subjects</h3>
+                        <ul>
+                            <li>Philosophy of Education</li>
+                            <li>Educational Psychology</li>
+                            <li>Sociology of Education</li>
+                            <li>Guidance and Counseling</li>
+                            <li>Educational Technology</li>
+                            <li>Educational Evaluation</li>
+                            <li>Educational Management</li>
+                            <li>Curriculum Development</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="column-content">
+                        <h3>Teaching Methods</h3>
+                        <ul>
+                            <li>Method of Teaching Subject 1</li>
+                            <li>Method of Teaching Subject 2</li>
+                            <li>Micro-teaching</li>
+                            <li>Lesson Planning</li>
+                            <li>Classroom Management</li>
+                            <li>Teaching Aids and Resources</li>
+                            <li>E-learning and Digital Pedagogy</li>
+                            <li>Inclusive Education</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-star"></i> Practical Components:</h4>
+                    <ul>
+                        <li><strong>Teaching Practice:</strong> 16 weeks internship in schools</li>
+                        <li><strong>Observation:</strong> 20 lessons observation</li>
+                        <li><strong>Workshops:</strong> 10 workshops on various topics</li>
+                        <li><strong>Seminars:</strong> 5 seminars on educational issues</li>
+                        <li><strong>Projects:</strong> 2 action research projects</li>
+                        <li><strong>Case Studies:</strong> Analysis of teaching scenarios</li>
+                        <li><strong>Portfolio Development:</strong> Teaching portfolio creation</li>
+                        <li><strong>Community Work:</strong> Educational awareness programs</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Eligibility Section -->
+        <section class="section" id="eligibility">
+            <div class="container">
+                <h2 class="section-title">Eligibility Criteria</h2>
+                <p class="section-subtitle">Check if you qualify for B.Ed admission</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-user-graduate"></i> Educational Qualification</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Bachelor's degree in any stream</li>
+                            <li><i class="fas fa-check"></i> Minimum 50% marks in graduation</li>
+                            <li><i class="fas fa-check"></i> 45% for reserved categories</li>
+                            <li><i class="fas fa-check"></i> Recognized university degree</li>
+                            <li><i class="fas fa-check"></i> No backlog in final year</li>
+                            <li><i class="fas fa-check"></i> Valid mark sheets required</li>
+                            <li><i class="fas fa-check"></i> Degree certificate mandatory</li>
+                            <li><i class="fas fa-check"></i> Migration certificate if applicable</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-calendar-alt"></i> Age Limit</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> No upper age limit</li>
+                            <li><i class="fas fa-check"></i> Minimum 21 years recommended</li>
+                            <li><i class="fas fa-check"></i> Age relaxation for reserved categories</li>
+                            <li><i class="fas fa-check"></i> Valid age proof required</li>
+                            <li><i class="fas fa-check"></i> Birth certificate or 10th marksheet</li>
+                            <li><i class="fas fa-check"></i> Government age norms apply</li>
+                            <li><i class="fas fa-check"></i> Age verification mandatory</li>
+                            <li><i class="fas fa-check"></i> Special provisions for women</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-file-alt"></i> Entrance Exam</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Qualify B.Ed entrance exam</li>
+                            <li><i class="fas fa-check"></i> State-level or university-level</li>
+                            <li><i class="fas fa-check"></i> Valid score card required</li>
+                            <li><i class="fas fa-check"></i> Exam pattern: MCQ based</li>
+                            <li><i class="fas fa-check"></i> Subjects: Teaching Aptitude, Reasoning</li>
+                            <li><i class="fas fa-check"></i> General Knowledge, Language</li>
+                            <li><i class="fas fa-check"></i> Minimum qualifying marks: 50%</li>
+                            <li><i class="fas fa-check"></i> Reservation policy applicable</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Minimum Marks</th>
+                                <th>Relaxation</th>
+                                <th>Documents Required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>General</td>
+                                <td>50%</td>
+                                <td>None</td>
+                                <td>Mark sheets, Certificate</td>
+                            </tr>
+                            <tr>
+                                <td>OBC</td>
+                                <td>45%</td>
+                                <td>5%</td>
+                                <td>Caste Certificate</td>
+                            </tr>
+                            <tr>
+                                <td>SC/ST</td>
+                                <td>40%</td>
+                                <td>10%</td>
+                                <td>Caste Certificate</td>
+                            </tr>
+                            <tr>
+                                <td>EWS</td>
+                                <td>45%</td>
+                                <td>5%</td>
+                                <td>Income Certificate</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admission Section -->
+        <section class="section" id="admission">
+            <div class="container">
+                <h2 class="section-title">Admission Process</h2>
+                <p class="section-subtitle">Simple 4-step admission process</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-edit"></i> Step 1: Application Form</h3>
+                        <ul>
+                            <li><i class="fas fa-arrow-right"></i> Fill online application form</li>
+                            <li><i class="fas fa-arrow-right"></i> Upload required documents</li>
+                            <li><i class="fas fa-arrow-right"></i> Pay application fee</li>
+                            <li><i class="fas fa-arrow-right"></i> Submit before deadline</li>
+                            <li><i class="fas fa-arrow-right"></i> Save application number</li>
+                            <li><i class="fas fa-arrow-right"></i> Print confirmation page</li>
+                            <li><i class="fas fa-arrow-right"></i> Keep copies of documents</li>
+                            <li><i class="fas fa-arrow-right"></i> Check email for updates</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-clipboard-list"></i> Step 2: Entrance Exam</h3>
+                        <ul>
+                            <li><i class="fas fa-arrow-right"></i> Download admit card</li>
+                            <li><i class="fas fa-arrow-right"></i> Appear for entrance test</li>
+                            <li><i class="fas fa-arrow-right"></i> Check exam schedule</li>
+                            <li><i class="fas fa-arrow-right"></i> Reach center on time</li>
+                            <li><i class="fas fa-arrow-right"></i> Carry required documents</li>
+                            <li><i class="fas fa-arrow-right"></i> Follow exam guidelines</li>
+                            <li><i class="fas fa-arrow-right"></i> Wait for results</li>
+                            <li><i class="fas fa-arrow-right"></i> Download score card</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-list-ol"></i> Step 3: Merit List</h3>
+                        <ul>
+                            <li><i class="fas fa-arrow-right"></i> Check merit list online</li>
+                            <li><i class="fas fa-arrow-right"></i> Verify your rank</li>
+                            <li><i class="fas fa-arrow-right"></i> Attend counseling if called</li>
+                            <li><i class="fas fa-arrow-right"></i> Choose college preference</li>
+                            <li><i class="fas fa-arrow-right"></i> Lock your choices</li>
+                            <li><i class="fas fa-arrow-right"></i> Wait for seat allotment</li>
+                            <li><i class="fas fa-arrow-right"></i> Download allotment letter</li>
+                            <li><i class="fas fa-arrow-right"></i> Report to college</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-university"></i> Step 4: Final Admission</h3>
+                        <ul>
+                            <li><i class="fas fa-arrow-right"></i> Report to allotted college</li>
+                            <li><i class="fas fa-arrow-right"></i> Verify original documents</li>
+                            <li><i class="fas fa-arrow-right"></i> Pay admission fee</li>
+                            <li><i class="fas fa-arrow-right"></i> Complete admission formalities</li>
+                            <li><i class="fas fa-arrow-right"></i> Get enrollment number</li>
+                            <li><i class="fas fa-arrow-right"></i> Attend orientation program</li>
+                            <li><i class="fas fa-arrow-right"></i> Start classes as per schedule</li>
+                            <li><i class="fas fa-arrow-right"></i> Join student community</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Important Dates 2024:</h4>
+                    <ul>
+                        <li><strong>Application Start:</strong> March 15, 2024</li>
+                        <li><strong>Application End:</strong> May 31, 2024</li>
+                        <li><strong>Entrance Exam:</strong> June 20, 2024</li>
+                        <li><strong>Result Declaration:</strong> July 10, 2024</li>
+                        <li><strong>Counseling Start:</strong> July 25, 2024</li>
+                        <li><strong>Classes Begin:</strong> August 15, 2024</li>
+                        <li><strong>Last Admission:</strong> August 31, 2024</li>
+                        <li><strong>Late Fee:</strong> ₹1000 till September 15, 2024</li>
+                    </ul>
+                </div>
+
+                <!-- Enrollment Form -->
+                <div class="what-is-bed">
+                    <h3>Quick Enrollment Form</h3>
+                    <form id="enrollForm">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="Enter your 10-digit mobile number">
+                        </div>
+                        <div class="form-group">
+                            <label for="course">Preferred Course *</label>
+                            <select id="course" name="course" required>
+                                <option value="">Select a course</option>
+                                <option value="mathematics">B.Ed Mathematics</option>
+                                <option value="science">B.Ed Science</option>
+                                <option value="english">B.Ed English</option>
+                                <option value="social-studies">B.Ed Social Studies</option>
+                                <option value="commerce">B.Ed Commerce</option>
+                                <option value="computer-science">B.Ed Computer Science</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Submit Application
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Colleges Section -->
+        <section class="section" id="colleges">
+            <div class="container">
+                <h2 class="section-title">Top B.Ed Colleges</h2>
+                <p class="section-subtitle">NCTE approved colleges with excellent placement records</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-trophy"></i> Delhi University Colleges</h3>
+                        <ul>
+                            <li><i class="fas fa-university"></i> Central Institute of Education</li>
+                            <li><i class="fas fa-university"></i> Lady Irwin College</li>
+                            <li><i class="fas fa-university"></i> Jamia Millia Islamia</li>
+                            <li><i class="fas fa-university"></i> IP University Colleges</li>
+                            <li><i class="fas fa-university"></i> Shyama Prasad Mukherji College</li>
+                            <li><i class="fas fa-university"></i> Mata Sundri College</li>
+                            <li><i class="fas fa-university"></i> Maharshi Valmiki College</li>
+                            <li><i class="fas fa-university"></i> Bhagat Singh College</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-star"></i> Private Colleges</h3>
+                        <ul>
+                            <li><i class="fas fa-graduation-cap"></i> Amity University</li>
+                            <li><i class="fas fa-graduation-cap"></i> Chandigarh University</li>
+                            <li><i class="fas fa-graduation-cap"></i> Lovely Professional University</li>
+                            <li><i class="fas fa-graduation-cap"></i> Galgotias University</li>
+                            <li><i class="fas fa-graduation-cap"></i> Sharda University</li>
+                            <li><i class="fas fa-graduation-cap"></i> GD Goenka University</li>
+                            <li><i class="fas fa-graduation-cap"></i> JNU (Jaipur National University)</li>
+                            <li><i class="fas fa-graduation-cap"></i> SRM University</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-map-marker-alt"></i> State Universities</h3>
+                        <ul>
+                            <li><i class="fas fa-school"></i> Mumbai University</li>
+                            <li><i class="fas fa-school"></i> Pune University</li>
+                            <li><i class="fas fa-school"></i> Bangalore University</li>
+                            <li><i class="fas fa-school"></i> Kolkata University</li>
+                            <li><i class="fas fa-school"></i> Chennai University</li>
+                            <li><i class="fas fa-school"></i> Hyderabad University</li>
+                            <li><i class="fas fa-school"></i> Lucknow University</li>
+                            <li><i class="fas fa-school"></i> Jaipur University</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>College Type</th>
+                                <th>Fee Range (Annual)</th>
+                                <th>Placement Rate</th>
+                                <th>Specializations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Government</td>
+                                <td>₹10,000 - ₹50,000</td>
+                                <td>85-95%</td>
+                                <td>All Subjects</td>
+                            </tr>
+                            <tr>
+                                <td>Private</td>
+                                <td>₹50,000 - ₹2,00,000</td>
+                                <td>70-90%</td>
+                                <td>Selected Subjects</td>
+                            </tr>
+                            <tr>
+                                <td>Deemed University</td>
+                                <td>₹1,00,000 - ₹3,00,000</td>
+                                <td>80-95%</td>
+                                <td>All Subjects</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-award"></i> Placement Highlights:</h4>
+                    <ul>
+                        <li><strong>Government Schools:</strong> 40% placements through TET/CTET</li>
+                        <li><strong>Private Schools:</strong> 35% placements with salary 3-5 LPA</li>
+                        <li><strong>International Schools:</strong> 15% placements with salary 5-10 LPA</li>
+                        <li><strong>Higher Education:</strong> 10% pursue M.Ed/Ph.D</li>
+                        <li><strong>Top Recruiters:</strong> DPS, KV, DAV, GD Goenka, Pathways</li>
+                        <li><strong>Abroad Opportunities:</strong> Middle East, Southeast Asia</li>
+                        <li><strong>Entrepreneurship:</strong> 5% start coaching centers</li>
+                        <li><strong>EdTech Companies:</strong> Byju's, Unacademy, Vedantu</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Higher Studies Section -->
+        <section class="section" id="higher-studies">
+            <div class="container">
+                <h2 class="section-title">Higher Studies After B.Ed</h2>
+                <p class="section-subtitle">Advanced educational programs to enhance your teaching career</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Master's Programs</h3>
+                        <ul>
+                            <li><i class="fas fa-book"></i> <strong>M.Ed (Master of Education):</strong> 2-year program</li>
+                            <li><i class="fas fa-book"></i> <strong>MA Education:</strong> 2-year theoretical program</li>
+                            <li><i class="fas fa-book"></i> <strong>M.Sc Education:</strong> Science education focus</li>
+                            <li><i class="fas fa-book"></i> <strong>M.A. Psychology:</strong> Educational psychology</li>
+                            <li><i class="fas fa-book"></i> <strong>M.A. Sociology:</strong> Educational sociology</li>
+                            <li><i class="fas fa-book"></i> <strong>M.A. English:</strong> Language teaching</li>
+                            <li><i class="fas fa-book"></i> <strong>M.A. Mathematics:</strong> Math education</li>
+                            <li><i class="fas fa-book"></i> <strong>M.Com:</strong> Commerce education</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-microscope"></i> Research Programs</h3>
+                        <ul>
+                            <li><i class="fas fa-flask"></i> <strong>M.Phil Education:</strong> 1-year research</li>
+                            <li><i class="fas fa-flask"></i> <strong>Ph.D Education:</strong> 3-5 years doctoral</li>
+                            <li><i class="fas fa-flask"></i> <strong>Ph.D Educational Psychology:</strong> Research</li>
+                            <li><i class="fas fa-flask"></i> <strong>Ph.D Educational Technology:</strong> Digital learning</li>
+                            <li><i class="fas fa-flask"></i> <strong>Ph.D Curriculum Studies:</strong> Design research</li>
+                            <li><i class="fas fa-flask"></i> <strong>Ph.D Special Education:</strong> Inclusive studies</li>
+                            <li><i class="fas fa-flask"></i> <strong>Post Doc:</strong> Advanced research</li>
+                            <li><i class="fas fa-flask"></i> <strong>Fellowship Programs:</strong> Research funding</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-certificate"></i> Diploma & Certificate Courses</h3>
+                        <ul>
+                            <li><i class="fas fa-award"></i> <strong>PGDTE:</strong> Technical Education</li>
+                            <li><i class="fas fa-award"></i> <strong>PGDHE:</strong> Higher Education</li>
+                            <li><i class="fas fa-award"></i> <strong>PGDGM:</strong> Guidance & Counseling</li>
+                            <li><i class="fas fa-award"></i> <strong>PGDE:</strong> Educational Management</li>
+                            <li><i class="fas fa-award"></i> <strong>D.El.Ed:</strong> Elementary Education</li>
+                            <li><i class="fas fa-award"></i> <strong>Certificate in ICT:</strong> Digital teaching</li>
+                            <li><i class="fas fa-award"></i> <strong>TESOL/TEFL:</strong> English teaching</li>
+                            <li><i class="fas fa-award"></i> <strong>Montessori Training:</strong> Early education</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-globe"></i> International Programs</h3>
+                        <ul>
+                            <li><i class="fas fa-plane"></i> <strong>M.Ed USA:</strong> Top universities</li>
+                            <li><i class="fas fa-plane"></i> <strong>M.A. Education UK:</strong> 1-year programs</li>
+                            <li><i class="fas fa-plane"></i> <strong>Master of Teaching Canada:</strong> 2-year</li>
+                            <li><i class="fas fa-plane"></i> <strong>M.Ed Australia:</strong> Research focus</li>
+                            <li><i class="fas fa-plane"></i> <strong>Education Studies New Zealand:</strong> Practical</li>
+                            <li><i class="fas fa-plane"></i> <strong>Erasmus Mundus:</strong> European program</li>
+                            <li><i class="fas fa-plane"></i> <strong>Fulbright Program:</strong> US scholarship</li>
+                            <li><i class="fas fa-plane"></i> <strong>Commonwealth Scholarship:</strong> UK/Canada</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-university"></i> Top Universities for Higher Studies</h3>
+                        <ul>
+                            <li><i class="fas fa-star"></i> <strong>Delhi University:</strong> M.Ed program</li>
+                            <li><i class="fas fa-star"></i> <strong>Jamia Millia Islamia:</strong> Education faculty</li>
+                            <li><i class="fas fa-star"></i> <strong>Banaras Hindu University:</strong> Research</li>
+                            <li><i class="fas fa-star"></i> <strong>Aligarh Muslim University:</strong> M.Ed</li>
+                            <li><i class="fas fa-star"></i> <strong>TISS Mumbai:</strong> Social work</li>
+                            <li><i class="fas fa-star"></i> <strong>IGNOU:</strong> Distance M.Ed</li>
+                            <li><i class="fas fa-star"></i> <strong>University of Calcutta:</strong> M.A. Education</li>
+                            <li><i class="fas fa-star"></i> <strong>University of Mumbai:</strong> Research</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-chart-line"></i> Benefits of Higher Studies</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> <strong>Career Advancement:</strong> Higher positions</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Salary Increment:</strong> 30-50% increase</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Research Opportunities:</strong> Academic roles</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Specialization:</strong> Expert status</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>International Exposure:</strong> Global prospects</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Consulting Roles:</strong> Advisory positions</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Entrepreneurship:</strong> Education startups</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Policy Making:</strong> Government roles</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Program</th>
+                                <th>Duration</th>
+                                <th>Eligibility</th>
+                                <th>Career Scope</th>
+                                <th>Average Fee</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>M.Ed</td>
+                                <td>2 Years</td>
+                                <td>B.Ed with 50%</td>
+                                <td>Professor, Administrator</td>
+                                <td>₹20,000 - ₹1,00,000/year</td>
+                            </tr>
+                            <tr>
+                                <td>M.Phil Education</td>
+                                <td>1 Year</td>
+                                <td>M.Ed with 55%</td>
+                                <td>Research, Teaching</td>
+                                <td>₹30,000 - ₹1,50,000/year</td>
+                            </tr>
+                            <tr>
+                                <td>Ph.D Education</td>
+                                <td>3-5 Years</td>
+                                <td>M.Ed/M.Phil with 55%</td>
+                                <td>Professor, Researcher</td>
+                                <td>₹40,000 - ₹2,00,000/year</td>
+                            </tr>
+                            <tr>
+                                <td>PGDHE</td>
+                                <td>1 Year</td>
+                                <td>B.Ed with 50%</td>
+                                <td>Higher Education</td>
+                                <td>₹15,000 - ₹50,000/year</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-lightbulb"></i> Higher Studies Path Recommendations:</h4>
+                    <ul>
+                        <li><strong>For Teaching in Colleges:</strong> Pursue M.Ed followed by NET/JRF and Ph.D</li>
+                        <li><strong>For School Administration:</strong> M.Ed + MBA (Education Management)</li>
+                        <li><strong>For Educational Research:</strong> M.Phil/Ph.D in Education</li>
+                        <li><strong>For Special Education:</strong> M.Ed + Diploma in Special Education</li>
+                        <li><strong>For Educational Technology:</strong> M.Ed + Certificate in EdTech</li>
+                        <li><strong>For International Teaching:</strong> TESOL/TEFL + International M.Ed</li>
+                        <li><strong>For Curriculum Development:</strong> M.Ed + Diploma in Curriculum Design</li>
+                        <li><strong>For Educational Consulting:</strong> M.Ed + MBA + Work Experience</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="section" id="contact">
+            <div class="container">
+                <div class="cta-section">
+                    <div class="cta-content">
+                        <h2>Start Your Teaching Career Today!</h2>
+                        <p>Get expert guidance for B.Ed admission in top teacher training colleges. 100% placement assistance guaranteed.</p>
+                        <div class="btn-group">
+                            <a href="tel:+919876543210" class="btn btn-primary">
+                                <i class="fas fa-phone"></i>
+                                Call Now: +91 98765 43210
+                            </a>
+                            <a href="mailto:info@whitedavidacademy.com" class="btn btn-white">
+                                <i class="fas fa-envelope"></i>
+                                Email Us
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Whitedavid Academy</h3>
+                    <p>Leading education consultancy providing expert guidance for teacher training courses with 15+ years of experience and 5000+ successful admissions.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#what-is-bed">About B.Ed</a></li>
+                        <li><a href="#courses">Courses</a></li>
+                        <li><a href="#subjects">Subjects</a></li>
+                        <li><a href="#eligibility">Eligibility</a></li>
+                        <li><a href="#admission">Admission</a></li>
+                        <li><a href="#colleges">Colleges</a></li>
+                        <li><a href="#higher-studies">Higher Studies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Popular Exams</h3>
+                    <ul>
+                        <li><a href="#">DU B.Ed</a></li>
+                        <li><a href="#">IPU CET</a></li>
+                        <li><a href="#">UP B.Ed JEE</a></li>
+                        <li><a href="#">IGNOU B.Ed</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                    <p><i class="fas fa-envelope"></i> info@whitedavidacademy.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Connaught Place, New Delhi</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Whitedavid Academy. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Generate particles
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+
+            // Hide loading screen
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hide');
+            }, 1000);
+
+            // Quick Navigation Active State
+            const quickNavItems = document.querySelectorAll('.quick-nav-item');
+            const sections = document.querySelectorAll('section[id]');
+
+            function updateQuickNavActive() {
+                const scrollY = window.pageYOffset;
+                
+                sections.forEach(section => {
+                    const sectionHeight = section.offsetHeight;
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                        quickNavItems.forEach(item => {
+                            item.classList.remove('active');
+                            if (item.getAttribute('data-section') === sectionId) {
+                                item.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateQuickNavActive);
+
+            // Quick Navigation Smooth Scroll
+            quickNavItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('data-section');
+                    const targetSection = document.querySelector('#' + targetId);
+                    
+                    if (targetSection) {
+                        const offsetTop = targetSection.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+            
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                const spans = this.querySelectorAll('span');
+                spans.forEach((span, index) => {
+                    if (navLinks.classList.contains('active')) {
+                        if (index === 0) span.style.transform = 'rotate(45deg) translate(5px, 5px)';
+                        if (index === 1) span.style.opacity = '0';
+                        if (index === 2) span.style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                    } else {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    }
+                });
+            });
+
+            // Close mobile menu on link click
+            document.querySelectorAll('#navLinks a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    const spans = menuToggle.querySelectorAll('span');
+                    spans.forEach(span => {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    });
+                });
+            });
+
+            // Scroll progress bar
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const offsetTop = target.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            const animatedElements = document.querySelectorAll('.course-card, .info-card, .cta-section, .what-is-bed, .highlight-box');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(element);
+            });
+
+            // Form submission handler
+            document.getElementById('enrollForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    course: document.getElementById('course').value
+                };
+                
+                // Here you would normally send data to your server
+                console.log('Form submitted:', formData);
+                
+                // Show success message
+                const successMessage = document.createElement('div');
+                successMessage.className = 'success-message';
+                successMessage.innerHTML = `
+                    <i class="fas fa-check-circle"></i> 
+                    Thank you! We'll contact you soon.
+                `;
+                document.body.appendChild(successMessage);
+                
+                // Reset form
+                this.reset();
+                
+                // Remove message after 5 seconds
+                setTimeout(() => {
+                    successMessage.style.animation = 'slideOut 0.5s ease';
+                    setTimeout(() => {
+                        document.body.removeChild(successMessage);
+                    }, 500);
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>

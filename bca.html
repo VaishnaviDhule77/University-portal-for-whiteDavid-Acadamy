@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCA Course - Whitedavid Academy | Computer Applications</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00E0FF;
+            --primary-dark: #0AB4CC;
+            --secondary: #A855F7;
+            --accent: #2CE6C2;
+            --dark: #0F172A;
+            --darker: #0B0F2A;
+            --darkest: #070A1A;
+            --light: #13203A;
+            --lighter: #1A2E4A;
+            --text: #FFFFFF;
+            --text-dim: #94A3B8;
+            --border: rgba(148, 163, 184, 0.1);
+            --border-hover: rgba(148, 163, 184, 0.2);
+            --glow: rgba(0, 224, 255, 0.4);
+            --glow-secondary: rgba(168, 85, 247, 0.4);
+            --accent-orange: #FF6A3D;
+            --accent-orange-light: #FF8A50;
+            --accent-blue: #3B82F6;
+            --accent-blue-light: #60A5FA;
+            --accent-purple: #A855F7;
+            --accent-pink: #EC4899;
+            --accent-green: #22C55E;
+            --accent-green-light: #4ADE80;
+            --accent-amber: #F59E0B;
+            --accent-amber-light: #FBBF24;
+            --accent-teal: #14B8A6;
+            --accent-teal-light: #2DD4BF;
+            --accent-rose: #F43F5E;
+            --accent-rose-light: #FB7185;
+            --gradient: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--darkest), var(--darker), #111A3A);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 224, 255, 0.06) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(44, 230, 194, 0.04) 0%, transparent 50%);
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darkest);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(0, 224, 255, 0.15);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .loading-text {
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--secondary));
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.2rem;
+            font-weight: 600;
+            animation: gradient-animation 3s ease infinite;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(11, 15, 42, 0.95), rgba(7, 10, 26, 0.95));
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            height: 70px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            will-change: transform;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--primary);
+            font-size: 1.8rem;
+            animation: pulse 2s ease infinite;
+            will-change: transform;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 5px 10px;
+            font-size: 1rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            z-index: 1002;
+        }
+
+        .menu-toggle:hover {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .quick-nav {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 30px;
+            padding: 20px 10px;
+            z-index: 999;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .quick-nav a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            color: var(--text-dim);
+            text-decoration: none;
+            margin: 10px 0;
+            border-radius: 50%;
+            transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-size: 1.1rem;
+        }
+
+        .quick-nav a::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.3s ease;
+            z-index: 0;
+        }
+
+        .quick-nav a i {
+            position: relative;
+            z-index: 2 !important;
+        }
+
+        .quick-nav a:hover {
+            color: white;
+            transform: scale(1.2) rotate(5deg);
+            box-shadow: 0 5px 15px var(--glow);
+        }
+
+        .quick-nav a:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .quick-nav a.active {
+            color: var(--darkest);
+            background: var(--gradient);
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        .hero {
+            padding: 140px 5% 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 224, 255, 0.08) 0%, transparent 70%);
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--secondary), var(--primary));
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 3s ease infinite;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-dim);
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.6s;
+        }
+
+        .btn:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 106, 61, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 106, 61, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(148, 163, 184, 0.1);
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--glow);
+        }
+
+        .btn-white {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-dim);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .btn-white:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--glow);
+        }
+
+        .section {
+            padding: 80px 5%;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 100px;
+            height: 3px;
+            background: var(--gradient);
+            transform: translateX(-50%) scaleX(0.667);
+            transform-origin: center;
+            animation: expand 2s ease infinite;
+            will-change: transform;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-dim);
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(26, 46, 74, 0.85));
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .info-card:hover::before {
+            opacity: 1;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px var(--glow);
+            border-color: var(--border-hover);
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-card h3 i {
+            font-size: 1.2rem;
+            animation: bounce 2s ease infinite;
+            will-change: transform;
+        }
+
+        .info-card ul {
+            list-style: none;
+        }
+
+        .info-card li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-dim);
+            transition: padding-left 0.3s ease, color 0.3s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .info-card li:last-child {
+            border-bottom: none;
+        }
+
+        .info-card li:hover {
+            padding-left: 10px;
+        }
+
+        .info-card li i {
+            color: var(--accent);
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .info-card li strong {
+            color: var(--text);
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .column-content {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(26, 46, 74, 0.85));
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        .column-content:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--glow);
+            border-color: var(--border-hover);
+        }
+
+        .column-content h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .column-content h3 i {
+            font-size: 1.1rem;
+        }
+
+        .column-content ul {
+            list-style: none;
+        }
+
+        .column-content li {
+            padding: 8px 0;
+            color: var(--text-dim);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .column-content li:hover {
+            color: var(--text);
+            transform: translateX(5px);
+        }
+
+        .column-content li i {
+            color: var(--secondary);
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .column-content li strong {
+            color: var(--text);
+        }
+
+        .responsive-table {
+            overflow-x: auto;
+            margin-top: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(26, 46, 74, 0.85));
+            min-width: 600px;
+            border: 1px solid var(--border);
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--dark), var(--lighter));
+            color: var(--primary);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            border-bottom: 1px solid var(--border-hover);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-dim);
+            transition: color 0.3s ease, background 0.3s ease;
+        }
+
+        tr:hover td {
+            color: var(--primary);
+            background: rgba(0, 224, 255, 0.04);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .cta-section {
+            padding: 80px 5%;
+            background: linear-gradient(135deg,
+                rgba(255, 106, 61, 0.06) 0%,
+                rgba(255, 138, 80, 0.04) 50%,
+                rgba(0, 224, 255, 0.03) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid rgba(255, 106, 61, 0.15);
+            border-bottom: 1px solid rgba(255, 106, 61, 0.15);
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 106, 61, 0.06) 0%, transparent 70%);
+            opacity: 0.5;
+        }
+
+        .cta-section .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin-bottom: 30px;
+        }
+
+        footer {
+            background: linear-gradient(135deg, var(--dark), var(--darker));
+            padding: 50px 5% 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p,
+        .footer-section li {
+            color: var(--text-dim);
+            margin-bottom: 10px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .footer-section li:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-section i {
+            color: var(--accent);
+            margin-right: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+        }
+
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            contain: strict;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 50%;
+            will-change: transform, opacity;
+            animation: float 18s infinite linear;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darkest);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--accent));
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes expand {
+            0%, 100% { transform: translateX(-50%) scaleX(0.667); }
+            50% { transform: translateX(-50%) scaleX(1); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Category-Based Multi-Accent System */
+
+        #what-is-bca .info-card:hover {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 224, 255, 0.15);
+        }
+        #what-is-bca .info-card::before {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        #eligibility .section-title {
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #eligibility .section-title::after {
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-orange-light));
+        }
+        #eligibility .column-content h3 {
+            color: var(--accent-orange);
+        }
+        #eligibility .column-content h3 i {
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #eligibility .column-content li i {
+            color: var(--accent-orange);
+        }
+        #eligibility .column-content li:hover {
+            color: var(--accent-orange);
+        }
+        #eligibility .column-content:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(255, 106, 61, 0.15);
+        }
+
+        #fees .section-title {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #fees .section-title::after {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-blue-light));
+        }
+        #fees th {
+            color: var(--accent-blue);
+        }
+        #fees tr:hover td {
+            color: var(--accent-blue);
+        }
+        #fees tr:hover {
+            background: rgba(59, 130, 246, 0.04);
+        }
+
+        #career .section-title {
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #career .section-title::after {
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-green-light));
+        }
+        #career .column-content h3 {
+            color: var(--accent-green);
+        }
+        #career .column-content h3 i {
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #career .column-content li i {
+            color: var(--accent-green);
+        }
+        #career .column-content li:hover {
+            color: var(--accent-green);
+        }
+        #career .column-content:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(34, 197, 94, 0.15);
+        }
+        #career th {
+            color: var(--accent-green);
+        }
+        #career tr:hover td {
+            color: var(--accent-green);
+        }
+        #career tr:hover {
+            background: rgba(34, 197, 94, 0.04);
+        }
+
+        #admission .section-title {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #admission .section-title::after {
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
+        }
+        #admission .info-card h3 {
+            color: var(--accent-purple);
+        }
+        #admission .info-card h3 i {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #admission .info-card li i {
+            color: var(--accent-pink);
+        }
+        #admission .info-card li:hover {
+            color: var(--accent-purple);
+        }
+        #admission .info-card:hover {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(168, 85, 247, 0.15);
+        }
+        #admission .info-card::before {
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
+        }
+
+        #universities .section-title {
+            background: linear-gradient(135deg, var(--accent-amber), var(--accent-amber-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #universities .section-title::after {
+            background: linear-gradient(90deg, var(--accent-amber), var(--accent-amber-light));
+        }
+        #universities .info-card h3 {
+            color: var(--accent-amber);
+        }
+        #universities .info-card h3 i {
+            background: linear-gradient(135deg, var(--accent-amber), var(--accent-amber-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #universities .info-card li i {
+            color: var(--accent-amber);
+        }
+        #universities .info-card li:hover {
+            color: var(--accent-amber);
+        }
+        #universities .info-card:hover {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(245, 158, 11, 0.15);
+        }
+        #universities .info-card::before {
+            background: linear-gradient(90deg, var(--accent-amber), var(--accent-amber-light));
+        }
+
+        #entrance .section-title {
+            background: linear-gradient(135deg, var(--accent-teal), var(--accent-teal-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #entrance .section-title::after {
+            background: linear-gradient(90deg, var(--accent-teal), var(--accent-teal-light));
+        }
+        #entrance th {
+            color: var(--accent-teal);
+        }
+        #entrance tr:hover td {
+            color: var(--accent-teal);
+        }
+        #entrance tr:hover {
+            background: rgba(20, 184, 166, 0.04);
+        }
+
+        #scholarships .section-title {
+            background: linear-gradient(135deg, var(--accent-rose), var(--accent-rose-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #scholarships .section-title::after {
+            background: linear-gradient(90deg, var(--accent-rose), var(--accent-rose-light));
+        }
+        #scholarships .info-card h3 {
+            color: var(--accent-rose);
+        }
+        #scholarships .info-card h3 i {
+            background: linear-gradient(135deg, var(--accent-rose), var(--accent-rose-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #scholarships .info-card li i {
+            color: var(--accent-rose);
+        }
+        #scholarships .info-card li:hover {
+            color: var(--accent-rose);
+        }
+        #scholarships .info-card:hover {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(244, 63, 94, 0.15);
+        }
+        #scholarships .info-card::before {
+            background: linear-gradient(90deg, var(--accent-rose), var(--accent-rose-light));
+        }
+
+        #contact .info-card:hover {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 224, 255, 0.15);
+        }
+        #contact .info-card::before {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(11, 15, 42, 0.98);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                padding: 20px;
+                transition: right 0.4s ease-in-out;
+                box-shadow: -5px 0 20px rgba(0,0,0,0.6);
+                border-left: 1px solid var(--border);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero {
+                padding-top: 120px;
+                padding-bottom: 60px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+                margin-bottom: 15px;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 320px;
+            }
+
+            .quick-nav {
+                right: 10px;
+                top: 50%;
+                padding: 15px 8px;
+                background: rgba(11, 15, 42, 0.9);
+            }
+
+            .quick-nav a {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+
+            .section {
+                padding: 50px 5%;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+                margin-bottom: 30px;
+            }
+
+            .info-grid,
+            .two-column,
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+            .logo i {
+                font-size: 1.4rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .section {
+                padding: 40px 4%;
+            }
+
+            .info-card,
+            .column-content {
+                padding: 20px;
+            }
+
+            .quick-nav {
+                top: auto;
+                bottom: 20px;
+                right: 10px;
+                transform: none;
+                padding: 10px 8px;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading BCA Course...</div>
+        </div>
+    </div>
+
+    <div class="bg-animation"></div>
+
+    <div id="particles"></div>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                Whitedavid Academy
+            </a>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#courses">Courses</a></li>
+                <li><a href="index.html#universities">Universities</a></li>
+                <li><a href="index.html#support">Support</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="quick-nav">
+        <a href="#what-is-bca" title="What is BCA"><i class="fas fa-info-circle"></i></a>
+        <a href="#eligibility" title="Eligibility"><i class="fas fa-check"></i></a>
+        <a href="#fees" title="Fees"><i class="fas fa-wallet"></i></a>
+        <a href="#career" title="Career"><i class="fas fa-briefcase"></i></a>
+        <a href="#admission" title="Admission"><i class="fas fa-user-plus"></i></a>
+        <a href="#contact" title="Contact"><i class="fas fa-phone"></i></a>
+    </div>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>BCA - Bachelor of Computer Applications</h1>
+                <p>Launch Your Career in Computer Science & IT Industry</p>
+                <div class="btn-group">
+                    <a href="#eligibility" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> Check Eligibility
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <i class="fas fa-phone-alt"></i> Talk to Counselor
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="what-is-bca">
+            <div class="container">
+                <h2 class="section-title">What is BCA?</h2>
+                <p class="section-subtitle">Understanding the Bachelor of Computer Applications Program</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-book"></i> Program Overview</h3>
+                        <ul>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Duration:</strong> 3 Years (6 Semesters)</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Level:</strong> Undergraduate Degree</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Field:</strong> Computer Applications</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Mode:</strong> Regular/Distance/Online</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Aim:</strong> IT & Software Development</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-bullseye"></i> Course Objectives</h3>
+                        <ul>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Programming:</strong> Learn coding languages</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Software:</strong> Application development</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Database:</strong> Data management skills</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Web Tech:</strong> Internet technologies</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Networking:</strong> Computer networks</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-cogs"></i> Key Skills Developed</h3>
+                        <ul>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Problem Solving:</strong> Logical thinking</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Coding:</strong> Programming skills</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Database:</strong> SQL & NoSQL</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Web Dev:</strong> Frontend & Backend</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Team Work:</strong> Collaboration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="eligibility">
+            <div class="container">
+                <h2 class="section-title">BCA Eligibility Criteria</h2>
+                <p class="section-subtitle">Requirements for BCA Admission</p>
+                
+                <div class="two-column">
+                    <div class="column-content">
+                        <h3><i class="fas fa-user-graduate"></i> Educational Qualification</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> <strong>10+2 Pass:</strong> Minimum 50% marks</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Stream:</strong> Any stream (PCM/Commerce/Arts)</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Math:</strong> Math in 10+2 preferred</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Age:</strong> No age limit</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Boards:</strong> Recognized board</li>
+                        </ul>
+                    </div>
+                    <div class="column-content">
+                        <h3><i class="fas fa-list-alt"></i> Additional Requirements</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> <strong>Entrance:</strong> University exam (if any)</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>English:</strong> Basic knowledge required</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Computer:</strong> Basic computer skills</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Interview:</strong> Personal interview (some colleges)</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Documents:</strong> Required certificates</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="fees">
+            <div class="container">
+                <h2 class="section-title">BCA Fees Structure</h2>
+                <p class="section-subtitle">Tuition Fees for BCA Program</p>
+                
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>College Type</th>
+                                <th>Annual Fees (INR)</th>
+                                <th>Total 3 Years (INR)</th>
+                                <th>Additional Costs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Government College</td>
+                                <td>10,000 - 30,000</td>
+                                <td>30,000 - 90,000</td>
+                                <td>5,000 - 10,000</td>
+                            </tr>
+                            <tr>
+                                <td>Private University</td>
+                                <td>50,000 - 1,50,000</td>
+                                <td>1,50,000 - 4,50,000</td>
+                                <td>20,000 - 50,000</td>
+                            </tr>
+                            <tr>
+                                <td>Deemed University</td>
+                                <td>1,00,000 - 2,50,000</td>
+                                <td>3,00,000 - 7,50,000</td>
+                                <td>30,000 - 70,000</td>
+                            </tr>
+                            <tr>
+                                <td>Top Private College</td>
+                                <td>2,00,000 - 4,00,000</td>
+                                <td>6,00,000 - 12,00,000</td>
+                                <td>50,000 - 1,00,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="career">
+            <div class="container">
+                <h2 class="section-title">BCA Career Scope & Opportunities</h2>
+                <p class="section-subtitle">Career Paths After BCA</p>
+                
+                <div class="two-column">
+                    <div class="column-content">
+                        <h3><i class="fas fa-briefcase"></i> Job Roles</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> <strong>Software Developer:</strong> Application development</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Web Developer:</strong> Website creation</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Database Admin:</strong> Data management</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>System Analyst:</strong> IT consulting</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Network Engineer:</strong> Network management</li>
+                        </ul>
+                    </div>
+                    <div class="column-content">
+                        <h3><i class="fas fa-industry"></i> Top Industries</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> <strong>IT Services:</strong> TCS, Infosys, Wipro</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Product Companies:</strong> Google, Microsoft</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Startups:</strong> Tech startups</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Banking:</strong> IT departments</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>E-commerce:</strong> Amazon, Flipkart</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Experience Level</th>
+                                <th>Job Roles</th>
+                                <th>Salary Range (LPA)</th>
+                                <th>Growth Path</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Entry Level (0-2 yrs)</td>
+                                <td>Junior Developer, Trainee</td>
+                                <td>2.5 - 5 LPA</td>
+                                <td>Software Engineer</td>
+                            </tr>
+                            <tr>
+                                <td>Mid Level (2-5 yrs)</td>
+                                <td>Software Engineer, Senior Developer</td>
+                                <td>5 - 12 LPA</td>
+                                <td>Team Lead</td>
+                            </tr>
+                            <tr>
+                                <td>Senior Level (5-10 yrs)</td>
+                                <td>Team Lead, Tech Lead</td>
+                                <td>12 - 25 LPA</td>
+                                <td>Manager</td>
+                            </tr>
+                            <tr>
+                                <td>Leadership (10+ yrs)</td>
+                                <td>Manager, Architect, Director</td>
+                                <td>25 - 80+ LPA</td>
+                                <td>CTO/VP</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="admission">
+            <div class="container">
+                <h2 class="section-title">BCA Admission Process</h2>
+                <p class="section-subtitle">Step-by-Step Guide to BCA Admission</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-clipboard-list"></i> Application Process</h3>
+                        <ul>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Registration:</strong> Online/Offline forms</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Documents:</strong> 10th, 12th mark sheets</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Photos:</strong> Passport size photos</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>ID Proof:</strong> Aadhar, PAN card</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Fee:</strong> Application fee payment</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-file-alt"></i> Entrance Exams</h3>
+                        <ul>
+                            <li><i class="fas fa-chevron-right"></i> <strong>IPU CET:</strong> GGSIPU Delhi</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>SUAT:</strong> Sharda University</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>BITSAT:</strong> BITS Pilani</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Christ University:</strong> Own exam</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>LPUNEST:</strong> LPU University</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-users"></i> Selection Process</h3>
+                        <ul>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Merit:</strong> 12th marks (40-60%)</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Entrance:</strong> Exam scores (30-50%)</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>GD:</strong> Group Discussion (10-20%)</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>PI:</strong> Personal Interview (10-20%)</li>
+                            <li><i class="fas fa-chevron-right"></i> <strong>Final:</strong> Composite score</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="universities">
+            <div class="container">
+                <h2 class="section-title">Top BCA Universities in India</h2>
+                <p class="section-subtitle">Best Institutions for BCA Programs</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-star"></i> Tier 1 Universities</h3>
+                        <ul>
+                            <li><i class="fas fa-university"></i> <strong>SICSR Pune:</strong> Symbiosis</li>
+                            <li><i class="fas fa-university"></i> <strong>Christ University:</strong> Bangalore</li>
+                            <li><i class="fas fa-university"></i> <strong>Lovely Professional:</strong> Punjab</li>
+                            <li><i class="fas fa-university"></i> <strong>Amity University:</strong> Noida</li>
+                            <li><i class="fas fa-university"></i> <strong>Sharda University:</strong> Greater Noida</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-star"></i> Tier 2 Universities</h3>
+                        <ul>
+                            <li><i class="fas fa-university"></i> <strong>IP University:</strong> Delhi</li>
+                            <li><i class="fas fa-university"></i> <strong>BVP Pune:</strong> BCA</li>
+                            <li><i class="fas fa-university"></i> <strong>Chandigarh University:</strong> BCA</li>
+                            <li><i class="fas fa-university"></i> <strong>Jain University:</strong> Bangalore</li>
+                            <li><i class="fas fa-university"></i> <strong>VIT University:</strong> Vellore</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-star"></i> State Universities</h3>
+                        <ul>
+                            <li><i class="fas fa-university"></i> <strong>Mumbai University:</strong> BCA</li>
+                            <li><i class="fas fa-university"></i> <strong>Pune University:</strong> BCA</li>
+                            <li><i class="fas fa-university"></i> <strong>Bangalore University:</strong> BCA</li>
+                            <li><i class="fas fa-university"></i> <strong>Kolkata University:</strong> BCA</li>
+                            <li><i class="fas fa-university"></i> <strong>Chennai University:</strong> BCA</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="entrance">
+            <div class="container">
+                <h2 class="section-title">BCA Entrance Exams</h2>
+                <p class="section-subtitle">Complete Guide to BCA Entrance Tests</p>
+                
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Exam Name</th>
+                                <th>Conducting Body</th>
+                                <th>Exam Date</th>
+                                <th>Mode</th>
+                                <th>Difficulty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>IPU CET</td>
+                                <td>GGSIPU Delhi</td>
+                                <td>May</td>
+                                <td>Online</td>
+                                <td>Moderate</td>
+                            </tr>
+                            <tr>
+                                <td>SUAT</td>
+                                <td>Sharda University</td>
+                                <td>April-May</td>
+                                <td>Online</td>
+                                <td>Moderate</td>
+                            </tr>
+                            <tr>
+                                <td>BITSAT</td>
+                                <td>BITS Pilani</td>
+                                <td>May-June</td>
+                                <td>Online</td>
+                                <td>Difficult</td>
+                            </tr>
+                            <tr>
+                                <td>Christ University</td>
+                                <td>Christ University</td>
+                                <td>April</td>
+                                <td>Online</td>
+                                <td>Moderate</td>
+                            </tr>
+                            <tr>
+                                <td>LPUNEST</td>
+                                <td>LPU University</td>
+                                <td>January-April</td>
+                                <td>Online</td>
+                                <td>Moderate</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="scholarships">
+            <div class="container">
+                <h2 class="section-title">BCA Scholarships</h2>
+                <p class="section-subtitle">Financial Aid for BCA Students</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-rupee-sign"></i> Merit-Based</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> <strong>Academic Excellence:</strong> 85%+ in 12th</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Entrance Rank:</strong> Top 500 ranks</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Scholarship Amount:</strong> 20-100% fee waiver</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Renewal:</strong> Based on performance</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-hand-holding-heart"></i> Need-Based</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> <strong>Family Income:</strong> Below ₹6 Lakhs</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Documents:</strong> Income certificate</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Coverage:</strong> 40-100% tuition fee</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Renewal:</strong> Annual verification</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-flag"></i> Government Schemes</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> <strong>NSP:</strong> National Scholarship Portal</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Central Sector:</strong> Technical Education</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>State Schemes:</strong> Varies by state</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Minority:</strong> Special scholarships</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="contact">
+            <div class="container">
+                <h2 class="section-title">Get in Touch</h2>
+                <p class="section-subtitle">Contact Whitedavid Academy for BCA Admission Guidance</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-phone"></i> Contact Numbers</h3>
+                        <ul>
+                            <li><i class="fas fa-phone-alt"></i> <strong>Landline:</strong> +91-11-23456789</li>
+                            <li><i class="fas fa-mobile-alt"></i> <strong>Mobile:</strong> +91-9876543210</li>
+                            <li><i class="fas fa-whatsapp"></i> <strong>WhatsApp:</strong> +91-9876543210</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-envelope"></i> Email Addresses</h3>
+                        <ul>
+                            <li><i class="fas fa-envelope"></i> <strong>General:</strong> info@whitedavidacademy.com</li>
+                            <li><i class="fas fa-envelope"></i> <strong>Admissions:</strong> admissions@whitedavidacademy.com</li>
+                            <li><i class="fas fa-envelope"></i> <strong>Support:</strong> support@whitedavidacademy.com</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-map-marker-alt"></i> Office Address</h3>
+                        <ul>
+                            <li><i class="fas fa-building"></i> <strong>Head Office:</strong> Delhi</li>
+                            <li><i class="fas fa-clock"></i> <strong>Working Hours:</strong> 9 AM - 7 PM</li>
+                            <li><i class="fas fa-calendar"></i> <strong>Days:</strong> Monday - Saturday</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to Start Your BCA Journey?</h2>
+                <p>Get expert guidance for BCA admission in top computer science colleges across India</p>
+                <div class="btn-group">
+                    <a href="tel:+919876543210" class="btn btn-primary">
+                        <i class="fas fa-phone"></i> Call Now
+                    </a>
+                    <a href="mailto:info@whitedavidacademy.com" class="btn btn-white">
+                        <i class="fas fa-envelope"></i> Email Us
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Whitedavid Academy</h3>
+                <p>Your trusted partner for computer science education guidance and admission assistance</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#courses">All Courses</a></li>
+                    <li><a href="index.html#universities">Universities</a></li>
+                    <li><a href="index.html#support">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>BCA Information</h3>
+                <ul>
+                    <li><a href="#what-is-bca">What is BCA</a></li>
+                    <li><a href="#eligibility">Eligibility</a></li>
+                    <li><a href="#fees">Fees Structure</a></li>
+                    <li><a href="#career">Career Scope</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-phone"></i> +91 9876543210</p>
+                <p><i class="fas fa-envelope"></i> info@whitedavidacademy.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> Delhi, India</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Whitedavid Academy. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Loading screen
+            setTimeout(function() {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 1000);
+
+            // Create particles — reduced for performance
+            var particlesContainer = document.getElementById('particles');
+            var particleCount = 20;
+            for (var i = 0; i < particleCount; i++) {
+                var particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = (Math.random() * 18) + 's';
+                particle.style.animationDuration = (18 + Math.random() * 12) + 's';
+                particlesContainer.appendChild(particle);
+            }
+
+            // Cache DOM references
+            var menuToggle = document.getElementById('menuToggle');
+            var navLinks = document.getElementById('navLinks');
+            var menuIcon = menuToggle.querySelector('i');
+            var quickNavLinks = document.querySelectorAll('.quick-nav a');
+            var sections = document.querySelectorAll('section[id]');
+
+            // Mobile menu toggle
+            menuToggle.addEventListener('click', function() {
+                var isActive = navLinks.classList.toggle('active');
+                menuIcon.classList.toggle('fa-bars', !isActive);
+                menuIcon.classList.toggle('fa-times', isActive);
+                document.body.style.overflow = isActive ? 'hidden' : 'auto';
+            });
+
+            // Close mobile menu on link click
+            var navLinkAnchors = document.querySelectorAll('#navLinks a');
+            for (var i = 0; i < navLinkAnchors.length; i++) {
+                navLinkAnchors[i].addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    menuIcon.classList.add('fa-bars');
+                    menuIcon.classList.remove('fa-times');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+
+            // Quick navigation active state
+            function updateActiveNav() {
+                var scrollPosition = window.scrollY || document.documentElement.scrollTop;
+                var current = '';
+
+                for (var i = 0; i < sections.length; i++) {
+                    var section = sections[i];
+                    if (scrollPosition >= (section.offsetTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                }
+
+                for (var j = 0; j < quickNavLinks.length; j++) {
+                    var link = quickNavLinks[j];
+                    var hrefId = link.getAttribute('href').slice(1);
+                    if (hrefId === current) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                }
+            }
+
+            // Single rAF scroll loop — replaces separate listeners
+            var ticking = false;
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    requestAnimationFrame(function() {
+                        updateActiveNav();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+
+            // Smooth scrolling for anchor links
+            var allAnchors = document.querySelectorAll('a[href^="#"]');
+            for (var i = 0; i < allAnchors.length; i++) {
+                allAnchors[i].addEventListener('click', function(e) {
+                    var href = this.getAttribute('href');
+                    if (href.length > 1) {
+                        var target = document.querySelector(href);
+                        if (target) {
+                            e.preventDefault();
+                            window.scrollTo({
+                                top: target.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            }
+
+            // Intersection Observer for fade-in animations
+            var animatedElements = document.querySelectorAll('.info-card, .column-content');
+            for (var i = 0; i < animatedElements.length; i++) {
+                animatedElements[i].style.opacity = '0';
+                animatedElements[i].style.transform = 'translateY(30px)';
+                animatedElements[i].style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                for (var i = 0; i < entries.length; i++) {
+                    if (entries[i].isIntersecting) {
+                        entries[i].target.style.opacity = '1';
+                        entries[i].target.style.transform = 'translateY(0)';
+                        observer.unobserve(entries[i].target);
+                    }
+                }
+            }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+            for (var i = 0; i < animatedElements.length; i++) {
+                observer.observe(animatedElements[i]);
+            }
+
+            // Initialize active nav on load
+            updateActiveNav();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,3037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VGU Online Education - Your Future Starts Here</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00E0FF;
+            --primary-dark: #2CE6C2;
+            --secondary: #FF6A3D;
+            --accent: #FF8A50;
+            --neon-cyan: #00E0FF;
+            --neon-teal: #2CE6C2;
+            --neon-purple: #A855F7;
+            --neon-pink: #EC4899;
+            --neon-blue: #3B82F6;
+            --neon-green: #22C55E;
+            --neon-amber: #F59E0B;
+            --dark: #0B0F2A;
+            --darker: #080C1E;
+            --darkest: #050810;
+            --light: #0F172A;
+            --lighter: #13203A;
+            --elevated: #1A2E4A;
+            --text: #FFFFFF;
+            --text-dim: #B0B8D1;
+            --text-muted: #94A3B8;
+            --border: rgba(148,163,184,0.1);
+            --border-light: rgba(148,163,184,0.15);
+            --glow: rgba(0, 224, 255, 0.3);
+            --glow-secondary: rgba(255, 106, 61, 0.3);
+            --glow-cyan: rgba(0, 224, 255, 0.5);
+            --glow-orange: rgba(255, 106, 61, 0.5);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--darkest);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darkest);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--neon-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+            backface-visibility: hidden;
+        }
+
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple), var(--secondary));
+            z-index: 1000;
+            will-change: width;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(11, 15, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(8, 12, 30, 0.98);
+            box-shadow: 0 5px 20px var(--glow);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--neon-cyan);
+            text-decoration: none;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--glow-cyan);
+        }
+
+        .quick-nav {
+            position: fixed;
+            right: 20px;
+            top: 60%;
+            transform: translateY(-50%);
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 20px 10px;
+            z-index: 999;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .quick-nav-item {
+            display: block;
+            width: 50px;
+            height: 50px;
+            margin: 10px 0;
+            border-radius: 50%;
+            background: var(--light);
+            border: 2px solid var(--border);
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 46px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .quick-nav-item:hover {
+            background: var(--neon-cyan);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--glow-cyan);
+        }
+
+        .quick-nav-item.active {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            color: white;
+            box-shadow: 0 0 20px var(--glow-cyan);
+        }
+
+        .quick-nav-item .tooltip {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--light);
+            color: var(--text);
+            padding: 5px 10px;
+            border-radius: 5px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .quick-nav-item:hover .tooltip {
+            opacity: 1;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 5% 50px;
+            position: relative;
+            background: linear-gradient(135deg, #0B0F2A 0%, #111A3A 50%, #1A2B5C 100%);
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            box-shadow: 0 5px 20px var(--glow-orange);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--glow-orange);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-dim);
+            border: 2px solid var(--border-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--glass);
+            color: var(--neon-cyan);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 5px 20px var(--glow);
+        }
+
+        .btn-white {
+            background: var(--text);
+            color: var(--dark);
+        }
+
+        .btn-white:hover {
+            background: var(--neon-cyan);
+            color: var(--dark);
+            box-shadow: 0 5px 20px var(--glow-cyan);
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 224, 255, 0.2);
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* ==============================================
+           ENHANCED STAT CARDS — All 14 Features
+           ============================================== */
+        .stat-card {
+            /* 1. Glassmorphism + 2. Gradient Background */
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.04) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            /* 5. Rounded Corners */
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            /* 11. Hover base */
+            transition: opacity 0.6s ease,
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        border-color 0.4s ease,
+                        box-shadow 0.4s ease,
+                        background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 4. Top Gradient Highlight Line */
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--neon-cyan) 30%, var(--neon-purple) 70%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Bottom subtle line */
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 15%;
+            right: 15%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease 0.05s;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .stat-card:hover::before { opacity: 1; }
+        .stat-card:hover::after { opacity: 0.4; }
+
+        /* 11. Hover + 3. Neon Glow + 12. Shadow Elevation */
+        .stat-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.06) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            border-color: rgba(0, 224, 255, 0.3);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 25px rgba(0, 224, 255, 0.15),
+                0 0 50px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        /* 8. Typography Hierarchy + 3. Text Glow */
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--neon-cyan);
+            margin-bottom: 0.5rem;
+            transition: text-shadow 0.4s ease;
+        }
+
+        .stat-card:hover .stat-number {
+            text-shadow: 0 0 15px rgba(0, 224, 255, 0.4);
+        }
+
+        /* 9. Color Contrast */
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .stat-card:hover .stat-label {
+            color: var(--text-dim);
+        }
+
+        .section {
+            padding: 80px 5%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* ==============================================
+           ENHANCED INFO CARDS — All 14 Features
+           ============================================== */
+        .info-card {
+            /* 1. Glassmorphism + 2. Gradient Background */
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.04) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            /* 5. Rounded Corners */
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            /* 11. Hover base */
+            transition: opacity 0.6s ease,
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        border-color 0.4s ease,
+                        box-shadow 0.4s ease,
+                        background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 4. Top Gradient Highlight Line */
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Bottom subtle line */
+        .info-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease 0.05s;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .info-card:hover::before { opacity: 1; }
+        .info-card:hover::after { opacity: 0.4; }
+
+        /* 11. Hover + 3. Neon Glow + 12. Shadow Elevation */
+        .info-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.06) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            border-color: rgba(0, 224, 255, 0.3);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 25px rgba(0, 224, 255, 0.15),
+                0 0 50px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        /* 6. Flexbox + 8. Typography Hierarchy */
+        .info-card h3 {
+            color: var(--neon-cyan);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            transition: text-shadow 0.4s ease;
+        }
+
+        .info-card h3 i {
+            margin-right: 10px;
+        }
+
+        /* 3. Title Glow on hover */
+        .info-card:hover h3 {
+            text-shadow: 0 0 15px rgba(0, 224, 255, 0.35);
+        }
+
+        /* 7. Icon-Based List */
+        .info-card ul {
+            list-style: none;
+        }
+
+        .info-card ul li {
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease, transform 0.25s ease;
+        }
+
+        .info-card ul li i {
+            color: var(--neon-teal);
+            margin-right: 10px;
+            flex-shrink: 0;
+            transition: text-shadow 0.3s ease, transform 0.25s ease;
+        }
+
+        /* 9. Text Highlight on hover */
+        .info-card:hover ul li {
+            color: var(--text-dim);
+        }
+
+        .info-card:hover ul li i {
+            text-shadow: 0 0 10px rgba(44, 230, 194, 0.4);
+        }
+
+        /* List item microinteraction */
+        .info-card ul li:hover {
+            transform: translateX(5px);
+            color: var(--text);
+        }
+
+        .info-card ul li:hover i {
+            transform: scale(1.15);
+        }
+
+        /* 9. Paragraph highlight */
+        .info-card p {
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+        }
+
+        .info-card:hover p {
+            color: var(--text-dim);
+        }
+
+        /* ==============================================
+           ENHANCED CTA SECTION — All 14 Features
+           ============================================== */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.08), rgba(168, 85, 247, 0.08));
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 3rem 0;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+            transition: opacity 0.6s ease,
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.4s ease;
+        }
+
+        /* Existing pulse animation — kept as-is */
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 224, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .cta-section.visible::before {
+            opacity: 1;
+            animation: pulse-bg 4s ease infinite;
+        }
+
+        /* 4. Bottom accent line — added via ::after */
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0, 224, 255, 0.4), rgba(168, 85, 247, 0.4), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* 11. Hover + 12. Elevation */
+        .cta-section:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 12px 40px rgba(0, 224, 255, 0.2),
+                0 0 50px rgba(168, 85, 247, 0.15);
+        }
+
+        .cta-section:hover::after {
+            opacity: 1;
+        }
+
+        .cta-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--neon-cyan);
+            position: relative;
+            z-index: 1;
+            transition: text-shadow 0.4s ease;
+        }
+
+        /* 3. Title Glow on hover */
+        .cta-section:hover .cta-content h2 {
+            text-shadow: 0 0 18px rgba(0, 224, 255, 0.35);
+        }
+
+        .cta-content p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        /* 9. Subtle text highlight */
+        .cta-section:hover .cta-content p {
+            color: var(--text-dim);
+        }
+
+        .cta-section .btn-group {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ==============================================
+           ENHANCED PLATFORM CARDS — All 14 Features
+           ============================================== */
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .platform-card {
+            /* 1. Glassmorphism + 2. Gradient Background */
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.04) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: opacity 0.6s ease,
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        border-color 0.4s ease,
+                        box-shadow 0.4s ease,
+                        background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 4. Top Gradient Highlight Line */
+        .platform-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--neon-cyan) 30%, var(--neon-teal) 70%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .platform-card:hover::before { opacity: 1; }
+
+        /* 11. Hover + 3. Neon Glow + 12. Shadow Elevation */
+        .platform-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.06) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            border-color: rgba(0, 224, 255, 0.3);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 25px rgba(0, 224, 255, 0.15),
+                0 0 50px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .platform-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-teal));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .platform-card:hover .platform-icon {
+            transform: scale(1.08);
+            box-shadow: 0 0 25px rgba(0, 224, 255, 0.3);
+        }
+
+        /* 8. Typography Hierarchy */
+        .platform-card h4 {
+            color: var(--neon-cyan);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            transition: text-shadow 0.4s ease;
+        }
+
+        /* 3. Title Glow on hover */
+        .platform-card:hover h4 {
+            text-shadow: 0 0 12px rgba(0, 224, 255, 0.35);
+        }
+
+        /* 9. Color Contrast */
+        .platform-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .platform-card:hover p {
+            color: var(--text-dim);
+        }
+
+        /* ==============================================
+           ENHANCED CAMPUS CARDS — All 14 Features
+           ============================================== */
+        .campus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .campus-card {
+            /* 1. Glassmorphism + 2. Gradient Background */
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.04) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            transition: opacity 0.6s ease,
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        border-color 0.4s ease,
+                        box-shadow 0.4s ease,
+                        background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 4. Top Gradient Highlight Line */
+        .campus-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--neon-blue) 30%, var(--neon-purple) 70%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .campus-card:hover::before { opacity: 1; }
+
+        /* 11. Hover + 3. Neon Glow + 12. Shadow Elevation */
+        .campus-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.06) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            border-color: rgba(168, 85, 247, 0.3);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 25px rgba(168, 85, 247, 0.15),
+                0 0 50px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .campus-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .campus-card:hover .campus-icon {
+            transform: scale(1.08);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .campus-card:nth-child(2) .campus-icon {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+        }
+        .campus-card:nth-child(3) .campus-icon {
+            background: linear-gradient(135deg, var(--neon-amber), var(--neon-green));
+        }
+        .campus-card:nth-child(4) .campus-icon {
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
+        }
+        .campus-card:nth-child(5) .campus-icon {
+            background: linear-gradient(135deg, var(--neon-pink), var(--secondary));
+        }
+        .campus-card:nth-child(6) .campus-icon {
+            background: linear-gradient(135deg, var(--neon-teal), var(--neon-blue));
+        }
+
+        /* 8. Typography Hierarchy */
+        .campus-card h4 {
+            color: var(--neon-cyan);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            transition: text-shadow 0.4s ease;
+        }
+
+        /* 3. Title Glow on hover */
+        .campus-card:hover h4 {
+            text-shadow: 0 0 12px rgba(0, 224, 255, 0.35);
+        }
+
+        /* 9. Color Contrast */
+        .campus-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            transition: color 0.3s ease;
+        }
+
+        .campus-card:hover p {
+            color: var(--text-dim);
+        }
+
+        /* ==============================================
+           ENHANCED FACILITY CARDS — All 14 Features
+           ============================================== */
+        .facility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .facility-card {
+            /* 1. Glassmorphism + 2. Gradient Background */
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.04) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            transition: opacity 0.6s ease,
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        border-color 0.4s ease,
+                        box-shadow 0.4s ease,
+                        background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 4. Top Gradient Highlight Line */
+        .facility-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--secondary) 30%, var(--accent) 70%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .facility-card:hover::before { opacity: 1; }
+
+        /* 11. Hover + 3. Neon Glow + 12. Shadow Elevation */
+        .facility-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.06) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            border-color: rgba(255, 106, 61, 0.3);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 25px rgba(255, 106, 61, 0.15),
+                0 0 50px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .facility-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 1rem;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .facility-card:hover .facility-icon {
+            transform: scale(1.08);
+            box-shadow: 0 0 20px rgba(255, 106, 61, 0.3);
+        }
+
+        .facility-card:nth-child(2) .facility-icon {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
+        }
+        .facility-card:nth-child(3) .facility-icon {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+        }
+        .facility-card:nth-child(4) .facility-icon {
+            background: linear-gradient(135deg, var(--neon-amber), var(--secondary));
+        }
+        .facility-card:nth-child(5) .facility-icon {
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-teal));
+        }
+        .facility-card:nth-child(6) .facility-icon {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+        }
+        .facility-card:nth-child(7) .facility-icon {
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+        }
+        .facility-card:nth-child(8) .facility-icon {
+            background: linear-gradient(135deg, var(--neon-teal), var(--neon-green));
+        }
+
+        /* 8. Typography Hierarchy */
+        .facility-card h4 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            transition: text-shadow 0.4s ease;
+        }
+
+        /* 3. Title Glow on hover */
+        .facility-card:hover h4 {
+            text-shadow: 0 0 12px rgba(255, 106, 61, 0.35);
+        }
+
+        /* 9. Color Contrast */
+        .facility-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .facility-card:hover p {
+            color: var(--text-dim);
+        }
+
+        /* ==============================================
+           ENHANCED PLACEMENT STAT CARDS — All 14 Features
+           ============================================== */
+        .placement-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .placement-stat-card {
+            /* 1. Glassmorphism + 2. Gradient Background */
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.04) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            transition: opacity 0.6s ease,
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        background 0.4s ease,
+                        box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 4. Top Gradient Highlight Line */
+        .placement-stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--neon-cyan) 30%, var(--neon-purple) 70%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .placement-stat-card:hover::before { opacity: 1; }
+
+        /* 11. Hover + 3. Neon Glow + 12. Shadow Elevation */
+        .placement-stat-card:hover {
+            transform: scale(1.05);
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.06) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 25px rgba(0, 224, 255, 0.15),
+                0 0 50px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        /* 8. Typography Hierarchy */
+        .placement-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            transition: filter 0.4s ease;
+        }
+
+        /* 3. Title Glow on hover (filter for gradient text) */
+        .placement-stat-card:hover .placement-number {
+            filter: drop-shadow(0 0 12px rgba(0, 224, 255, 0.4));
+        }
+
+        /* 9. Color Contrast */
+        .placement-label {
+            color: var(--text-muted);
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .placement-stat-card:hover .placement-label {
+            color: var(--text-dim);
+        }
+
+        /* ==============================================
+           ENHANCED RECRUITER CARDS — All 14 Features
+           ============================================== */
+        .recruiters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .recruiter-card {
+            /* 1. Glassmorphism + 2. Gradient Background */
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.04) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            transition: opacity 0.6s ease,
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        border-color 0.4s ease,
+                        box-shadow 0.4s ease,
+                        background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 4. Top Gradient Highlight Line */
+        .recruiter-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--neon-cyan) 30%, var(--neon-purple) 70%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .recruiter-card:hover::before { opacity: 1; }
+
+        /* 11. Hover + 3. Neon Glow + 12. Shadow Elevation */
+        .recruiter-card:hover {
+            transform: scale(1.05);
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.06) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            border-color: rgba(0, 224, 255, 0.3);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(0, 224, 255, 0.15),
+                0 0 40px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .recruiter-card img {
+            max-width: 100%;
+            max-height: 60px;
+            filter: grayscale(100%) brightness(0.8);
+            transition: filter 0.4s ease;
+        }
+
+        .recruiter-card:hover img {
+            filter: grayscale(0%) brightness(1);
+        }
+
+        /* ==============================================
+           ENHANCED PROGRAM CARDS — All 14 Features
+           ============================================== */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .program-card {
+            /* 1. Glassmorphism + 2. Gradient Background */
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.04) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            transition: opacity 0.6s ease,
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        border-color 0.4s ease,
+                        box-shadow 0.4s ease,
+                        background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 4. Top Gradient Highlight Line — changed from radial overlay to top line */
+        .program-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--neon-cyan) 30%, var(--neon-purple) 70%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Bottom subtle line */
+        .program-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease 0.05s;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .program-card:hover::before { opacity: 1; }
+        .program-card:hover::after { opacity: 0.4; }
+
+        /* 11. Hover + 3. Neon Glow + 12. Shadow Elevation */
+        .program-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.06) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            border-color: rgba(0, 224, 255, 0.3);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 25px rgba(0, 224, 255, 0.15),
+                0 0 50px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .program-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        /* 8. Typography Hierarchy */
+        .program-title {
+            color: var(--neon-cyan);
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            transition: text-shadow 0.4s ease;
+        }
+
+        /* 3. Title Glow on hover */
+        .program-card:hover .program-title {
+            text-shadow: 0 0 12px rgba(0, 224, 255, 0.35);
+        }
+
+        .program-duration {
+            background: rgba(0, 224, 255, 0.15);
+            color: var(--neon-cyan);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .program-card:hover .program-duration {
+            background: rgba(0, 224, 255, 0.25);
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.2);
+        }
+
+        .program-features {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .program-features li {
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease, transform 0.25s ease;
+        }
+
+        .program-features li i {
+            color: var(--neon-teal);
+            margin-right: 10px;
+            flex-shrink: 0;
+            transition: text-shadow 0.3s ease, transform 0.25s ease;
+        }
+
+        /* 9. Text Highlight on hover */
+        .program-card:hover .program-features li {
+            color: var(--text-dim);
+        }
+
+        .program-card:hover .program-features li i {
+            text-shadow: 0 0 10px rgba(44, 230, 194, 0.4);
+        }
+
+        /* List item microinteraction */
+        .program-features li:hover {
+            transform: translateX(5px);
+            color: var(--text);
+        }
+
+        .program-features li:hover i {
+            transform: scale(1.15);
+        }
+
+        .program-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--glass-border);
+            gap: 1rem;
+        }
+
+        .program-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary);
+            white-space: nowrap;
+            transition: text-shadow 0.4s ease;
+        }
+
+        /* 3. Price Glow on hover */
+        .program-card:hover .program-price {
+            text-shadow: 0 0 12px rgba(255, 106, 61, 0.35);
+        }
+
+        .program-price span {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: normal;
+            transition: color 0.3s ease;
+        }
+
+        .program-card:hover .program-price span {
+            color: var(--text-dim);
+        }
+
+        /* ==============================================
+           ENHANCED STEP CARDS — All 14 Features
+           ============================================== */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .step-card {
+            /* 1. Glassmorphism + 2. Gradient Background */
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.04) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            transition: opacity 0.6s ease,
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.4s ease,
+                        background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 4. Bottom Gradient Line — existing ::after kept as-is for scale animation */
+        .step-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .step-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* 11. Hover + 3. Neon Glow + 12. Shadow Elevation */
+        .step-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.06) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 25px rgba(0, 224, 255, 0.15),
+                0 0 50px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .step-card:hover .step-number {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 224, 255, 0.4);
+        }
+
+        .step-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(0, 224, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            color: var(--neon-cyan);
+            transition: filter 0.4s ease, transform 0.4s ease, background 0.4s ease;
+        }
+
+        .step-card:hover .step-icon {
+            filter: drop-shadow(0 0 12px rgba(0, 224, 255, 0.4));
+            transform: scale(1.08);
+            background: rgba(0, 224, 255, 0.15);
+        }
+
+        /* 8. Typography Hierarchy */
+        .step-card h4 {
+            color: var(--neon-cyan);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            transition: text-shadow 0.4s ease;
+        }
+
+        /* 3. Title Glow on hover */
+        .step-card:hover h4 {
+            text-shadow: 0 0 12px rgba(0, 224, 255, 0.35);
+        }
+
+        /* 9. Color Contrast */
+        .step-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .step-card:hover p {
+            color: var(--text-dim);
+        }
+
+        /* ==============================================
+           ENHANCED TESTIMONIAL CARDS — All 14 Features
+           ============================================== */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            /* 1. Glassmorphism + 2. Gradient Background */
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.04) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            transition: opacity 0.6s ease,
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        border-color 0.4s ease,
+                        box-shadow 0.4s ease,
+                        background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 4. Top Gradient Highlight Line */
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--neon-teal) 30%, var(--neon-cyan) 70%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .testimonial-card:hover::before { opacity: 1; }
+
+        /* 11. Hover + 3. Neon Glow + 12. Shadow Elevation */
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.06) 0%,
+                var(--light) 30%,
+                var(--lighter) 100%
+            );
+            border-color: rgba(44, 230, 194, 0.3);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 25px rgba(44, 230, 194, 0.15),
+                0 0 50px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .testimonial-rating {
+            color: var(--neon-amber);
+            margin-bottom: 1rem;
+        }
+
+        /* 9. Color Contrast */
+        .testimonial-text {
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            transition: color 0.3s ease;
+        }
+
+        .testimonial-card:hover .testimonial-text {
+            color: var(--text-dim);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .testimonial-card:hover .author-avatar {
+            transform: scale(1.08);
+            box-shadow: 0 0 18px rgba(0, 224, 255, 0.3);
+        }
+
+        /* 8. Typography Hierarchy */
+        .author-info h5 {
+            color: var(--neon-cyan);
+            margin-bottom: 0.2rem;
+            transition: text-shadow 0.4s ease;
+        }
+
+        /* 3. Title Glow on hover */
+        .testimonial-card:hover .author-info h5 {
+            text-shadow: 0 0 10px rgba(0, 224, 255, 0.3);
+        }
+
+        .author-info p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .testimonial-card:hover .author-info p {
+            color: var(--text-dim);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 2rem;
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid var(--glass-border);
+            color: var(--text-muted);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 5px 20px var(--glow);
+        }
+
+        footer {
+            background: linear-gradient(180deg, var(--darker), var(--darkest));
+            padding: 4rem 5% 2rem;
+            border-top: 1px solid var(--glass-border);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--neon-cyan);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p {
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .footer-section i {
+            color: var(--neon-teal);
+            margin-right: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--neon-cyan);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulse-bg {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darkest);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--neon-cyan), var(--neon-purple));
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--neon-purple), var(--neon-pink));
+        }
+
+        @media (max-width: 1024px) {
+            .nav-links { gap: 1.2rem; }
+            .nav-links a { font-size: 0.95rem; }
+            .hero-content { gap: 2.5rem; }
+            .hero-text h1 { font-size: 2.8rem; }
+            .hero-text p { font-size: 1.1rem; }
+            .quick-nav { right: 10px; padding: 15px 8px; }
+            .quick-nav-item { width: 42px; height: 42px; line-height: 38px; margin: 8px 0; }
+            .quick-nav-item i { font-size: 0.9rem; }
+            .quick-nav-item .tooltip { display: none; }
+            .section { padding: 60px 4%; }
+            .section-title { font-size: 2.2rem; }
+            .programs-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+            .info-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+            .campus-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+            .facility-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+            .testimonials-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+            .recruiters-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1.5rem; }
+            .cta-content h2 { font-size: 1.8rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: rgba(8, 12, 30, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 2rem;
+                transition: right 0.3s ease;
+                gap: 1.5rem;
+            }
+            .nav-links.active { right: 0; }
+            .nav-links a { font-size: 1.2rem; padding: 10px 20px; }
+            .menu-toggle { display: flex; }
+            .hero { padding: 100px 4% 40px; min-height: auto; padding-bottom: 60px; }
+            .hero-content { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+            .hero-text h1 { font-size: 2.2rem; }
+            .hero-text p { font-size: 1rem; margin-bottom: 1.5rem; }
+            .hero-stats { grid-template-columns: repeat(2, 1fr); }
+            .stat-number { font-size: 1.6rem; }
+            .stat-label { font-size: 0.8rem; }
+            .btn-group { justify-content: center; }
+            .btn { padding: 10px 20px; font-size: 0.9rem; }
+            .quick-nav { display: none; }
+            .section { padding: 50px 4%; }
+            .section-title { font-size: 1.9rem; }
+            .section-subtitle { font-size: 1rem; margin-bottom: 2rem; }
+            .programs-grid { grid-template-columns: 1fr; }
+            .program-header { flex-direction: column; gap: 0.5rem; }
+            .program-footer { flex-direction: column; align-items: flex-start; }
+            .program-price { font-size: 1.3rem; }
+            .info-grid { grid-template-columns: 1fr; }
+            .platform-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .platform-card { padding: 1.5rem; }
+            .platform-icon { width: 60px; height: 60px; font-size: 1.5rem; }
+            .campus-grid { grid-template-columns: 1fr; }
+            .facility-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .facility-card { padding: 1.5rem; }
+            .facility-icon { width: 55px; height: 55px; font-size: 1.4rem; }
+            .placement-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .placement-number { font-size: 2rem; }
+            .placement-label { font-size: 0.9rem; }
+            .recruiters-grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+            .recruiter-card { padding: 1rem; height: 80px; }
+            .steps-container { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .step-card { padding: 1.5rem; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .cta-section { padding: 2.5rem 1.5rem; }
+            .cta-content h2 { font-size: 1.5rem; }
+            .cta-content p { font-size: 1rem; }
+            .tabs { gap: 0.5rem; margin-bottom: 2rem; }
+            .tab-btn { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+            footer { padding: 3rem 4% 1.5rem; }
+            .footer-content { grid-template-columns: repeat(2, 1fr); text-align: left; }
+        }
+
+        @media (max-width: 576px) {
+            nav { padding: 0.8rem 4%; }
+            .logo { font-size: 1.2rem; }
+            .logo i { font-size: 1.5rem; margin-right: 8px; }
+            .hero { padding: 90px 4% 40px; }
+            .hero-text h1 { font-size: 1.8rem; line-height: 1.3; }
+            .hero-text p { font-size: 0.95rem; }
+            .hero-stats { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+            .stat-card { padding: 1rem; }
+            .stat-number { font-size: 1.4rem; }
+            .stat-label { font-size: 0.75rem; }
+            .btn { padding: 10px 18px; font-size: 0.85rem; width: 100%; justify-content: center; }
+            .btn-group { flex-direction: column; align-items: stretch; }
+            .section { padding: 40px 3%; }
+            .section-title { font-size: 1.6rem; }
+            .section-subtitle { font-size: 0.95rem; margin-bottom: 1.5rem; }
+            .info-card { padding: 1.5rem; }
+            .info-card h3 { font-size: 1.1rem; }
+            .info-card ul li { font-size: 0.9rem; padding: 0.4rem 0; }
+            .platform-grid { grid-template-columns: 1fr; }
+            .platform-card { padding: 1.5rem; }
+            .platform-icon { width: 65px; height: 65px; }
+            .campus-card { padding: 1.5rem; }
+            .campus-card h4 { font-size: 1.1rem; }
+            .facility-grid { grid-template-columns: 1fr; }
+            .placement-stats { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+            .placement-stat-card { padding: 1.5rem 1rem; }
+            .placement-number { font-size: 1.6rem; }
+            .placement-label { font-size: 0.85rem; }
+            .recruiters-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+            .recruiter-card { height: 70px; padding: 0.8rem; }
+            .program-card { padding: 1.5rem; }
+            .program-title { font-size: 1.2rem; }
+            .program-features li { font-size: 0.9rem; }
+            .steps-container { grid-template-columns: 1fr; }
+            .step-icon { width: 60px; height: 60px; font-size: 1.5rem; }
+            .step-card h4 { font-size: 1.1rem; }
+            .step-card p { font-size: 0.9rem; }
+            .testimonial-card { padding: 1.5rem; }
+            .testimonial-text { font-size: 0.95rem; }
+            .cta-section { padding: 2rem 1rem; margin: 2rem 0; }
+            .cta-content h2 { font-size: 1.3rem; }
+            .cta-content p { font-size: 0.95rem; margin-bottom: 1.5rem; }
+            .tabs { gap: 0.5rem; }
+            .tab-btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
+            footer { padding: 2.5rem 3% 1.5rem; }
+            .footer-content { grid-template-columns: 1fr; text-align: center; }
+            .footer-section h3 { font-size: 1.1rem; }
+            .footer-section p { font-size: 0.9rem; }
+            .footer-bottom p { font-size: 0.85rem; }
+        }
+
+        @media (max-width: 400px) {
+            .logo { font-size: 1.1rem; }
+            .logo i { font-size: 1.3rem; }
+            .hero-text h1 { font-size: 1.5rem; }
+            .hero-text p { font-size: 0.9rem; }
+            .stat-number { font-size: 1.2rem; }
+            .stat-label { font-size: 0.7rem; }
+            .btn { padding: 10px 15px; font-size: 0.8rem; }
+            .section-title { font-size: 1.4rem; }
+            .section-subtitle { font-size: 0.9rem; }
+            .info-card { padding: 1.2rem; border-radius: 15px; }
+            .info-card h3 { font-size: 1rem; }
+            .info-card ul li { font-size: 0.85rem; }
+            .platform-icon, .facility-icon, .campus-icon { width: 50px; height: 50px; }
+            .platform-icon { font-size: 1.3rem; }
+            .facility-icon { font-size: 1.2rem; }
+            .campus-icon { font-size: 1.2rem; }
+            .platform-card, .campus-card, .facility-card, .program-card, .step-card, .testimonial-card { padding: 1.2rem; border-radius: 15px; }
+            .platform-card h4, .campus-card h4, .facility-card h4, .step-card h4 { font-size: 1rem; }
+            .platform-card p, .campus-card p, .facility-card p, .step-card p { font-size: 0.85rem; }
+            .program-title { font-size: 1.1rem; }
+            .program-price { font-size: 1.2rem; }
+            .placement-number { font-size: 1.4rem; }
+            .placement-label { font-size: 0.8rem; }
+            .recruiters-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+            .recruiter-card { height: 60px; padding: 0.6rem; }
+            .tab-btn { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
+            .cta-content h2 { font-size: 1.2rem; }
+            .cta-content p { font-size: 0.9rem; }
+            .author-avatar { width: 40px; height: 40px; font-size: 0.85rem; }
+            .author-info h5 { font-size: 0.95rem; }
+            .author-info p { font-size: 0.8rem; }
+        }
+
+        @media (max-width: 350px) {
+            .hero-text h1 { font-size: 1.35rem; }
+            .hero-stats { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+            .stat-card { padding: 0.8rem; }
+            .stat-number { font-size: 1.1rem; }
+            .stat-label { font-size: 0.65rem; }
+            .section { padding: 30px 2%; }
+            .section-title { font-size: 1.3rem; }
+            .placement-stats { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+            .placement-stat-card { padding: 1rem 0.8rem; }
+            .placement-number { font-size: 1.3rem; }
+            .recruiters-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+            .cta-section { padding: 1.5rem 0.8rem; }
+            .cta-content h2 { font-size: 1.1rem; }
+        }
+
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero { min-height: auto; padding: 80px 4% 30px; }
+            .hero-text h1 { font-size: 1.8rem; }
+            .hero-stats { grid-template-columns: repeat(4, 1fr); gap: 0.8rem; }
+            .section { padding: 40px 4%; }
+            .cta-section { padding: 2rem; }
+        }
+
+        /* Touch device — disable hover transforms */
+        @media (hover: none) {
+            .info-card:hover, .platform-card:hover, .campus-card:hover, .facility-card:hover, .placement-stat-card:hover, .program-card:hover, .step-card:hover, .testimonial-card:hover, .recruiter-card:hover, .stat-card:hover {
+                transform: none;
+                box-shadow: none;
+                border-color: var(--glass-border);
+            }
+            .btn:hover { transform: none; }
+            .platform-card:hover .platform-icon,
+            .campus-card:hover .campus-icon,
+            .facility-card:hover .facility-icon,
+            .step-card:hover .step-number,
+            .step-card:hover .step-icon,
+            .testimonial-card:hover .author-avatar {
+                transform: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .particle { display: none; }
+        }
+
+        @media (prefers-contrast: high) {
+            :root {
+                --border: rgba(148,163,184,0.3);
+                --glass-border: rgba(148,163,184,0.4);
+                --text-muted: #C8D0E0;
+            }
+            .info-card, .platform-card, .campus-card, .facility-card, .placement-stat-card, .program-card, .step-card, .testimonial-card, .recruiter-card, .stat-card {
+                border-width: 2px;
+            }
+        }
+
+        @media print {
+            header, .quick-nav, #progressBar, #particles, .loading { display: none !important; }
+            body { background: white; color: black; }
+            .section { padding: 20px 0; }
+            .section-title { -webkit-text-fill-color: #333; color: #333; }
+            .info-card, .platform-card, .campus-card, .facility-card, .placement-stat-card, .program-card, .step-card, .testimonial-card, .stat-card {
+                background: white; border: 1px solid #ccc; box-shadow: none; transform: none !important;
+                backdrop-filter: none; -webkit-backdrop-filter: none;
+            }
+            .info-card::before, .info-card::after,
+            .platform-card::before, .campus-card::before, .facility-card::before,
+            .placement-stat-card::before, .program-card::before, .program-card::after,
+            .testimonial-card::before, .stat-card::before, .stat-card::after,
+            .recruiter-card::before, .cta-section::after {
+                display: none !important;
+            }
+            .btn { border: 1px solid #333; color: #333; background: white; }
+            .placement-number { -webkit-text-fill-color: #333; color: #333; }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div id="progressBar"></div>
+
+    <div id="particles"></div>
+
+    <header id="navbar">
+        <nav>
+            <a href="#" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                VGU Online
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#programs">Programs</a></li>
+                <li><a href="#platform">Platform</a></li>
+                <li><a href="#campus">Campus Life</a></li>
+                <li><a href="#facilities">Facilities</a></li>
+                <li><a href="#placements">Placements</a></li>
+                <li><a href="#admission">Admission</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="quick-nav">
+        <div class="quick-nav-item active" data-title="Home"><i class="fas fa-home"></i><span class="tooltip">Home</span></div>
+        <div class="quick-nav-item" data-title="Programs"><i class="fas fa-book"></i><span class="tooltip">Programs</span></div>
+        <div class="quick-nav-item" data-title="platform"><i class="fas fa-laptop"></i><span class="tooltip">Platform</span></div>
+        <div class="quick-nav-item" data-title="campus"><i class="fas fa-users"></i><span class="tooltip">Campus Life</span></div>
+        <div class="quick-nav-item" data-title="facilities"><i class="fas fa-building"></i><span class="tooltip">Facilities</span></div>
+        <div class="quick-nav-item" data-title="placements"><i class="fas fa-briefcase"></i><span class="tooltip">Placements</span></div>
+        <div class="quick-nav-item" data-title="admission"><i class="fas fa-user-plus"></i><span class="tooltip">Admission</span></div>
+        <div class="quick-nav-item" data-title="contact"><i class="fas fa-phone"></i><span class="tooltip">Contact</span></div>
+    </div>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Transform Your Career with VGU Online Education</h1>
+                <p>UGC-DEB Approved Online Degree Programs from India's Leading University</p>
+                <div class="btn-group">
+                    <a href="#programs" class="btn btn-primary"><i class="fas fa-rocket"></i> Explore Programs</a>
+                    <a href="#admission" class="btn btn-secondary"><i class="fas fa-play-circle"></i> How It Works</a>
+                    <a href="tel:18001230123" class="btn btn-white"><i class="fas fa-phone-alt"></i> Call Now</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-card"><div class="stat-number">50,000+</div><div class="stat-label">Active Learners</div></div>
+                    <div class="stat-card"><div class="stat-number">95%</div><div class="stat-label">Placement Rate</div></div>
+                    <div class="stat-card"><div class="stat-number">150+</div><div class="stat-label">Hiring Partners</div></div>
+                    <div class="stat-card"><div class="stat-number">4.8/5</div><div class="stat-label">Student Rating</div></div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://via.placeholder.com/600x400/00E0FF/050810?text=Online+Learning" alt="Online Learning">
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="programs">
+        <div class="container">
+            <h2 class="section-title">Our Online Programs</h2>
+            <p class="section-subtitle">Choose from a wide range of UGC-DEB approved programs</p>
+            <div class="tabs">
+                <button class="tab-btn active" data-category="management">Management</button>
+                <button class="tab-btn" data-category="computer">Computer Applications</button>
+                <button class="tab-btn" data-category="commerce">Commerce</button>
+                <button class="tab-btn" data-category="arts">Arts & Humanities</button>
+            </div>
+            <div class="programs-grid">
+                <div class="program-card" data-category="management">
+                    <div class="program-header">
+                        <div><h3 class="program-title">BBA Online</h3><p style="color: var(--text-muted);">Bachelor of Business Administration</p></div>
+                        <span class="program-duration">3 Years</span>
+                    </div>
+                    <ul class="program-features">
+                        <li><i class="fas fa-check"></i> Live Interactive Classes</li>
+                        <li><i class="fas fa-check"></i> Industry-Relevant Curriculum</li>
+                        <li><i class="fas fa-check"></i> Expert Faculty from IIMs/IITs</li>
+                        <li><i class="fas fa-check"></i> Placement Assistance</li>
+                        <li><i class="fas fa-check"></i> EMI Options Available</li>
+                    </ul>
+                    <div class="program-footer">
+                        <div class="program-price">₹75,000 <span>/year</span></div>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+                <div class="program-card" data-category="management">
+                    <div class="program-header">
+                        <div><h3 class="program-title">MBA Online</h3><p style="color: var(--text-muted);">Master of Business Administration</p></div>
+                        <span class="program-duration">2 Years</span>
+                    </div>
+                    <ul class="program-features">
+                        <li><i class="fas fa-check"></i> 12+ Specializations</li>
+                        <li><i class="fas fa-check"></i> Weekend Live Classes</li>
+                        <li><i class="fas fa-check"></i> Case Study Based Learning</li>
+                        <li><i class="fas fa-check"></i> Global Alumni Network</li>
+                        <li><i class="fas fa-check"></i> 100% Placement Support</li>
+                    </ul>
+                    <div class="program-footer">
+                        <div class="program-price">₹1,20,000 <span>/year</span></div>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+                <div class="program-card" data-category="computer">
+                    <div class="program-header">
+                        <div><h3 class="program-title">BCA Online</h3><p style="color: var(--text-muted);">Bachelor of Computer Applications</p></div>
+                        <span class="program-duration">3 Years</span>
+                    </div>
+                    <ul class="program-features">
+                        <li><i class="fas fa-check"></i> Latest Tech Stack</li>
+                        <li><i class="fas fa-check"></i> Practical Coding Sessions</li>
+                        <li><i class="fas fa-check"></i> Cloud Lab Access</li>
+                        <li><i class="fas fa-check"></i> Internship Opportunities</li>
+                        <li><i class="fas fa-check"></i> Industry Certifications</li>
+                    </ul>
+                    <div class="program-footer">
+                        <div class="program-price">₹60,000 <span>/year</span></div>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+                <div class="program-card" data-category="computer">
+                    <div class="program-header">
+                        <div><h3 class="program-title">MCA Online</h3><p style="color: var(--text-muted);">Master of Computer Applications</p></div>
+                        <span class="program-duration">2 Years</span>
+                    </div>
+                    <ul class="program-features">
+                        <li><i class="fas fa-check"></i> Advanced Programming</li>
+                        <li><i class="fas fa-check"></i> AI & Machine Learning</li>
+                        <li><i class="fas fa-check"></i> Cloud Computing</li>
+                        <li><i class="fas fa-check"></i> Cyber Security</li>
+                        <li><i class="fas fa-check"></i> Research Projects</li>
+                    </ul>
+                    <div class="program-footer">
+                        <div class="program-price">₹85,000 <span>/year</span></div>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+                <div class="program-card" data-category="commerce">
+                    <div class="program-header">
+                        <div><h3 class="program-title">B.Com Online</h3><p style="color: var(--text-muted);">Bachelor of Commerce</p></div>
+                        <span class="program-duration">3 Years</span>
+                    </div>
+                    <ul class="program-features">
+                        <li><i class="fas fa-check"></i> Accounting & Finance</li>
+                        <li><i class="fas fa-check"></i> Taxation & GST</li>
+                        <li><i class="fas fa-check"></i> Financial Analysis</li>
+                        <li><i class="fas fa-check"></i> Business Law</li>
+                        <li><i class="fas fa-check"></i> CA Foundation Prep</li>
+                    </ul>
+                    <div class="program-footer">
+                        <div class="program-price">₹45,000 <span>/year</span></div>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+                <div class="program-card" data-category="commerce">
+                    <div class="program-header">
+                        <div><h3 class="program-title">M.Com Online</h3><p style="color: var(--text-muted);">Master of Commerce</p></div>
+                        <span class="program-duration">2 Years</span>
+                    </div>
+                    <ul class="program-features">
+                        <li><i class="fas fa-check"></i> Advanced Accounting</li>
+                        <li><i class="fas fa-check"></i> Corporate Finance</li>
+                        <li><i class="fas fa-check"></i> International Business</li>
+                        <li><i class="fas fa-check"></i> Research Methodology</li>
+                        <li><i class="fas fa-check"></i> PhD Preparation</li>
+                    </ul>
+                    <div class="program-footer">
+                        <div class="program-price">₹55,000 <span>/year</span></div>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+                <div class="program-card" data-category="arts">
+                    <div class="program-header">
+                        <div><h3 class="program-title">BA Online</h3><p style="color: var(--text-muted);">Bachelor of Arts</p></div>
+                        <span class="program-duration">3 Years</span>
+                    </div>
+                    <ul class="program-features">
+                        <li><i class="fas fa-check"></i> Multiple Specializations</li>
+                        <li><i class="fas fa-check"></i> English Literature</li>
+                        <li><i class="fas fa-check"></i> Psychology</li>
+                        <li><i class="fas fa-check"></i> Sociology</li>
+                        <li><i class="fas fa-check"></i> Political Science</li>
+                    </ul>
+                    <div class="program-footer">
+                        <div class="program-price">₹35,000 <span>/year</span></div>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+                <div class="program-card" data-category="arts">
+                    <div class="program-header">
+                        <div><h3 class="program-title">MA Online</h3><p style="color: var(--text-muted);">Master of Arts</p></div>
+                        <span class="program-duration">2 Years</span>
+                    </div>
+                    <ul class="program-features">
+                        <li><i class="fas fa-check"></i> Deep Subject Knowledge</li>
+                        <li><i class="fas fa-check"></i> Research Skills</li>
+                        <li><i class="fas fa-check"></i> Critical Thinking</li>
+                        <li><i class="fas fa-check"></i> Academic Writing</li>
+                        <li><i class="fas fa-check"></i> NET/JRF Preparation</li>
+                    </ul>
+                    <div class="program-footer">
+                        <div class="program-price">₹40,000 <span>/year</span></div>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="platform">
+        <div class="container">
+            <h2 class="section-title">Our Online Learning Platform</h2>
+            <p class="section-subtitle">State-of-the-art digital learning experience</p>
+            <div class="platform-grid">
+                <div class="platform-card">
+                    <div class="platform-icon"><i class="fas fa-video"></i></div>
+                    <h4>Live Interactive Classes</h4>
+                    <p>Real-time classes with industry experts and peer interaction</p>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h4>AI-Powered Learning</h4>
+                    <p>Personalized learning paths with AI recommendations</p>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h4>Learn Anywhere</h4>
+                    <p>Access courses on mobile, tablet, or desktop anytime</p>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon"><i class="fas fa-certificate"></i></div>
+                    <h4>Digital Certificates</h4>
+                    <p>Blockchain-verified certificates upon completion</p>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon"><i class="fas fa-users"></i></div>
+                    <h4>Peer Learning</h4>
+                    <p>Collaborate with 50,000+ learners worldwide</p>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon"><i class="fas fa-headset"></i></div>
+                    <h4>24/7 Support</h4>
+                    <p>Round-the-clock academic and technical support</p>
+                </div>
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-book-open"></i> Rich Learning Content</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> HD Video Lectures</li>
+                        <li><i class="fas fa-check"></i> Interactive E-books</li>
+                        <li><i class="fas fa-check"></i> Case Studies & Projects</li>
+                        <li><i class="fas fa-check"></i> Quizzes & Assignments</li>
+                        <li><i class="fas fa-check"></i> Discussion Forums</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-chart-line"></i> Progress Tracking</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Real-time Analytics</li>
+                        <li><i class="fas fa-check"></i> Performance Reports</li>
+                        <li><i class="fas fa-check"></i> Skill Assessment</li>
+                        <li><i class="fas fa-check"></i> Learning Milestones</li>
+                        <li><i class="fas fa-check"></i> Gamified Learning</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-tools"></i> Learning Tools</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Virtual Labs</li>
+                        <li><i class="fas fa-check"></i> Coding Playground</li>
+                        <li><i class="fas fa-check"></i> Simulation Software</li>
+                        <li><i class="fas fa-check"></i> Note-taking Tools</li>
+                        <li><i class="fas fa-check"></i> Calendar & Reminders</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="campus">
+        <div class="container">
+            <h2 class="section-title">Virtual Campus Life</h2>
+            <p class="section-subtitle">Experience vibrant campus life online</p>
+            <div class="campus-grid">
+                <div class="campus-card">
+                    <div class="campus-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <h4>Virtual Events & Workshops</h4>
+                    <p>Attend webinars, guest lectures, and industry workshops conducted by experts from top companies. Build your network while learning from the best.</p>
+                </div>
+                <div class="campus-card">
+                    <div class="campus-icon"><i class="fas fa-user-friends"></i></div>
+                    <h4>Student Clubs & Communities</h4>
+                    <p>Join various student clubs based on your interests - coding, business, arts, literature, sports, and more. Connect with like-minded peers.</p>
+                </div>
+                <div class="campus-card">
+                    <div class="campus-icon"><i class="fas fa-trophy"></i></div>
+                    <h4>Online Competitions</h4>
+                    <p>Participate in hackathons, business plan competitions, case study contests, and cultural events. Win prizes and showcase your talents.</p>
+                </div>
+                <div class="campus-card">
+                    <div class="campus-icon"><i class="fas fa-users-cog"></i></div>
+                    <h4>Peer Learning Networks</h4>
+                    <p>Collaborate on projects, form study groups, and learn together. Our platform facilitates seamless peer-to-peer learning and knowledge sharing.</p>
+                </div>
+                <div class="campus-card">
+                    <div class="campus-icon"><i class="fas fa-newspaper"></i></div>
+                    <h4>Digital Campus Magazine</h4>
+                    <p>Contribute articles, stories, and creative content to our monthly digital magazine. Express yourself and build your portfolio.</p>
+                </div>
+                <div class="campus-card">
+                    <div class="campus-icon"><i class="fas fa-hands-helping"></i></div>
+                    <h4>Social Initiatives</h4>
+                    <p>Participate in online social responsibility programs, awareness campaigns, and community service projects. Make a positive impact.</p>
+                </div>
+            </div>
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Join Our Thriving Online Community</h2>
+                    <p>Connect, Learn, and Grow with 50,000+ Students</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary"><i class="fas fa-users"></i> Join Community</a>
+                        <a href="#" class="btn btn-secondary"><i class="fas fa-calendar"></i> View Events</a>
+                        <a href="#" class="btn btn-white"><i class="fas fa-user-plus"></i> Start Learning</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="facilities">
+        <div class="container">
+            <h2 class="section-title">World-Class Digital Facilities</h2>
+            <p class="section-subtitle">Cutting-edge infrastructure for online learning</p>
+            <div class="facility-grid">
+                <div class="facility-card">
+                    <div class="facility-icon"><i class="fas fa-cloud"></i></div>
+                    <h4>Cloud Infrastructure</h4>
+                    <p>99.9% uptime with AWS-powered cloud infrastructure ensuring seamless access to your learning materials 24/7.</p>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-icon"><i class="fas fa-flask"></i></div>
+                    <h4>Virtual Labs</h4>
+                    <p>Hands-on practice with state-of-the-art virtual labs for programming, data science, and engineering simulations.</p>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-icon"><i class="fas fa-book"></i></div>
+                    <h4>Digital Library</h4>
+                    <p>Access to 1M+ e-books, journals, research papers, and publications from leading publishers worldwide.</p>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-icon"><i class="fas fa-microphone"></i></div>
+                    <h4>Recording Studio</h4>
+                    <p>Professional-grade recording studio for creating high-quality video content and presentations.</p>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-icon"><i class="fas fa-headset"></i></div>
+                    <h4>24/7 Support Center</h4>
+                    <p>Round-the-clock technical and academic support through chat, email, and phone for all your queries.</p>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h4>Secure Exam Platform</h4>
+                    <p>Ai-proctored online examinations with advanced security features ensuring fair and credible assessment.</p>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-icon"><i class="fas fa-mobile"></i></div>
+                    <h4>Mobile Learning App</h4>
+                    <p>Feature-rich mobile app for iOS and Android with offline download, push notifications, and seamless sync.</p>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-icon"><i class="fas fa-chart-bar"></i></div>
+                    <h4>Analytics Dashboard</h4>
+                    <p>Comprehensive learning analytics with AI-powered insights to track and improve your performance.</p>
+                </div>
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-server"></i> Technical Specifications</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 99.9% Server Uptime</li>
+                        <li><i class="fas fa-check"></i> CDN for Global Access</li>
+                        <li><i class="fas fa-check"></i> Auto-scaling Infrastructure</li>
+                        <li><i class="fas fa-check"></i> Daily Data Backups</li>
+                        <li><i class="fas fa-check"></i> SSL Encrypted Platform</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-tachometer-alt"></i> Performance Metrics</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> < 2 Second Load Time</li>
+                        <li><i class="fas fa-check"></i> 4K Video Streaming</li>
+                        <li><i class="fas fa-check"></i> 1000+ Concurrent Users</li>
+                        <li><i class="fas fa-check"></i> Zero Downtime Updates</li>
+                        <li><i class="fas fa-check"></i> Global CDN Network</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-lock"></i> Security Features</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> End-to-End Encryption</li>
+                        <li><i class="fas fa-check"></i> Two-Factor Authentication</li>
+                        <li><i class="fas fa-check"></i> GDPR Compliant</li>
+                        <li><i class="fas fa-check"></i> Regular Security Audits</li>
+                        <li><i class="fas fa-check"></i> Data Privacy Protection</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="placements">
+        <div class="container">
+            <h2 class="section-title">Placement & Career Support</h2>
+            <p class="section-subtitle">Your career growth is our priority</p>
+            <div class="placement-stats">
+                <div class="placement-stat-card"><div class="placement-number">₹25 LPA</div><div class="placement-label">Highest Package</div></div>
+                <div class="placement-stat-card"><div class="placement-number">₹8 LPA</div><div class="placement-label">Average Package</div></div>
+                <div class="placement-stat-card"><div class="placement-number">95%</div><div class="placement-label">Placement Rate</div></div>
+                <div class="placement-stat-card"><div class="placement-number">500+</div><div class="placement-label">Hiring Partners</div></div>
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-briefcase"></i> Placement Assistance</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Resume Building Workshops</li>
+                        <li><i class="fas fa-check"></i> Mock Interviews</li>
+                        <li><i class="fas fa-check"></i> Aptitude Training</li>
+                        <li><i class="fas fa-check"></i> Group Discussion Practice</li>
+                        <li><i class="fas fa-check"></i> 1-on-1 Career Counseling</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-rocket"></i> Career Development</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Soft Skills Training</li>
+                        <li><i class="fas fa-check"></i> Leadership Programs</li>
+                        <li><i class="fas fa-check"></i> Industry Certifications</li>
+                        <li><i class="fas fa-check"></i> Internship Opportunities</li>
+                        <li><i class="fas fa-check"></i> Alumni Mentorship</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-handshake"></i> Industry Connections</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Corporate Partnerships</li>
+                        <li><i class="fas fa-check"></i> Job Fairs & Drives</li>
+                        <li><i class="fas fa-check"></i> Industry Guest Lectures</li>
+                        <li><i class="fas fa-check"></i> Networking Events</li>
+                        <li><i class="fas fa-check"></i> Startup Incubation</li>
+                    </ul>
+                </div>
+            </div>
+            <h3 style="text-align: center; color: var(--neon-cyan); margin: 3rem 0 2rem;">Our Top Recruiters</h3>
+            <div class="recruiters-grid">
+                <div class="recruiter-card"><img src="https://via.placeholder.com/150x60/ffffff/050810?text=TCS" alt="TCS"></div>
+                <div class="recruiter-card"><img src="https://via.placeholder.com/150x60/ffffff/050810?text=Infosys" alt="Infosys"></div>
+                <div class="recruiter-card"><img src="https://via.placeholder.com/150x60/ffffff/050810?text=Wipro" alt="Wipro"></div>
+                <div class="recruiter-card"><img src="https://via.placeholder.com/150x60/ffffff/050810?text=HCL" alt="HCL"></div>
+                <div class="recruiter-card"><img src="https://via.placeholder.com/150x60/ffffff/050810?text=IBM" alt="IBM"></div>
+                <div class="recruiter-card"><img src="https://via.placeholder.com/150x60/ffffff/050810?text=Microsoft" alt="Microsoft"></div>
+                <div class="recruiter-card"><img src="https://via.placeholder.com/150x60/ffffff/050810?text=Amazon" alt="Amazon"></div>
+                <div class="recruiter-card"><img src="https://via.placeholder.com/150x60/ffffff/050810?text=Google" alt="Google"></div>
+                <div class="recruiter-card"><img src="https://via.placeholder.com/150x60/ffffff/050810?text=Deloitte" alt="Deloitte"></div>
+                <div class="recruiter-card"><img src="https://via.placeholder.com/150x60/ffffff/050810?text=KPMG" alt="KPMG"></div>
+                <div class="recruiter-card"><img src="https://via.placeholder.com/150x60/ffffff/050810?text=Accenture" alt="Accenture"></div>
+                <div class="recruiter-card"><img src="https://via.placeholder.com/150x60/ffffff/050810?text=Capegemini" alt="Capegemini"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="admission">
+        <div class="container">
+            <h2 class="section-title">Admission Process</h2>
+            <p class="section-subtitle">Simple 4-step admission process</p>
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-search"></i></div>
+                    <h4>Choose Program</h4>
+                    <p>Browse our catalog and select the program that matches your career goals</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-file-alt"></i></div>
+                    <h4>Apply Online</h4>
+                    <p>Fill the application form and upload required documents</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-credit-card"></i></div>
+                    <h4>Pay Fees</h4>
+                    <p>Secure online payment with multiple options including EMI</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon"><i class="fas fa-play-circle"></i></div>
+                    <h4>Start Learning</h4>
+                    <p>Get instant access to courses and begin your learning journey</p>
+                </div>
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-list-check"></i> Eligibility Criteria</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> For UG: 10+2 from recognized board</li>
+                        <li><i class="fas fa-check"></i> For PG: Bachelor's degree in relevant field</li>
+                        <li><i class="fas fa-check"></i> Minimum 45% marks in qualifying exam</li>
+                        <li><i class="fas fa-check"></i> No age limit for working professionals</li>
+                        <li><i class="fas fa-check"></i> Relaxation for reserved categories</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-file-upload"></i> Documents Required</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 10th & 12th mark sheets</li>
+                        <li><i class="fas fa-check"></i> Graduation certificates (for PG)</li>
+                        <li><i class="fas fa-check"></i> Photo ID proof (Aadhar/PAN)</li>
+                        <li><i class="fas fa-check"></i> Passport size photographs</li>
+                        <li><i class="fas fa-check"></i> Address proof</li>
+                        <li><i class="fas fa-check"></i> Signature scan</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-calendar-alt"></i> Important Dates</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Admission Open: January & July</li>
+                        <li><i class="fas fa-check"></i> Last Date to Apply: 30th June / 31st Dec</li>
+                        <li><i class="fas fa-check"></i> Document Verification: Within 7 days</li>
+                        <li><i class="fas fa-check"></i> Fee Payment: Within 15 days</li>
+                        <li><i class="fas fa-check"></i> Classes Commence: 1st Aug / 1st Feb</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Ready to Start Your Journey?</h2>
+                    <p>Join 50,000+ learners achieving their dreams with VGU Online</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary"><i class="fas fa-user-plus"></i> Apply Now</a>
+                        <a href="#" class="btn btn-secondary"><i class="fas fa-download"></i> Download Brochure</a>
+                        <a href="tel:18001230123" class="btn btn-white"><i class="fas fa-phone"></i> Talk to Counselor</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Student Success Stories</h2>
+            <p class="section-subtitle">Hear From Our Online Learners</p>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="testimonial-text">"VGU Online's MBA program helped me get promoted to Manager level while working. The flexible schedule and quality faculty made it possible to balance work and studies. The LMS is excellent and the support team is always helpful."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RP</div>
+                        <div class="author-info"><h5>Rahul Patel</h5><p>MBA Online | Product Manager, Infosys</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="testimonial-text">"As a working mother, VGU Online's BCA program was a blessing. I could study at my own pace, attend live classes on weekends, and still manage my family. The degree is UGC recognized and helped me get a better job."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SK</div>
+                        <div class="author-info"><h5>Sneha Kapoor</h5><p>BCA Online | Software Developer, TCS</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="testimonial-text">"The online B.Com program at VGU exceeded my expectations. The faculty is very supportive, the study material is comprehensive, and the online exams are convenient. I'm now preparing for CA foundation alongside my degree."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AM</div>
+                        <div class="author-info"><h5>Amit Mehra</h5><p>B.Com Online | CA Aspirant</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="testimonial-text">"VGU Online's MA program helped me switch my career from teaching to content writing. The quality of education is on par with regular colleges, and the flexibility allowed me to work part-time. Highly recommended!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">PG</div>
+                        <div class="author-info"><h5>Priya Gupta</h5><p>MA Online | Content Writer, BYJU'S</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="testimonial-text">"The MCA program at VGU Online is industry-relevant with latest technologies. The virtual labs and coding practice helped me improve my skills. I got placed as a Data Analyst even before completing the degree."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">VK</div>
+                        <div class="author-info"><h5>Vikram Kumar</h5><p>MCA Online | Data Analyst, Wipro</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="testimonial-text">"I'm a defense personnel and VGU Online's BBA program allowed me to pursue higher education while serving. The mobile app is very useful for studying during travels. The degree is valid for government jobs."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RS</div>
+                        <div class="author-info"><h5>Rajeev Sharma</h5><p>BBA Online | Indian Army Officer</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="section-subtitle">We're Here to Help You</p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-phone-alt"></i> Contact Numbers</h3>
+                    <p>Admission Helpline: 1800-123-0123 (Toll-Free)<br>WhatsApp: +91-9887654321<br>Office: +91-141-2345678</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-envelope"></i> Email Addresses</h3>
+                    <p>Admissions: online.admissions@vgu.ac.in<br>Support: online.support@vgu.ac.in<br>Info: info@vguonline.ac.in</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-clock"></i> Office Hours</h3>
+                    <p>Monday - Saturday: 9:00 AM - 6:00 PM<br>Sunday: 10:00 AM - 4:00 PM<br>24/7 Online Support Available</p>
+                </div>
+            </div>
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Start Your Online Learning Journey Today!</h2>
+                    <p>Join India's Leading Online Education Platform</p>
+                    <div class="btn-group">
+                        <a href="tel:18001230123" class="btn btn-primary"><i class="fas fa-phone"></i> Call Now: 1800-123-0123</a>
+                        <a href="#" class="btn btn-secondary"><i class="fas fa-comments"></i> Live Chat</a>
+                        <a href="#" class="btn btn-white"><i class="fas fa-calendar"></i> Schedule Callback</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VGU Online Education</h3>
+                    <p>Vivekananda Global University</p>
+                    <p>Jaipur, Rajasthan</p>
+                    <p>UGC-DEB Approved | NAAC 'A' Grade</p>
+                    <p>ISO 9001:2015 Certified</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#platform">Platform</a></li>
+                        <li><a href="#campus">Campus Life</a></li>
+                        <li><a href="#facilities">Facilities</a></li>
+                        <li><a href="#placements">Placements</a></li>
+                        <li><a href="#admission">Admission</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Programs</h3>
+                    <ul>
+                        <li><a href="#">BBA Online</a></li>
+                        <li><a href="#">MBA Online</a></li>
+                        <li><a href="#">BCA Online</a></li>
+                        <li><a href="#">MCA Online</a></li>
+                        <li><a href="#">B.Com Online</a></li>
+                        <li><a href="#">M.Com Online</a></li>
+                        <li><a href="#">BA Online</a></li>
+                        <li><a href="#">MA Online</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <p><i class="fab fa-facebook"></i> Facebook</p>
+                    <p><i class="fab fa-twitter"></i> Twitter</p>
+                    <p><i class="fab fa-instagram"></i> Instagram</p>
+                    <p><i class="fab fa-linkedin"></i> LinkedIn</p>
+                    <p><i class="fab fa-youtube"></i> YouTube</p>
+                    <p><i class="fab fa-telegram"></i> Telegram</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VGU Online Education. All Rights Reserved.</p>
+                <p>Vivekananda Global University, Jaipur | UGC-DEB Approved | NAAC Accredited</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var particlesContainer = document.getElementById('particles');
+            for (var i = 0; i < 12; i++) {
+                var particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+
+            setTimeout(function() {
+                document.getElementById('loading').classList.add('hide');
+            }, 800);
+
+            var quickNavItems = document.querySelectorAll('.quick-nav-item');
+            var sections = document.querySelectorAll('section[id]');
+            var progressBar = document.getElementById('progressBar');
+            var navbar = document.getElementById('navbar');
+            var sectionsArr = Array.prototype.slice.call(sections);
+            var quickNavArr = Array.prototype.slice.call(quickNavItems);
+
+            var sectionOffsets = [];
+            function cacheSectionOffsets() {
+                sectionOffsets = sectionsArr.map(function(section) {
+                    return {
+                        id: section.getAttribute('id'),
+                        top: section.offsetTop - 100,
+                        height: section.offsetHeight
+                    };
+                });
+            }
+            cacheSectionOffsets();
+            var resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(cacheSectionOffsets, 200);
+            });
+
+            var scrollTicking = false;
+            function onScroll() {
+                if (!scrollTicking) {
+                    requestAnimationFrame(function() {
+                        var scrollY = window.pageYOffset;
+                        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                        if (height > 0) {
+                            progressBar.style.width = ((scrollY / height) * 100) + '%';
+                        }
+                        if (scrollY > 50) {
+                            navbar.classList.add('scrolled');
+                        } else {
+                            navbar.classList.remove('scrolled');
+                        }
+                        for (var i = 0; i < sectionOffsets.length; i++) {
+                            var s = sectionOffsets[i];
+                            if (scrollY > s.top && scrollY <= s.top + s.height) {
+                                for (var j = 0; j < quickNavArr.length; j++) {
+                                    if (quickNavArr[j].getAttribute('data-title').toLowerCase() === s.id) {
+                                        quickNavArr[j].classList.add('active');
+                                    } else {
+                                        quickNavArr[j].classList.remove('active');
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        scrollTicking = false;
+                    });
+                    scrollTicking = true;
+                }
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+
+            for (var q = 0; q < quickNavArr.length; q++) {
+                quickNavArr[q].addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var targetId = this.getAttribute('data-title').toLowerCase();
+                    var targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        window.scrollTo({ top: targetSection.offsetTop - 80, behavior: 'smooth' });
+                    }
+                });
+            }
+
+            var menuToggle = document.getElementById('menuToggle');
+            var navLinks = document.getElementById('navLinks');
+            var menuSpans = menuToggle.querySelectorAll('span');
+
+            menuToggle.addEventListener('click', function() {
+                var isActive = navLinks.classList.toggle('active');
+                if (isActive) {
+                    menuSpans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    menuSpans[1].style.opacity = '0';
+                    menuSpans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                } else {
+                    menuSpans[0].style.transform = 'none';
+                    menuSpans[1].style.opacity = '1';
+                    menuSpans[2].style.transform = 'none';
+                }
+            });
+
+            var navAnchors = navLinks.querySelectorAll('a');
+            for (var n = 0; n < navAnchors.length; n++) {
+                navAnchors[n].addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    menuSpans[0].style.transform = 'none';
+                    menuSpans[1].style.opacity = '1';
+                    menuSpans[2].style.transform = 'none';
+                });
+            }
+
+            document.addEventListener('click', function(e) {
+                if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                    menuSpans[0].style.transform = 'none';
+                    menuSpans[1].style.opacity = '1';
+                    menuSpans[2].style.transform = 'none';
+                }
+            });
+
+            var allAnchors = document.querySelectorAll('a[href^="#"]');
+            for (var a = 0; a < allAnchors.length; a++) {
+                allAnchors[a].addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var href = this.getAttribute('href');
+                    if (href.length > 1) {
+                        var target = document.querySelector(href);
+                        if (target) {
+                            window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                        }
+                    }
+                });
+            }
+
+            var tabBtns = document.querySelectorAll('.tab-btn');
+            var programCards = document.querySelectorAll('.program-card');
+            var tabArr = Array.prototype.slice.call(tabBtns);
+            var cardArr = Array.prototype.slice.call(programCards);
+
+            for (var t = 0; t < tabArr.length; t++) {
+                tabArr[t].addEventListener('click', function() {
+                    var category = this.getAttribute('data-category');
+                    for (var b = 0; b < tabArr.length; b++) {
+                        tabArr[b].classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    for (var c = 0; c < cardArr.length; c++) {
+                        var card = cardArr[c];
+                        if (card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                for (var i = 0; i < entries.length; i++) {
+                    var entry = entries[i];
+                    var el = entry.target;
+                    if (entry.isIntersecting) {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                        if (el.classList.contains('cta-section')) {
+                            el.classList.add('visible');
+                        } else {
+                            observer.unobserve(el);
+                        }
+                    } else {
+                        if (el.classList.contains('cta-section')) {
+                            el.classList.remove('visible');
+                        }
+                    }
+                }
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            var animatedElements = document.querySelectorAll('.info-card, .program-card, .step-card, .platform-card, .stat-card, .testimonial-card, .campus-card, .facility-card, .placement-stat-card, .recruiter-card');
+            for (var o = 0; o < animatedElements.length; o++) {
+                animatedElements[o].style.opacity = '0';
+                animatedElements[o].style.transform = 'translateY(30px)';
+                observer.observe(animatedElements[o]);
+            }
+
+            tabArr[0].click();
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    navLinks.classList.remove('active');
+                    menuSpans[0].style.transform = 'none';
+                    menuSpans[1].style.opacity = '1';
+                    menuSpans[2].style.transform = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaipur National University Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Dark Gradient Theme */
+            --primary: #00E0FF;
+            --primary-dark: #00B8D4;
+            --secondary: #2CE6C2;
+            --accent: #14B8A6;
+            --bg-dark: #040614;
+            --bg-darker: #0B0F2A;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-primary: #FFFFFF;
+            --text-secondary: #B0B8D1;
+            --text-muted: #94A3B8;
+            --border-color: rgba(148, 163, 184, 0.1);
+            --border-accent: rgba(0, 224, 255, 0.15);
+            --gradient-1: linear-gradient(135deg, #00E0FF, #2CE6C2);
+            --gradient-2: linear-gradient(135deg, #14B8A6, #00E0FF);
+            --gradient-3: linear-gradient(135deg, #2CE6C2, #14B8A6);
+            --cta-gradient: linear-gradient(135deg, #FF6A3D, #FF8A50);
+            /* Elevated Dark Cards */
+            --elevated: #0F172A;
+            --elevated-light: #13203A;
+            --elevated-lighter: #1A2E4A;
+            /* Multi-Accent */
+            --accent-blue: #3B82F6;
+            --accent-blue-light: #60A5FA;
+            --accent-purple: #A855F7;
+            --accent-purple-light: #EC4899;
+            --accent-green: #22C55E;
+            --accent-green-light: #4ADE80;
+            --accent-amber: #F59E0B;
+            --accent-amber-light: #FBBF24;
+            --accent-orange: #FF6A3D;
+            --accent-orange-light: #FF8A50;
+            --accent-teal: #14B8A6;
+            --accent-teal-light: #2DD4BF;
+            --accent-pink: #EC4899;
+            /* Glow */
+            --glow: rgba(0, 224, 255, 0.15);
+            --glow-accent: rgba(44, 230, 194, 0.15);
+            --glow-cta: rgba(255, 106, 61, 0.2);
+            /* Glassmorphism */
+            --glass-blur: blur(20px);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-darker); }
+        ::-webkit-scrollbar-thumb { background: var(--gradient-1); border-radius: 4px; box-shadow: 0 0 8px var(--glow); }
+
+        #loading {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-dark); display: flex; justify-content: center; align-items: center;
+            z-index: 10000; transition: opacity 0.5s;
+        }
+        .spinner {
+            width: 50px; height: 50px; border: 3px solid rgba(0, 224, 255, 0.1);
+            border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite;
+            box-shadow: 0 0 20px var(--glow);
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        #progressBar {
+            position: fixed; top: 0; left: 0; height: 3px;
+            background: var(--gradient-1); z-index: 9999; transition: width 0.2s;
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        nav {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(4, 6, 20, 0.85); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            z-index: 1000; transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border-color);
+        }
+        nav.scrolled {
+            background: rgba(4, 6, 20, 0.95);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem; font-weight: bold;
+            background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links { display: flex; list-style: none; gap: 2rem; }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none; transition: all 0.3s ease;
+            position: relative; padding: 0.5rem 0;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+            background: var(--gradient-1); transition: width 0.3s ease;
+            box-shadow: 0 0 8px var(--glow);
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--primary); text-shadow: 0 0 10px var(--glow); }
+
+        .quick-nav {
+            position: fixed; right: 20px; top: 60%; transform: translateY(-50%);
+            z-index: 999; display: flex; flex-direction: column; gap: 15px;
+        }
+        .quick-nav-list { display: contents; }
+        .quick-nav-item {
+            width: 50px; height: 50px;
+            background: rgba(15, 23, 42, 0.85); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease; position: relative;
+        }
+        .quick-nav-item:hover {
+            border-color: var(--primary);
+            transform: scale(1.1); box-shadow: 0 0 20px var(--glow);
+        }
+        .quick-nav-item.active { background: var(--gradient-1); border-color: transparent; box-shadow: 0 0 20px var(--glow); }
+        .quick-nav-item i { color: var(--text-muted); font-size: 1.2rem; transition: color 0.3s ease; }
+        .quick-nav-item:hover i, .quick-nav-item.active i { color: var(--text-primary); }
+        .quick-nav-tooltip {
+            position: absolute; right: 60px; background: var(--elevated);
+            color: var(--text-secondary); padding: 5px 10px; border-radius: 5px;
+            white-space: nowrap; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease; font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+        }
+        .quick-nav-item:hover .quick-nav-tooltip { opacity: 1; }
+
+        .quick-nav-toggle {
+            display: none; width: 52px; height: 52px;
+            background: rgba(15, 23, 42, 0.95); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color); border-radius: 50%;
+            align-items: center; justify-content: center;
+            cursor: pointer; position: relative; z-index: 2;
+            transition: all 0.3s ease; flex-shrink: 0;
+        }
+        .quick-nav-toggle i {
+            color: var(--primary); font-size: 1.4rem;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .quick-nav-toggle:hover { border-color: var(--primary); box-shadow: 0 0 25px var(--glow); }
+        .quick-nav-toggle:active { transform: scale(0.95); }
+
+        .hero {
+            height: 100vh; display: flex; align-items: center; position: relative;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0, 224, 255, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(44, 230, 194, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
+                url('https://via.placeholder.com/1920x1080/0B0F2A/00E0FF?text=JNU+Online') center/cover;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0, 224, 255, 0.15), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(44, 230, 194, 0.1), transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(59, 130, 246, 0.1), transparent 50%);
+            animation: gradient-rotate 10s ease infinite;
+        }
+        @keyframes gradient-rotate { 0%, 100% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(1.1); } }
+        .hero-content { position: relative; z-index: 1; max-width: 800px; animation: fadeInUp 1s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .hero h1 {
+            font-size: 3.5rem; margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent-blue));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(0, 224, 255, 0.15));
+        }
+        .hero p { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2rem; }
+
+        .btn {
+            display: inline-block; padding: 12px 30px; border-radius: 50px;
+            text-decoration: none; font-weight: 600; transition: all 0.3s ease;
+            border: none; cursor: pointer; position: relative; overflow: hidden;
+        }
+        /* CTA Warm Gradient */
+        .btn-primary {
+            background: var(--cta-gradient); color: white;
+            box-shadow: 0 4px 20px var(--glow-cta);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255, 106, 61, 0.35); }
+        /* Ghost / Outline Button */
+        .btn-secondary { background: transparent; color: var(--text-secondary); border: 2px solid var(--border-color); }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); box-shadow: 0 4px 20px var(--glow); transform: translateY(-2px); }
+        .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .section { padding: 80px 0; position: relative; }
+        .section::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            box-shadow: 0 0 15px var(--glow); opacity: 0.5;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .section-title {
+            font-size: 2.5rem; text-align: center; margin-bottom: 1rem;
+            background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        .section-subtitle { text-align: center; color: var(--text-muted); margin-bottom: 3rem; font-size: 1.1rem; }
+
+        /* Glassmorphism Info Cards */
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .info-card {
+            background: var(--bg-card); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 16px;
+            padding: 2rem; transition: all 0.4s ease; position: relative; overflow: hidden;
+        }
+        .info-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: var(--gradient-1); transform: scaleX(0); transition: transform 0.3s ease;
+            box-shadow: 0 0 10px var(--glow);
+        }
+        .info-card:hover::before { transform: scaleX(1); }
+        .info-card:hover {
+            transform: translateY(-5px); box-shadow: 0 10px 40px var(--glow);
+            border-color: var(--border-accent); background: rgba(255, 255, 255, 0.06);
+        }
+        .info-card h3 { color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 600; }
+        .info-card h3 i { font-size: 1.4rem; flex-shrink: 0; filter: drop-shadow(0 0 6px var(--glow)); }
+        .info-card ul { list-style: none; }
+        .info-card ul li { padding: 0.5rem 0; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; font-size: 0.95rem; }
+        .info-card ul li:hover { color: var(--primary); transform: translateX(5px); text-shadow: 0 0 5px var(--glow); }
+        .info-card ul li i { color: var(--secondary); font-size: 0.8rem; flex-shrink: 0; filter: drop-shadow(0 0 4px var(--glow-accent)); }
+
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-bottom: 3rem; }
+        .column-content h3 { font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
+        .column-content p { color: var(--text-secondary); margin-bottom: 1rem; }
+        .column-image img { width: 100%; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color); transition: transform 0.3s ease; }
+        .column-image img:hover { transform: scale(1.05); }
+
+        /* Elevated Dark Course Categories - Multi-Accent */
+        .course-categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        .course-category {
+            background: linear-gradient(135deg, var(--elevated), var(--elevated-light));
+            border: 1px solid var(--border-color); border-radius: 16px;
+            padding: 2rem; transition: all 0.4s ease; position: relative; overflow: hidden;
+        }
+        .course-category::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100px;
+            opacity: 0.06; transition: opacity 0.4s ease;
+        }
+        .course-category:hover::before { opacity: 0.12; }
+        .course-category:hover { transform: translateY(-5px); border-color: var(--border-accent); }
+        .course-category h3 { color: var(--text-primary); margin-bottom: 1.5rem; font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 600; position: relative; z-index: 1; }
+        .course-category h3 i { font-size: 1.4rem; flex-shrink: 0; }
+        .course-list { list-style: none; position: relative; z-index: 1; }
+        .course-list li { padding: 0.5rem 0; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer; font-size: 0.95rem; }
+        .course-list li:hover { color: var(--text-primary); padding-left: 10px; }
+        .course-list li:last-child { border-bottom: none; }
+
+        .course-category.c-blue::before { background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-light)); }
+        .course-category.c-blue:hover { box-shadow: 0 10px 40px rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.2); }
+        .course-category.c-blue h3 i { color: var(--accent-blue); filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.4)); }
+        .course-category.c-cyan::before { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+        .course-category.c-cyan:hover { box-shadow: 0 10px 40px var(--glow); border-color: var(--border-accent); }
+        .course-category.c-cyan h3 i { color: var(--primary); filter: drop-shadow(0 0 8px var(--glow)); }
+        .course-category.c-orange::before { background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light)); }
+        .course-category.c-orange:hover { box-shadow: 0 10px 40px rgba(255, 106, 61, 0.08); border-color: rgba(255, 106, 61, 0.2); }
+        .course-category.c-orange h3 i { color: var(--accent-orange); filter: drop-shadow(0 0 8px rgba(255, 106, 61, 0.4)); }
+        .course-category.c-green::before { background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light)); }
+        .course-category.c-green:hover { box-shadow: 0 10px 40px rgba(34, 197, 94, 0.08); border-color: rgba(34, 197, 94, 0.2); }
+        .course-category.c-green h3 i { color: var(--accent-green); filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.4)); }
+        .course-category.c-amber::before { background: linear-gradient(135deg, var(--accent-amber), var(--accent-amber-light)); }
+        .course-category.c-amber:hover { box-shadow: 0 10px 40px rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.2); }
+        .course-category.c-amber h3 i { color: var(--accent-amber); filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.4)); }
+        .course-category.c-purple::before { background: linear-gradient(135deg, var(--accent-purple), var(--accent-purple-light)); }
+        .course-category.c-purple:hover { box-shadow: 0 10px 40px rgba(168, 85, 247, 0.08); border-color: rgba(168, 85, 247, 0.2); }
+        .course-category.c-purple h3 i { color: var(--accent-purple); filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.4)); }
+        .course-category.c-pink::before { background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple)); }
+        .course-category.c-pink:hover { box-shadow: 0 10px 40px rgba(236, 72, 153, 0.08); border-color: rgba(236, 72, 153, 0.2); }
+        .course-category.c-pink h3 i { color: var(--accent-pink); filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.4)); }
+
+        .comparison-table { overflow-x: auto; margin-top: 3rem; -webkit-overflow-scrolling: touch; border-radius: 12px; border: 1px solid var(--border-color); }
+        .comparison-table table { width: 100%; border-collapse: collapse; background: var(--bg-card); min-width: 600px; }
+        .comparison-table th { background: rgba(0, 224, 255, 0.08); color: var(--primary); padding: 1rem; text-align: left; font-weight: 600; font-size: 0.9rem; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-accent); }
+        .comparison-table td { padding: 1rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.95rem; transition: all 0.3s ease; }
+        .comparison-table tr:hover td { background: rgba(0, 224, 255, 0.03); color: var(--primary); text-shadow: 0 0 5px var(--glow); }
+        .comparison-table tr:last-child td { border-bottom: none; }
+
+        .timeline { position: relative; margin: 3rem 0; }
+        .timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, transparent, var(--primary), var(--secondary), transparent); transform: translateX(-50%); box-shadow: 0 0 15px var(--glow); }
+        .timeline-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; position: relative; }
+        .timeline-item:nth-child(even) { flex-direction: row-reverse; }
+        .timeline-content {
+            width: 45%; background: var(--bg-card); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px;
+            padding: 2rem; position: relative; transition: all 0.4s ease;
+        }
+        .timeline-content:hover { transform: scale(1.05); box-shadow: 0 10px 30px var(--glow); border-color: var(--border-accent); }
+        .timeline-content h4 { color: var(--primary); margin-bottom: 0.5rem; }
+        .timeline-content p { color: var(--text-secondary); }
+        .timeline-dot { width: 20px; height: 20px; background: var(--gradient-1); border-radius: 50%; position: absolute; left: 50%; transform: translateX(-50%); box-shadow: 0 0 20px var(--glow); }
+        .timeline-year { width: 45%; text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--secondary); }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.04), rgba(44, 230, 194, 0.02));
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-accent); border-radius: 16px;
+            padding: 2rem; margin-top: 3rem; position: relative; overflow: hidden;
+        }
+        .highlight-box::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: var(--gradient-1); opacity: 0.03; animation: rotate 10s linear infinite; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .highlight-box h4 { color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 600; }
+        .highlight-box h4 i { flex-shrink: 0; }
+        .highlight-box ul { list-style: none; position: relative; z-index: 1; }
+        .highlight-box ul li { padding: 0.5rem 0; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; font-size: 0.95rem; }
+        .highlight-box ul li:hover { color: var(--primary); transform: translateX(5px); }
+
+        /* Glassmorphism Stat Cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .stat-card {
+            background: var(--bg-card); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 16px;
+            padding: 2rem; text-align: center; transition: all 0.4s ease; position: relative; overflow: hidden;
+        }
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--gradient-1); opacity: 0; transition: opacity 0.3s ease; }
+        .stat-card:hover::before { opacity: 0.08; }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 40px var(--glow); border-color: var(--border-accent); }
+        .stat-number { font-size: 2.5rem; font-weight: bold; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; filter: drop-shadow(0 0 10px var(--glow)); }
+        .stat-label { color: var(--text-muted); font-size: 1rem; }
+
+        /* Multi-Accent Facility Cards */
+        .facility-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .facility-card {
+            background: linear-gradient(135deg, var(--elevated), var(--elevated-light));
+            border: 1px solid var(--border-color); border-radius: 16px;
+            padding: 2rem; text-align: center; transition: all 0.4s ease;
+            position: relative; overflow: hidden;
+        }
+        .facility-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 80px; opacity: 0.06; transition: opacity 0.4s ease; }
+        .facility-card:hover::before { opacity: 0.12; }
+        .facility-card:hover { transform: translateY(-5px); border-color: var(--border-light); }
+        .facility-card i { font-size: 3rem; margin-bottom: 1rem; transition: all 0.3s ease; }
+        .facility-card:hover i { transform: scale(1.1); }
+        .facility-card h4 { color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 600; }
+        .facility-card p { color: var(--text-muted); font-size: 0.9rem; }
+
+        .facility-card.f-cyan::before { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+        .facility-card.f-cyan:hover { box-shadow: 0 10px 40px var(--glow); border-color: var(--border-accent); }
+        .facility-card.f-cyan i { color: var(--primary); filter: drop-shadow(0 0 10px var(--glow)); }
+        .facility-card.f-blue::before { background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-light)); }
+        .facility-card.f-blue:hover { box-shadow: 0 10px 40px rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.2); }
+        .facility-card.f-blue i { color: var(--accent-blue); filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4)); }
+        .facility-card.f-green::before { background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light)); }
+        .facility-card.f-green:hover { box-shadow: 0 10px 40px rgba(34, 197, 94, 0.08); border-color: rgba(34, 197, 94, 0.2); }
+        .facility-card.f-green i { color: var(--accent-green); filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.4)); }
+        .facility-card.f-orange::before { background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light)); }
+        .facility-card.f-orange:hover { box-shadow: 0 10px 40px rgba(255, 106, 61, 0.08); border-color: rgba(255, 106, 61, 0.2); }
+        .facility-card.f-orange i { color: var(--accent-orange); filter: drop-shadow(0 0 10px rgba(255, 106, 61, 0.4)); }
+        .facility-card.f-purple::before { background: linear-gradient(135deg, var(--accent-purple), var(--accent-purple-light)); }
+        .facility-card.f-purple:hover { box-shadow: 0 10px 40px rgba(168, 85, 247, 0.08); border-color: rgba(168, 85, 247, 0.2); }
+        .facility-card.f-purple i { color: var(--accent-purple); filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.4)); }
+        .facility-card.f-amber::before { background: linear-gradient(135deg, var(--accent-amber), var(--accent-amber-light)); }
+        .facility-card.f-amber:hover { box-shadow: 0 10px 40px rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.2); }
+        .facility-card.f-amber i { color: var(--accent-amber); filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.4)); }
+        .facility-card.f-teal::before { background: linear-gradient(135deg, var(--accent-teal), var(--accent-teal-light)); }
+        .facility-card.f-teal:hover { box-shadow: 0 10px 40px rgba(20, 184, 166, 0.08); border-color: rgba(20, 184, 166, 0.2); }
+        .facility-card.f-teal i { color: var(--accent-teal); filter: drop-shadow(0 0 10px rgba(20, 184, 166, 0.4)); }
+        .facility-card.f-pink::before { background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple)); }
+        .facility-card.f-pink:hover { box-shadow: 0 10px 40px rgba(236, 72, 153, 0.08); border-color: rgba(236, 72, 153, 0.2); }
+        .facility-card.f-pink i { color: var(--accent-pink); filter: drop-shadow(0 0 10px rgba(236, 72, 153, 0.4)); }
+
+        .cta-section {
+            background: linear-gradient(135deg, rgba(255, 106, 61, 0.04), rgba(0, 224, 255, 0.03));
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-accent); border-radius: 20px;
+            padding: 3rem; text-align: center; position: relative; overflow: hidden;
+        }
+        .cta-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--gradient-1); opacity: 0.02; }
+        .cta-content { position: relative; z-index: 1; }
+        .cta-content h2 { font-size: 2.5rem; margin-bottom: 1rem; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+        .cta-content p { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2rem; }
+
+        footer {
+            background: linear-gradient(135deg, var(--bg-darker), var(--bg-dark));
+            padding: 3rem 0 1rem; border-top: 1px solid var(--border-color);
+            position: relative;
+        }
+        footer::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            box-shadow: 0 0 15px var(--glow);
+        }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .footer-section h3 { color: var(--primary); margin-bottom: 1rem; font-size: 1.2rem; font-weight: 600; }
+        .footer-section p { color: var(--text-muted); margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: 0.5rem; }
+        .footer-section ul li a { color: var(--text-muted); text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem; }
+        .footer-section ul li a:hover { color: var(--primary); padding-left: 5px; text-shadow: 0 0 8px var(--glow); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); }
+
+        .menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 6px; z-index: 1001; }
+        .menu-toggle span { width: 25px; height: 3px; background: var(--gradient-1); transition: 0.3s; border-radius: 3px; box-shadow: 0 0 5px var(--glow); }
+        .nav-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 998; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .nav-overlay.active { opacity: 1; visibility: visible; }
+
+        #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
+        .particle { position: absolute; width: 3px; height: 3px; border-radius: 50%; opacity: 0.35; animation: float 15s infinite linear; }
+        @keyframes float { from { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.35; } 90% { opacity: 0.35; } to { transform: translateY(-100vh) rotate(360deg); opacity: 0; } }
+        .hide { opacity: 0 !important; pointer-events: none !important; }
+
+        /* Multi-Accent Campus Cards */
+        .campus-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .campus-card {
+            background: linear-gradient(135deg, var(--elevated), var(--elevated-light));
+            border: 1px solid var(--border-color); border-radius: 16px;
+            overflow: hidden; transition: all 0.4s ease; position: relative;
+        }
+        .campus-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0, 224, 255, 0.08); border-color: var(--border-accent); }
+        .campus-card-image {
+            height: 200px; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        .campus-card-image::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent); transform: rotate(45deg); animation: scan 3s linear infinite; }
+        @keyframes scan { from { transform: translateX(-100%) translateY(-100%) rotate(45deg); } to { transform: translateX(100%) translateY(100%) rotate(45deg); } }
+        .campus-card-image i { font-size: 4rem; z-index: 1; position: relative; }
+        .campus-card-content { padding: 2rem; }
+        .campus-card-content h4 { color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem; font-weight: 600; }
+        .campus-card-content p { color: var(--text-muted); margin-bottom: 1rem; font-size: 0.95rem; }
+        .campus-card-content ul { list-style: none; }
+        .campus-card-content ul li { padding: 0.3rem 0; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
+        .campus-card-content ul li i { color: var(--secondary); font-size: 0.8rem; flex-shrink: 0; }
+
+        .campus-card.cm-blue .campus-card-image { background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05)); }
+        .campus-card.cm-blue .campus-card-image i { color: var(--accent-blue); filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.5)); }
+        .campus-card.cm-cyan .campus-card-image { background: linear-gradient(135deg, rgba(0, 224, 255, 0.15), rgba(44, 230, 194, 0.05)); }
+        .campus-card.cm-cyan .campus-card-image i { color: var(--primary); filter: drop-shadow(0 0 15px var(--glow)); }
+        .campus-card.cm-green .campus-card-image { background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05)); }
+        .campus-card.cm-green .campus-card-image i { color: var(--accent-green); filter: drop-shadow(0 0 15px rgba(34, 197, 94, 0.5)); }
+        .campus-card.cm-orange .campus-card-image { background: linear-gradient(135deg, rgba(255, 106, 61, 0.15), rgba(255, 106, 61, 0.05)); }
+        .campus-card.cm-orange .campus-card-image i { color: var(--accent-orange); filter: drop-shadow(0 0 15px rgba(255, 106, 61, 0.5)); }
+        .campus-card.cm-purple .campus-card-image { background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.05)); }
+        .campus-card.cm-purple .campus-card-image i { color: var(--accent-purple); filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.5)); }
+        .campus-card.cm-amber .campus-card-image { background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05)); }
+        .campus-card.cm-amber .campus-card-image i { color: var(--accent-amber); filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.5)); }
+        .campus-card.cm-teal .campus-card-image { background: linear-gradient(135deg, rgba(20, 184, 166, 0.15), rgba(20, 184, 166, 0.05)); }
+        .campus-card.cm-teal .campus-card-image i { color: var(--accent-teal); filter: drop-shadow(0 0 15px rgba(20, 184, 166, 0.5)); }
+        .campus-card.cm-pink .campus-card-image { background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(168, 85, 247, 0.05)); }
+        .campus-card.cm-pink .campus-card-image i { color: var(--accent-pink); filter: drop-shadow(0 0 15px rgba(236, 72, 153, 0.5)); }
+
+        /* Multi-Accent Facility Showcase */
+        .facility-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .facility-showcase-card {
+            background: linear-gradient(135deg, var(--elevated), var(--elevated-light));
+            border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem;
+            position: relative; overflow: hidden; transition: all 0.4s ease;
+        }
+        .facility-showcase-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gradient-1); transform: scaleX(0); transition: transform 0.3s ease; }
+        .facility-showcase-card:hover::after { transform: scaleX(1); }
+        .facility-showcase-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px var(--glow); border-color: var(--border-accent); }
+        .facility-icon-large {
+            width: 80px; height: 80px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; margin-bottom: 1.5rem; transition: all 0.3s ease;
+        }
+        .facility-showcase-card:hover .facility-icon-large { transform: scale(1.1) rotate(5deg); }
+        .facility-icon-large i { font-size: 2rem; color: white; }
+        .facility-showcase-card h4 { color: var(--primary); margin-bottom: 1rem; font-size: 1.4rem; font-weight: 600; }
+        .facility-showcase-card p { color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6; font-size: 0.95rem; }
+        .facility-features { list-style: none; }
+        .facility-features li { padding: 0.5rem 0; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; font-size: 0.9rem; }
+        .facility-features li:hover { color: var(--primary); transform: translateX(5px); }
+        .facility-features li i { color: var(--secondary); font-size: 0.9rem; flex-shrink: 0; }
+
+        .facility-showcase-card.fs-cyan .facility-icon-large { background: linear-gradient(135deg, var(--primary), var(--secondary)); box-shadow: 0 8px 25px var(--glow); }
+        .facility-showcase-card.fs-cyan:hover .facility-icon-large { box-shadow: 0 12px 35px var(--glow); }
+        .facility-showcase-card.fs-blue .facility-icon-large { background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-light)); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3); }
+        .facility-showcase-card.fs-blue:hover .facility-icon-large { box-shadow: 0 12px 35px rgba(59, 130, 246, 0.4); }
+        .facility-showcase-card.fs-green .facility-icon-large { background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light)); box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3); }
+        .facility-showcase-card.fs-green:hover .facility-icon-large { box-shadow: 0 12px 35px rgba(34, 197, 94, 0.4); }
+        .facility-showcase-card.fs-orange .facility-icon-large { background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light)); box-shadow: 0 8px 25px rgba(255, 106, 61, 0.3); }
+        .facility-showcase-card.fs-orange:hover .facility-icon-large { box-shadow: 0 12px 35px rgba(255, 106, 61, 0.4); }
+        .facility-showcase-card.fs-purple .facility-icon-large { background: linear-gradient(135deg, var(--accent-purple), var(--accent-purple-light)); box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3); }
+        .facility-showcase-card.fs-purple:hover .facility-icon-large { box-shadow: 0 12px 35px rgba(168, 85, 247, 0.4); }
+        .facility-showcase-card.fs-amber .facility-icon-large { background: linear-gradient(135deg, var(--accent-amber), var(--accent-amber-light)); box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3); }
+        .facility-showcase-card.fs-amber:hover .facility-icon-large { box-shadow: 0 12px 35px rgba(245, 158, 11, 0.4); }
+        .facility-showcase-card.fs-teal .facility-icon-large { background: linear-gradient(135deg, var(--accent-teal), var(--accent-teal-light)); box-shadow: 0 8px 25px rgba(20, 184, 166, 0.3); }
+        .facility-showcase-card.fs-teal:hover .facility-icon-large { box-shadow: 0 12px 35px rgba(20, 184, 166, 0.4); }
+        .facility-showcase-card.fs-pink .facility-icon-large { background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple)); box-shadow: 0 8px 25px rgba(236, 72, 153, 0.3); }
+        .facility-showcase-card.fs-pink:hover .facility-icon-large { box-shadow: 0 12px 35px rgba(236, 72, 153, 0.4); }
+
+        .placement-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 3rem 0; }
+        .placement-stat-card {
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.04), rgba(44, 230, 194, 0.02));
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-accent); border-radius: 16px;
+            padding: 2rem; text-align: center; position: relative; overflow: hidden; transition: all 0.4s ease;
+        }
+        .placement-stat-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, var(--primary), transparent); opacity: 0; transition: opacity 0.3s ease; }
+        .placement-stat-card:hover::before { opacity: 0.08; }
+        .placement-stat-card:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 35px var(--glow); }
+        .placement-number { font-size: 3rem; font-weight: bold; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; display: block; filter: drop-shadow(0 0 10px var(--glow)); }
+        .placement-label { color: var(--text-muted); font-size: 1rem; font-weight: 500; }
+
+        .recruiters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; margin: 3rem 0; }
+        .recruiter-card {
+            background: var(--bg-card); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px;
+            padding: 1.5rem; display: flex; align-items: center; justify-content: center;
+            height: 100px; transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        .recruiter-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0, 224, 255, 0.1), transparent); transition: left 0.5s ease; }
+        .recruiter-card:hover::before { left: 100%; }
+        .recruiter-card:hover { transform: scale(1.05); border-color: var(--border-accent); box-shadow: 0 10px 25px var(--glow); }
+        .recruiter-card span { color: var(--text-secondary); font-weight: 600; font-size: 0.9rem; text-align: center; transition: color 0.3s ease; }
+        .recruiter-card:hover span { color: var(--primary); }
+
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .testimonial-card {
+            background: var(--bg-card); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 16px;
+            padding: 2rem; position: relative; transition: all 0.4s ease;
+        }
+        .testimonial-card::before { content: '"'; position: absolute; top: 10px; left: 20px; font-size: 4rem; color: var(--primary); opacity: 0.15; }
+        .testimonial-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px var(--glow); border-color: var(--border-accent); }
+        .testimonial-content { margin-bottom: 1.5rem; color: var(--text-secondary); font-style: italic; position: relative; z-index: 1; font-size: 0.95rem; }
+        .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+        .author-avatar {
+            width: 50px; height: 50px; border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.2), rgba(44, 230, 194, 0.15));
+            border: 1px solid rgba(0, 224, 255, 0.2);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--primary); font-weight: bold; font-size: 1.2rem; flex-shrink: 0;
+        }
+        .author-info h5 { color: var(--primary); margin-bottom: 0.2rem; }
+        .author-info p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* ============================================ */
+        /* RESPONSIVE DESIGN                            */
+        /* ============================================ */
+
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 3rem; }
+            .hero p { font-size: 1.1rem; }
+            .section-title { font-size: 2.2rem; }
+            .cta-content h2 { font-size: 2.2rem; }
+            .two-column { gap: 2rem; }
+            .column-content h3 { font-size: 1.75rem; }
+            .quick-nav { right: 15px; gap: 12px; }
+            .quick-nav-item { width: 45px; height: 45px; }
+            .quick-nav-item i { font-size: 1.1rem; }
+            .quick-nav-tooltip { display: none; }
+            .course-categories { grid-template-columns: repeat(2, 1fr); }
+            .facility-showcase { grid-template-columns: repeat(2, 1fr); }
+            .campus-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            .nav-links {
+                display: none; position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+                background: rgba(4, 6, 20, 0.98); backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                flex-direction: column; padding: 80px 30px 30px;
+                border-left: 1px solid var(--border-color); gap: 0; overflow-y: auto;
+                -webkit-overflow-scrolling: touch; z-index: 999;
+            }
+            .nav-links.active { display: flex; right: 0; }
+            .nav-links li { border-bottom: 1px solid var(--border-color); }
+            .nav-links li:last-child { border-bottom: none; }
+            .nav-links a { display: block; padding: 15px 0; font-size: 1rem; }
+            .nav-links a::after { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1rem; }
+            .section { padding: 60px 0; }
+            .section-title { font-size: 2rem; }
+            .section-subtitle { font-size: 1rem; margin-bottom: 2rem; }
+            .container { padding: 0 1.25rem; }
+            .nav-container { padding: 1rem 1.25rem; }
+            .logo { font-size: 1.3rem; }
+            .two-column { grid-template-columns: 1fr; gap: 2rem; }
+            .column-content h3 { font-size: 1.5rem; }
+            .info-grid { grid-template-columns: 1fr; gap: 1.5rem; margin-top: 2rem; }
+            .course-categories { grid-template-columns: 1fr; gap: 1.5rem; }
+            .facility-showcase { grid-template-columns: 1fr; gap: 1.5rem; }
+            .campus-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 2rem; }
+            .placement-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 2rem 0; }
+            .testimonials-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .facility-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 2rem; }
+            .recruiters-grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+            .highlight-box { padding: 1.5rem; margin-top: 2rem; }
+            .cta-section { padding: 2rem 1.5rem; }
+            .cta-content h2 { font-size: 1.8rem; }
+            .cta-content p { font-size: 1rem; }
+            .timeline::before { left: 30px; }
+            .timeline-item { flex-direction: column !important; align-items: flex-start !important; margin-bottom: 2rem; }
+            .timeline-content { width: 100%; margin-left: 60px; padding: 1.25rem; }
+            .timeline-content:hover { transform: none; }
+            .timeline-year { width: 100%; margin-left: 60px; text-align: left; font-size: 1rem; margin-bottom: 0.5rem; }
+            .timeline-dot { left: 30px; width: 16px; height: 16px; }
+            .btn-group { flex-direction: column; }
+            .btn { width: 100%; text-align: center; padding: 12px 20px; }
+            .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
+            .info-card { padding: 1.5rem; }
+            .course-category { padding: 1.5rem; }
+            .facility-showcase-card { padding: 1.5rem; }
+            .campus-card-content { padding: 1.5rem; }
+            .quick-nav { bottom: 20px; right: 15px; top: auto; transform: none; flex-direction: column; align-items: flex-end; gap: 10px; z-index: 998; }
+            .quick-nav-list {
+                display: flex; flex-direction: column; gap: 8px;
+                background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(14px);
+                border: 1px solid var(--border-color); border-radius: 14px; padding: 10px;
+                opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.95);
+                transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                pointer-events: none; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            }
+            .quick-nav.expanded .quick-nav-list { opacity: 1; visibility: visible; transform: translateY(0) scale(1); pointer-events: all; }
+            .quick-nav-item {
+                width: 44px; height: 44px; opacity: 0; transform: scale(0.5);
+                transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+            .quick-nav.expanded .quick-nav-item:nth-child(1) { opacity: 1; transform: scale(1); transition-delay: 0.20s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(2) { opacity: 1; transform: scale(1); transition-delay: 0.17s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(3) { opacity: 1; transform: scale(1); transition-delay: 0.14s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(4) { opacity: 1; transform: scale(1); transition-delay: 0.11s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(5) { opacity: 1; transform: scale(1); transition-delay: 0.08s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(6) { opacity: 1; transform: scale(1); transition-delay: 0.06s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(7) { opacity: 1; transform: scale(1); transition-delay: 0.04s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(8) { opacity: 1; transform: scale(1); transition-delay: 0.02s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(9) { opacity: 1; transform: scale(1); transition-delay: 0.01s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(10) { opacity: 1; transform: scale(1); transition-delay: 0s; }
+            .quick-nav-item:hover { transform: scale(1.08) !important; }
+            .quick-nav-toggle { display: flex; }
+            .quick-nav-tooltip { display: none !important; }
+        }
+
+        @media (max-width: 576px) {
+            .container { padding: 0 1rem; }
+            .nav-container { padding: 0.75rem 1rem; }
+            .logo { font-size: 1.15rem; }
+            .hero { height: auto; min-height: 100vh; padding: 100px 0 60px; }
+            .hero h1 { font-size: 2rem; line-height: 1.2; }
+            .hero p { font-size: 0.95rem; margin-bottom: 1.5rem; }
+            .section { padding: 50px 0; }
+            .section-title { font-size: 1.75rem; padding: 0 5px; }
+            .section-subtitle { font-size: 0.95rem; padding: 0 5px; margin-bottom: 1.5rem; }
+            .info-card { padding: 1.25rem; }
+            .info-card h3 { font-size: 1.1rem; flex-wrap: wrap; }
+            .info-card h3 i { font-size: 1.2rem; }
+            .info-card ul li { font-size: 0.9rem; padding: 0.4rem 0; }
+            .course-category { padding: 1.25rem; }
+            .course-category h3 { font-size: 1.1rem; }
+            .course-list li { font-size: 0.9rem; padding: 0.4rem 0; }
+            .facility-showcase-card { padding: 1.25rem; }
+            .facility-showcase-card h4 { font-size: 1.2rem; }
+            .facility-showcase-card p { font-size: 0.9rem; }
+            .facility-icon-large { width: 65px; height: 65px; margin-bottom: 1rem; }
+            .facility-icon-large i { font-size: 1.6rem; }
+            .facility-features li { font-size: 0.9rem; }
+            .campus-card-image { height: 160px; }
+            .campus-card-image i { font-size: 3rem; }
+            .campus-card-content { padding: 1.25rem; }
+            .campus-card-content h4 { font-size: 1.15rem; }
+            .campus-card-content p { font-size: 0.9rem; }
+            .campus-card-content ul li { font-size: 0.85rem; }
+            .stat-number { font-size: 2rem; }
+            .stat-label { font-size: 0.9rem; }
+            .stat-card { padding: 1.25rem; }
+            .placement-number { font-size: 2.25rem; }
+            .placement-label { font-size: 0.9rem; }
+            .placement-stat-card { padding: 1.25rem; }
+            .placement-stat-card:hover { transform: translateY(-5px); }
+            .recruiters-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .recruiter-card { height: 80px; padding: 1rem; }
+            .recruiter-card span { font-size: 0.8rem; }
+            .testimonial-card { padding: 1.25rem; }
+            .testimonial-card::before { font-size: 3rem; }
+            .testimonial-content { font-size: 0.9rem; }
+            .author-avatar { width: 42px; height: 42px; font-size: 1rem; }
+            .author-info h5 { font-size: 0.95rem; }
+            .author-info p { font-size: 0.85rem; }
+            .highlight-box { padding: 1.25rem; margin-top: 1.5rem; }
+            .highlight-box h4 { font-size: 1.1rem; }
+            .highlight-box ul li { font-size: 0.9rem; }
+            .cta-section { padding: 1.5rem 1rem; border-radius: 15px; }
+            .cta-content h2 { font-size: 1.5rem; }
+            .cta-content p { font-size: 0.95rem; margin-bottom: 1.5rem; }
+            .facility-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .facility-card { padding: 1.5rem; }
+            .facility-card i { font-size: 2.5rem; }
+            .facility-card h4 { font-size: 1.1rem; }
+            .facility-card p { font-size: 0.85rem; }
+            .timeline::before { left: 20px; }
+            .timeline-item { margin-left: 0; margin-bottom: 1.5rem; }
+            .timeline-content { margin-left: 45px; padding: 1rem; }
+            .timeline-year { margin-left: 45px; font-size: 0.9rem; }
+            .timeline-dot { left: 20px; width: 14px; height: 14px; }
+            .timeline-content h4 { font-size: 1rem; }
+            .timeline-content p { font-size: 0.9rem; }
+            .footer-section p { font-size: 0.9rem; }
+            .footer-section h3 { font-size: 1.1rem; }
+            .footer-bottom p { font-size: 0.85rem; }
+            .comparison-table { margin-top: 2rem; }
+            .comparison-table th, .comparison-table td { padding: 0.75rem; font-size: 0.9rem; }
+            .column-content h3 { font-size: 1.35rem; }
+            .column-content p { font-size: 0.95rem; }
+            .quick-nav { bottom: 15px; right: 12px; gap: 8px; }
+            .quick-nav-list {
+                display: grid; grid-template-columns: repeat(2, 38px); gap: 8px;
+                padding: 10px; border-radius: 16px; transform-origin: bottom right;
+            }
+            .quick-nav-item { width: 38px; height: 38px; }
+            .quick-nav-item i { font-size: 0.95rem; }
+            .quick-nav.expanded .quick-nav-item:nth-child(1) { transition-delay: 0s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(2) { transition-delay: 0.02s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(3) { transition-delay: 0.04s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(4) { transition-delay: 0.06s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(5) { transition-delay: 0.08s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(6) { transition-delay: 0.10s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(7) { transition-delay: 0.12s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(8) { transition-delay: 0.14s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(9) { transition-delay: 0.16s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(10) { transition-delay: 0.18s; }
+            .quick-nav-toggle { width: 46px; height: 46px; }
+            .quick-nav-toggle i { font-size: 1.2rem; }
+        }
+
+        @media (max-width: 375px) {
+            .hero h1 { font-size: 1.75rem; }
+            .hero p { font-size: 0.9rem; }
+            .section-title { font-size: 1.5rem; }
+            .section-subtitle { font-size: 0.9rem; }
+            .logo { font-size: 1rem; }
+            .info-card h3 { font-size: 1rem; }
+            .info-card ul li { font-size: 0.85rem; }
+            .course-category h3 { font-size: 1rem; }
+            .course-list li { font-size: 0.85rem; }
+            .stat-number { font-size: 1.75rem; }
+            .placement-number { font-size: 1.75rem; }
+            .recruiters-grid { grid-template-columns: repeat(2, 1fr); }
+            .recruiter-card span { font-size: 0.75rem; }
+            .quick-nav { display: none; }
+            .cta-content h2 { font-size: 1.35rem; }
+        }
+
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero { min-height: auto; height: auto; padding: 80px 0 40px; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 0.95rem; margin-bottom: 1rem; }
+            .section { padding: 40px 0; }
+            .section-title { font-size: 1.75rem; }
+            .cta-content h2 { font-size: 1.75rem; }
+            .quick-nav { bottom: 10px; right: 10px; }
+            .quick-nav-list { padding: 8px; gap: 6px; }
+            .quick-nav-item { width: 34px; height: 34px; }
+            .quick-nav-item i { font-size: 0.85rem; }
+            .quick-nav-toggle { width: 40px; height: 40px; }
+            .quick-nav-toggle i { font-size: 1rem; }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .btn:hover { transform: none; }
+            .btn:active { transform: scale(0.98); }
+            .info-card:hover { transform: none; }
+            .info-card:active { transform: scale(0.99); }
+            .course-category:hover { transform: none; }
+            .stat-card:hover { transform: none; }
+            .placement-stat-card:hover { transform: none; }
+            .recruiter-card:hover { transform: none; }
+            .campus-card:hover { transform: none; }
+            .facility-card:hover { transform: none; }
+            .facility-showcase-card:hover { transform: none; }
+            .testimonial-card:hover { transform: none; }
+            .quick-nav-item:hover { transform: scale(1.08) !important; }
+            .quick-nav-item:active { transform: scale(0.92) !important; }
+            .timeline-content:hover { transform: none; }
+            .column-image img:hover { transform: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+            .particle { display: none; }
+        }
+
+        @media (prefers-contrast: high) {
+            .info-card, .course-category, .facility-showcase-card, .campus-card, .stat-card, .facility-card, .placement-stat-card, .recruiter-card, .testimonial-card, .highlight-box, .cta-section, .timeline-content, .comparison-table { border-width: 2px; }
+            .quick-nav-item { border-width: 2px; }
+            .quick-nav-list { border-width: 2px; }
+            .quick-nav-toggle { border-width: 2px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading"><div class="spinner"></div></div>
+    <div id="progressBar"></div>
+    <div id="particles"></div>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo"><i class="fas fa-graduation-cap"></i> JNU Online</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#courses">Programs</a></li>
+                <li><a href="#admission">Admission</a></li>
+                <li><a href="#learning">Learning</a></li>
+                <li><a href="#campus">Campus Life</a></li>
+                <li><a href="#facilities">Facilities</a></li>
+                <li><a href="#placements">Placements</a></li>
+                <li><a href="#support">Support</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <div class="quick-nav" id="quickNav">
+        <div class="quick-nav-list" id="quickNavList">
+            <div class="quick-nav-item active" data-section="home"><i class="fas fa-home"></i><div class="quick-nav-tooltip">Home</div></div>
+            <div class="quick-nav-item" data-section="about"><i class="fas fa-info-circle"></i><div class="quick-nav-tooltip">About</div></div>
+            <div class="quick-nav-item" data-section="courses"><i class="fas fa-book"></i><div class="quick-nav-tooltip">Programs</div></div>
+            <div class="quick-nav-item" data-section="admission"><i class="fas fa-user-plus"></i><div class="quick-nav-tooltip">Admission</div></div>
+            <div class="quick-nav-item" data-section="learning"><i class="fas fa-laptop"></i><div class="quick-nav-tooltip">Learning</div></div>
+            <div class="quick-nav-item" data-section="campus"><i class="fas fa-university"></i><div class="quick-nav-tooltip">Campus</div></div>
+            <div class="quick-nav-item" data-section="facilities"><i class="fas fa-building"></i><div class="quick-nav-tooltip">Facilities</div></div>
+            <div class="quick-nav-item" data-section="placements"><i class="fas fa-briefcase"></i><div class="quick-nav-tooltip">Placements</div></div>
+            <div class="quick-nav-item" data-section="support"><i class="fas fa-headset"></i><div class="quick-nav-tooltip">Support</div></div>
+            <div class="quick-nav-item" data-section="contact"><i class="fas fa-phone"></i><div class="quick-nav-tooltip">Contact</div></div>
+        </div>
+        <div class="quick-nav-toggle" id="quickNavToggle"><i class="fas fa-compass"></i></div>
+    </div>
+
+    <section class="hero section" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Jaipur National University Online</h1>
+                <p>UGC-DEB Approved Distance Education Programs | Learn from Anywhere, Anytime</p>
+                <div class="btn-group">
+                    <a href="#courses" class="btn btn-primary"><i class="fas fa-rocket"></i> Explore Programs</a>
+                    <a href="#admission" class="btn btn-secondary"><i class="fas fa-play-circle"></i> How to Apply</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">About JNU Online</h2>
+            <p class="section-subtitle">Empowering 50,000+ Learners Worldwide</p>
+            <div class="two-column">
+                <div class="column-content">
+                    <h3>Why Choose JNU Online?</h3>
+                    <p>Jaipur National University's online programs offer flexible, quality education designed for working professionals and students. Our UGC-DEB approved courses ensure recognized degrees with the convenience of remote learning.</p>
+                    <p>With 15+ years of excellence in distance education, we provide industry-relevant curriculum, expert faculty, and comprehensive student support to help you achieve your career goals.</p>
+                    <div class="btn-group"><a href="#courses" class="btn btn-primary"><i class="fas fa-arrow-right"></i> View Programs</a></div>
+                </div>
+                <div class="column-image"><img src="https://via.placeholder.com/600x400/0B0F2A/00E0FF/ffffff?text=JNU+Online+Learning" alt="JNU Online Learning"></div>
+            </div>
+            <div class="info-grid">
+                <div class="info-card"><h3><i class="fas fa-award"></i> Recognized & Approved</h3><ul><li><i class="fas fa-check"></i> UGC-DEB Approved</li><li><i class="fas fa-check"></i> NAAC 'A' Grade University</li><li><i class="fas fa-check"></i> AICTE Approved Programs</li><li><i class="fas fa-check"></i> AIU Member</li><li><i class="fas fa-check"></i> ISO 9001:2015 Certified</li><li><i class="fas fa-check"></i> Government Recognized</li><li><i class="fas fa-check"></i> Industry Validated</li><li><i class="fas fa-check"></i> Globally Accepted</li></ul></div>
+                <div class="info-card"><h3><i class="fas fa-users"></i> 50,000+ Happy Learners</h3><ul><li><i class="fas fa-check"></i> 95% Satisfaction Rate</li><li><i class="fas fa-check"></i> 500+ Corporate Partners</li><li><i class="fas fa-check"></i> 1000+ Recruiter Network</li><li><i class="fas fa-check"></i> 85% Placement Success</li><li><i class="fas fa-check"></i> 25+ Countries Students</li><li><i class="fas fa-check"></i> Strong Alumni Network</li><li><i class="fas fa-check"></i> Industry Mentorship</li><li><i class="fas fa-check"></i> Career Guidance Support</li></ul></div>
+                <div class="info-card"><h3><i class="fas fa-laptop-house"></i> Flexible Learning</h3><ul><li><i class="fas fa-check"></i> Learn at Your Pace</li><li><i class="fas fa-check"></i> 24/7 Course Access</li><li><i class="fas fa-check"></i> Mobile App Support</li><li><i class="fas fa-check"></i> Live & Recorded Classes</li><li><i class="fas fa-check"></i> Weekend Batches Available</li><li><i class="fas fa-check"></i> No Age Limit</li><li><i class="fas fa-check"></i> Study While Working</li><li><i class="fas fa-check"></i> Lifetime Course Access</li></ul></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="courses">
+        <div class="container">
+            <h2 class="section-title">Online Programs</h2>
+            <p class="section-subtitle">Industry-Relevant Courses for Career Growth</p>
+            <div class="course-categories">
+                <div class="course-category c-blue"><h3><i class="fas fa-briefcase"></i> Management</h3><ul class="course-list"><li>BBA (Bachelor of Business Administration)</li><li>MBA (Master of Business Administration)</li><li>B.Com (Bachelor of Commerce)</li><li>M.Com (Master of Commerce)</li><li>Executive MBA</li><li>PGDM (Post Graduate Diploma)</li><li>Diploma in Business Management</li><li>Certificate in Digital Marketing</li></ul></div>
+                <div class="course-category c-cyan"><h3><i class="fas fa-laptop-code"></i> Information Technology</h3><ul class="course-list"><li>BCA (Bachelor of Computer Applications)</li><li>MCA (Master of Computer Applications)</li><li>B.Sc. (Computer Science)</li><li>M.Sc. (Computer Science)</li><li>B.Sc. (IT)</li><li>M.Sc. (IT)</li><li>Diploma in Software Development</li><li>Certificate in Cyber Security</li></ul></div>
+                <div class="course-category c-orange"><h3><i class="fas fa-heartbeat"></i> Healthcare</h3><ul class="course-list"><li>B.Sc. (Nursing)</li><li>M.Sc. (Nursing)</li><li>B.Pharma (Bachelor of Pharmacy)</li><li>M.Pharma (Master of Pharmacy)</li><li>BPT (Physiotherapy)</li><li>MPT (Physiotherapy)</li><li>Diploma in Medical Lab Technology</li><li>Certificate in Healthcare Management</li></ul></div>
+                <div class="course-category c-green"><h3><i class="fas fa-flask"></i> Science & Arts</h3><ul class="course-list"><li>B.A. (Bachelor of Arts)</li><li>M.A. (Master of Arts)</li><li>B.Sc. (General)</li><li>M.Sc. (General)</li><li>B.A. (Psychology)</li><li>M.A. (Psychology)</li><li>B.A. (Sociology)</li><li>M.A. (English)</li></ul></div>
+                <div class="course-category c-amber"><h3><i class="fas fa-balance-scale"></i> Professional Studies</h3><ul class="course-list"><li>LLB (Bachelor of Law)</li><li>LLM (Master of Law)</li><li>B.Lib (Bachelor of Library Science)</li><li>M.Lib (Master of Library Science)</li><li>BJMC (Journalism & Mass Comm)</li><li>MJMC (Journalism & Mass Comm)</li></ul></div>
+                <div class="course-category c-purple"><h3><i class="fas fa-graduation-cap"></i> Specialized Programs</h3><ul class="course-list"><li>Digital Marketing Certification</li><li>Data Science Program</li><li>Machine Learning Course</li><li>Artificial Intelligence Program</li><li>Cloud Computing Certification</li><li>Blockchain Technology</li><li>Full Stack Development</li><li>UI/UX Design Course</li></ul></div>
+            </div>
+            <div class="comparison-table"><table><thead><tr><th>Program Level</th><th>Duration</th><th>Eligibility</th><th>Fee Range/Year</th><th>Learning Mode</th></tr></thead><tbody><tr><td>Undergraduate</td><td>3 Years</td><td>10+2 Pass</td><td>₹15,000 - ₹35,000</td><td>Online/LMS</td></tr><tr><td>Postgraduate</td><td>2 Years</td><td>Graduation</td><td>₹20,000 - ₹45,000</td><td>Online/LMS</td></tr><tr><td>Diploma/Certificate</td><td>1 Year</td><td>10+2/Graduation</td><td>₹10,000 - ₹25,000</td><td>Online/LMS</td></tr><tr><td>Executive Programs</td><td>1-2 Years</td><td>Work Experience</td><td>₹50,000 - ₹1,50,000</td><td>Online/Weekend</td></tr></tbody></table></div>
+        </div>
+    </section>
+
+    <section class="section" id="admission">
+        <div class="container">
+            <h2 class="section-title">Online Admission Process</h2>
+            <p class="section-subtitle">Simple 3-Step Admission Process</p>
+            <div class="info-grid">
+                <div class="info-card"><h3><i class="fas fa-calendar-alt"></i> Admission Schedule</h3><ul><li><i class="fas fa-check"></i> January Session: Starts Jan 2024</li><li><i class="fas fa-check"></i> July Session: Starts July 2024</li><li><i class="fas fa-check"></i> Application Open: Year-round</li><li><i class="fas fa-check"></i> Last Date: Session-wise</li><li><i class="fas fa-check"></i> Document Verification: 7 Days</li><li><i class="fas fa-check"></i> Fee Payment: Online/Offline</li><li><i class="fas fa-check"></i> ID Generation: 48 Hours</li><li><i class="fas fa-check"></i> LMS Access: Immediate</li></ul></div>
+                <div class="info-card"><h3><i class="fas fa-tasks"></i> Application Steps</h3><ul><li><i class="fas fa-check"></i> Fill Online Application</li><li><i class="fas fa-check"></i> Upload Documents</li><li><i class="fas fa-check"></i> Pay Application Fee</li><li><i class="fas fa-check"></i> Document Verification</li><li><i class="fas fa-check"></i> Pay Program Fee</li><li><i class="fas fa-check"></i> Get Student ID</li><li><i class="fas fa-check"></i> Access LMS Portal</li><li><i class="fas fa-check"></i> Start Learning</li></ul></div>
+                <div class="info-card"><h3><i class="fas fa-rupee-sign"></i> Fee Payment</h3><ul><li><i class="fas fa-check"></i> Application Fee: ₹500</li><li><i class="fas fa-check"></i> Program Fee: Yearly/Semester</li><li><i class="fas fa-check"></i> Payment Modes: Online/Offline</li><li><i class="fas fa-check"></i> EMI Facility Available</li><li><i class="fas fa-check"></i> Scholarship: Merit-based</li><li><i class="fas fa-check"></i> Discount: Early Bird</li><li><i class="fas fa-check"></i> Refund Policy: As per norms</li><li><i class="fas fa-check"></i> Tax Benefits: Available</li></ul></div>
+            </div>
+            <div class="timeline">
+                <h3 style="text-align:center;margin-bottom:2rem;color:var(--primary);">Admission Timeline</h3>
+                <div class="timeline-item"><div class="timeline-content"><h4>Step 1: Application</h4><p>Fill online form and upload required documents.</p></div><div class="timeline-dot"></div><div class="timeline-year">Day 1</div></div>
+                <div class="timeline-item"><div class="timeline-content"><h4>Step 2: Verification</h4><p>Documents verified by admission team.</p></div><div class="timeline-dot"></div><div class="timeline-year">Day 2-7</div></div>
+                <div class="timeline-item"><div class="timeline-content"><h4>Step 3: Fee Payment</h4><p>Pay program fee and get confirmation.</p></div><div class="timeline-dot"></div><div class="timeline-year">Day 8-10</div></div>
+                <div class="timeline-item"><div class="timeline-content"><h4>Step 4: Start Learning</h4><p>Receive LMS credentials and begin course.</p></div><div class="timeline-dot"></div><div class="timeline-year">Day 11</div></div>
+            </div>
+            <div class="highlight-box"><h4><i class="fas fa-exclamation-triangle"></i> Required Documents:</h4><ul><li>10th Mark Sheet & Certificate</li><li>12th Mark Sheet & Certificate (for UG)</li><li>Graduation Mark Sheet & Degree (for PG)</li><li>Photo ID Proof (Aadhar/PAN/Passport)</li><li>Passport Size Photographs</li><li>Signature Specimen</li><li>Work Experience Certificate (if applicable)</li><li>Category Certificate (if applicable)</li></ul></div>
+        </div>
+    </section>
+
+    <section class="section" id="learning">
+        <div class="container">
+            <h2 class="section-title">Digital Learning Experience</h2>
+            <p class="section-subtitle">State-of-the-Art Online Learning Platform</p>
+            <div class="info-grid">
+                <div class="info-card"><h3><i class="fas fa-laptop"></i> Learning Management System</h3><ul><li><i class="fas fa-check"></i> User-Friendly Interface</li><li><i class="fas fa-check"></i> Mobile App Support</li><li><i class="fas fa-check"></i> Video Lectures</li><li><i class="fas fa-check"></i> E-Books & Study Materials</li><li><i class="fas fa-check"></i> Interactive Assignments</li><li><i class="fas fa-check"></i> Online Quizzes & Tests</li><li><i class="fas fa-check"></i> Progress Tracking</li><li><i class="fas fa-check"></i> Discussion Forums</li></ul></div>
+                <div class="info-card"><h3><i class="fas fa-chalkboard-teacher"></i> Academic Support</h3><ul><li><i class="fas fa-check"></i> Live Online Classes</li><li><i class="fas fa-check"></i> Recorded Sessions</li><li><i class="fas fa-check"></i> Doubt Clearing Sessions</li><li><i class="fas fa-check"></i> Mentor Support</li><li><i class="fas fa-check"></i> Peer Learning Groups</li><li><i class="fas fa-check"></i> Academic Counseling</li><li><i class="fas fa-check"></i> Webinars & Workshops</li><li><i class="fas fa-check"></i> 24/7 Query Support</li></ul></div>
+                <div class="info-card"><h3><i class="fas fa-clipboard-check"></i> Assessment System</h3><ul><li><i class="fas fa-check"></i> Online Examinations</li><li><i class="fas fa-check"></i> Proctored Tests</li><li><i class="fas fa-check"></i> Continuous Evaluation</li><li><i class="fas fa-check"></i> Project Work</li><li><i class="fas fa-check"></i> Assignment Submission</li><li><i class="fas fa-check"></i> Instant Results</li><li><i class="fas fa-check"></i> Grade Reports</li><li><i class="fas fa-check"></i> Digital Certificates</li></ul></div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-number">5000+</div><div class="stat-label">Video Lectures</div></div>
+                <div class="stat-card"><div class="stat-number">1000+</div><div class="stat-label">E-Books</div></div>
+                <div class="stat-card"><div class="stat-number">24/7</div><div class="stat-label">Learning Access</div></div>
+                <div class="stat-card"><div class="stat-number">95%</div><div class="stat-label">Platform Uptime</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="campus">
+        <div class="container">
+            <h2 class="section-title">Virtual Campus Life</h2>
+            <p class="section-subtitle">Experience Vibrant Student Life Online</p>
+            <div class="campus-grid">
+                <div class="campus-card cm-blue"><div class="campus-card-image"><i class="fas fa-calendar-alt"></i></div><div class="campus-card-content"><h4>Virtual Events & Festivals</h4><p>Participate in online cultural festivals, technical fests, and annual celebrations from anywhere.</p><ul><li><i class="fas fa-check"></i> Annual Cultural Fest</li><li><i class="fas fa-check"></i> Technical Symposium</li><li><i class="fas fa-check"></i> Sports Tournaments</li><li><i class="fas fa-check"></i> Art & Music Competitions</li></ul></div></div>
+                <div class="campus-card c-green"><div class="campus-card-image"><i class="fas fa-users"></i></div><div class="campus-card-content"><h4>Student Clubs & Communities</h4><p>Join diverse student communities and clubs based on your interests and career goals.</p><ul><li><i class="fas fa-check"></i> Tech Innovation Club</li><li><i class="fas fa-check"></i> Business Leaders Forum</li><li><i class="fas fa-check"></i> Creative Arts Society</li><li><i class="fas fa-check"></i> Health & Wellness Club</li></ul></div></div>
+                <div class="campus-card c-cyan"><div class="campus-card-image"><i class="fas fa-video"></i></div><div class="campus-card-content"><h4>Live Webinars & Workshops</h4><p>Attend interactive sessions with industry experts, thought leaders, and successful alumni.</p><ul><li><i class="fas fa-check"></i> Industry Expert Talks</li><li><i class="fas fa-check"></i> Skill Development Workshops</li><li><i class="fas fa-check"></i> Career Guidance Sessions</li><li><i class="fas fa-check"></i> Alumni Success Stories</li></ul></div></div>
+                <div class="campus-card cm-amber"><div class="campus-card-image"><i class="fas fa-trophy"></i></div><div class="campus-card-content"><h4>Competitions & Challenges</h4><p>Showcase your talents in various online competitions and win exciting prizes.</p><ul><li><i class="fas fa-check"></i> Hackathons</li><li><i class="fas fa-check"></i> Business Plan Contests</li><li><i class="fas fa-check"></i> Coding Challenges</li><li><i class="fas fa-check"></i> Design Competitions</li></ul></div></div>
+                <div class="campus-card cm-purple"><div class="campus-card-image"><i class="fas fa-comments"></i></div><div class="campus-card-content"><h4>Peer Learning Networks</h4><p>Connect with fellow students, share knowledge, and collaborate on projects.</p><ul><li><i class="fas fa-check"></i> Study Groups</li><li><i class="fas fa-check"></i> Project Collaboration</li><li><i class="fas fa-check"></i> Mentorship Programs</li><li><i class="fas fa-check"></i> Discussion Forums</li></ul></div></div>
+                <div class="campus-card cm-teal"><div class="campus-card-image"><i class="fas fa-globe"></i></div><div class="campus-card-content"><h4>Global Student Exchange</h4><p>Interact with international students and participate in global learning initiatives.</p><ul><li><i class="fas fa-check"></i> Virtual Exchange Programs</li><li><i class="fas fa-check"></i> International Webinars</li><li><i class="fas fa-check"></i> Cross-Cultural Projects</li><li><i class="fas fa-check"></i> Global Networking</li></ul></div></div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-number">100+</div><div class="stat-label">Virtual Events/Year</div></div>
+                <div class="stat-card"><div class="stat-number">25+</div><div class="stat-label">Student Clubs</div></div>
+                <div class="stat-card"><div class="stat-number">50+</div><div class="stat-label">Workshops Monthly</div></div>
+                <div class="stat-card"><div class="stat-number">10K+</div><div class="stat-label">Active Participants</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="facilities">
+        <div class="container">
+            <h2 class="section-title">Digital Learning Facilities</h2>
+            <p class="section-subtitle">World-Class Infrastructure for Online Education</p>
+            <div class="facility-showcase">
+                <div class="facility-showcase-card fs-cyan"><div class="facility-icon-large"><i class="fas fa-book-reader"></i></div><h4>Digital Library</h4><p>Access to vast collection of e-books, journals, research papers, and digital resources 24/7.</p><ul class="facility-features"><li><i class="fas fa-check"></i> 50,000+ E-Books</li><li><i class="fas fa-check"></i> 1000+ Journals</li><li><i class="fas fa-check"></i> Research Databases</li><li><i class="fas fa-check"></i> Video Tutorials</li><li><i class="fas fa-check"></i> Mobile Access</li></ul></div>
+                <div class="facility-showcase-card fs-blue"><div class="facility-icon-large"><i class="fas fa-flask"></i></div><h4>Virtual Labs</h4><p>Hands-on practical experience through state-of-the-art virtual laboratories and simulations.</p><ul class="facility-features"><li><i class="fas fa-check"></i> Programming Labs</li><li><i class="fas fa-check"></i> Science Simulations</li><li><i class="fas fa-check"></i> Business Case Studies</li><li><i class="fas fa-check"></i> Engineering Projects</li><li><i class="fas fa-check"></i> Real-time Experiments</li></ul></div>
+                <div class="facility-showcase-card fs-orange"><div class="facility-icon-large"><i class="fas fa-server"></i></div><h4>Cloud Infrastructure</h4><p>Robust cloud-based learning platform ensuring seamless access and data security.</p><ul class="facility-features"><li><i class="fas fa-check"></i> 99.9% Uptime</li><li><i class="fas fa-check"></i> Auto Backup</li><li><i class="fas fa-check"></i> High-Speed Servers</li><li><i class="fas fa-check"></i> Global CDN</li><li><i class="fas fa-check"></i> Secure Data Storage</li></ul></div>
+                <div class="facility-showcase-card fs-purple"><div class="facility-icon-large"><i class="fas fa-mobile-alt"></i></div><h4>Mobile Learning App</h4><p>Learn on-the-go with our feature-rich mobile application for iOS and Android devices.</p><ul class="facility-features"><li><i class="fas fa-check"></i> Offline Downloads</li><li><i class="fas fa-check"></i> Push Notifications</li><i class="fas fa-check"></i> Live Classes</li><li><i class="fas fa-check"></i> Assignment Submission</li><li><i class="fas fa-check"></i> Performance Tracking</li></ul></div>
+                <div class="facility-showcase-card fs-green"><div class="facility-icon-large"><i class="fas fa-headset"></i></div><h4>24/7 Support Center</h4><p>Round-the-clock technical and academic support through multiple channels.</p><ul class="facility-features"><li><i class="fas fa-check"></i> Live Chat Support</li><i class="fas fa-check"></i> Email Assistance</li><li><i class="fas fa-check"></i> Phone Support</li><li><i class="fas fa-check"></i> Video Call Help</li><li><i class="fas fa-check"></i> FAQ Knowledge Base</li></ul></div>
+                <div class="facility-showcase-card fs-amber"><div class="facility-icon-large"><i class="fas fa-certificate"></i></div><h4>Digital Credentials</h4><p>Secure, verifiable digital certificates and badges with blockchain technology.</p><ul class="facility-features"><li><i class="fas fa-check"></i> Blockchain Verification</li><li><i class="fas fa-check"></i> QR Code Authentication</li><li><i class="fas fa-check"></i> LinkedIn Integration</li><li><i class="fas fa-check"></i> Lifetime Validity</li><li><i class="fas fa-check"></i> Digital Badges</li></ul></div>
+            </div>
+            <div class="highlight-box"><h4><i class="fas fa-star"></i> Premium Facilities Include:</h4><ul><li>AI-powered personalized learning paths</li><li>AR/VR immersive learning experiences</li><li>High-definition video streaming with adaptive bitrate</li><li>Collaborative whiteboards and group study tools</li><li>Integrated plagiarism checker for assignments</li><li>Automated proctoring for online exams</li><li>Cloud storage for projects and assignments</li><li>Real-time collaboration tools for group projects</li></ul></div>
+        </div>
+    </section>
+
+    <section class="section" id="placements">
+        <div class="container">
+            <h2 class="section-title">Placement & Career Services</h2>
+            <p class="section-subtitle">Building Successful Careers Through Strategic Partnerships</p>
+            <div class="placement-stats">
+                <div class="placement-stat-card"><span class="placement-number">85%</span><span class="placement-label">Placement Rate</span></div>
+                <div class="placement-stat-card"><span class="placement-number">8.5 LPA</span><span class="placement-label">Average Package</span></div>
+                <div class="placement-stat-card"><span class="placement-number">28 LPA</span><span class="placement-label">Highest Package</span></div>
+                <div class="placement-stat-card"><span class="placement-number">500+</span><span class="placement-label">Hiring Partners</span></div>
+            </div>
+            <div class="info-grid">
+                <div class="info-card"><h3><i class="fas fa-briefcase"></i> Career Development</h3><ul><li><i class="fas fa-check"></i> Resume Building Workshops</li><li><i class="fas fa-check"></i> Interview Preparation</li><li><i class="fas fa-check"></i> Aptitude Training</li><li><i class="fas fa-check"></i> Group Discussion Practice</li><li><i class="fas fa-check"></i> Technical Skill Enhancement</li><li><i class="fas fa-check"></i> Soft Skills Development</li><li><i class="fas fa-check"></i> Personality Development</li><li><i class="fas fa-check"></i> Career Counseling</li></ul></div>
+                <div class="info-card"><h3><i class="fas fa-handshake"></i> Industry Connections</h3><ul><li><i class="fas fa-check"></i> Corporate Tie-ups</li><li><i class="fas fa-check"></i> Industry Visits</li><li><i class="fas fa-check"></i> Guest Lectures</li><li><i class="fas fa-check"></i> Internship Programs</li><li><i class="fas fa-check"></i> Job Fairs</li><li><i class="fas fa-check"></i> Alumni Network</li><li><i class="fas fa-check"></i> Mentorship Programs</li><li><i class="fas fa-check"></i> Startup Incubation</li></ul></div>
+                <div class="info-card"><h3><i class="fas fa-chart-line"></i> Placement Support</h3><ul><li><i class="fas fa-check"></i> Job Portal Access</li><li><i class="fas fa-check"></i> Campus Recruitment</li><li><i class="fas fa-check"></i> Off-Campus Drives</li><li><i class="fas fa-check"></i> Profile Matching</li><li><i class="fas fa-check"></i> Job Alerts</li><li><i class="fas fa-check"></i> Placement Assistance</li><li><i class="fas fa-check"></i> Salary Negotiation</li><li><i class="fas fa-check"></i> Post-Placement Support</li></ul></div>
+            </div>
+            <h3 style="text-align:center;margin:3rem 0 2rem;color:var(--primary);font-weight:600;">Top Recruiting Companies</h3>
+            <div class="recruiters-grid">
+                <div class="recruiter-card"><span>TCS</span></div><div class="recruiter-card"><span>Infosys</span></div><div class="recruiter-card"><span>Wipro</span></div><div class="recruiter-card"><span>HCL</span></div><div class="recruiter-card"><span>IBM</span></div><div class="recruiter-card"><span>Microsoft</span></div><div class="recruiter-card"><span>Amazon</span></div><div class="recruiter-card"><span>Google</span></div><div class="recruiter-card"><span>Deloitte</span></div><div class="recruiter-card"><span>KPMG</span></div><div class="recruiter-card"><span>Accenture</span></div><div class="recruiter-card"><span>Capegemini</span></div>
+            </div>
+            <h3 style="text-align:center;margin:3rem 0 2rem;color:var(--primary);font-weight:600;">Student Success Stories</h3>
+            <div class="testimonials-grid">
+                <div class="testimonial-card"><div class="testimonial-content">"JNU Online's MBA program helped me transition from a technical role to management. The flexible schedule allowed me to work while studying, and the placement support landed me a great job at a MNC."</div><div class="testimonial-author"><div class="author-avatar">RK</div><div class="author-info"><h5>Rahul Kumar</h5><p>MBA | Product Manager, Microsoft</p></div></div></div></div>
+                <div class="testimonial-card"><div class="testimonial-content">"The BCA program from JNU Online provided me with excellent technical skills and practical knowledge. The virtual labs and industry projects made me job-ready from day one."</div><div class="testimonial-author"><div class="author-avatar">SP</div><div class="author-info"><h5>Sneha Patel</h5><p>BCA | Software Developer, Infosys</p></div></div></div></div>
+                <div class="testimonial-card"><div class="testimonial-content">"The quality of education and support from JNU Online is exceptional. The faculty is experienced, and the curriculum is updated with industry trends. I got placed through campus recruitment."</div><div class="testimonial-author"><div class="author-avatar">AM</div><div class="author-info"><h5>Amit Mehra</h5><p>M.Com | Financial Analyst, Deloitte</p></div></div></div></div>
+            </div>
+            <div class="highlight-box"><h4><i class="fas fa-trophy"></i> Placement Highlights:</h4><ul><li>85% students placed within 6 months of course completion</li><li>500+ companies participated in recruitment drives</li><li>Multiple job offers for 40% of placed students</li><li>International placements in USA, UK, Canada, and UAE</li><li>Entrepreneurship support for startup enthusiasts</li><li>Lifetime career guidance and job assistance</li><li>Alumni referral program for better opportunities</li><li>Regular skill-upgradation workshops for placed students</li></ul></div>
+        </div>
+    </section>
+
+    <section class="section" id="support">
+        <div class="container">
+            <h2 class="section-title">Student Support Services</h2>
+            <p class="section-subtitle">Comprehensive Support Throughout Your Learning Journey</p>
+            <div class="facility-grid">
+                <div class="facility-card f-cyan"><i class="fas fa-headset"></i><h4>24/7 Helpdesk</h4><p>Round-the-clock support for all technical and academic queries</p></div>
+                <div class="facility-card f-blue"><i class="fas fa-user-graduate"></i><h4>Academic Mentors</h4><p>Personalized guidance from experienced faculty members</p></div>
+                <div class="facility-card f-green"><i class="fas fa-book-open"></i><h4>Digital Library</h4><p>Access to thousands of e-books, journals, research papers, and digital resources</p></div>
+                <div class="facility-card f-orange"><i class="fas fa-comments"></i><h4>Discussion Forums</h4><p>Connect with peers and faculty for collaborative learning</p></div>
+                <div class="facility-card f-purple"><i class="fas fa-briefcase"></i><h4>Career Services</h4><p>Placement assistance and career guidance for online learners</p></div>
+                <div class="facility-card f-amber"><i class="fas fa-certificate"></i><h4>Digital Certificates</h4><p>Verifiable digital certificates and mark sheets</p></div>
+                <div class="facility-card f-teal"><i class="fas fa-users"></i><h4>Alumni Network</h4><p>Connect with 50,000+ alumni for networking and opportunities</p></div>
+                <div class="facility-card f-pink"><i class="fas fa-mobile-alt"></i><h4>Mobile Learning</h4><p>Learn on-the-go with our dedicated mobile app</p></div>
+            </div>
+            <div class="highlight-box"><h4><i class="fas fa-star"></i> Exclusive Benefits for Online Learners:</h4><ul><li>Flexible study schedule - Learn at your convenience</li><li>Cost-effective education with no travel expenses</li><li>Balance work and study with part-time options</li><li>Access to global faculty and industry experts</li><li>Lifetime access to learning materials</li><li>Free skill development courses and certifications</li><li>Special workshops for soft skills development</li><li>Internship and project opportunities</li></ul></div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="cta-section"><div class="cta-content"><h2>Start Your Online Learning Journey!</h2><p>Join 50,000+ learners advancing their careers with JNU Online Programs</p><div class="btn-group"><a href="tel:+918828933999" class="btn btn-primary"><i class="fas fa-phone"></i> Call: +91 88289 33999</a><a href="mailto:admissions@jnuonline.ac.in" class="btn btn-secondary"><i class="fas fa-envelope"></i> Email Us</a></div></div></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section"><h3>Jaipur National University Online</h3><p>Empowering learners worldwide with quality distance education programs since 2007.</p></div>
+                <div class="footer-section"><h3>Quick Links</h3><ul><li><a href="#home">Home</a></li><li><a href="#about">About JNU Online</a></li><li><a href="#courses">Programs</a></li><li><a href="#admission">Admission</a></li><li><a href="#learning">Learning Platform</a></li><li><a href="#campus">Campus Life</a></li><li><a href="#facilities">Facilities</a></li><li><a href="#placements">Placements</a></li><li><a href="#support">Student Support</a></li></ul></div>
+                <div class="footer-section"><h3>Important Info</h3><ul><li><a href="#">UGC-DEB Approval</a></li><li><a href="#">Fee Structure</a></li><li><a href="#">Academic Calendar</a></li><li><a href="#">Examination Schedule</a></li></ul></div>
+                <div class="footer-section"><h3>Contact Info</h3><p><i class="fas fa-map-marker-alt"></i> Jagatpura, Jaipur - 302017</p><p><i class="fas fa-phone"></i> +91 88289 33999</p><p><i class="fas fa-envelope"></i> info@jnuonline.ac.in</p></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2024 Jaipur National University Online. All Rights Reserved. | UGC-DEB Approved | NAAC 'A' Grade</p></div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const colors = ['#00E0FF', '#2CE6C2', '#3B82F6', '#A855F7'];
+            for (let i = 0; i < 40; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 15 + 's';
+                p.style.animationDuration = (15 + Math.random() * 10) + 's';
+                p.style.background = colors[Math.floor(Math.random() * colors.length)];
+                p.style.boxShadow = '0 0 6px ' + p.style.background;
+                particlesContainer.appendChild(p);
+            }
+
+            setTimeout(() => { document.getElementById('loading').classList.add('hide'); }, 1000);
+
+            const quickNav = document.getElementById('quickNav');
+            const quickNavToggle = document.getElementById('quickNavToggle');
+            const quickNavItems = document.querySelectorAll('.quick-nav-item');
+            const sections = document.querySelectorAll('section[id]');
+
+            function updateQuickNavActive() {
+                const scrollY = window.pageYOffset;
+                sections.forEach(section => {
+                    const h = section.offsetHeight;
+                    const top = section.offsetTop - 100;
+                    const id = section.getAttribute('id');
+                    if (scrollY > top && scrollY <= top + h) {
+                        quickNavItems.forEach(item => {
+                            item.classList.toggle('active', item.getAttribute('data-section') === id);
+                        });
+                    }
+                });
+            }
+            window.addEventListener('scroll', updateQuickNavActive);
+
+            function openQuickNav() {
+                quickNav.classList.add('expanded');
+                quickNavToggle.querySelector('i').style.transform = 'rotate(45deg)';
+            }
+            function closeQuickNav() {
+                quickNav.classList.remove('expanded');
+                quickNavToggle.querySelector('i').style.transform = 'rotate(0deg)';
+            }
+            quickNavToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (quickNav.classList.contains('expanded')) { closeQuickNav(); } else { openQuickNav(); }
+            });
+
+            quickNavItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('data-section');
+                    const target = document.querySelector('#' + targetId);
+                    if (target) {
+                        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                        setTimeout(closeQuickNav, 200);
+                    }
+                });
+            });
+
+            document.addEventListener('click', function(e) {
+                if (quickNav.classList.contains('expanded') && !quickNav.contains(e.target)) { closeQuickNav(); }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeQuickNav();
+                    if (document.getElementById('navLinks').classList.contains('active')) closeMenu();
+                }
+            });
+
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+            const navOverlay = document.getElementById('navOverlay');
+
+            function openMenu() {
+                navLinks.classList.add('active'); navOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                const s = menuToggle.querySelectorAll('span');
+                s[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                s[1].style.opacity = '0';
+                s[2].style.transform = 'rotate(-45deg) translate(7px, -7px)';
+            }
+            function closeMenu() {
+                navLinks.classList.remove('active'); navOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+                menuToggle.querySelectorAll('span').forEach(s => { s.style.transform = 'none'; s.style.opacity = '1'; });
+            }
+            menuToggle.addEventListener('click', () => { navLinks.classList.contains('active') ? closeMenu() : openMenu(); });
+            navOverlay.addEventListener('click', closeMenu);
+            document.querySelectorAll('#navLinks a').forEach(l => l.addEventListener('click', closeMenu));
+
+            window.addEventListener('scroll', () => {
+                const s = document.body.scrollTop || document.documentElement.scrollTop;
+                const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                document.getElementById('progressBar').style.width = (s / h) * 100 + '%';
+                document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(a => {
+                a.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const t = document.querySelector(this.getAttribute('href'));
+                    if (t) window.scrollTo({ top: t.offsetTop - 80, behavior: 'smooth' });
+                });
+            });
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; } });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            document.querySelectorAll('.info-card,.cta-section,.facility-card,.course-category,.highlight-box,.stat-card,.timeline-item,.campus-card,.facility-showcase-card,.placement-stat-card,.recruiter-card,.testimonial-card').forEach((el, i) => {
+                el.style.opacity = '0'; el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease ' + (i * 0.04) + 's, transform 0.6s ease ' + (i * 0.04) + 's';
+                observer.observe(el);
+            });
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) { if (navLinks.classList.contains('active')) closeMenu(); closeQuickNav(); }
+            });
+        });
+    </script>
+</body>
+</html>

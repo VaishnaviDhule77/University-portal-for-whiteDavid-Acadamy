@@ -1,0 +1,2647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B.Tech - Bachelor of Technology | Whitedavid Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Dark Gradient Theme - Deep Navy to Indigo */
+            --dark: #0B0F2A;
+            --darker: #070A1F;
+            --darkest: #040614;
+            --light: #111A3A;
+            --lighter: #1A2E4A;
+            --elevated: #0F172A;
+            
+            /* Neon Cyan/Teal Accent */
+            --primary: #00E0FF;
+            --primary-dark: #00B8D4;
+            --accent: #2CE6C2;
+            --accent-dark: #1BC4A0;
+            
+            /* CTA Warm Gradient */
+            --cta: #FF6A3D;
+            --cta-light: #FF8A50;
+            
+            /* Multi-Accent System */
+            --accent-orange: #FF6A3D;
+            --accent-orange-light: #FF8A50;
+            --accent-blue: #3B82F6;
+            --accent-blue-light: #60A5FA;
+            --accent-purple: #A855F7;
+            --accent-purple-light: #EC4899;
+            --accent-green: #22C55E;
+            --accent-green-light: #4ADE80;
+            --accent-amber: #F59E0B;
+            --accent-amber-light: #FBBF24;
+            --accent-teal: #14B8A6;
+            --accent-teal-light: #2DD4BF;
+            
+            /* Typography */
+            --text: #FFFFFF;
+            --text-muted: #B0B8D1;
+            --text-dim: #94A3B8;
+            
+            /* Borders & Effects */
+            --border: rgba(148, 163, 184, 0.1);
+            --border-light: rgba(148, 163, 184, 0.15);
+            --glow: rgba(0, 224, 255, 0.4);
+            --glow-accent: rgba(44, 230, 194, 0.4);
+            --glow-cta: rgba(255, 106, 61, 0.4);
+            
+            /* Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-bg-hover: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(20px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--darkest);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 4px;
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--accent-dark));
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        /* Loading Screen */
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darkest);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #loadingScreen.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading {
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 70px;
+            height: 70px;
+            border: 3px solid rgba(0, 224, 255, 0.1);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 30px var(--glow);
+        }
+
+        .loading-text {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Main Content */
+        #mainContent {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        #mainContent.show {
+            opacity: 1;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(11, 15, 42, 0.92), rgba(7, 10, 31, 0.95));
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.7rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 1.9rem;
+            color: var(--primary);
+            filter: drop-shadow(0 0 8px var(--glow));
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 10px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px var(--glow);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 3px;
+            box-shadow: 0 0 5px var(--glow);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 100px 5%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 224, 255, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(44, 230, 194, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 50% 20%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
+                linear-gradient(135deg, var(--dark), var(--darker), var(--darkest));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(0, 224, 255, 0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: scan 20s linear infinite;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+            filter: drop-shadow(0 0 20px rgba(0, 224, 255, 0.2));
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        /* CTA Warm Gradient Button */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cta), var(--cta-light));
+            color: white;
+            box-shadow: 0 4px 20px var(--glow-cta);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 106, 61, 0.5);
+        }
+
+        /* Ghost / Outline Button */
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-muted);
+            border: 2px solid var(--border-light);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 20px rgba(0, 224, 255, 0.15);
+        }
+
+        .btn-white {
+            background: var(--glass-bg);
+            color: var(--text);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-white:hover {
+            background: var(--glass-bg-hover);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 224, 255, 0.15);
+        }
+
+        /* Quick Navigation */
+        .quick-nav {
+            position: static;
+            top: 80px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(17, 26, 58, 0.9));
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            padding: 1rem 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .quick-nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .quick-nav-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .quick-nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .quick-nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px var(--glow);
+        }
+
+        .quick-nav-links a:hover::before,
+        .quick-nav-links a.active::before {
+            width: 100%;
+        }
+
+        .quick-nav-links a:hover,
+        .quick-nav-links a.active {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            box-shadow: 0 0 15px var(--glow);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 1.15rem;
+            margin-bottom: 3rem;
+            font-weight: 400;
+        }
+
+        /* ============================================
+           ENHANCED GLASSMORPHISM INFO CARDS
+           ============================================ */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .info-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Gradient Top Highlight Line */
+        .info-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Mouse-follow Glow Effect */
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.06), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Interactive Hover Card Effect - Lift + Glow + Text Highlight */
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 
+                0 10px 40px rgba(0, 224, 255, 0.1),
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(0, 224, 255, 0.1);
+            border-color: rgba(0, 224, 255, 0.2);
+            background: var(--glass-bg-hover);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+
+        .info-card:hover::before {
+            opacity: 1;
+        }
+
+        .info-card:hover::after {
+            opacity: 1;
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Title Glow on Hover */
+        .info-card:hover h3 {
+            text-shadow: 0 0 20px rgba(0, 224, 255, 0.6);
+            transform: translateX(5px);
+        }
+
+        .info-card:hover h3 i {
+            filter: drop-shadow(0 0 12px var(--glow-accent));
+            transform: scale(1.1);
+        }
+
+        .info-card h3 i {
+            font-size: 1.4rem;
+            color: var(--accent);
+            filter: drop-shadow(0 0 6px var(--glow-accent));
+            transition: all 0.4s ease;
+        }
+
+        .info-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Text Highlight on Hover */
+        .info-card:hover p {
+            color: #d0d8ef;
+        }
+
+        .info-card ul {
+            list-style: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-card li {
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        /* List Item Hover Highlight */
+        .info-card:hover li:hover {
+            color: var(--primary);
+            text-shadow: 0 0 8px var(--glow);
+            background: rgba(0, 224, 255, 0.05);
+            padding-left: 12px;
+            transform: translateX(7px);
+        }
+
+        .info-card li i {
+            color: var(--accent);
+            margin-top: 5px;
+            font-size: 0.8rem;
+            filter: drop-shadow(0 0 4px var(--glow-accent));
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .info-card:hover li:hover i {
+            transform: scale(1.3);
+            filter: drop-shadow(0 0 10px var(--glow-accent));
+        }
+
+        .info-card li strong {
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover li:hover strong {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        .info-card ol {
+            padding-left: 1.2rem;
+            color: var(--text-muted);
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-card ol li {
+            padding: 0.4rem 0;
+            display: list-item;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .info-card:hover ol li:hover {
+            color: var(--primary);
+            text-shadow: 0 0 8px var(--glow);
+            padding-left: 8px;
+        }
+
+        /* ============================================
+           ENHANCED TWO COLUMN LAYOUT CARDS
+           ============================================ */
+        .two-column {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .column-content {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Gradient Top Highlight Line */
+        .column-content::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Mouse-follow Glow Effect */
+        .column-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.06), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Interactive Hover Card Effect */
+        .column-content:hover {
+            transform: translateY(-10px);
+            box-shadow: 
+                0 10px 40px rgba(0, 224, 255, 0.1),
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(0, 224, 255, 0.1);
+            border-color: rgba(0, 224, 255, 0.2);
+            background: var(--glass-bg-hover);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+
+        .column-content:hover::before {
+            opacity: 1;
+        }
+
+        .column-content:hover::after {
+            opacity: 1;
+        }
+
+        .column-content h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Title Glow on Hover */
+        .column-content:hover h3 {
+            text-shadow: 0 0 20px rgba(0, 224, 255, 0.6);
+            transform: translateX(5px);
+        }
+
+        .column-content:hover h3 i {
+            filter: drop-shadow(0 0 12px var(--glow-accent));
+            transform: scale(1.15);
+        }
+
+        .column-content h3 i {
+            font-size: 1.5rem;
+            color: var(--accent);
+            filter: drop-shadow(0 0 6px var(--glow-accent));
+            transition: all 0.4s ease;
+        }
+
+        .column-content ul {
+            list-style: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .column-content li {
+            padding: 0.8rem 0;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.35s ease;
+            font-size: 0.95rem;
+            border-radius: 5px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .column-content li:last-child {
+            border-bottom: none;
+        }
+
+        /* List Item Hover Highlight - Enhanced */
+        .column-content:hover li:hover {
+            color: var(--primary);
+            padding-left: 15px;
+            text-shadow: 0 0 10px var(--glow);
+            background: rgba(0, 224, 255, 0.04);
+            border-bottom-color: rgba(0, 224, 255, 0.15);
+            transform: translateX(10px);
+        }
+
+        .column-content li strong {
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .column-content:hover li:hover strong {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        /* ============================================
+           ENHANCED RESPONSIVE TABLES
+           ============================================ */
+        .responsive-table {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            overflow-x: auto;
+            margin-top: 3rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Gradient Top Highlight Line */
+        .responsive-table::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+            opacity: 0.5;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+
+        /* Table Hover Effect */
+        .responsive-table:hover {
+            box-shadow: 
+                0 10px 50px rgba(0, 224, 255, 0.08),
+                0 20px 60px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 224, 255, 0.15);
+            background: var(--glass-bg-hover);
+        }
+
+        .responsive-table:hover::before {
+            opacity: 1;
+        }
+
+        .responsive-table table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-muted);
+            position: relative;
+            z-index: 2;
+        }
+
+        .responsive-table th {
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.15), rgba(44, 230, 194, 0.1));
+            color: var(--primary);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(0, 224, 255, 0.2);
+        }
+
+        .responsive-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        /* Enhanced Row Hover - Lift + Glow + Text Highlight */
+        .responsive-table tr:hover td {
+            background: rgba(0, 224, 255, 0.05);
+            color: var(--primary);
+            text-shadow: 0 0 8px var(--glow);
+            box-shadow: 0 4px 15px rgba(0, 224, 255, 0.05);
+        }
+
+        .responsive-table tr {
+            transition: all 0.3s ease;
+        }
+
+        .responsive-table tr:hover {
+            transform: scale(1.01);
+        }
+
+        .responsive-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* ============================================
+           ENHANCED COMPARISON CARDS - MULTI-ACCENT
+           ============================================ */
+        .comparison-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .comparison-card {
+            background: linear-gradient(135deg, var(--elevated), var(--light));
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Gradient Top Highlight Line */
+        .comparison-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+
+        .comparison-card.cyan::after {
+            background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+        }
+        .comparison-card.orange::after {
+            background: linear-gradient(90deg, transparent, var(--accent-orange), var(--accent-orange-light), transparent);
+        }
+        .comparison-card.blue::after {
+            background: linear-gradient(90deg, transparent, var(--accent-blue), var(--accent-blue-light), transparent);
+        }
+        .comparison-card.green::after {
+            background: linear-gradient(90deg, transparent, var(--accent-green), var(--accent-green-light), transparent);
+        }
+        .comparison-card.amber::after {
+            background: linear-gradient(90deg, transparent, var(--accent-amber), var(--accent-amber-light), transparent);
+        }
+        .comparison-card.purple::after {
+            background: linear-gradient(90deg, transparent, var(--accent-purple), var(--accent-purple-light), transparent);
+        }
+
+        .comparison-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            opacity: 0.08;
+            transition: opacity 0.4s ease;
+        }
+
+        .comparison-card:hover::before {
+            opacity: 0.18;
+        }
+
+        /* Interactive Hover Card Effect - Lift + Glow */
+        .comparison-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 
+                0 15px 50px rgba(0, 0, 0, 0.4),
+                0 5px 20px rgba(0, 0, 0, 0.2);
+            border-color: var(--border-light);
+        }
+
+        .comparison-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Category-based hover accents */
+        .comparison-card.cyan::before {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+        .comparison-card.cyan:hover {
+            box-shadow: 
+                0 15px 50px rgba(0, 224, 255, 0.12),
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(0, 224, 255, 0.15);
+            border-color: rgba(0, 224, 255, 0.25);
+        }
+
+        .comparison-card.orange::before {
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+        }
+        .comparison-card.orange:hover {
+            box-shadow: 
+                0 15px 50px rgba(255, 106, 61, 0.12),
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 106, 61, 0.15);
+            border-color: rgba(255, 106, 61, 0.25);
+        }
+
+        .comparison-card.blue::before {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-light));
+        }
+        .comparison-card.blue:hover {
+            box-shadow: 
+                0 15px 50px rgba(59, 130, 246, 0.12),
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.25);
+        }
+
+        .comparison-card.green::before {
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light));
+        }
+        .comparison-card.green:hover {
+            box-shadow: 
+                0 15px 50px rgba(34, 197, 94, 0.12),
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.25);
+        }
+
+        .comparison-card.amber::before {
+            background: linear-gradient(135deg, var(--accent-amber), var(--accent-amber-light));
+        }
+        .comparison-card.amber:hover {
+            box-shadow: 
+                0 15px 50px rgba(245, 158, 11, 0.12),
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.25);
+        }
+
+        .comparison-card.purple::before {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-purple-light));
+        }
+        .comparison-card.purple:hover {
+            box-shadow: 
+                0 15px 50px rgba(168, 85, 247, 0.12),
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(168, 85, 247, 0.15);
+            border-color: rgba(168, 85, 247, 0.25);
+        }
+
+        .comparison-card .card-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Icon Glow & Scale on Hover */
+        .comparison-card:hover .card-icon {
+            transform: scale(1.15) translateY(-5px);
+        }
+
+        .comparison-card.cyan .card-icon {
+            color: var(--primary);
+            filter: drop-shadow(0 0 12px rgba(0, 224, 255, 0.5));
+        }
+        .comparison-card.cyan:hover .card-icon {
+            filter: drop-shadow(0 0 25px rgba(0, 224, 255, 0.7));
+        }
+
+        .comparison-card.orange .card-icon {
+            color: var(--accent-orange);
+            filter: drop-shadow(0 0 12px rgba(255, 106, 61, 0.5));
+        }
+        .comparison-card.orange:hover .card-icon {
+            filter: drop-shadow(0 0 25px rgba(255, 106, 61, 0.7));
+        }
+
+        .comparison-card.blue .card-icon {
+            color: var(--accent-blue);
+            filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.5));
+        }
+        .comparison-card.blue:hover .card-icon {
+            filter: drop-shadow(0 0 25px rgba(59, 130, 246, 0.7));
+        }
+
+        .comparison-card.green .card-icon {
+            color: var(--accent-green);
+            filter: drop-shadow(0 0 12px rgba(34, 197, 94, 0.5));
+        }
+        .comparison-card.green:hover .card-icon {
+            filter: drop-shadow(0 0 25px rgba(34, 197, 94, 0.7));
+        }
+
+        .comparison-card.amber .card-icon {
+            color: var(--accent-amber);
+            filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.5));
+        }
+        .comparison-card.amber:hover .card-icon {
+            filter: drop-shadow(0 0 25px rgba(245, 158, 11, 0.7));
+        }
+
+        .comparison-card.purple .card-icon {
+            color: var(--accent-purple);
+            filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.5));
+        }
+        .comparison-card.purple:hover .card-icon {
+            filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.7));
+        }
+
+        .comparison-card h3 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Title Text Highlight on Hover */
+        .comparison-card:hover h3 {
+            transform: translateY(-2px);
+        }
+
+        .comparison-card.cyan:hover h3 {
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
+        }
+        .comparison-card.orange:hover h3 {
+            color: var(--accent-orange);
+            text-shadow: 0 0 20px rgba(255, 106, 61, 0.5);
+        }
+        .comparison-card.blue:hover h3 {
+            color: var(--accent-blue);
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        .comparison-card.green:hover h3 {
+            color: var(--accent-green);
+            text-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+        }
+        .comparison-card.amber:hover h3 {
+            color: var(--accent-amber);
+            text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+        }
+        .comparison-card.purple:hover h3 {
+            color: var(--accent-purple);
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+        }
+
+        .comparison-card > p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Description Text Highlight on Hover */
+        .comparison-card:hover > p {
+            color: var(--text-muted);
+        }
+
+        .comparison-card .card-price {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 1rem 0;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Price Badge Glow on Hover */
+        .comparison-card:hover .card-price {
+            transform: scale(1.05);
+        }
+
+        .comparison-card.cyan .card-price {
+            color: var(--primary);
+            background: rgba(0, 224, 255, 0.1);
+            border: 1px solid rgba(0, 224, 255, 0.2);
+        }
+        .comparison-card.cyan:hover .card-price {
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.3);
+            background: rgba(0, 224, 255, 0.15);
+        }
+
+        .comparison-card.orange .card-price {
+            color: var(--accent-orange);
+            background: rgba(255, 106, 61, 0.1);
+            border: 1px solid rgba(255, 106, 61, 0.2);
+        }
+        .comparison-card.orange:hover .card-price {
+            box-shadow: 0 0 20px rgba(255, 106, 61, 0.3);
+            background: rgba(255, 106, 61, 0.15);
+        }
+
+        .comparison-card.blue .card-price {
+            color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        .comparison-card.blue:hover .card-price {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            background: rgba(59, 130, 246, 0.15);
+        }
+
+        .comparison-card.green .card-price {
+            color: var(--accent-green);
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+        .comparison-card.green:hover .card-price {
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+            background: rgba(34, 197, 94, 0.15);
+        }
+
+        .comparison-card.amber .card-price {
+            color: var(--accent-amber);
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+        .comparison-card.amber:hover .card-price {
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+            background: rgba(245, 158, 11, 0.15);
+        }
+
+        .comparison-card.purple .card-price {
+            color: var(--accent-purple);
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        .comparison-card.purple:hover .card-price {
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+            background: rgba(168, 85, 247, 0.15);
+        }
+
+        .comparison-card .card-features {
+            list-style: none;
+            margin: 1.5rem 0 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .comparison-card .card-features li {
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        /* Feature List Hover Highlight */
+        .comparison-card:hover .card-features li:hover {
+            background: rgba(255, 255, 255, 0.03);
+            transform: translateX(5px);
+        }
+
+        .comparison-card.cyan .card-features i { 
+            color: var(--primary); 
+            transition: all 0.3s ease;
+        }
+        .comparison-card.cyan:hover .card-features li:hover i {
+            filter: drop-shadow(0 0 8px rgba(0, 224, 255, 0.6));
+            transform: scale(1.2);
+        }
+
+        .comparison-card.orange .card-features i { 
+            color: var(--accent-orange); 
+            transition: all 0.3s ease;
+        }
+        .comparison-card.orange:hover .card-features li:hover i {
+            filter: drop-shadow(0 0 8px rgba(255, 106, 61, 0.6));
+            transform: scale(1.2);
+        }
+
+        .comparison-card.blue .card-features i { 
+            color: var(--accent-blue); 
+            transition: all 0.3s ease;
+        }
+        .comparison-card.blue:hover .card-features li:hover i {
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
+            transform: scale(1.2);
+        }
+
+        .comparison-card.green .card-features i { 
+            color: var(--accent-green); 
+            transition: all 0.3s ease;
+        }
+        .comparison-card.green:hover .card-features li:hover i {
+            filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.6));
+            transform: scale(1.2);
+        }
+
+        .comparison-card.amber .card-features i { 
+            color: var(--accent-amber); 
+            transition: all 0.3s ease;
+        }
+        .comparison-card.amber:hover .card-features li:hover i {
+            filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.6));
+            transform: scale(1.2);
+        }
+
+        .comparison-card.purple .card-features i { 
+            color: var(--accent-purple); 
+            transition: all 0.3s ease;
+        }
+        .comparison-card.purple:hover .card-features li:hover i {
+            filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6));
+            transform: scale(1.2);
+        }
+
+        /* ============================================
+           ENHANCED APPROVAL CARDS
+           ============================================ */
+        .approval-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .approval-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Gradient Top Highlight Line */
+        .approval-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Interactive Hover Card Effect - Lift + Glow */
+        .approval-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 
+                0 15px 50px rgba(0, 224, 255, 0.12),
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(0, 224, 255, 0.15);
+            border-color: rgba(0, 224, 255, 0.25);
+            background: var(--glass-bg-hover);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+
+        .approval-card:hover::after {
+            opacity: 1;
+        }
+
+        .approval-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.15), rgba(44, 230, 194, 0.1));
+            border: 1px solid rgba(0, 224, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--primary);
+            box-shadow: 0 0 30px rgba(0, 224, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Icon Glow & Scale on Hover */
+        .approval-card:hover .approval-icon {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 0 50px rgba(0, 224, 255, 0.25);
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.25), rgba(44, 230, 194, 0.2));
+            border-color: rgba(0, 224, 255, 0.4);
+        }
+
+        .approval-card:hover .approval-icon i {
+            filter: drop-shadow(0 0 15px rgba(0, 224, 255, 0.7));
+        }
+
+        .approval-card h3 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Title Text Highlight on Hover */
+        .approval-card:hover h3 {
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .approval-card p {
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Description Text Highlight on Hover */
+        .approval-card:hover p {
+            color: var(--text-muted);
+        }
+
+        .approval-card .status {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: linear-gradient(135deg, rgba(44, 230, 194, 0.15), rgba(0, 224, 255, 0.1));
+            color: var(--accent);
+            border: 1px solid rgba(44, 230, 194, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Status Badge Glow on Hover */
+        .approval-card:hover .status {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(44, 230, 194, 0.3);
+            background: linear-gradient(135deg, rgba(44, 230, 194, 0.25), rgba(0, 224, 255, 0.2));
+            border-color: rgba(44, 230, 194, 0.4);
+            text-shadow: 0 0 10px rgba(44, 230, 194, 0.5);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: 
+                radial-gradient(circle at 30% 20%, rgba(255, 106, 61, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(0, 224, 255, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(44, 230, 194, 0.04) 0%, transparent 70%),
+                linear-gradient(135deg, var(--dark), var(--darker));
+            padding: 80px 5%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="0.8" fill="rgba(0, 224, 255, 0.06)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 1;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section .btn-group {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--darker), var(--darkest));
+            padding: 50px 5% 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--text-dim);
+            text-decoration: none;
+            line-height: 1.8;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            padding: 0.3rem 0;
+        }
+
+        .footer-section p i {
+            color: var(--accent);
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        /* Animations */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100px); }
+        }
+
+        /* Fade In Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Particles Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            animation: float 12s infinite linear;
+            opacity: 0.4;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0) translateX(0); 
+                opacity: 0.4;
+            }
+            25% {
+                opacity: 0.6;
+            }
+            50% { 
+                transform: translateY(-100px) translateX(30px); 
+                opacity: 0.2;
+            }
+            75% {
+                opacity: 0.5;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: linear-gradient(135deg, rgba(11, 15, 42, 0.98), rgba(7, 10, 31, 0.98));
+                backdrop-filter: var(--glass-blur);
+                -webkit-backdrop-filter: var(--glass-blur);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+                padding: 2rem 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .quick-nav-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .approval-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            /* Reduce hover lift on mobile for better UX */
+            .info-card:hover,
+            .column-content:hover,
+            .comparison-card:hover,
+            .approval-card:hover {
+                transform: translateY(-5px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 60px 5%;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 60px 5%;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .info-card,
+            .column-content,
+            .comparison-card,
+            .approval-card {
+                padding: 1.5rem;
+            }
+
+            .responsive-table {
+                padding: 1rem;
+            }
+
+            .responsive-table th,
+            .responsive-table td {
+                padding: 0.6rem 0.5rem;
+                font-size: 0.85rem;
+            }
+
+            /* Minimal hover on very small screens */
+            .info-card:hover,
+            .column-content:hover,
+            .comparison-card:hover,
+            .approval-card:hover {
+                transform: translateY(-3px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen">
+        <div class="loading">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading B.Tech Information...</div>
+        </div>
+    </div>
+
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+        <!-- Header -->
+        <header>
+            <nav>
+                <a href="index.html" class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    Whitedavid Academy
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#courses">Courses</a></li>
+                    <li><a href="index.html#universities">Universities</a></li>
+                    <li><a href="index.html#support">Support</a></li>
+                    <li><a href="tel:+919876543210" class="btn btn-primary">Call Now</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>B.Tech - Bachelor of Technology</h1>
+                <p class="hero-subtitle">4-Year Undergraduate Engineering Program</p>
+                <p class="hero-description">
+                    Pursue B.Tech from top engineering colleges in India. Get comprehensive guidance for JEE Main, JEE Advanced, state-level engineering entrance exams, and direct admission through management quota.
+                </p>
+                <div class="btn-group">
+                    <a href="#admission" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> Start Admission
+                    </a>
+                    <a href="#colleges" class="btn btn-secondary">
+                        <i class="fas fa-university"></i> Top Colleges
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Navigation -->
+        <div class="quick-nav">
+            <div class="quick-nav-content">
+                <div class="quick-nav-links">
+                    <a href="#what-is-btech" class="active">What is B.Tech</a>
+                    <a href="#eligibility">Eligibility</a>
+                    <a href="#subjects">Subjects</a>
+                    <a href="#colleges">Top Colleges</a>
+                    <a href="#approvals">Approvals</a>
+                    <a href="#fees">Fees Structure</a>
+                    <a href="#career">Career Scope</a>
+                    <a href="#admission">Admission Process</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- What is B.Tech Section -->
+        <section class="section" id="what-is-btech">
+            <h2 class="section-title">What is B.Tech?</h2>
+            <p class="section-subtitle">Understanding Bachelor of Technology Program</p>
+            
+            <div class="info-grid">
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-info-circle"></i> Program Overview</h3>
+                    <p>B.Tech (Bachelor of Technology) is a 4-year undergraduate engineering degree program that focuses on theoretical knowledge and practical application of technology and engineering principles.</p>
+                </div>
+                
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-clock"></i> Duration</h3>
+                    <p>4 Years (8 Semesters) - Full-time program with industry internships and practical training in final year.</p>
+                </div>
+                
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-award"></i> Degree Type</h3>
+                    <p>Professional undergraduate degree recognized globally. Equivalent to B.E. (Bachelor of Engineering) in India.</p>
+                </div>
+            </div>
+
+            <div class="two-column">
+                <div class="column-content fade-in">
+                    <h3><i class="fas fa-book"></i> Program Structure</h3>
+                    <ul>
+                        <li><strong>Year 1:</strong> Basic Sciences & Engineering Fundamentals</li>
+                        <li><strong>Year 2:</strong> Core Engineering Subjects</li>
+                        <li><strong>Year 3:</strong> Specialization & Electives</li>
+                        <li><strong>Year 4:</strong> Projects & Industrial Training</li>
+                    </ul>
+                </div>
+                <div class="column-content fade-in">
+                    <h3><i class="fas fa-trophy"></i> Program Outcomes</h3>
+                    <ul>
+                        <li><strong>Technical Skills:</strong> Problem-solving abilities</li>
+                        <li><strong>Practical Knowledge:</strong> Hands-on experience</li>
+                        <li><strong>Industry Ready:</strong> Placement opportunities</li>
+                        <li><strong>Higher Studies:</strong> M.Tech/MS/MBA eligibility</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Eligibility Section -->
+        <section class="section" id="eligibility">
+            <h2 class="section-title">B.Tech Eligibility Criteria</h2>
+            <p class="section-subtitle">Requirements for Engineering Admission</p>
+            
+            <div class="info-grid">
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-user-graduate"></i> Academic Qualification</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> 10+2 or equivalent from recognized board</li>
+                        <li><i class="fas fa-check-circle"></i> Physics, Chemistry & Mathematics compulsory</li>
+                        <li><i class="fas fa-check-circle"></i> Minimum 45% marks (40% for reserved categories)</li>
+                        <li><i class="fas fa-check-circle"></i> English as one of the subjects</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-calendar-alt"></i> Age Limit</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Minimum age: 17 years as of Dec 31</li>
+                        <li><i class="fas fa-check-circle"></i> Maximum age: 25 years (30 for reserved)</li>
+                        <li><i class="fas fa-check-circle"></i> Age relaxation for SC/ST/OBC</li>
+                        <li><i class="fas fa-check-circle"></i> No age limit for NRI/Foreign students</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-file-alt"></i> Entrance Exams</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> JEE Main (National Level)</li>
+                        <li><i class="fas fa-check-circle"></i> JEE Advanced (For IITs)</li>
+                        <li><i class="fas fa-check-circle"></i> State Engineering Exams</li>
+                        <li><i class="fas fa-check-circle"></i> University-specific entrance tests</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="responsive-table fade-in">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Minimum Marks %</th>
+                            <th>Relaxation</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>General</td>
+                            <td>45% in PCM</td>
+                            <td>None</td>
+                            <td>All subjects compulsory</td>
+                        </tr>
+                        <tr>
+                            <td>OBC</td>
+                            <td>45% in PCM</td>
+                            <td>5% age relaxation</td>
+                            <td>Valid certificate required</td>
+                        </tr>
+                        <tr>
+                            <td>SC/ST</td>
+                            <td>40% in PCM</td>
+                            <td>5% age relaxation</td>
+                            <td>Caste certificate mandatory</td>
+                        </tr>
+                        <tr>
+                            <td>EWS</td>
+                            <td>45% in PCM</td>
+                            <td>None</td>
+                            <td>Income certificate required</td>
+                        </tr>
+                        <tr>
+                            <td>PWD</td>
+                            <td>40% in PCM</td>
+                            <td>10% age relaxation</td>
+                            <td>Disability certificate needed</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Subjects Section -->
+        <section class="section" id="subjects">
+            <h2 class="section-title">B.Tech Subjects & Specializations</h2>
+            <p class="section-subtitle">Popular Engineering Branches and Courses</p>
+            
+            <div class="comparison-cards">
+                <div class="comparison-card cyan fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Computer Science</h3>
+                    <p>Programming, AI, ML, Data Science</p>
+                    <div class="card-price">Most Popular</div>
+                    <ul class="card-features">
+                        <li><i class="fas fa-check"></i> High Salary Packages</li>
+                        <li><i class="fas fa-check"></i> Global Opportunities</li>
+                        <li><i class="fas fa-check"></i> Startup Culture</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card orange fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3>Electronics</h3>
+                    <p>Circuits, VLSI, Embedded Systems</p>
+                    <div class="card-price">Core Field</div>
+                    <ul class="card-features">
+                        <li><i class="fas fa-check"></i> Hardware Development</li>
+                        <li><i class="fas fa-check"></i> R&D Opportunities</li>
+                        <li><i class="fas fa-check"></i> PSUs Jobs</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card blue fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Electrical</h3>
+                    <p>Power Systems, Machines, Control</p>
+                    <div class="card-price">Evergreen</div>
+                    <ul class="card-features">
+                        <li><i class="fas fa-check"></i> Power Sector Jobs</li>
+                        <li><i class="fas fa-check"></i> Government Jobs</li>
+                        <li><i class="fas fa-check"></i> Stable Career</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card green fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Mechanical</h3>
+                    <p>Design, Manufacturing, Thermal</p>
+                    <div class="card-price">Versatile</div>
+                    <ul class="card-features">
+                        <li><i class="fas fa-check"></i> Automotive Industry</li>
+                        <li><i class="fas fa-check"></i> Manufacturing Sector</li>
+                        <li><i class="fas fa-check"></i> Aerospace Jobs</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card amber fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Civil</h3>
+                    <p>Construction, Structures, Planning</p>
+                    <div class="card-price">Infrastructure</div>
+                    <ul class="card-features">
+                        <li><i class="fas fa-check"></i> Construction Industry</li>
+                        <li><i class="fas fa-check"></i> Government Projects</li>
+                        <li><i class="fas fa-check"></i> Real Estate</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card purple fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3>Chemical</h3>
+                    <p>Process, Petrochemicals, Pharma</p>
+                    <div class="card-price">Specialized</div>
+                    <ul class="card-features">
+                        <li><i class="fas fa-check"></i> Chemical Industries</li>
+                        <li><i class="fas fa-check"></i> Pharma Companies</li>
+                        <li><i class="fas fa-check"></i> Research Labs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="responsive-table fade-in">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Branch</th>
+                            <th>Duration</th>
+                            <th>Seats (Approx)</th>
+                            <th>Average Package</th>
+                            <th>Top Recruiters</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Computer Science</td>
+                            <td>4 Years</td>
+                            <td>50,000+</td>
+                            <td>₹8-25 LPA</td>
+                            <td>Google, Microsoft, Amazon</td>
+                        </tr>
+                        <tr>
+                            <td>Electronics</td>
+                            <td>4 Years</td>
+                            <td>40,000+</td>
+                            <td>₹4-15 LPA</td>
+                            <td>Intel, Samsung, TI</td>
+                        </tr>
+                        <tr>
+                            <td>Electrical</td>
+                            <td>4 Years</td>
+                            <td>35,000+</td>
+                            <td>₹4-12 LPA</td>
+                            <td>BHEL, Siemens, ABB</td>
+                        </tr>
+                        <tr>
+                            <td>Mechanical</td>
+                            <td>4 Years</td>
+                            <td>60,000+</td>
+                            <td>₹4-18 LPA</td>
+                            <td>Tata, L&T, Mahindra</td>
+                        </tr>
+                        <tr>
+                            <td>Civil</td>
+                            <td>4 Years</td>
+                            <td>30,000+</td>
+                            <td>₹3-10 LPA</td>
+                            <td>L&T, Gammon, DLF</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Top Colleges Section -->
+        <section class="section" id="colleges">
+            <h2 class="section-title">Top B.Tech Colleges in India</h2>
+            <p class="section-subtitle">Premier Engineering Institutions</p>
+            
+            <div class="info-grid">
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-trophy"></i> NIRF Top 10 (2023)</h3>
+                    <ol style="list-style: decimal; padding-left: 1.2rem; color: var(--text-muted);">
+                        <li style="padding: 0.4rem 0;">IIT Madras</li>
+                        <li style="padding: 0.4rem 0;">IIT Delhi</li>
+                        <li style="padding: 0.4rem 0;">IIT Bombay</li>
+                        <li style="padding: 0.4rem 0;">IIT Kanpur</li>
+                        <li style="padding: 0.4rem 0;">IIT Roorkee</li>
+                        <li style="padding: 0.4rem 0;">IIT Kharagpur</li>
+                        <li style="padding: 0.4rem 0;">IIT Guwahati</li>
+                        <li style="padding: 0.4rem 0;">NIT Trichy</li>
+                        <li style="padding: 0.4rem 0;">IIT Hyderabad</li>
+                        <li style="padding: 0.4rem 0;">IIT Indore</li>
+                    </ol>
+                </div>
+                
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-map-marker-alt"></i> State-wise Top Colleges</h3>
+                    <ul>
+                        <li><strong>Delhi:</strong> IITD, DTU, NSIT</li>
+                        <li><strong>Maharashtra:</strong> IITB, COEP, VJTI</li>
+                        <li><strong>Tamil Nadu:</strong> IITM, NITT, CEG</li>
+                        <li><strong>Karnataka:</strong> IISc, NITK, RVCE</li>
+                        <li><strong>Uttar Pradesh:</strong> IITK, MNNIT, HBTU</li>
+                        <li><strong>West Bengal:</strong> IITKGP, JU, IIEST</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-rupee-sign"></i> Fee Structure Comparison</h3>
+                    <ul>
+                        <li><strong>IITs:</strong> ₹2-3 Lakhs/year</li>
+                        <li><strong>NITs:</strong> ₹1.5-2.5 Lakhs/year</li>
+                        <li><strong>IIITs:</strong> ₹2-4 Lakhs/year</li>
+                        <li><strong>Private:</strong> ₹3-15 Lakhs/year</li>
+                        <li><strong>Deemed Universities:</strong> ₹2-8 Lakhs/year</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Approvals Section -->
+        <section class="section" id="approvals">
+            <h2 class="section-title">B.Tech Approvals & Recognition</h2>
+            <p class="section-subtitle">Statutory Bodies & Accreditations</p>
+            
+            <div class="approval-grid">
+                <div class="approval-card fade-in">
+                    <div class="approval-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>AICTE</h3>
+                    <p>All India Council for Technical Education</p>
+                    <span class="status">Mandatory Approval</span>
+                </div>
+                
+                <div class="approval-card fade-in">
+                    <div class="approval-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h3>UGC</h3>
+                    <p>University Grants Commission</p>
+                    <span class="status">Degree Recognition</span>
+                </div>
+                
+                <div class="approval-card fade-in">
+                    <div class="approval-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>NBA</h3>
+                    <p>National Board of Accreditation</p>
+                    <span class="status">Quality Assurance</span>
+                </div>
+                
+                <div class="approval-card fade-in">
+                    <div class="approval-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3>PCI</h3>
+                    <p>Professional Council of India</p>
+                    <span class="status">Professional Recognition</span>
+                </div>
+            </div>
+
+            <div class="info-grid" style="margin-top: 3rem;">
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-check-double"></i> Approval Benefits</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> <strong>Valid Degree:</strong> Government Recognition</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>Quality Education:</strong> Standardized Curriculum</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>Placement:</strong> Campus Recruitment Eligibility</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>Higher Studies:</strong> PG/M.Tech Admission</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>Govt Jobs:</strong> PSU/IES Eligibility</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>Bank Loans:</strong> Educational Loan Approval</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-shield-alt"></i> Quality Assurance</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> <strong>Regular Audits:</strong> Quality Checks</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>Faculty Standards:</strong> Qualified Professors</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>Infrastructure:</strong> Modern Facilities</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>Research:</strong> R&D Facilities</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>Industry Connect:</strong> Collaborations</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>Student Support:</strong> Counseling Services</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-graduation-cap"></i> Global Recognition</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> <strong>Washington Accord:</strong> International Recognition</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>ABET Accredited:</strong> USA Recognition</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>Engineering Council:</strong> UK Recognition</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>EUR-ACE:</strong> European Recognition</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>IEA:</strong> International Engineering Alliance</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>UNESCO:</strong> Global Standards</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fees Structure Section -->
+        <section class="section" id="fees">
+            <h2 class="section-title">B.Tech Fees Structure</h2>
+            <p class="section-subtitle">Investment in Your Engineering Education</p>
+            
+            <div class="responsive-table fade-in">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>College Type</th>
+                            <th>Annual Fees</th>
+                            <th>4 Year Total</th>
+                            <th>Hostel Fees</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>IITs</td>
+                            <td>₹2-3 Lakhs</td>
+                            <td>₹8-12 Lakhs</td>
+                            <td>₹1-2 Lakhs/year</td>
+                        </tr>
+                        <tr>
+                            <td>NITs</td>
+                            <td>₹1.5-2.5 Lakhs</td>
+                            <td>₹6-10 Lakhs</td>
+                            <td>₹0.8-1.5 Lakhs/year</td>
+                        </tr>
+                        <tr>
+                            <td>IIITs</td>
+                            <td>₹2-4 Lakhs</td>
+                            <td>₹8-16 Lakhs</td>
+                            <td>₹1-2 Lakhs/year</td>
+                        </tr>
+                        <tr>
+                            <td>Private Universities</td>
+                            <td>₹3-8 Lakhs</td>
+                            <td>₹12-32 Lakhs</td>
+                            <td>₹1-3 Lakhs/year</td>
+                        </tr>
+                        <tr>
+                            <td>State Colleges</td>
+                            <td>₹0.5-1.5 Lakhs</td>
+                            <td>₹2-6 Lakhs</td>
+                            <td>₹0.5-1 Lakhs/year</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-piggy-bank"></i> Scholarships</h3>
+                    <ul>
+                        <li><i class="fas fa-award"></i> Merit-based Scholarships</li>
+                        <li><i class="fas fa-hand-holding-usd"></i> Need-based Financial Aid</li>
+                        <li><i class="fas fa-certificate"></i> Government Schemes</li>
+                        <li><i class="fas fa-university"></i> College-specific Awards</li>
+                        <li><i class="fas fa-percentage"></i> Fee Waivers Available</li>
+                    </ul>
+                </div>
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-credit-card"></i> Education Loans</h3>
+                    <ul>
+                        <li><i class="fas fa-university"></i> Nationalized Banks</li>
+                        <li><i class="fas fa-percentage"></i> Low Interest Rates</li>
+                        <li><i class="fas fa-clock"></i> Easy Repayment Options</li>
+                        <li><i class="fas fa-shield-alt"></i> Government Guarantee</li>
+                        <li><i class="fas fa-file-invoice"></i> Simple Documentation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Career Scope Section -->
+        <section class="section" id="career">
+            <h2 class="section-title">B.Tech Career Scope</h2>
+            <p class="section-subtitle">Career Opportunities After Engineering</p>
+            
+            <div class="two-column">
+                <div class="column-content fade-in">
+                    <h3><i class="fas fa-briefcase"></i> Job Profiles</h3>
+                    <ul>
+                        <li><strong>Software Engineer:</strong> IT & Software Development</li>
+                        <li><strong>Data Scientist:</strong> Analytics & AI</li>
+                        <li><strong>Design Engineer:</strong> Product Development</li>
+                        <li><strong>Project Manager:</strong> Team Leadership</li>
+                        <li><strong>Research Scientist:</strong> R&D Departments</li>
+                        <li><strong>Consultant:</strong> Technical Consulting</li>
+                    </ul>
+                </div>
+                <div class="column-content fade-in">
+                    <h3><i class="fas fa-industry"></i> Top Sectors</h3>
+                    <ul>
+                        <li><strong>IT Services:</strong> TCS, Infosys, Wipro</li>
+                        <li><strong>Product Companies:</strong> Google, Microsoft</li>
+                        <li><strong>Core Engineering:</strong> L&T, BHEL</li>
+                        <li><strong>Startups:</strong> Numerous Opportunities</li>
+                        <li><strong>PSUs:</strong> Government Jobs</li>
+                        <li><strong>Research:</strong> DRDO, ISRO, CSIR</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="responsive-table fade-in">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Experience</th>
+                            <th>Role Level</th>
+                            <th>Salary Range (LPA)</th>
+                            <th>Growth Path</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Fresher (0-2 yrs)</td>
+                            <td>Engineer/Developer</td>
+                            <td>3 - 8 LPA</td>
+                            <td>Senior Engineer</td>
+                        </tr>
+                        <tr>
+                            <td>Mid Level (2-5 yrs)</td>
+                            <td>Senior Engineer</td>
+                            <td>8 - 15 LPA</td>
+                            <td>Team Lead</td>
+                        </tr>
+                        <tr>
+                            <td>Senior Level (5-10 yrs)</td>
+                            <td>Team Lead/Architect</td>
+                            <td>15 - 30 LPA</td>
+                            <td>Manager</td>
+                        </tr>
+                        <tr>
+                            <td>Leadership (10+ yrs)</td>
+                            <td>Manager/Director</td>
+                            <td>30 - 100+ LPA</td>
+                            <td>VP/CXO</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Admission Process Section -->
+        <section class="section" id="admission">
+            <h2 class="section-title">B.Tech Admission Process</h2>
+            <p class="section-subtitle">Step-by-Step Engineering Admission Guide</p>
+            
+            <div class="info-grid">
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-calendar-alt"></i> Important Dates</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>JEE Main:</strong> Jan/April Session</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>JEE Advanced:</strong> May/June</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>State Exams:</strong> April-May</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Counseling:</strong> June-July</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Classes Start:</strong> August</li>
+                    </ul>
+                </div>
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-tasks"></i> Application Steps</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Registration:</strong> Online Form Fill</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Documents:</strong> Upload Required</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Fee Payment:</strong> Application Fee</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Admit Card:</strong> Download Hall Ticket</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Exam:</strong> Appear for Test</li>
+                    </ul>
+                </div>
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-clipboard-check"></i> Counseling Process</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Registration:</strong> JoSAA/State Counseling</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Choice Fill:</strong> College Preference</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Seat Allotment:</strong> Round-wise</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Reporting:</strong> Document Verification</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Admission:</strong> Fee Payment</li>
+                    </ul>
+                </div>
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-file-alt"></i> Required Documents</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Academic:</strong> 10th & 12th Marksheets</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Score Card:</strong> Entrance Exam Result</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>ID Proof:</strong> Aadhar/PAN Card</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Photos:</strong> Passport Size</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Category:</strong> Caste Certificate (if applicable)</li>
+                    </ul>
+                </div>
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-graduation-cap"></i> After B.Tech</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>M.Tech/MS:</strong> Higher Studies</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>MBA:</strong> Management Course</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Job:</strong> Campus Placement</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Startup:</strong> Entrepreneurship</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Civil Services:</strong> Govt. Jobs</li>
+                    </ul>
+                </div>
+                <div class="info-card fade-in">
+                    <h3><i class="fas fa-lightbulb"></i> Preparation Tips</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Physics:</strong> Concepts & Numericals</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Chemistry:</strong> Organic & Inorganic</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Mathematics:</strong> Practice Problems</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Mock Tests:</strong> Regular Practice</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Time Management:</strong> Study Schedule</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="fade-in">Ready to Start Your B.Tech Journey?</h2>
+            <p class="fade-in">Get expert guidance for engineering admission in top colleges across India. Our counselors help you choose the right specialization and college.</p>
+            <div class="btn-group fade-in">
+                <a href="tel:+919876543210" class="btn btn-primary">
+                    <i class="fas fa-phone"></i> Call Now
+                </a>
+                <a href="mailto:info@whitedavidacademy.com" class="btn btn-secondary">
+                    <i class="fas fa-envelope"></i> Email Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Whitedavid Academy</h3>
+                    <p>Your trusted partner for engineering education guidance and admission assistance. We help students find the right path to achieve their academic and career goals.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#courses">All Courses</a></li>
+                        <li><a href="index.html#universities">Universities</a></li>
+                        <li><a href="index.html#support">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>B.Tech Information</h3>
+                    <ul>
+                        <li><a href="#what-is-btech">What is B.Tech</a></li>
+                        <li><a href="#eligibility">Eligibility</a></li>
+                        <li><a href="#subjects">Subjects</a></li>
+                        <li><a href="#approvals">Approvals</a></li>
+                        <li><a href="#colleges">Top Colleges</a></li>
+                        <li><a href="#fees">Fees Structure</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-phone"></i> +91 9876543210</p>
+                    <p><i class="fas fa-envelope"></i> info@whitedavidacademy.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Delhi, India</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Whitedavid Academy. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Loading screen
+            const loadingScreen = document.getElementById('loadingScreen');
+            const mainContent = document.getElementById('mainContent');
+            
+            setTimeout(function() {
+                loadingScreen.classList.add('hide');
+                mainContent.classList.add('show');
+                
+                setTimeout(function() {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 1500);
+
+            // Generate floating particles with new color scheme
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 40; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 12 + 's';
+                particle.style.animationDuration = (12 + Math.random() * 10) + 's';
+                
+                // New color palette for particles
+                const colors = ['#00E0FF', '#2CE6C2', '#3B82F6', '#A855F7'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.boxShadow = `0 0 6px ${particle.style.background}`;
+                
+                particlesContainer.appendChild(particle);
+            }
+
+            // Mobile menu toggle
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenu.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                const spans = this.querySelectorAll('span');
+                spans[0].style.transform = navLinks.classList.contains('active') ? 'rotate(45deg) translateY(8px)' : '';
+                spans[1].style.opacity = navLinks.classList.contains('active') ? '0' : '1';
+                spans[2].style.transform = navLinks.classList.contains('active') ? 'rotate(-45deg) translateY(-8px)' : '';
+            });
+
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    const spans = mobileMenu.querySelectorAll('span');
+                    spans[0].style.transform = '';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = '';
+                });
+            });
+
+            // Quick navigation active state
+            const quickNavLinks = document.querySelectorAll('.quick-nav-links a');
+            const sections = document.querySelectorAll('section[id]');
+
+            function updateActiveNav() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (scrollY >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                quickNavLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').slice(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveNav);
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const offsetTop = target.offsetTop - 100;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all fade-in elements
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            // Mouse glow effect on cards - Enhanced
+            document.addEventListener('mousemove', (e) => {
+                const infoCards = document.querySelectorAll('.info-card');
+                const columnCards = document.querySelectorAll('.column-content');
+                const comparisonCards = document.querySelectorAll('.comparison-card');
+                
+                // Combine all card types for mouse tracking
+                const allCards = [...infoCards, ...columnCards, ...comparisonCards];
+                
+                allCards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    // Only update if mouse is near the card
+                    const isNear = (
+                        e.clientX >= rect.left - 50 && 
+                        e.clientX <= rect.right + 50 && 
+                        e.clientY >= rect.top - 50 && 
+                        e.clientY <= rect.bottom + 50
+                    );
+                    
+                    if (isNear) {
+                        card.style.setProperty('--mouse-x', `${x}px`);
+                        card.style.setProperty('--mouse-y', `${y}px`);
+                    }
+                });
+            });
+
+            // Initialize active nav on page load
+            updateActiveNav();
+        });
+    </script>
+</body>
+</html>

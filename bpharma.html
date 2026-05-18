@@ -1,0 +1,2861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B.Pharma Admission | Whitedavid Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Primary colors — Neon Cyan / Teal */
+            --primary: #00E0FF;
+            --primary-dark: #0A9CC5;
+            --secondary: #2CE6C2;
+            --accent: #FF6A3D;
+
+            /* Background colors — Dark Gradient / Midnight Blue */
+            --dark: #0F172A;
+            --darker: #0B0F2A;
+            --darkest: #070B1A;
+            --light: #13203A;
+            --lighter: #1A2E4A;
+
+            /* Text colors — Soft White */
+            --text: #FFFFFF;
+            --text-dim: #94A3B8;
+
+            /* Border colors — Low-Contrast */
+            --border: rgba(148,163,184,0.12);
+
+            /* Glow colors — Ambient Cyan */
+            --glow: rgba(0, 224, 255, 0.35);
+            --glow-secondary: rgba(44, 230, 194, 0.35);
+
+            /* CTA Warm */
+            --cta-start: #FF6A3D;
+            --cta-end: #FF8A50;
+
+            /* Category Accents */
+            --cat-orange: #FF6A3D;
+            --cat-blue: #3B82F6;
+            --cat-purple: #A855F7;
+            --cat-pink: #EC4899;
+            --cat-green: #22C55E;
+            --cat-amber: #F59E0B;
+            --cat-teal: #14B8A6;
+            --cat-rose: #F43F5E;
+            --cat-indigo: #818CF8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--darkest);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--darkest);
+            overflow: hidden;
+        }
+
+        .radial-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .radial-glow:nth-child(1) {
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, var(--primary), transparent);
+            top: -250px;
+            left: -250px;
+            animation-delay: 0s;
+        }
+
+        .radial-glow:nth-child(2) {
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, var(--secondary), transparent);
+            bottom: -200px;
+            right: -200px;
+            animation-delay: 5s;
+        }
+
+        .radial-glow:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--accent), transparent);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 10s;
+            opacity: 0.15;
+        }
+
+        /* Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--glow);
+            animation: float 15s infinite linear;
+            opacity: 0.4;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darkest);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(11, 15, 42, 0.92), rgba(7, 11, 26, 0.92));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-animation 3s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 12px var(--glow);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1002;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 3px;
+            box-shadow: 0 0 6px var(--glow);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 100px 5%;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.04), rgba(44, 230, 194, 0.04));
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 224, 255, 0.08) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 5s ease infinite;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cta-start), var(--cta-end));
+            color: white;
+            box-shadow: 0 5px 25px rgba(255, 106, 61, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(255, 106, 61, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid rgba(0, 224, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.15);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--darkest);
+            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--glow);
+        }
+
+        /* Quick Navigation */
+        .quick-nav {
+            position: sticky;
+            top: 80px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(19, 32, 58, 0.85));
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            padding: 1rem 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .quick-nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) var(--dark);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .quick-nav-content::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .quick-nav-content::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+
+        .quick-nav-content::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .quick-nav a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            background: rgba(0, 224, 255, 0.06);
+            border: 1px solid transparent;
+            flex-shrink: 0;
+        }
+
+        .quick-nav a:hover {
+            background: var(--primary);
+            color: var(--darkest);
+            box-shadow: 0 5px 15px var(--glow);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 5%;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 5rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            animation: expand 2s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        .section-title p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+        }
+
+        /* ============================================
+           ENHANCED GLASSMORPHISM INFO CARDS
+           ============================================ */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Gradient Top Highlight Line — hidden by default, visible on hover */
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+
+        /* Mouse-follow Glow Effect — hidden by default */
+        .info-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Interactive Hover Card Effect */
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow:
+                0 10px 40px rgba(0, 224, 255, 0.12),
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(0, 224, 255, 0.1);
+            border-color: rgba(0, 224, 255, 0.25);
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+
+        .info-card:hover::before {
+            opacity: 1;
+        }
+
+        .info-card:hover::after {
+            opacity: 1;
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Title Glow + Icon Scale on Hover */
+        .info-card:hover h3 {
+            text-shadow: 0 0 20px rgba(0, 224, 255, 0.6);
+            transform: translateX(5px);
+        }
+
+        .info-card:hover h3 i {
+            filter: drop-shadow(0 0 12px var(--glow));
+            transform: scale(1.15);
+        }
+
+        .info-card h3 i {
+            transition: all 0.4s ease;
+        }
+
+        .info-card p, .info-card li {
+            color: var(--text-dim);
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Text Highlight on Hover */
+        .info-card:hover p {
+            color: #c8d0e5;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-radius: 6px;
+            padding-left: 5px;
+            padding-right: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .info-card li:last-child {
+            border-bottom: none;
+        }
+
+        /* List Item Hover Highlight */
+        .info-card:hover li:hover {
+            color: var(--primary);
+            text-shadow: 0 0 8px var(--glow);
+            background: rgba(0, 224, 255, 0.05);
+            padding-left: 12px;
+            transform: translateX(7px);
+        }
+
+        /* ============================================
+           ENHANCED TWO COLUMN CARDS
+           ============================================ */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .column {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Mouse-follow Glow Effect */
+        .column::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Gradient Top Highlight Line */
+        .column::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+
+        /* Interactive Hover Card Effect */
+        .column:hover {
+            transform: translateY(-10px);
+            box-shadow:
+                0 10px 40px rgba(0, 224, 255, 0.12),
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(0, 224, 255, 0.1);
+            border-color: rgba(0, 224, 255, 0.25);
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+
+        .column:hover::before {
+            opacity: 1;
+        }
+
+        .column:hover::after {
+            opacity: 1;
+        }
+
+        .column h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Title Glow on Hover */
+        .column:hover h3 {
+            text-shadow: 0 0 20px rgba(0, 224, 255, 0.6);
+            transform: translateX(5px);
+        }
+
+        .column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .column:hover h3::after {
+            width: 80px;
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        .column ul {
+            list-style: none;
+            padding: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Column List Items — moved from inline styles */
+        .column li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.35s ease;
+            border-radius: 6px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .column li:last-child {
+            border-bottom: none;
+        }
+
+        .column li i {
+            color: var(--secondary);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* List Item Hover Highlight */
+        .column:hover li:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--glow);
+            background: rgba(0, 224, 255, 0.04);
+            padding-left: 15px;
+            transform: translateX(10px);
+        }
+
+        .column:hover li:hover i {
+            filter: drop-shadow(0 0 8px var(--glow-secondary));
+            transform: scale(1.2);
+        }
+
+        /* ============================================
+           ENHANCED CAREER GRID — MULTI-ACCENT
+           ============================================ */
+        .career-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .career-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 1.5rem;
+            border-radius: 18px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Gradient Top Highlight Line — category colored */
+        .career-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+
+        .career-card:nth-child(1)::before { background: linear-gradient(90deg, transparent, var(--cat-orange), transparent); }
+        .career-card:nth-child(2)::before { background: linear-gradient(90deg, transparent, var(--cat-blue), transparent); }
+        .career-card:nth-child(3)::before { background: linear-gradient(90deg, transparent, var(--cat-purple), transparent); }
+        .career-card:nth-child(4)::before { background: linear-gradient(90deg, transparent, var(--cat-green), transparent); }
+        .career-card:nth-child(5)::before { background: linear-gradient(90deg, transparent, var(--cat-amber), transparent); }
+        .career-card:nth-child(6)::before { background: linear-gradient(90deg, transparent, var(--cat-teal), transparent); }
+        .career-card:nth-child(7)::before { background: linear-gradient(90deg, transparent, var(--cat-indigo), transparent); }
+        .career-card:nth-child(8)::before { background: linear-gradient(90deg, transparent, var(--cat-rose), transparent); }
+
+        /* Category glow overlays */
+        .career-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .career-card:nth-child(1)::after { background: radial-gradient(circle at 50% 30%, rgba(255, 106, 61, 0.15), transparent 70%); }
+        .career-card:nth-child(2)::after { background: radial-gradient(circle at 50% 30%, rgba(59, 130, 246, 0.15), transparent 70%); }
+        .career-card:nth-child(3)::after { background: radial-gradient(circle at 50% 30%, rgba(168, 85, 247, 0.15), transparent 70%); }
+        .career-card:nth-child(4)::after { background: radial-gradient(circle at 50% 30%, rgba(34, 197, 94, 0.15), transparent 70%); }
+        .career-card:nth-child(5)::after { background: radial-gradient(circle at 50% 30%, rgba(245, 158, 11, 0.15), transparent 70%); }
+        .career-card:nth-child(6)::after { background: radial-gradient(circle at 50% 30%, rgba(20, 184, 166, 0.15), transparent 70%); }
+        .career-card:nth-child(7)::after { background: radial-gradient(circle at 50% 30%, rgba(129, 140, 248, 0.15), transparent 70%); }
+        .career-card:nth-child(8)::after { background: radial-gradient(circle at 50% 30%, rgba(244, 63, 94, 0.15), transparent 70%); }
+
+        .career-card:hover::after {
+            opacity: 1;
+        }
+
+        .career-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Enhanced Hover with multi-layer shadows */
+        .career-card:nth-child(1):hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 15px 40px rgba(255, 106, 61, 0.2), 0 0 0 1px rgba(255, 106, 61, 0.25), inset 0 1px 0 rgba(255, 106, 61, 0.1); border-color: rgba(255, 106, 61, 0.3); }
+        .career-card:nth-child(2):hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2), 0 0 0 1px rgba(59, 130, 246, 0.25), inset 0 1px 0 rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3); }
+        .career-card:nth-child(3):hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 15px 40px rgba(168, 85, 247, 0.2), 0 0 0 1px rgba(168, 85, 247, 0.25), inset 0 1px 0 rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); }
+        .career-card:nth-child(4):hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 15px 40px rgba(34, 197, 94, 0.2), 0 0 0 1px rgba(34, 197, 94, 0.25), inset 0 1px 0 rgba(34, 197, 94, 0.1); border-color: rgba(34, 197, 94, 0.3); }
+        .career-card:nth-child(5):hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 15px 40px rgba(245, 158, 11, 0.2), 0 0 0 1px rgba(245, 158, 11, 0.25), inset 0 1px 0 rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); }
+        .career-card:nth-child(6):hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 15px 40px rgba(20, 184, 166, 0.2), 0 0 0 1px rgba(20, 184, 166, 0.25), inset 0 1px 0 rgba(20, 184, 166, 0.1); border-color: rgba(20, 184, 166, 0.3); }
+        .career-card:nth-child(7):hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 15px 40px rgba(129, 140, 248, 0.2), 0 0 0 1px rgba(129, 140, 248, 0.25), inset 0 1px 0 rgba(129, 140, 248, 0.1); border-color: rgba(129, 140, 248, 0.3); }
+        .career-card:nth-child(8):hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 15px 40px rgba(244, 63, 94, 0.2), 0 0 0 1px rgba(244, 63, 94, 0.25), inset 0 1px 0 rgba(244, 63, 94, 0.1); border-color: rgba(244, 63, 94, 0.3); }
+
+        .career-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+            animation: bounce 3s infinite;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Icon Scale + Enhanced Glow on Hover */
+        .career-card:hover i {
+            transform: scale(1.2) translateY(-5px);
+        }
+
+        .career-card:nth-child(1) i { color: var(--cat-orange); filter: drop-shadow(0 0 8px rgba(255, 106, 61, 0.4)); }
+        .career-card:nth-child(2) i { color: var(--cat-blue); filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.4)); }
+        .career-card:nth-child(3) i { color: var(--cat-purple); filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.4)); }
+        .career-card:nth-child(4) i { color: var(--cat-green); filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.4)); }
+        .career-card:nth-child(5) i { color: var(--cat-amber); filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.4)); }
+        .career-card:nth-child(6) i { color: var(--cat-teal); filter: drop-shadow(0 0 8px rgba(20, 184, 166, 0.4)); }
+        .career-card:nth-child(7) i { color: var(--cat-indigo); filter: drop-shadow(0 0 8px rgba(129, 140, 248, 0.4)); }
+        .career-card:nth-child(8) i { color: var(--cat-rose); filter: drop-shadow(0 0 8px rgba(244, 63, 94, 0.4)); }
+
+        .career-card:nth-child(1):hover i { filter: drop-shadow(0 0 20px rgba(255, 106, 61, 0.7)); }
+        .career-card:nth-child(2):hover i { filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.7)); }
+        .career-card:nth-child(3):hover i { filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.7)); }
+        .career-card:nth-child(4):hover i { filter: drop-shadow(0 0 20px rgba(34, 197, 94, 0.7)); }
+        .career-card:nth-child(5):hover i { filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.7)); }
+        .career-card:nth-child(6):hover i { filter: drop-shadow(0 0 20px rgba(20, 184, 166, 0.7)); }
+        .career-card:nth-child(7):hover i { filter: drop-shadow(0 0 20px rgba(129, 140, 248, 0.7)); }
+        .career-card:nth-child(8):hover i { filter: drop-shadow(0 0 20px rgba(244, 63, 94, 0.7)); }
+
+        .career-card h3 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Title Text Highlight on Hover — category colored */
+        .career-card:hover h3 {
+            transform: translateY(-2px);
+        }
+
+        .career-card:nth-child(1):hover h3 { color: var(--cat-orange); text-shadow: 0 0 15px rgba(255, 106, 61, 0.5); }
+        .career-card:nth-child(2):hover h3 { color: var(--cat-blue); text-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
+        .career-card:nth-child(3):hover h3 { color: var(--cat-purple); text-shadow: 0 0 15px rgba(168, 85, 247, 0.5); }
+        .career-card:nth-child(4):hover h3 { color: var(--cat-green); text-shadow: 0 0 15px rgba(34, 197, 94, 0.5); }
+        .career-card:nth-child(5):hover h3 { color: var(--cat-amber); text-shadow: 0 0 15px rgba(245, 158, 11, 0.5); }
+        .career-card:nth-child(6):hover h3 { color: var(--cat-teal); text-shadow: 0 0 15px rgba(20, 184, 166, 0.5); }
+        .career-card:nth-child(7):hover h3 { color: var(--cat-indigo); text-shadow: 0 0 15px rgba(129, 140, 248, 0.5); }
+        .career-card:nth-child(8):hover h3 { color: var(--cat-rose); text-shadow: 0 0 15px rgba(244, 63, 94, 0.5); }
+
+        .career-card p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Description Text Highlight on Hover */
+        .career-card:hover p {
+            color: #c0c8dd;
+        }
+
+        /* ============================================
+           ENHANCED SUBJECT ITEMS
+           ============================================ */
+        .subjects-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .subject-item {
+            background: rgba(0, 224, 255, 0.06);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            border: 1px solid rgba(0, 224, 255, 0.15);
+            color: var(--text);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            font-size: 1rem;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subject Hover — enhanced glow */
+        .subject-item:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--darkest);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px var(--glow), 0 0 0 1px rgba(0, 224, 255, 0.3);
+            border-color: transparent;
+            font-weight: 500;
+        }
+
+        /* ============================================
+           ENHANCED COLLEGE CARDS
+           ============================================ */
+        .college-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 1.5rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Mouse-follow Glow Effect */
+        .college-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Gradient Top Highlight Line */
+        .college-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+
+        /* Interactive Hover Card Effect */
+        .college-card:hover {
+            transform: translateX(10px) translateY(-3px);
+            box-shadow:
+                0 15px 45px rgba(0, 224, 255, 0.15),
+                0 0 0 1px rgba(0, 224, 255, 0.2),
+                inset 0 1px 0 rgba(0, 224, 255, 0.1);
+            border-color: rgba(0, 224, 255, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .college-card:hover::before {
+            opacity: 1;
+        }
+
+        .college-card:hover::after {
+            opacity: 1;
+        }
+
+        .college-info h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* College Name Glow on Hover */
+        .college-card:hover .college-info h3 {
+            text-shadow: 0 0 20px rgba(0, 224, 255, 0.6);
+            transform: translateX(5px);
+        }
+
+        .college-info p {
+            color: var(--text-dim);
+            margin-bottom: 0.3rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* College Info Text Highlight on Hover */
+        .college-card:hover .college-info p {
+            color: #c0c8dd;
+        }
+
+        .college-info p i {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .college-card:hover .college-info p i {
+            filter: drop-shadow(0 0 6px var(--glow-secondary));
+        }
+
+        .college-rank {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Rank Glow + Scale on Hover */
+        .college-card:hover .college-rank {
+            transform: scale(1.15);
+            filter: drop-shadow(0 0 15px rgba(0, 224, 255, 0.5));
+        }
+
+        /* ============================================
+           ENHANCED ADMISSION PROCESS STEPS
+           ============================================ */
+        .admission-process {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Keep scan animation pseudo-element */
+        .process-step::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 224, 255, 0.08), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+            opacity: 0;
+        }
+
+        /* Gradient Top Highlight Line */
+        .process-step::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+
+        .process-step:hover::before {
+            animation: scan 1s ease-in-out;
+        }
+
+        .process-step:hover::after {
+            opacity: 1;
+        }
+
+        /* Interactive Hover Card Effect */
+        .process-step:hover {
+            transform: translateY(-10px);
+            box-shadow:
+                0 15px 50px rgba(0, 224, 255, 0.15),
+                0 0 0 1px rgba(0, 224, 255, 0.2),
+                inset 0 1px 0 rgba(0, 224, 255, 0.1);
+            border-color: rgba(0, 224, 255, 0.25);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .process-step i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: block;
+            animation: bounce 2s infinite;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Icon Scale + Glow on Hover */
+        .process-step:hover i {
+            transform: scale(1.15) translateY(-5px);
+            filter: drop-shadow(0 0 20px rgba(0, 224, 255, 0.6));
+        }
+
+        .process-step h3 {
+            color: var(--text);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Title Glow on Hover */
+        .process-step:hover h3 {
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .process-step p {
+            color: var(--text-dim);
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Text Highlight on Hover */
+        .process-step:hover p {
+            color: #c0c8dd;
+        }
+
+        /* ============================================
+           ENHANCED ENTRANCE EXAM CARDS
+           ============================================ */
+        .entrance-exams {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .exam-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Gradient Top Highlight Line — category colored */
+        .exam-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+
+        .exam-card:nth-child(1)::before { background: linear-gradient(90deg, transparent, var(--cat-blue), #60A5FA, transparent); }
+        .exam-card:nth-child(2)::before { background: linear-gradient(90deg, transparent, var(--cat-purple), var(--cat-pink), transparent); }
+        .exam-card:nth-child(3)::before { background: linear-gradient(90deg, transparent, var(--cat-teal), #2DD4BF, transparent); }
+
+        /* Category glow overlay */
+        .exam-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .exam-card:nth-child(1)::after { background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.12), transparent 70%); }
+        .exam-card:nth-child(2)::after { background: radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.12), transparent 70%); }
+        .exam-card:nth-child(3)::after { background: radial-gradient(circle at 50% 0%, rgba(20, 184, 166, 0.12), transparent 70%); }
+
+        .exam-card:hover::after {
+            opacity: 1;
+        }
+
+        .exam-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Enhanced Hover with multi-layer shadows */
+        .exam-card:nth-child(1):hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 15px 50px rgba(59, 130, 246, 0.2), 0 0 0 1px rgba(59, 130, 246, 0.25), inset 0 1px 0 rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3); }
+        .exam-card:nth-child(2):hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 15px 50px rgba(168, 85, 247, 0.2), 0 0 0 1px rgba(168, 85, 247, 0.25), inset 0 1px 0 rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); }
+        .exam-card:nth-child(3):hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 15px 50px rgba(20, 184, 166, 0.2), 0 0 0 1px rgba(20, 184, 166, 0.25), inset 0 1px 0 rgba(20, 184, 166, 0.1); border-color: rgba(20, 184, 166, 0.3); }
+
+        .exam-card h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 0.5rem;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        .exam-card:nth-child(1) h3 { color: var(--cat-blue); }
+        .exam-card:nth-child(2) h3 { color: var(--cat-purple); }
+        .exam-card:nth-child(3) h3 { color: var(--cat-teal); }
+
+        .exam-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            transition: width 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .exam-card:nth-child(1) h3::after { background: linear-gradient(90deg, var(--cat-blue), #60A5FA); }
+        .exam-card:nth-child(2) h3::after { background: linear-gradient(90deg, var(--cat-purple), var(--cat-pink)); }
+        .exam-card:nth-child(3) h3::after { background: linear-gradient(90deg, var(--cat-teal), #2DD4BF); }
+
+        /* Title Underline Expand + Glow on Hover */
+        .exam-card:hover h3::after {
+            width: 80px;
+        }
+
+        .exam-card:nth-child(1):hover h3::after { box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+        .exam-card:nth-child(2):hover h3::after { box-shadow: 0 0 10px rgba(168, 85, 247, 0.5); }
+        .exam-card:nth-child(3):hover h3::after { box-shadow: 0 0 10px rgba(20, 184, 166, 0.5); }
+
+        /* Title Text Glow on Hover */
+        .exam-card:nth-child(1):hover h3 { text-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        .exam-card:nth-child(2):hover h3 { text-shadow: 0 0 20px rgba(168, 85, 247, 0.5); }
+        .exam-card:nth-child(3):hover h3 { text-shadow: 0 0 20px rgba(20, 184, 166, 0.5); }
+
+        .exam-details {
+            list-style: none;
+            padding: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .exam-details li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.35s ease;
+            border-radius: 6px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .exam-details li:last-child {
+            border-bottom: none;
+        }
+
+        .exam-details li i {
+            width: 20px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .exam-card:nth-child(1) .exam-details li i { color: var(--cat-blue); }
+        .exam-card:nth-child(2) .exam-details li i { color: var(--cat-purple); }
+        .exam-card:nth-child(3) .exam-details li i { color: var(--cat-teal); }
+
+        /* List Item Hover Highlight */
+        .exam-card:hover .exam-details li:hover {
+            background: rgba(255, 255, 255, 0.03);
+            padding-left: 12px;
+            transform: translateX(7px);
+        }
+
+        .exam-card:nth-child(1):hover .exam-details li:hover { color: var(--cat-blue); text-shadow: 0 0 8px rgba(59, 130, 246, 0.4); }
+        .exam-card:nth-child(2):hover .exam-details li:hover { color: var(--cat-purple); text-shadow: 0 0 8px rgba(168, 85, 247, 0.4); }
+        .exam-card:nth-child(3):hover .exam-details li:hover { color: var(--cat-teal); text-shadow: 0 0 8px rgba(20, 184, 166, 0.4); }
+
+        .exam-card:nth-child(1):hover .exam-details li:hover i { filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5)); transform: scale(1.15); }
+        .exam-card:nth-child(2):hover .exam-details li:hover i { filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.5)); transform: scale(1.15); }
+        .exam-card:nth-child(3):hover .exam-details li:hover i { filter: drop-shadow(0 0 8px rgba(20, 184, 166, 0.5)); transform: scale(1.15); }
+
+        /* ============================================
+           ENHANCED HIGHER STUDIES GRID
+           ============================================ */
+        .higher-studies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .study-option {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Mouse-follow Glow Effect */
+        .study-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Gradient Top Highlight Line */
+        .study-option::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+
+        /* Interactive Hover Card Effect */
+        .study-option:hover {
+            transform: translateY(-10px);
+            box-shadow:
+                0 15px 50px rgba(0, 224, 255, 0.15),
+                0 0 0 1px rgba(0, 224, 255, 0.2),
+                inset 0 1px 0 rgba(0, 224, 255, 0.1);
+            border-color: rgba(0, 224, 255, 0.25);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .study-option:hover::before {
+            opacity: 1;
+        }
+
+        .study-option:hover::after {
+            opacity: 1;
+        }
+
+        .study-option h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Title Glow on Hover */
+        .study-option:hover h3 {
+            text-shadow: 0 0 20px rgba(0, 224, 255, 0.6);
+            transform: translateX(5px);
+        }
+
+        .study-option:hover h3 i {
+            filter: drop-shadow(0 0 12px var(--glow-secondary));
+            transform: scale(1.15);
+        }
+
+        .study-option h3 i {
+            color: var(--secondary);
+            transition: all 0.4s ease;
+        }
+
+        .study-option p {
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* Text Highlight on Hover */
+        .study-option:hover p {
+            color: #c0c8dd;
+        }
+
+        .study-option ul {
+            list-style: none;
+            padding: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .study-option li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            color: var(--text-dim);
+            position: relative;
+            transition: all 0.35s ease;
+            border-radius: 6px;
+        }
+
+        .study-option li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        /* List Item Hover Highlight */
+        .study-option:hover li:hover {
+            color: var(--primary);
+            text-shadow: 0 0 8px var(--glow);
+            background: rgba(0, 224, 255, 0.05);
+            padding-left: 2rem;
+            transform: translateX(7px);
+        }
+
+        .study-option:hover li:hover::before {
+            color: var(--primary);
+            filter: drop-shadow(0 0 6px var(--glow));
+            transform: scale(1.2);
+        }
+
+        /* ============================================
+           ENHANCED FEE TABLE
+           ============================================ */
+        .table-scroll-wrapper {
+            width: 100%;
+            margin-top: 3rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Gradient Top Highlight Line */
+        .table-scroll-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            opacity: 0.5;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+
+        /* Table Hover Effect */
+        .table-scroll-wrapper:hover {
+            box-shadow: 0 15px 50px rgba(0, 224, 255, 0.1), 0 0 0 1px rgba(0, 224, 255, 0.15);
+            border-color: rgba(0, 224, 255, 0.2);
+        }
+
+        .table-scroll-wrapper:hover::before {
+            opacity: 1;
+        }
+
+        .fee-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            min-width: 550px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .fee-table thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .fee-table th {
+            padding: 1.5rem;
+            text-align: left;
+            color: var(--darkest);
+            font-weight: 600;
+            font-size: 1.1rem;
+            white-space: nowrap;
+        }
+
+        .fee-table td {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-dim);
+            transition: all 0.3s ease;
+        }
+
+        .fee-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        /* Enhanced Row Hover — Text Highlight + Glow */
+        .fee-table tbody tr:hover {
+            background: rgba(0, 224, 255, 0.06);
+            transform: scale(1.01);
+        }
+
+        .fee-table tbody tr:hover td {
+            color: var(--primary);
+            text-shadow: 0 0 8px var(--glow);
+        }
+
+        .fee-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* ============================================
+           ENHANCED FAQ ITEMS
+           ============================================ */
+        .faq-container {
+            max-width: 800px;
+            margin: 3rem auto 0;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            margin-bottom: 1rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 10px 30px rgba(0, 224, 255, 0.12), 0 0 0 1px rgba(0, 224, 255, 0.18);
+            border-color: rgba(0, 224, 255, 0.22);
+            transform: translateX(5px);
+        }
+
+        .faq-item.active {
+            box-shadow: 0 20px 50px rgba(0, 224, 255, 0.18), 0 0 0 1px rgba(0, 224, 255, 0.25);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text);
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.4s ease;
+            gap: 1rem;
+        }
+
+        .faq-question:hover {
+            color: var(--primary);
+            padding-left: 2rem;
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        .faq-question i {
+            color: var(--primary);
+            transition: transform 0.3s ease, filter 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .faq-question:hover i {
+            filter: drop-shadow(0 0 10px var(--glow));
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        /* CTA Section — Warm Accent */
+        .cta-section {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 4rem 5%;
+            text-align: center;
+            margin: 5rem 0;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 106, 61, 0.15);
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 106, 61, 0.12) 0%, transparent 70%);
+            animation: pulse-bg 4s ease infinite;
+        }
+
+        .cta-section > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--cta-start), var(--cta-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, var(--cta-start), var(--cta-end));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 10px 35px rgba(255, 106, 61, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(255, 106, 61, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, rgba(11, 15, 42, 0.96), rgba(7, 11, 26, 0.96));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 3rem 5% 1rem;
+            margin-top: 5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .footer-section li i {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+            width: 20px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 6px;
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(10px) translateX(-10px); }
+            75% { transform: translateY(-10px) translateX(20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(20deg); }
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
+        }
+
+        @keyframes expand {
+            from { width: 0; }
+            to { width: 100px; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse-bg {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* =========================================
+           RESPONSIVE DESIGN
+           ========================================= */
+
+        /* Tablet */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero p {
+                font-size: 1.15rem;
+            }
+
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+
+            .info-cards {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+
+            .career-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+
+            .entrance-exams {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+
+            /* Reduce hover lift on tablet */
+            .info-card:hover,
+            .column:hover,
+            .process-step:hover,
+            .study-option:hover,
+            .exam-card:hover {
+                transform: translateY(-7px);
+            }
+
+            .career-card:hover {
+                transform: translateY(-6px) scale(1.02);
+            }
+
+            .college-card:hover {
+                transform: translateX(7px) translateY(-2px);
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: flex;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: linear-gradient(180deg, rgba(11, 15, 42, 0.98), rgba(7, 11, 26, 0.98));
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.3s ease;
+                z-index: 999;
+                border-left: 1px solid var(--border);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+                gap: 2rem;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero {
+                margin-top: 80px;
+                padding: 60px 5% 50px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .quick-nav-content {
+                padding: 0 1rem;
+                gap: 0.5rem;
+            }
+
+            .quick-nav a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            main {
+                padding: 2rem 4%;
+            }
+
+            .section {
+                margin-bottom: 3.5rem;
+            }
+
+            .section-title {
+                margin-bottom: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .section-title p {
+                font-size: 1rem;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .column {
+                padding: 1.5rem;
+            }
+
+            .column h3 {
+                font-size: 1.3rem;
+            }
+
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .info-card {
+                padding: 1.5rem;
+            }
+
+            .career-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .career-card {
+                padding: 1.2rem 1rem;
+            }
+
+            .career-card i {
+                font-size: 2rem;
+            }
+
+            .career-card h3 {
+                font-size: 1rem;
+            }
+
+            .career-card p {
+                font-size: 0.8rem;
+            }
+
+            .subject-item {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .college-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.75rem;
+                padding: 1.5rem;
+            }
+
+            .college-rank {
+                font-size: 2rem;
+            }
+
+            .admission-process {
+                grid-template-columns: 1fr;
+            }
+
+            .process-step {
+                padding: 1.5rem;
+            }
+
+            .entrance-exams {
+                grid-template-columns: 1fr;
+            }
+
+            .exam-card {
+                padding: 1.5rem;
+            }
+
+            .fee-table th,
+            .fee-table td {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .faq-question {
+                padding: 1.2rem;
+                font-size: 1rem;
+            }
+
+            .faq-question:hover {
+                padding-left: 1.2rem;
+            }
+
+            .faq-answer {
+                font-size: 0.95rem;
+            }
+
+            .cta-section {
+                padding: 3rem 4%;
+                margin: 3.5rem 0;
+            }
+
+            .cta-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .cta-section p {
+                font-size: 1rem;
+            }
+
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 1.05rem;
+            }
+
+            footer {
+                padding: 3rem 4% 1rem;
+                margin-top: 3.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-section h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .footer-section a:hover {
+                transform: none;
+            }
+
+            /* Reduced hover on mobile */
+            .info-card:hover,
+            .column:hover,
+            .process-step:hover,
+            .study-option:hover,
+            .exam-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .career-card:hover {
+                transform: translateY(-4px) scale(1.01);
+            }
+
+            .college-card:hover {
+                transform: translateX(5px);
+            }
+
+            .faq-item:hover {
+                transform: none;
+            }
+        }
+
+        /* Very Small Screens */
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .hero {
+                padding: 50px 4% 40px;
+            }
+
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .btn {
+                padding: 10px 22px;
+                font-size: 1rem;
+                width: 100%;
+                max-width: 260px;
+                text-align: center;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+
+            .career-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .subjects-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .subject-item {
+                width: 100%;
+                text-align: center;
+            }
+
+            .college-info h3 {
+                font-size: 1.1rem;
+            }
+
+            .cta-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .cta-button {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .quick-nav a {
+                padding: 0.4rem 0.7rem;
+                font-size: 0.85rem;
+            }
+
+            /* Minimal hover on very small screens */
+            .info-card:hover,
+            .column:hover,
+            .process-step:hover,
+            .study-option:hover,
+            .exam-card:hover {
+                transform: translateY(-3px);
+            }
+
+            .career-card:hover {
+                transform: translateY(-3px) scale(1.01);
+            }
+
+            .college-card:hover {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="radial-glow"></div>
+        <div class="radial-glow"></div>
+        <div class="radial-glow"></div>
+    </div>
+
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <div class="logo">Whitedavid Academy</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#courses">Courses</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Bachelor of Pharmacy (B.Pharma)</h1>
+            <p>Embark on a rewarding journey in pharmaceutical sciences with comprehensive education and practical training</p>
+            <div class="btn-group">
+                <a href="#admission" class="btn btn-primary">Apply Now</a>
+                <a href="#brochure" class="btn btn-secondary">Download Brochure</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Navigation -->
+    <div class="quick-nav">
+        <div class="quick-nav-content">
+            <a href="#overview">Overview</a>
+            <a href="#eligibility">Eligibility</a>
+            <a href="#careers">Careers</a>
+            <a href="#subjects">Subjects</a>
+            <a href="#colleges">Colleges</a>
+            <a href="#admission">Admission</a>
+            <a href="#fees">Fees</a>
+            <a href="#faq">FAQ</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Overview Section -->
+        <section class="section" id="overview">
+            <div class="section-title">
+                <h2>Program Overview</h2>
+                <p>Everything you need to know about B.Pharma</p>
+            </div>
+            <div class="info-cards">
+                <div class="info-card">
+                    <h3><i class="fas fa-clock"></i> Duration</h3>
+                    <p>4 Years (8 Semesters)</p>
+                    <ul>
+                        <li>Full-time program</li>
+                        <li>Academic calendar: July-May</li>
+                        <li>Industrial training in final year</li>
+                        <li>Internship opportunities available</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-graduation-cap"></i> Degree Type</h3>
+                    <p>Undergraduate Program</p>
+                    <ul>
+                        <li>Professional degree course</li>
+                        <li>PCI approved curriculum</li>
+                        <li>Research-oriented learning</li>
+                        <li>Industry integrated training</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-book"></i> Curriculum</h3>
+                    <p>Comprehensive Pharmacy Education</p>
+                    <ul>
+                        <li>Theoretical knowledge</li>
+                        <li>Practical laboratory work</li>
+                        <li>Research projects</li>
+                        <li>Clinical pharmacy training</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Eligibility Section -->
+        <section class="section" id="eligibility">
+            <div class="section-title">
+                <h2>Eligibility Criteria</h2>
+                <p>Requirements for B.Pharma admission</p>
+            </div>
+            <div class="two-column">
+                <div class="column">
+                    <h3>Educational Qualification</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> 10+2 with PCM/PCB</li>
+                        <li><i class="fas fa-check-circle"></i> Minimum 50% marks</li>
+                        <li><i class="fas fa-check-circle"></i> English as compulsory subject</li>
+                        <li><i class="fas fa-check-circle"></i> Recognized board qualification</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>Additional Requirements</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Age limit: 17-25 years</li>
+                        <li><i class="fas fa-check-circle"></i> Valid NEET/Entrance score</li>
+                        <li><i class="fas fa-check-circle"></i> Medical fitness certificate</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Career Opportunities -->
+        <section class="section" id="careers">
+            <div class="section-title">
+                <h2>Career Opportunities</h2>
+                <p>Explore diverse career paths after B.Pharma</p>
+            </div>
+            <div class="career-grid">
+                <div class="career-card">
+                    <i class="fas fa-hospital"></i>
+                    <h3>Hospital Pharmacist</h3>
+                    <p>Work in healthcare settings</p>
+                </div>
+                <div class="career-card">
+                    <i class="fas fa-industry"></i>
+                    <h3>Industry Professional</h3>
+                    <p>Join pharma companies</p>
+                </div>
+                <div class="career-card">
+                    <i class="fas fa-microscope"></i>
+                    <h3>Research Scientist</h3>
+                    <p>Work in R&D departments</p>
+                </div>
+                <div class="career-card">
+                    <i class="fas fa-store"></i>
+                    <h3>Retail Pharmacist</h3>
+                    <p>Manage medical stores</p>
+                </div>
+                <div class="career-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Academician</h3>
+                    <p>Teach in pharmacy colleges</p>
+                </div>
+                <div class="career-card">
+                    <i class="fas fa-gavel"></i>
+                    <h3>Regulatory Affairs</h3>
+                    <p>Work with drug authorities</p>
+                </div>
+                <div class="career-card">
+                    <i class="fas fa-briefcase-medical"></i>
+                    <h3>Medical Representative</h3>
+                    <p>Promote pharma products</p>
+                </div>
+                <div class="career-card">
+                    <i class="fas fa-pills"></i>
+                    <h3>Quality Control</h3>
+                    <p>Ensure drug standards</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Subjects -->
+        <section class="section" id="subjects">
+            <div class="section-title">
+                <h2>Core Subjects</h2>
+                <p>Key subjects covered in B.Pharma curriculum</p>
+            </div>
+            <div class="subjects-container">
+                <div class="subject-item">Pharmaceutical Chemistry</div>
+                <div class="subject-item">Pharmacology</div>
+                <div class="subject-item">Pharmaceutics</div>
+                <div class="subject-item">Pharmacognosy</div>
+                <div class="subject-item">Biochemistry</div>
+                <div class="subject-item">Microbiology</div>
+                <div class="subject-item">Anatomy & Physiology</div>
+                <div class="subject-item">Drug Store Management</div>
+                <div class="subject-item">Pharmaceutical Analysis</div>
+                <div class="subject-item">Clinical Pharmacy</div>
+                <div class="subject-item">Biopharmaceutics</div>
+                <div class="subject-item">Medicinal Chemistry</div>
+            </div>
+        </section>
+
+        <!-- Top Colleges -->
+        <section class="section" id="colleges">
+            <div class="section-title">
+                <h2>Top Colleges for B.Pharma</h2>
+                <p>Prestigious institutions offering Pharmacy</p>
+            </div>
+            <div class="college-card">
+                <div class="college-info">
+                    <h3>Birla Institute of Technology</h3>
+                    <p>Department of Pharmacy</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Mesra, Ranchi</p>
+                </div>
+                <div class="college-rank">#1</div>
+            </div>
+            <div class="college-card">
+                <div class="college-info">
+                    <h3>Manipal College of Pharmaceutical Sciences</h3>
+                    <p>Manipal Academy of Higher Education</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Manipal, Karnataka</p>
+                </div>
+                <div class="college-rank">#2</div>
+            </div>
+            <div class="college-card">
+                <div class="college-info">
+                    <h3>Jamia Hamdard</h3>
+                    <p>Faculty of Pharmacy</p>
+                    <p><i class="fas fa-map-marker-alt"></i> New Delhi</p>
+                </div>
+                <div class="college-rank">#3</div>
+            </div>
+            <div class="college-card">
+                <div class="college-info">
+                    <h3>University Institute of Pharmaceutical Sciences</h3>
+                    <p>Panjab University</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Chandigarh</p>
+                </div>
+                <div class="college-rank">#4</div>
+            </div>
+            <div class="college-card">
+                <div class="college-info">
+                    <h3>Banaras Hindu University</h3>
+                    <p>Institute of Pharmaceutical Sciences</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Varanasi, UP</p>
+                </div>
+                <div class="college-rank">#5</div>
+            </div>
+        </section>
+
+        <!-- Admission Process -->
+        <section class="section" id="admission">
+            <div class="section-title">
+                <h2>Admission Process</h2>
+                <p>Step-by-step guide to secure your B.Pharma seat</p>
+            </div>
+            <div class="admission-process">
+                <div class="process-step">
+                    <i class="fas fa-search"></i>
+                    <h3>Research & Apply</h3>
+                    <p>Explore colleges and submit applications</p>
+                </div>
+                <div class="process-step">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Entrance Exam</h3>
+                    <p>Appear for NEET or university tests</p>
+                </div>
+                <div class="process-step">
+                    <i class="fas fa-list-ol"></i>
+                    <h3>Counseling</h3>
+                    <p>Participate in admission counseling</p>
+                </div>
+                <div class="process-step">
+                    <i class="fas fa-check-double"></i>
+                    <h3>Confirmation</h3>
+                    <p>Complete formalities and confirm seat</p>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top: 4rem;">
+                <h2>Popular Entrance Exams</h2>
+                <p>Key entrance tests for B.Pharma admission</p>
+            </div>
+            <div class="entrance-exams">
+                <div class="exam-card">
+                    <h3>NEET UG</h3>
+                    <ul class="exam-details">
+                        <li><i class="fas fa-calendar"></i> Conducted: May</li>
+                        <li><i class="fas fa-clock"></i> Duration: 3h 20min</li>
+                        <li><i class="fas fa-tasks"></i> Sections: Physics, Chemistry, Biology</li>
+                        <li><i class="fas fa-users"></i> Colleges: 300+ across India</li>
+                    </ul>
+                </div>
+                <div class="exam-card">
+                    <h3>GPAT</h3>
+                    <ul class="exam-details">
+                        <li><i class="fas fa-calendar"></i> Conducted: February</li>
+                        <li><i class="fas fa-clock"></i> Duration: 3 hours</li>
+                        <li><i class="fas fa-tasks"></i> Sections: Pharmacy syllabus</li>
+                        <li><i class="fas fa-users"></i> Seats: 24,000+ M.Pharma</li>
+                    </ul>
+                </div>
+                <div class="exam-card">
+                    <h3>State PET</h3>
+                    <ul class="exam-details">
+                        <li><i class="fas fa-calendar"></i> Conducted: Varies by state</li>
+                        <li><i class="fas fa-clock"></i> Duration: 2-3 hours</li>
+                        <li><i class="fas fa-tasks"></i> Sections: PCB + Mathematics</li>
+                        <li><i class="fas fa-users"></i> Seats: State quota available</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fee Structure -->
+        <section class="section" id="fees">
+            <div class="section-title">
+                <h2>Fee Structure</h2>
+                <p>Estimated costs for B.Pharma program</p>
+            </div>
+            <div class="table-scroll-wrapper">
+                <table class="fee-table">
+                    <thead>
+                        <tr>
+                            <th>College Type</th>
+                            <th>Annual Fee Range</th>
+                            <th>Duration</th>
+                            <th>Total Fee</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Government College</td>
+                            <td>₹40,000 - ₹1,50,000</td>
+                            <td>4 Years</td>
+                            <td>₹1.6L - ₹6L</td>
+                        </tr>
+                        <tr>
+                            <td>Private College</td>
+                            <td>₹80,000 - ₹2,50,000</td>
+                            <td>4 Years</td>
+                            <td>₹3.2L - ₹10L</td>
+                        </tr>
+                        <tr>
+                            <td>Deemed University</td>
+                            <td>₹2,00,000 - ₹4,00,000</td>
+                            <td>4 Years</td>
+                            <td>₹8L - ₹16L</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section" id="faq">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Common queries about B.Pharma program</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What is the duration of B.Pharma course?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        B.Pharma is a 4-year undergraduate program divided into 8 semesters. It includes both theoretical knowledge and practical training in various aspects of pharmaceutical sciences.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is NEET mandatory for B.Pharma admission?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        NEET is mandatory for admission to most government and reputed private colleges. However, some private universities conduct their own entrance tests or offer direct admission based on 12th marks.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What are the job prospects after B.Pharma?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        B.Pharma graduates have excellent job prospects in pharmaceutical companies, hospitals, research labs, and regulatory agencies. Starting salaries range from ₹3-6 LPA with high growth potential.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I open my own pharmacy after B.Pharma?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, after completing B.Pharma and registering with the State Pharmacy Council, you can open your own pharmacy or medical store. You need to obtain the necessary licenses and follow regulatory guidelines.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What is the difference between B.Pharma and Pharm.D?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        B.Pharma focuses on pharmaceutical sciences and industry, while Pharm.D is a doctorate program focusing on clinical pharmacy and patient care. Pharm.D is 6 years (5 years + 1 year internship).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>Ready to Start Your Pharmacy Journey?</h2>
+            <p>Get expert guidance for B.Pharma admission</p>
+            <a href="index.html#contact" class="cta-button">Apply Now</a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#courses">All Courses</a></li>
+                    <li><a href="index.html#admission-support">Admission Support</a></li>
+                    <li><a href="index.html#testimonials">Testimonials</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Popular Courses</h3>
+                <ul>
+                    <li><a href="ba.html">B.A</a></li>
+                    <li><a href="bcom.html">B.Com</a></li>
+                    <li><a href="bsc.html">B.Sc</a></li>
+                    <li><a href="btech.html">B.Tech</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +91 9876543210</li>
+                    <li><i class="fas fa-envelope"></i> info@whitedavidacademy.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Delhi, India</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Whitedavid Academy. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 1000);
+        });
+
+        // Generate Particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            const colors = ['#00E0FF', '#2CE6C2', '#3B82F6', '#A855F7'];
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.background = color;
+                particle.style.boxShadow = `0 0 10px ${color}`;
+                particlesContainer.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const spans = menuToggle.querySelectorAll('span');
+            if (navLinks.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans.forEach(span => {
+                    span.style.transform = 'none';
+                    span.style.opacity = '1';
+                });
+            }
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#navLinks a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const spans = menuToggle.querySelectorAll('span');
+                spans.forEach(span => {
+                    span.style.transform = 'none';
+                    span.style.opacity = '1';
+                });
+            });
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 140;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'linear-gradient(135deg, rgba(11, 15, 42, 0.98), rgba(7, 11, 26, 0.98))';
+                header.style.boxShadow = '0 5px 25px rgba(0, 0, 0, 0.5)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, rgba(11, 15, 42, 0.92), rgba(7, 11, 26, 0.92))';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Quick nav active state
+        const sections = document.querySelectorAll('section[id]');
+        const quickNavLinks = document.querySelectorAll('.quick-nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            quickNavLinks.forEach(link => {
+                link.style.background = 'rgba(0, 224, 255, 0.06)';
+                link.style.color = 'var(--text)';
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.style.background = 'var(--primary)';
+                    link.style.color = 'var(--darkest)';
+                }
+            });
+        });
+
+        // Mouse-follow glow effect on cards
+        document.addEventListener('mousemove', (e) => {
+            const infoCards = document.querySelectorAll('.info-card');
+            const columns = document.querySelectorAll('.column');
+            const collegeCards = document.querySelectorAll('.college-card');
+            const studyOptions = document.querySelectorAll('.study-option');
+
+            const allCards = [...infoCards, ...columns, ...collegeCards, ...studyOptions];
+
+            allCards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const isNear = (
+                    e.clientX >= rect.left - 50 &&
+                    e.clientX <= rect.right + 50 &&
+                    e.clientY >= rect.top - 50 &&
+                    e.clientY <= rect.bottom + 50
+                );
+
+                if (isNear) {
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

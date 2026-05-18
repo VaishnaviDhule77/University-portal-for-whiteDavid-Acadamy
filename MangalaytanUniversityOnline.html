@@ -1,0 +1,2707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mangalayatan University Online - UGC-DEB Approved Online Programs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00E0FF;
+            --primary-dark: #00B8D4;
+            --secondary: #2CE6C2;
+            --accent: #FF6A3D;
+            --accent-light: #FF8A50;
+            
+            --dark: #0B0F2A;
+            --darker: #080C22;
+            --darkest: #050818;
+            --light: #111A3A;
+            --lighter: #1A2B5C;
+            
+            --text: #FFFFFF;
+            --text-dim: #B0B8D1;
+            --text-muted: #94A3B8;
+            
+            --border: rgba(148,163,184,0.1);
+            --border-light: rgba(148,163,184,0.15);
+            
+            --glow: rgba(0, 224, 255, 0.3);
+            --glow-secondary: rgba(44, 230, 194, 0.3);
+            --glow-accent: rgba(255, 106, 61, 0.3);
+            
+            --category-orange: #FF6A3D;
+            --category-blue: #3B82F6;
+            --category-purple: #A855F7;
+            --category-green: #22C55E;
+            --category-amber: #F59E0B;
+            --category-teal: #14B8A6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--darkest);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: var(--darkest);
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 224, 255, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(44, 230, 194, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(255, 106, 61, 0.03) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .bg-animation.visible::before {
+            opacity: 1;
+            animation: rotate 20s linear infinite;
+            will-change: transform;
+        }
+
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darkest);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loading.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--darker);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            width: 0%;
+            will-change: width;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(11, 15, 42, 0.85);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(8, 12, 34, 0.95);
+            box-shadow: 0 5px 30px var(--glow);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .logo i {
+            color: var(--primary);
+            margin-right: 10px;
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px var(--glow));
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 20px var(--glow);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+            white-space: nowrap;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text);
+            margin: 3px 0;
+            transition: 0.3s;
+            display: block;
+        }
+
+        .quick-nav {
+            position: fixed;
+            right: 20px;
+            top: 60%;
+            transform: translateY(-50%);
+            background: rgba(17, 26, 58, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 1rem;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            z-index: 999;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .quick-nav-item {
+            display: block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin: 10px 0;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .quick-nav-item:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            transform: scale(1.2);
+            box-shadow: 0 0 25px var(--glow);
+        }
+
+        .quick-nav-item.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 0 25px var(--glow);
+        }
+
+        .hero {
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.03) 0%, rgba(44, 230, 194, 0.03) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .hero.visible::before {
+            opacity: 1;
+            animation: rotate 20s linear infinite;
+            will-change: transform;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px var(--glow);
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            font-weight: 500;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            box-shadow: 0 5px 25px var(--glow-accent);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px var(--glow-accent);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--dark);
+            box-shadow: 0 5px 25px var(--glow);
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--dark);
+            box-shadow: 0 5px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px var(--glow);
+            border: 1px solid var(--border);
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+            backface-visibility: hidden;
+        }
+
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section:nth-child(even) {
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.01) 0%, rgba(44, 230, 194, 0.01) 100%);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            padding: 0 1rem;
+            text-shadow: 0 0 30px var(--glow);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            padding: 0 1rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .info-card {
+            background: rgba(17, 26, 58, 0.6);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--glow), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px var(--glow);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+
+        .info-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 20px var(--glow);
+        }
+
+        .info-card h3 i {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 10px var(--glow));
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding-left: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-card ul li {
+            padding: 8px 0;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .info-card ul li:hover {
+            color: var(--text);
+            transform: translateX(5px);
+        }
+
+        .info-card ul li i {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 5px var(--glow-secondary));
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin: 3rem 0;
+        }
+
+        .column-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px var(--glow);
+        }
+
+        .column-content p {
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .column-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .column-content ul li {
+            padding: 10px 0;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .column-content ul li:hover {
+            transform: translateX(10px);
+            color: var(--primary);
+        }
+
+        .column-content ul li i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            width: 30px;
+            text-align: center;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 5px var(--glow-secondary));
+        }
+
+        .column-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 25px 60px var(--glow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .column-image img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 35px 80px var(--glow);
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .program-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(26, 46, 74, 0.9));
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .program-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px var(--glow);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+
+        .program-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.05), rgba(44, 230, 194, 0.05));
+            border-bottom: 1px solid var(--border);
+        }
+
+        .program-header h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px var(--glow);
+        }
+
+        .program-header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .program-body {
+            padding: 1.5rem;
+        }
+
+        .program-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .program-features li {
+            padding: 8px 0;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .program-features li i {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 5px var(--glow-secondary));
+        }
+
+        .program-footer {
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .program-duration {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .platform-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .platform-feature {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(17, 26, 58, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .platform-feature::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .platform-feature:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 25px 60px var(--glow);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+
+        .platform-feature:hover::before {
+            opacity: 0.1;
+        }
+
+        .platform-feature i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .platform-feature:nth-child(1) i { color: var(--category-blue); filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.5)); }
+        .platform-feature:nth-child(2) i { color: var(--category-purple); filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.5)); }
+        .platform-feature:nth-child(3) i { color: var(--category-teal); filter: drop-shadow(0 0 15px rgba(20, 184, 166, 0.5)); }
+        .platform-feature:nth-child(4) i { color: var(--category-green); filter: drop-shadow(0 0 15px rgba(34, 197, 94, 0.5)); }
+        .platform-feature:nth-child(5) i { color: var(--category-amber); filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.5)); }
+        .platform-feature:nth-child(6) i { color: var(--category-orange); filter: drop-shadow(0 0 15px rgba(255, 106, 61, 0.5)); }
+        .platform-feature:nth-child(7) i { color: var(--primary); filter: drop-shadow(0 0 15px var(--glow)); }
+        .platform-feature:nth-child(8) i { color: var(--secondary); filter: drop-shadow(0 0 15px var(--glow-secondary)); }
+
+        .platform-feature h4 {
+            color: var(--text);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .platform-feature p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .admission-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background: rgba(17, 26, 58, 0.6);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--glow), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 20px;
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px var(--glow);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+
+        .step-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark);
+            box-shadow: 0 5px 25px var(--glow);
+        }
+
+        .step-card h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 20px var(--glow);
+        }
+
+        .step-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .campus-life-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .campus-life-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(26, 46, 74, 0.9));
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .campus-life-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px var(--glow);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+
+        .campus-life-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .campus-life-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .campus-life-card:hover .campus-life-image img {
+            transform: scale(1.1);
+        }
+
+        .campus-life-content {
+            padding: 1.5rem;
+        }
+
+        .campus-life-content h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            text-shadow: 0 0 20px var(--glow);
+        }
+
+        .campus-life-content p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .facility-item {
+            background: rgba(17, 26, 58, 0.6);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .facility-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--glow), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .facility-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px var(--glow);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+
+        .facility-item:hover::before {
+            opacity: 0.1;
+        }
+
+        .facility-item i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .facility-item:nth-child(1) i { color: var(--category-blue); filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.5)); }
+        .facility-item:nth-child(2) i { color: var(--category-green); filter: drop-shadow(0 0 15px rgba(34, 197, 94, 0.5)); }
+        .facility-item:nth-child(3) i { color: var(--category-purple); filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.5)); }
+        .facility-item:nth-child(4) i { color: var(--category-orange); filter: drop-shadow(0 0 15px rgba(255, 106, 61, 0.5)); }
+        .facility-item:nth-child(5) i { color: var(--category-teal); filter: drop-shadow(0 0 15px rgba(20, 184, 166, 0.5)); }
+        .facility-item:nth-child(6) i { color: var(--category-amber); filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.5)); }
+        .facility-item:nth-child(7) i { color: var(--primary); filter: drop-shadow(0 0 15px var(--glow)); }
+        .facility-item:nth-child(8) i { color: var(--secondary); filter: drop-shadow(0 0 15px var(--glow-secondary)); }
+        .facility-item:nth-child(9) i { color: var(--category-blue); filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.5)); }
+        .facility-item:nth-child(10) i { color: var(--category-green); filter: drop-shadow(0 0 15px rgba(34, 197, 94, 0.5)); }
+        .facility-item:nth-child(11) i { color: var(--category-purple); filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.5)); }
+        .facility-item:nth-child(12) i { color: var(--category-orange); filter: drop-shadow(0 0 15px rgba(255, 106, 61, 0.5)); }
+
+        .facility-item h4 {
+            color: var(--text);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .facility-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .placements-container {
+            margin-top: 3rem;
+        }
+
+        .placement-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .placement-stat {
+            background: rgba(17, 26, 58, 0.6);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .placement-stat:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px var(--glow);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+
+        .placement-stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 30px var(--glow);
+        }
+
+        .placement-stat-label {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .recruiters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .recruiter-logo {
+            background: rgba(17, 26, 58, 0.6);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .recruiter-logo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--glow);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+
+        .recruiter-logo img {
+            max-width: 100%;
+            max-height: 60px;
+            filter: grayscale(100%) brightness(0.7);
+            transition: filter 0.3s ease;
+        }
+
+        .recruiter-logo:hover img {
+            filter: grayscale(0%) brightness(1);
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: rgba(17, 26, 58, 0.6);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.15;
+            text-shadow: 0 0 30px var(--glow);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px var(--glow);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+
+        .testimonial-text {
+            color: var(--text);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            box-shadow: 0 5px 20px var(--glow);
+        }
+
+        .author-info h5 {
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+            text-shadow: 0 0 20px var(--glow);
+        }
+
+        .author-info p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .cta-section {
+            background: rgba(17, 26, 58, 0.6);
+            backdrop-filter: blur(20px);
+            padding: 4rem 3rem;
+            border-radius: 30px;
+            text-align: center;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, var(--glow) 0%, transparent 70%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .cta-section.visible::before {
+            animation: pulse-bg 4s ease-in-out infinite;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px var(--glow);
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        footer {
+            background: linear-gradient(135deg, var(--darker), var(--darkest));
+            padding: 3rem 0 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            text-shadow: 0 0 20px var(--glow);
+        }
+
+        .footer-section p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            padding: 5px 0;
+        }
+
+        .footer-section ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        .footer-section i {
+            color: var(--secondary);
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 5px var(--glow-secondary));
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .footer-bottom p {
+            margin-bottom: 0.25rem;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 5px;
+            box-shadow: 0 0 15px var(--glow);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse-bg {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.3; }
+        }
+
+        @media (max-width: 1400px) {
+            .container { max-width: 1140px; }
+            .hero-content { gap: 3rem; }
+        }
+
+        @media (max-width: 1200px) {
+            .container { max-width: 960px; }
+            .nav-links { gap: 1.5rem; }
+            .nav-links a { font-size: 0.95rem; }
+            .hero-text h1 { font-size: 3rem; }
+            .hero-text p { font-size: 1.1rem; }
+            .section-title { font-size: 2.3rem; }
+            .hero-content { gap: 2.5rem; }
+            .two-column { gap: 3rem; }
+            .programs-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+            .campus-life-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+            .testimonials { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+            .footer-content { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .container { max-width: 720px; }
+            .nav-links { gap: 1.2rem; }
+            .nav-links a { font-size: 0.9rem; }
+            .logo { font-size: 1.3rem; }
+            .logo i { font-size: 1.7rem; margin-right: 8px; }
+            .hero { padding: 100px 0 60px; }
+            .hero-text h1 { font-size: 2.6rem; }
+            .hero-text p { font-size: 1rem; }
+            .section-title { font-size: 2.1rem; }
+            .section-subtitle { font-size: 1rem; margin-bottom: 2.5rem; }
+            .section { padding: 60px 0; }
+            .hero-content { gap: 2rem; }
+            .two-column { gap: 2rem; }
+            .column-content h3 { font-size: 1.8rem; }
+            .quick-nav { right: 10px; padding: 0.8rem; }
+            .quick-nav-item { width: 36px; height: 36px; line-height: 36px; margin: 8px 0; }
+            .programs-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+            .platform-features { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+            .admission-steps { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+            .campus-life-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+            .facilities-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+            .testimonials { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+            .info-grid { gap: 1.5rem; }
+            .recruiters-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1.5rem; }
+            .placement-stats { gap: 1.5rem; }
+            .footer-content { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+            .cta-section { padding: 3rem 2rem; }
+            .cta-section h2 { font-size: 2.2rem; }
+            .cta-section p { font-size: 1.1rem; }
+        }
+
+        @media (max-width: 768px) {
+            .container { max-width: 540px; padding: 0 15px; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(11, 15, 42, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 1rem 0;
+                border-top: 1px solid var(--border);
+                gap: 0;
+                overflow-y: auto;
+                max-height: calc(100vh - 70px);
+            }
+            .nav-links.active { display: flex; }
+            .nav-links li { width: 100%; }
+            .nav-links a {
+                display: block;
+                padding: 1rem 1.5rem;
+                font-size: 1.05rem;
+                width: 100%;
+                border-bottom: 1px solid rgba(148,163,184,0.1);
+                text-align: center;
+            }
+            .nav-links a::after { display: none; }
+            .menu-toggle { display: flex; }
+            .hero { padding: 80px 0 50px; }
+            .hero-content { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+            .hero-text h1 { font-size: 2.2rem; line-height: 1.3; }
+            .hero-text p { font-size: 0.95rem; margin-bottom: 1.5rem; }
+            .hero-buttons { justify-content: center; flex-direction: column; align-items: center; gap: 0.75rem; }
+            .hero-buttons .btn { width: 100%; max-width: 320px; }
+            .hero-image img { max-height: 300px; object-fit: cover; }
+            .quick-nav { display: none; }
+            .section { padding: 50px 0; }
+            .section-title { font-size: 1.8rem; margin-bottom: 0.75rem; }
+            .section-subtitle { font-size: 0.95rem; margin-bottom: 2rem; }
+            .two-column { grid-template-columns: 1fr; gap: 2rem; }
+            .column-content h3 { font-size: 1.6rem; }
+            .column-content ul li { padding: 8px 0; }
+            .info-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .info-card { padding: 1.5rem; }
+            .info-card h3 { font-size: 1.3rem; }
+            .info-card h3 i { font-size: 1.5rem; }
+            .programs-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .program-header { padding: 1.2rem; }
+            .program-header h3 { font-size: 1.2rem; }
+            .program-header p { font-size: 0.85rem; }
+            .program-body { padding: 1.2rem; }
+            .program-features li { padding: 6px 0; font-size: 0.9rem; }
+            .program-footer { padding: 1.2rem; flex-direction: column; align-items: stretch; text-align: center; gap: 0.75rem; }
+            .program-footer .btn { width: 100%; }
+            .platform-features { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .platform-feature { padding: 1.5rem 1rem; }
+            .platform-feature i { font-size: 2.5rem; margin-bottom: 0.75rem; }
+            .platform-feature h4 { font-size: 1.05rem; margin-bottom: 0.75rem; }
+            .platform-feature p { font-size: 0.85rem; }
+            .admission-steps { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .step-card { padding: 1.5rem 1rem; }
+            .step-number { width: 50px; height: 50px; font-size: 1.3rem; margin-bottom: 1rem; }
+            .step-card h4 { font-size: 1.1rem; }
+            .step-card p { font-size: 0.9rem; }
+            .campus-life-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .campus-life-image { height: 180px; }
+            .campus-life-content { padding: 1.25rem; }
+            .campus-life-content h4 { font-size: 1.15rem; }
+            .facilities-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .facility-item { padding: 1.5rem 1rem; }
+            .facility-item i { font-size: 2.5rem; margin-bottom: 0.75rem; }
+            .facility-item h4 { font-size: 1.05rem; margin-bottom: 0.75rem; }
+            .facility-item p { font-size: 0.85rem; }
+            .placement-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .placement-stat { padding: 1.5rem; }
+            .placement-stat-number { font-size: 2rem; }
+            .placement-stat-label { font-size: 0.9rem; }
+            .recruiters-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .recruiter-logo { height: 80px; padding: 1rem; }
+            .testimonials { grid-template-columns: 1fr; gap: 1.5rem; }
+            .testimonial-card { padding: 1.5rem; }
+            .testimonial-card::before { font-size: 3rem; }
+            .testimonial-text { font-size: 0.95rem; margin-bottom: 1.25rem; }
+            .cta-section { padding: 2.5rem 1.5rem; border-radius: 20px; }
+            .cta-section h2 { font-size: 1.8rem; }
+            .cta-section p { font-size: 1rem; }
+            .btn-group { flex-direction: column; align-items: center; gap: 0.75rem; }
+            .btn-group .btn { width: 100%; max-width: 320px; }
+            .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
+            .footer-section { text-align: center; }
+            .footer-section p { display: flex; justify-content: center; align-items: flex-start; gap: 0; }
+            .footer-section i { margin-right: 0; width: auto; flex-shrink: 0; }
+            .footer-bottom p { font-size: 0.9rem; }
+        }
+
+        @media (max-width: 576px) {
+            .container { max-width: 100%; padding: 0 12px; }
+            .logo { font-size: 1.15rem; }
+            .logo i { font-size: 1.5rem; margin-right: 6px; }
+            .nav-container { padding: 0.8rem 0; }
+            .navbar { padding: 0.8rem 0; }
+            .hero { padding: 70px 0 40px; }
+            .hero-content { gap: 1.5rem; }
+            .hero-text h1 { font-size: 1.9rem; line-height: 1.25; }
+            .hero-text p { font-size: 0.9rem; margin-bottom: 1.25rem; }
+            .hero-buttons .btn { max-width: 280px; padding: 10px 20px; font-size: 0.95rem; }
+            .hero-image img { max-height: 250px; }
+            .section { padding: 40px 0; }
+            .section-title { font-size: 1.6rem; }
+            .section-subtitle { font-size: 0.9rem; margin-bottom: 1.5rem; }
+            .programs-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+            .program-header h3 { font-size: 1.3rem; }
+            .program-header p { font-size: 0.9rem; }
+            .program-body { padding: 1.25rem; }
+            .program-features li { font-size: 0.95rem; }
+            .platform-features { grid-template-columns: 1fr; gap: 1.25rem; }
+            .platform-feature {
+                padding: 1.5rem;
+                text-align: left;
+                display: grid;
+                grid-template-columns: auto 1fr;
+                grid-template-rows: auto auto;
+                gap: 0.5rem 1rem;
+                align-items: center;
+            }
+            .platform-feature i { grid-row: 1 / 3; margin-bottom: 0; font-size: 2.5rem; }
+            .platform-feature h4 { font-size: 1.1rem; }
+            .platform-feature p { font-size: 0.9rem; grid-column: 2; }
+            .admission-steps { grid-template-columns: 1fr; gap: 1.25rem; }
+            .step-card { padding: 1.25rem; }
+            .facilities-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .facility-item { padding: 1.25rem 0.75rem; }
+            .facility-item i { font-size: 2rem; margin-bottom: 0.5rem; }
+            .facility-item h4 { font-size: 0.95rem; margin-bottom: 0.5rem; }
+            .facility-item p { font-size: 0.8rem; }
+            .placement-stats { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .placement-stat { padding: 1.25rem 1rem; }
+            .placement-stat-number { font-size: 1.75rem; }
+            .placement-stat-label { font-size: 0.85rem; }
+            .recruiters-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .recruiter-logo { height: 70px; padding: 0.75rem; }
+            .info-card { padding: 1.25rem; }
+            .info-card h3 { font-size: 1.2rem; }
+            .info-card h3 i { font-size: 1.4rem; }
+            .info-card ul li { font-size: 0.9rem; padding: 6px 0; }
+            .campus-life-image { height: 160px; }
+            .campus-life-content { padding: 1rem; }
+            .campus-life-content h4 { font-size: 1.1rem; }
+            .testimonial-card { padding: 1.25rem; }
+            .testimonial-text { font-size: 0.9rem; }
+            .cta-section { padding: 2rem 1rem; border-radius: 15px; }
+            .cta-section h2 { font-size: 1.5rem; }
+            .cta-section p { font-size: 0.95rem; }
+            .btn-group .btn { max-width: 280px; padding: 10px 18px; font-size: 0.9rem; }
+            .btn i { font-size: 0.85rem; }
+            .column-content h3 { font-size: 1.4rem; }
+            .column-content ul li { padding: 7px 0; font-size: 0.95rem; }
+            .column-content ul li i { font-size: 1rem; width: 25px; }
+            .footer-section h3 { font-size: 1.15rem; }
+            .footer-section p, .footer-section ul li a { font-size: 0.9rem; }
+        }
+
+        @media (max-width: 400px) {
+            .container { padding: 0 10px; }
+            .logo { font-size: 1rem; }
+            .logo i { font-size: 1.3rem; margin-right: 5px; }
+            .hero { padding: 60px 0 35px; }
+            .hero-text h1 { font-size: 1.7rem; }
+            .hero-text p { font-size: 0.85rem; }
+            .hero-buttons .btn { max-width: 260px; padding: 9px 16px; font-size: 0.88rem; }
+            .hero-image img { max-height: 220px; }
+            .section-title { font-size: 1.45rem; }
+            .section-subtitle { font-size: 0.85rem; }
+            .facilities-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .facility-item {
+                padding: 1.5rem;
+                text-align: left;
+                display: grid;
+                grid-template-columns: auto 1fr;
+                grid-template-rows: auto auto;
+                gap: 0.25rem 1rem;
+                align-items: center;
+            }
+            .facility-item i { grid-row: 1 / 3; margin-bottom: 0; font-size: 2.5rem; }
+            .facility-item h4 { font-size: 1.05rem; margin-bottom: 0.25rem; }
+            .facility-item p { font-size: 0.9rem; grid-column: 2; }
+            .stat-number { font-size: 1.6rem; }
+            .stat-label { font-size: 0.85rem; }
+            .campus-life-image { height: 140px; }
+            .recruiter-logo { height: 65px; padding: 0.5rem; }
+            .cta-section h2 { font-size: 1.35rem; }
+            .btn-group .btn { max-width: 100%; }
+            .program-footer .btn { font-size: 0.9rem; padding: 8px 16px; }
+            .step-card h4 { font-size: 1.05rem; }
+            .step-card p { font-size: 0.85rem; }
+        }
+
+        @media (max-width: 350px) {
+            .hero-text h1 { font-size: 1.5rem; }
+            .hero-text p { font-size: 0.8rem; }
+            .section-title { font-size: 1.3rem; }
+            .section-subtitle { font-size: 0.8rem; }
+            .hero-buttons .btn, .btn-group .btn { max-width: 100%; padding: 8px 14px; font-size: 0.85rem; }
+            .info-card, .program-card, .step-card, .testimonial-card, .platform-feature, .facility-item { padding: 1rem; }
+            .program-header h3 { font-size: 1.15rem; }
+            .info-card h3 { font-size: 1.1rem; }
+            .info-card h3 i { font-size: 1.2rem; }
+            .placement-stat-number { font-size: 1.4rem; }
+            .placement-stat-label { font-size: 0.8rem; }
+            .cta-section h2 { font-size: 1.2rem; }
+            .author-avatar { width: 40px; height: 40px; font-size: 1rem; }
+            .author-info h5 { font-size: 0.95rem; }
+            .author-info p { font-size: 0.8rem; }
+            .column-content h3 { font-size: 1.25rem; }
+            .column-content ul li { font-size: 0.9rem; }
+        }
+
+        @media (max-height: 600px) {
+            .hero { padding: 80px 0 30px; }
+            .hero-text h1 { font-size: 2rem; }
+            .hero-text p { font-size: 0.9rem; margin-bottom: 1rem; }
+            .hero-image img { max-height: 200px; }
+            .hero-buttons { gap: 0.5rem; }
+            .hero-buttons .btn { padding: 8px 16px; font-size: 0.9rem; }
+        }
+
+        @media (max-width: 768px) and (orientation: landscape) {
+            .hero { padding: 70px 0 30px; }
+            .hero-text h1 { font-size: 1.8rem; }
+            .hero-text p { font-size: 0.9rem; margin-bottom: 1rem; }
+            .section { padding: 30px 0; }
+            .hero-buttons { flex-direction: row; flex-wrap: wrap; gap: 0.5rem; }
+            .hero-buttons .btn { width: auto; max-width: none; padding: 8px 16px; font-size: 0.85rem; }
+            .hero-image img { max-height: 200px; }
+            .campus-life-image { height: 140px; }
+            .cta-section { padding: 1.5rem 1rem; }
+            .cta-section h2 { font-size: 1.5rem; }
+            .btn-group { flex-direction: row; flex-wrap: wrap; gap: 0.5rem; }
+            .btn-group .btn { width: auto; max-width: none; padding: 8px 16px; font-size: 0.85rem; }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .btn:hover { transform: none; }
+            .info-card:hover, .program-card:hover, .platform-feature:hover, .step-card:hover, .campus-life-card:hover, .facility-item:hover, .placement-stat:hover, .recruiter-logo:hover, .testimonial-card:hover { transform: none; }
+            .quick-nav-item:hover { transform: none; }
+            .campus-life-card:hover .campus-life-image img { transform: none; }
+            .column-image img:hover { transform: none; }
+        }
+
+        @media print {
+            .navbar, .progress-container, .bg-animation, .quick-nav, .loading, .particles { display: none !important; }
+            body { background: white; color: black; }
+            .section { page-break-inside: avoid; padding: 20px 0; }
+            .info-card, .program-card, .platform-feature, .step-card, .campus-life-card, .facility-item, .placement-stat, .testimonial-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; transform: none; }
+            .btn, .hero-buttons, .btn-group { display: none; }
+            .section-title, .column-content h3, .cta-section h2 { -webkit-text-fill-color: initial; color: #333; }
+            .hero-text h1 { -webkit-text-fill-color: initial; color: #333; }
+            .placement-stat-number { -webkit-text-fill-color: initial; color: #333; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .particle { animation: none; display: none; }
+            .bg-animation::before, .hero::before, .cta-section::before { animation: none; }
+            .loading-spinner { animation: none; border-top-color: var(--primary); }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="#" class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    Mangalayatan Online
+                </a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#programs">Programs</a></li>
+                    <li><a href="#platform">Platform</a></li>
+                    <li><a href="#admission">Admission</a></li>
+                    <li><a href="#campus">Campus Life</a></li>
+                    <li><a href="#facilities">Facilities</a></li>
+                    <li><a href="#placements">Placements</a></li>
+                    <li><a href="#support">Support</a></li>
+                </ul>
+                <div class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="quick-nav">
+        <a href="#home" class="quick-nav-item active"><i class="fas fa-home"></i></a>
+        <a href="#about" class="quick-nav-item"><i class="fas fa-info-circle"></i></a>
+        <a href="#programs" class="quick-nav-item"><i class="fas fa-book"></i></a>
+        <a href="#platform" class="quick-nav-item"><i class="fas fa-laptop"></i></a>
+        <a href="#admission" class="quick-nav-item"><i class="fas fa-user-plus"></i></a>
+        <a href="#campus" class="quick-nav-item"><i class="fas fa-university"></i></a>
+        <a href="#facilities" class="quick-nav-item"><i class="fas fa-building"></i></a>
+        <a href="#placements" class="quick-nav-item"><i class="fas fa-briefcase"></i></a>
+        <a href="#support" class="quick-nav-item"><i class="fas fa-headset"></i></a>
+    </div>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Transform Your Career with Mangalayatan Online</h1>
+                    <p>UGC-DEB Approved Online Degree Programs | Learn from Anywhere | Get Placed in Top Companies</p>
+                    <div class="hero-buttons">
+                        <a href="#programs" class="btn btn-primary">
+                            <i class="fas fa-rocket"></i>
+                            Explore Programs
+                        </a>
+                        <a href="#admission" class="btn btn-secondary">
+                            <i class="fas fa-phone"></i>
+                            Talk to Counselor
+                        </a>
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-download"></i>
+                            Download Brochure
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://picsum.photos/seed/online-learning/600/400" alt="Online Learning">
+                </div>
+            </div>
+        </div>
+        <div class="particles" id="particles"></div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">About Mangalayatan University Online</h2>
+            <p class="section-subtitle">Empowering Learners with Quality Online Education Since 2006</p>
+            
+            <div class="two-column">
+                <div class="column-content">
+                    <h3>Why Choose Mangalayatan Online?</h3>
+                    <p>Mangalayatan University Online is a premier institution offering UGC-DEB approved online degree programs designed for working professionals and students seeking flexible learning options.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> UGC-DEB Approved Programs</li>
+                        <li><i class="fas fa-check-circle"></i> NAAC A+ Accredited University</li>
+                        <li><i class="fas fa-check-circle"></i> Industry-Relevant Curriculum</li>
+                        <li><i class="fas fa-check-circle"></i> Experienced Faculty Members</li>
+                        <li><i class="fas fa-check-circle"></i> Interactive Learning Platform</li>
+                        <li><i class="fas fa-check-circle"></i> 24/7 Student Support</li>
+                        <li><i class="fas fa-check-circle"></i> Placement Assistance</li>
+                        <li><i class="fas fa-check-circle"></i> Affordable Fee Structure</li>
+                    </ul>
+                </div>
+                <div class="column-image">
+                    <img src="https://picsum.photos/seed/university/600/400" alt="Mangalayatan University">
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-award"></i> Recognitions</h3>
+                    <ul>
+                        <li><i class="fas fa-star"></i> UGC-DEB Approved</li>
+                        <li><i class="fas fa-star"></i> NAAC A+ Grade</li>
+                        <li><i class="fas fa-star"></i> AICTE Approved</li>
+                        <li><i class="fas fa-star"></i> AIU Member</li>
+                        <li><i class="fas fa-star"></i> ISO 9001:2015 Certified</li>
+                        <li><i class="fas fa-star"></i> NIRF Ranked</li>
+                        <li><i class="fas fa-star"></i> Industry Accredited</li>
+                        <li><i class="fas fa-star"></i> Government Recognized</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-users"></i> 50,000+ Students</h3>
+                    <ul>
+                        <li><i class="fas fa-user-graduate"></i> Working Professionals</li>
+                        <li><i class="fas fa-user-graduate"></i> Fresh Graduates</li>
+                        <li><i class="fas fa-user-graduate"></i> Business Owners</li>
+                        <li><i class="fas fa-user-graduate"></i> Homemakers</li>
+                        <li><i class="fas fa-user-graduate"></i> Defense Personnel</li>
+                        <li><i class="fas fa-user-graduate"></i> Government Employees</li>
+                        <li><i class="fas fa-user-graduate"></i> International Students</li>
+                        <li><i class="fas fa-user-graduate"></i> Career Switchers</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-globe"></i> Global Reach</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 28+ States</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 500+ Cities</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 15+ Countries</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 1000+ Corporates</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 200+ Industries</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 50+ Alumni Chapters</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Global Partnerships</li>
+                        <li><i class="fas fa-map-marker-alt"></i> International Faculty</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="programs">
+        <div class="container">
+            <h2 class="section-title">Online Programs</h2>
+            <p class="section-subtitle">Choose from Our Wide Range of Career-Oriented Programs</p>
+            
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-header">
+                        <h3>Online MBA</h3>
+                        <p>Master of Business Administration</p>
+                    </div>
+                    <div class="program-body">
+                        <ul class="program-features">
+                            <li><i class="fas fa-check"></i> 12 Specializations</li>
+                            <li><i class="fas fa-check"></i> 2 Year Program</li>
+                            <li><i class="fas fa-check"></i> Live & Recorded Classes</li>
+                            <li><i class="fas fa-check"></i> Industry Projects</li>
+                            <li><i class="fas fa-check"></i> Placement Support</li>
+                        </ul>
+                    </div>
+                    <div class="program-footer">
+                        <span class="program-duration"><i class="fas fa-clock"></i> 2 Years</span>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-header">
+                        <h3>Online MCA</h3>
+                        <p>Master of Computer Applications</p>
+                    </div>
+                    <div class="program-body">
+                        <ul class="program-features">
+                            <li><i class="fas fa-check"></i> 5 Specializations</li>
+                            <li><i class="fas fa-check"></i> 2 Year Program</li>
+                            <li><i class="fas fa-check"></i> Practical Learning</li>
+                            <li><i class="fas fa-check"></i> Coding Practice</li>
+                            <li><i class="fas fa-check"></i> IT Placement</li>
+                        </ul>
+                    </div>
+                    <div class="program-footer">
+                        <span class="program-duration"><i class="fas fa-clock"></i> 2 Years</span>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-header">
+                        <h3>Online BBA</h3>
+                        <p>Bachelor of Business Administration</p>
+                    </div>
+                    <div class="program-body">
+                        <ul class="program-features">
+                            <li><i class="fas fa-check"></i> 4 Specializations</li>
+                            <li><i class="fas fa-check"></i> 3 Year Program</li>
+                            <li><i class="fas fa-check"></i> Foundation Course</li>
+                            <li><i class="fas fa-check"></i> Internship Opportunity</li>
+                            <li><i class="fas fa-check"></i> Career Guidance</li>
+                        </ul>
+                    </div>
+                    <div class="program-footer">
+                        <span class="program-duration"><i class="fas fa-clock"></i> 3 Years</span>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-header">
+                        <h3>Online BCA</h3>
+                        <p>Bachelor of Computer Applications</p>
+                    </div>
+                    <div class="program-body">
+                        <ul class="program-features">
+                            <li><i class="fas fa-check"></i> 3 Specializations</li>
+                            <li><i class="fas fa-check"></i> 3 Year Program</li>
+                            <li><i class="fas fa-check"></i> Programming Skills</li>
+                            <li><i class="fas fa-check"></i> Web Development</li>
+                            <li><i class="fas fa-check"></i> Tech Career</li>
+                        </ul>
+                    </div>
+                    <div class="program-footer">
+                        <span class="program-duration"><i class="fas fa-clock"></i> 3 Years</span>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-header">
+                        <h3>Online M.Com</h3>
+                        <p>Master of Commerce</p>
+                    </div>
+                    <div class="program-body">
+                        <ul class="program-features">
+                            <li><i class="fas fa-check"></i> 3 Specializations</li>
+                            <li><i class="fas fa-check"></i> 2 Year Program</li>
+                            <li><i class="fas fa-check"></i> Advanced Accounting</li>
+                            <li><i class="fas fa-check"></i> Financial Analysis</li>
+                            <li><i class="fas fa-check"></i> Finance Jobs</li>
+                        </ul>
+                    </div>
+                    <div class="program-footer">
+                        <span class="program-duration"><i class="fas fa-clock"></i> 2 Years</span>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-header">
+                        <h3>Online BA</h3>
+                        <p>Bachelor of Arts</p>
+                    </div>
+                    <div class="program-body">
+                        <ul class="program-features">
+                            <li><i class="fas fa-check"></i> 5 Specializations</li>
+                            <li><i class="fas fa-check"></i> 3 Year Program</li>
+                            <li><i class="fas fa-check"></i> Liberal Arts</li>
+                            <li><i class="fas fa-check"></i> Communication Skills</li>
+                            <li><i class="fas fa-check"></i> Multiple Careers</li>
+                        </ul>
+                    </div>
+                    <div class="program-footer">
+                        <span class="program-duration"><i class="fas fa-clock"></i> 3 Years</span>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="platform">
+        <div class="container">
+            <h2 class="section-title">Advanced Online Learning Platform</h2>
+            <p class="section-subtitle">State-of-the-Art Digital Learning Experience</p>
+            
+            <div class="platform-features">
+                <div class="platform-feature">
+                    <i class="fas fa-video"></i>
+                    <h4>Live Interactive Classes</h4>
+                    <p>Real-time virtual classrooms with industry experts</p>
+                </div>
+                
+                <div class="platform-feature">
+                    <i class="fas fa-play-circle"></i>
+                    <h4>Recorded Lectures</h4>
+                    <p>Access recorded sessions anytime, anywhere</p>
+                </div>
+                
+                <div class="platform-feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h4>Mobile Learning App</h4>
+                    <p>Learn on-the-go with our dedicated mobile app</p>
+                </div>
+                
+                <div class="platform-feature">
+                    <i class="fas fa-book"></i>
+                    <h4>Digital Library</h4>
+                    <p>Extensive collection of e-books and resources</p>
+                </div>
+                
+                <div class="platform-feature">
+                    <i class="fas fa-tasks"></i>
+                    <h4>Online Assessments</h4>
+                    <p>Regular quizzes and assignments for evaluation</p>
+                </div>
+                
+                <div class="platform-feature">
+                    <i class="fas fa-comments"></i>
+                    <h4>Discussion Forums</h4>
+                    <p>Collaborate with peers and faculty members</p>
+                </div>
+                
+                <div class="platform-feature">
+                    <i class="fas fa-certificate"></i>
+                    <h4>Digital Certificates</h4>
+                    <p>Verifiable digital certificates and badges</p>
+                </div>
+                
+                <div class="platform-feature">
+                    <i class="fas fa-headset"></i>
+                    <h4>24/7 Support</h4>
+                    <p>Round-the-clock technical and academic support</p>
+                </div>
+            </div>
+
+            <div class="two-column">
+                <div class="column-image">
+                    <img src="https://picsum.photos/seed/learning-platform/600/400" alt="Learning Platform">
+                </div>
+                <div class="column-content">
+                    <h3>Platform Highlights</h3>
+                    <p>Our cutting-edge online learning platform is designed to provide an immersive and engaging educational experience.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> AI-Powered Learning Paths</li>
+                        <li><i class="fas fa-check-circle"></i> Virtual Reality Labs</li>
+                        <li><i class="fas fa-check-circle"></i> Gamified Learning Experience</li>
+                        <li><i class="fas fa-check-circle"></i> Personalized Dashboard</li>
+                        <li><i class="fas fa-check-circle"></i> Progress Tracking</li>
+                        <li><i class="fas fa-check-circle"></i> Peer Learning Networks</li>
+                        <li><i class="fas fa-check-circle"></i> Mentorship Programs</li>
+                        <li><i class="fas fa-check-circle"></i> Career Services Integration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="admission">
+        <div class="container">
+            <h2 class="section-title">Admission Process</h2>
+            <p class="section-subtitle">Simple and Transparent Admission Procedure</p>
+            
+            <div class="admission-steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>Choose Program</h4>
+                    <p>Select your desired program from our wide range of UGC-DEB approved courses</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>Fill Application</h4>
+                    <p>Complete the online application form with your personal and educational details</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>Submit Documents</h4>
+                    <p>Upload required documents for verification and eligibility assessment</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h4>Pay Fees</h4>
+                    <p>Pay the program fees through our secure online payment gateway</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <h4>Get Enrollment</h4>
+                    <p>Receive your enrollment confirmation and access to the learning platform</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <h4>Start Learning</h4>
+                    <p>Begin your learning journey with orientation and induction programs</p>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-file-alt"></i> Eligibility Criteria</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Minimum 50% in qualifying exam</li>
+                        <li><i class="fas fa-check"></i> Valid ID proof required</li>
+                        <li><i class="fas fa-check"></i> Educational certificates</li>
+                        <li><i class="fas fa-check"></i> Work experience (for MBA)</li>
+                        <li><i class="fas fa-check"></i> Age limit as per program</li>
+                        <li><i class="fas fa-check"></i> Basic computer knowledge</li>
+                        <li><i class="fas fa-check"></i> Internet access</li>
+                        <li><i class="fas fa-check"></i> English proficiency</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-folder"></i> Documents Required</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 10th Mark Sheet</li>
+                        <li><i class="fas fa-check"></i> 12th Mark Sheet</li>
+                        <li><i class="fas fa-check"></i> Graduation Certificate</li>
+                        <li><i class="fas fa-check"></i> Transfer Certificate</li>
+                        <li><i class="fas fa-check"></i> Migration Certificate</li>
+                        <li><i class="fas fa-check"></i> Aadhar Card</li>
+                        <li><i class="fas fa-check"></i> Passport Size Photos</li>
+                        <li><i class="fas fa-check"></i> Signature Scan</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-rupee-sign"></i> Fee Structure</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Affordable Program Fees</li>
+                        <li><i class="fas fa-check"></i> EMI Options Available</li>
+                        <li><i class="fas fa-check"></i> Scholarship Programs</li>
+                        <li><i class="fas fa-check"></i> No Hidden Charges</li>
+                        <li><i class="fas fa-check"></i> Refund Policy</li>
+                        <li><i class="fas fa-check"></i> Education Loan Support</li>
+                        <li><i class="fas fa-check"></i> Corporate Discounts</li>
+                        <li><i class="fas fa-check"></i> Alumni Benefits</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="campus">
+        <div class="container">
+            <h2 class="section-title">Campus Life</h2>
+            <p class="section-subtitle">Experience Vibrant Campus Culture Even in Online Mode</p>
+            
+            <div class="campus-life-grid">
+                <div class="campus-life-card">
+                    <div class="campus-life-image">
+                        <img src="https://picsum.photos/seed/clubs/400/200" alt="Student Clubs">
+                    </div>
+                    <div class="campus-life-content">
+                        <h4>Student Clubs & Societies</h4>
+                        <p>Join various student clubs and societies to pursue your interests and develop new skills.</p>
+                    </div>
+                </div>
+
+                <div class="campus-life-card">
+                    <div class="campus-life-image">
+                        <img src="https://picsum.photos/seed/events/400/200" alt="Events">
+                    </div>
+                    <div class="campus-life-content">
+                        <h4>Events & Festivals</h4>
+                        <p>Participate in cultural festivals, technical events, and management conclaves organized throughout the year.</p>
+                    </div>
+                </div>
+
+                <div class="campus-life-card">
+                    <div class="campus-life-image">
+                        <img src="https://picsum.photos/seed/sports/400/200" alt="Sports">
+                    </div>
+                    <div class="campus-life-content">
+                        <h4>Sports & Fitness</h4>
+                        <p>Engage in various sports activities and fitness programs to maintain a healthy lifestyle.</p>
+                    </div>
+                </div>
+
+                <div class="campus-life-card">
+                    <div class="campus-life-image">
+                        <img src="https://picsum.photos/seed/workshops/400/200" alt="Workshops">
+                    </div>
+                    <div class="campus-life-content">
+                        <h4>Workshops & Seminars</h4>
+                        <p>Attend industry workshops, guest lectures, and skill development seminars to enhance your knowledge.</p>
+                    </div>
+                </div>
+
+                <div class="campus-life-card">
+                    <div class="campus-life-image">
+                        <img src="https://picsum.photos/seed/cultural/400/200" alt="Cultural">
+                    </div>
+                    <div class="campus-life-content">
+                        <h4>Cultural Activities</h4>
+                        <p>Explore your creative side through music, dance, drama, and art activities on campus.</p>
+                    </div>
+                </div>
+
+                <div class="campus-life-card">
+                    <div class="campus-life-image">
+                        <img src="https://picsum.photos/seed/volunteer/400/200" alt="Volunteer">
+                    </div>
+                    <div class="campus-life-content">
+                        <h4>Community Service</h4>
+                        <p>Contribute to society through various community service initiatives and social outreach programs.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="two-column">
+                <div class="column-content">
+                    <h3>Virtual Campus Experience</h3>
+                    <p>Even in online mode, we ensure you get the complete campus experience through our virtual initiatives.</p>
+                    <ul>
+                        <li><i class="fas fa-users"></i> Online Student Communities</li>
+                        <li><i class="fas fa-calendar"></i> Virtual Events Calendar</li>
+                        <li><i class="fas fa-trophy"></i> Online Competitions</li>
+                        <li><i class="fas fa-podcast"></i> Webinar Series</li>
+                        <li><i class="fas fa-gamepad"></i> Virtual Sports Events</li>
+                        <li><i class="fas fa-paint-brush"></i> Online Art Gallery</li>
+                        <li><i class="fas fa-music"></i> Virtual Music Concerts</li>
+                        <li><i class="fas fa-theater-masks"></i> Online Drama Club</li>
+                    </ul>
+                </div>
+                <div class="column-image">
+                    <img src="https://picsum.photos/seed/virtual-campus/600/400" alt="Virtual Campus">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="facilities">
+        <div class="container">
+            <h2 class="section-title">World-Class Facilities</h2>
+            <p class="section-subtitle">State-of-the-Art Infrastructure for Enhanced Learning</p>
+            
+            <div class="facilities-grid">
+                <div class="facility-item">
+                    <i class="fas fa-wifi"></i>
+                    <h4>High-Speed Internet</h4>
+                    <p>Seamless connectivity with 1Gbps internet speed across campus</p>
+                </div>
+                
+                <div class="facility-item">
+                    <i class="fas fa-book-open"></i>
+                    <h4>Digital Library</h4>
+                    <p>Access to thousands of e-books, journals, and research papers</p>
+                </div>
+                
+                <div class="facility-item">
+                    <i class="fas fa-desktop"></i>
+                    <h4>Computer Labs</h4>
+                    <p>Well-equipped labs with latest software and hardware</p>
+                </div>
+                
+                <div class="facility-item">
+                    <i class="fas fa-video"></i>
+                    <h4>Recording Studios</h4>
+                    <p>Professional studios for creating high-quality course content</p>
+                </div>
+                
+                <div class="facility-item">
+                    <i class="fas fa-running"></i>
+                    <h4>Sports Complex</h4>
+                    <p>Modern sports facilities for various indoor and outdoor games</p>
+                </div>
+                
+                <div class="facility-item">
+                    <i class="fas fa-utensils"></i>
+                    <h4>Food Court</h4>
+                    <p>Hygienic and multi-cuisine food court serving nutritious meals</p>
+                </div>
+                
+                <div class="facility-item">
+                    <i class="fas fa-bed"></i>
+                    <h4>Hostel Facilities</h4>
+                    <p>Comfortable and secure accommodation with all amenities</p>
+                </div>
+                
+                <div class="facility-item">
+                    <i class="fas fa-hospital"></i>
+                    <h4>Healthcare Center</h4>
+                    <p>24/7 medical facility with qualified doctors and nurses</p>
+                </div>
+                
+                <div class="facility-item">
+                    <i class="fas fa-bus"></i>
+                    <h4>Transportation</h4>
+                    <p>Fleet of buses for safe and convenient commuting</p>
+                </div>
+                
+                <div class="facility-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h4>Shopping Complex</h4>
+                    <p>On-campus stores for daily necessities and stationery</p>
+                </div>
+                
+                <div class="facility-item">
+                    <i class="fas fa-pray"></i>
+                    <h4>Prayer Hall</h4>
+                    <p>Peaceful space for meditation and spiritual activities</p>
+                </div>
+                
+                <div class="facility-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Security</h4>
+                    <p>24/7 CCTV surveillance and trained security personnel</p>
+                </div>
+            </div>
+
+            <div class="two-column">
+                <div class="column-content">
+                    <h3>Advanced Learning Infrastructure</h3>
+                    <p>Our campus is equipped with modern infrastructure designed to provide the best learning environment.</p>
+                    <ul>
+                        <li><i class="fas fa-chalkboard-teacher"></i> Smart Classrooms</li>
+                        <li><i class="fas fa-vr-cardboard"></i> Virtual Reality Labs</li>
+                        <li><i class="fas fa-lightbulb"></i> Innovation Center</li>
+                        <li><i class="fas fa-language"></i> Language Lab</li>
+                        <li><i class="fas fa-microphone"></i> Media Center</li>
+                        <li><i class="fas fa-users-cog"></i> Conference Halls</li>
+                        <li><i class="fas fa-chalkboard"></i> Seminar Rooms</li>
+                        <li><i class="fas fa-couch"></i> Study Lounges</li>
+                    </ul>
+                </div>
+                <div class="column-image">
+                    <img src="https://picsum.photos/seed/infrastructure/600/400" alt="Campus Infrastructure">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="placements">
+        <div class="container">
+            <h2 class="section-title">Placements & Career Services</h2>
+            <p class="section-subtitle">Building Successful Careers Through Industry Connections</p>
+            
+            <div class="placements-container">
+                <div class="placement-stats">
+                    <div class="placement-stat">
+                        <div class="placement-stat-number">500+</div>
+                        <div class="placement-stat-label">Hiring Partners</div>
+                    </div>
+                    <div class="placement-stat">
+                        <div class="placement-stat-number">8.5 LPA</div>
+                        <div class="placement-stat-label">Highest Package</div>
+                    </div>
+                    <div class="placement-stat">
+                        <div class="placement-stat-number">4.2 LPA</div>
+                        <div class="placement-stat-label">Average Package</div>
+                    </div>
+                    <div class="placement-stat">
+                        <div class="placement-stat-number">92%</div>
+                        <div class="placement-stat-label">Placement Rate</div>
+                    </div>
+                </div>
+
+                <h3 style="text-align: center; color: var(--primary); margin: 3rem 0 2rem; text-shadow: 0 0 20px var(--glow);">Top Recruiters</h3>
+                <div class="recruiters-grid">
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/tcs/150/60" alt="TCS"></div>
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/infosys/150/60" alt="Infosys"></div>
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/wipro/150/60" alt="Wipro"></div>
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/hcl/150/60" alt="HCL"></div>
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/amazon/150/60" alt="Amazon"></div>
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/microsoft/150/60" alt="Microsoft"></div>
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/google/150/60" alt="Google"></div>
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/ibm/150/60" alt="IBM"></div>
+                </div>
+
+                <div class="info-grid" style="margin-top: 3rem;">
+                    <div class="info-card">
+                        <h3><i class="fas fa-briefcase"></i> Career Services</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Resume Building Workshops</li>
+                            <li><i class="fas fa-check"></i> Mock Interviews</li>
+                            <li><i class="fas fa-check"></i> Aptitude Training</li>
+                            <li><i class="fas fa-check"></i> Group Discussions</li>
+                            <li><i class="fas fa-check"></i> Soft Skills Development</li>
+                            <li><i class="fas fa-check"></i> Technical Training</li>
+                            <li><i class="fas fa-check"></i> Career Counseling</li>
+                            <li><i class="fas fa-check"></i> Job Fairs</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-handshake"></i> Internship Programs</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Paid Internships</li>
+                            <li><i class="fas fa-check"></i> Industry Projects</li>
+                            <li><i class="fas fa-check"></i> Startup Incubation</li>
+                            <li><i class="fas fa-check"></i> Research Opportunities</li>
+                            <li><i class="fas fa-check"></i> Virtual Internships</li>
+                            <li><i class="fas fa-check"></i> International Internships</li>
+                            <li><i class="fas fa-check"></i> Part-time Jobs</li>
+                            <li><i class="fas fa-check"></i> Freelance Projects</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-chart-line"></i> Placement Support</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> On-Campus Recruitment</li>
+                            <li><i class="fas fa-check"></i> Off-Campus Drives</li>
+                            <li><i class="fas fa-check"></i> Job Portal Access</li>
+                            <li><i class="fas fa-check"></i> Alumni Referrals</li>
+                            <li><i class="fas fa-check"></i> LinkedIn Optimization</li>
+                            <li><i class="fas fa-check"></i> Networking Events</li>
+                            <li><i class="fas fa-check"></i> Industry Visits</li>
+                            <li><i class="fas fa-check"></i> Guest Lectures</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="text-align: center; color: var(--primary); margin: 3rem 0 2rem; text-shadow: 0 0 20px var(--glow);">Student Success Stories</h3>
+                <div class="testimonials">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"The online MBA program at Mangalayatan transformed my career. The flexible schedule allowed me to work while studying, and the placement support helped me land a job at a top MNC with a 60% salary hike."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">RK</div>
+                            <div class="author-info">
+                                <h5>Rahul Kumar</h5>
+                                <p>MBA Graduate, Senior Manager at TCS</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"The quality of education and industry exposure I received was exceptional. The faculty members are very supportive, and the practical approach to learning helped me secure my dream job."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">PS</div>
+                            <div class="author-info">
+                                <h5>Priya Sharma</h5>
+                                <p>MCA Graduate, Software Engineer at Microsoft</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"The online learning platform is user-friendly, and the course content is relevant to industry needs. I especially appreciated the career services that helped me transition from academia to corporate life smoothly."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">AM</div>
+                            <div class="author-info">
+                                <h5>Amit Mehra</h5>
+                                <p>BBA Graduate, Business Analyst at Amazon</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="support">
+        <div class="container">
+            <h2 class="section-title">Student Support Services</h2>
+            <p class="section-subtitle">Comprehensive Support for Successful Online Learning</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-headset"></i> Academic Support</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 24/7 Doubt Clearing</li>
+                        <li><i class="fas fa-check"></i> Faculty Mentorship</li>
+                        <li><i class="fas fa-check"></i> Subject Matter Experts</li>
+                        <li><i class="fas fa-check"></i> Study Groups</li>
+                        <li><i class="fas fa-check"></i> Peer Learning</li>
+                        <li><i class="fas fa-check"></i> Extra Classes</li>
+                        <li><i class="fas fa-check"></i> Revision Sessions</li>
+                        <li><i class="fas fa-check"></i> Exam Preparation</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-laptop"></i> Technical Support</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Platform Training</li>
+                        <li><i class="fas fa-check"></i> Login Issues</li>
+                        <li><i class="fas fa-check"></i> Video Playback Help</li>
+                        <li><i class="fas fa-check"></i> App Support</li>
+                        <li><i class="fas fa-check"></i> Internet Guidance</li>
+                        <li><i class="fas fa-check"></i> Device Compatibility</li>
+                        <li><i class="fas fa-check"></i> Software Installation</li>
+                        <li><i class="fas fa-check"></i> Troubleshooting</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-briefcase"></i> Career Services</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Resume Building</li>
+                        <li><i class="fas fa-check"></i> Interview Preparation</li>
+                        <li><i class="fas fa-check"></i> Job Portal Access</li>
+                        <li><i class="fas fa-check"></i> Career Counseling</li>
+                        <li><i class="fas fa-check"></i> Skill Development</li>
+                        <li><i class="fas fa-check"></i> Internship Support</li>
+                        <li><i class="fas fa-check"></i> Placement Assistance</li>
+                        <li><i class="fas fa-check"></i> Alumni Network</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="two-column">
+                <div class="column-content">
+                    <h3>Support Channels</h3>
+                    <p>We provide multiple support channels to ensure you get help whenever you need it.</p>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> Toll-Free Helpline: 1800-123-4567</li>
+                        <li><i class="fas fa-envelope"></i> Email: support@muonline.ac.in</li>
+                        <li><i class="fas fa-comments"></i> Live Chat: Available 24/7</li>
+                        <li><i class="fab fa-whatsapp"></i> WhatsApp: +91 98765 43210</li>
+                        <li><i class="fas fa-ticket-alt"></i> Support Ticket System</li>
+                        <li><i class="fab fa-youtube"></i> Video Tutorials</li>
+                        <li><i class="fas fa-book"></i> Knowledge Base</li>
+                        <li><i class="fas fa-users"></i> Community Forum</li>
+                    </ul>
+                </div>
+                <div class="column-image">
+                    <img src="https://picsum.photos/seed/support/600/400" alt="Student Support">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="cta-section" id="ctaSection">
+                <div class="cta-content">
+                    <h2>Start Your Online Learning Journey Today!</h2>
+                    <p>Join 50,000+ learners advancing their careers with Mangalayatan Online</p>
+                    <div class="btn-group">
+                        <a href="tel:18001234567" class="btn btn-primary">
+                            <i class="fas fa-phone"></i>
+                            Call: 1800-123-4567
+                        </a>
+                        <a href="mailto:admissions@muonline.ac.in" class="btn btn-secondary">
+                            <i class="fas fa-envelope"></i>
+                            Email Us
+                        </a>
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-download"></i>
+                            Download Brochure
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Mangalayatan University Online</h3>
+                    <p>India's leading online education platform offering UGC-DEB approved degree programs with flexible learning options.</p>
+                    <p>UGC-DEB Approved | NAAC A+ | AICTE | AIU | ISO 9001:2015</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#platform">Platform</a></li>
+                        <li><a href="#admission">Admission</a></li>
+                        <li><a href="#campus">Campus Life</a></li>
+                        <li><a href="#facilities">Facilities</a></li>
+                        <li><a href="#placements">Placements</a></li>
+                        <li><a href="#support">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Programs</h3>
+                    <ul>
+                        <li><a href="#">Online MBA</a></li>
+                        <li><a href="#">Online MCA</a></li>
+                        <li><a href="#">Online BBA</a></li>
+                        <li><a href="#">Online BCA</a></li>
+                        <li><a href="#">Online M.Com</a></li>
+                        <li><a href="#">Online BA</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Mangalayatan University, Beswan, Aligarh - 202145, UP</p>
+                    <p><i class="fas fa-phone"></i> 1800-123-4567 (Toll-Free)</p>
+                    <p><i class="fas fa-envelope"></i> admissions@muonline.ac.in</p>
+                    <p><i class="fas fa-globe"></i> www.muonline.ac.in</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mangalayatan University Online. All Rights Reserved.</p>
+                <p>Recognized by UGC-DEB | Approved by AICTE | Accredited by NAAC</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var particlesContainer = document.getElementById('particles');
+            for (var i = 0; i < 15; i++) {
+                var particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+
+            setTimeout(function() {
+                document.getElementById('loading').classList.add('hide');
+            }, 800);
+
+            var quickNavItems = document.querySelectorAll('.quick-nav-item');
+            var sections = document.querySelectorAll('section[id]');
+            var progressBar = document.getElementById('progressBar');
+            var navbar = document.getElementById('navbar');
+            var bgAnimation = document.getElementById('bgAnimation');
+            var hero = document.querySelector('.hero');
+            var ctaSection = document.getElementById('ctaSection');
+            var sectionsArr = Array.prototype.slice.call(sections);
+            var quickNavArr = Array.prototype.slice.call(quickNavItems);
+
+            var sectionOffsets = [];
+            function cacheSectionOffsets() {
+                sectionOffsets = sectionsArr.map(function(section) {
+                    return {
+                        id: section.getAttribute('id'),
+                        top: section.offsetTop - 100,
+                        height: section.offsetHeight
+                    };
+                });
+            }
+            cacheSectionOffsets();
+            var resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(cacheSectionOffsets, 200);
+            });
+
+            var scrollTicking = false;
+            function onScroll() {
+                if (!scrollTicking) {
+                    requestAnimationFrame(function() {
+                        var scrollY = window.pageYOffset;
+
+                        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                        if (height > 0) {
+                            progressBar.style.width = ((scrollY / height) * 100) + '%';
+                        }
+
+                        if (scrollY > 50) {
+                            navbar.classList.add('scrolled');
+                        } else {
+                            navbar.classList.remove('scrolled');
+                        }
+
+                        if (scrollY < window.innerHeight) {
+                            hero.classList.add('visible');
+                            bgAnimation.classList.add('visible');
+                        } else {
+                            hero.classList.remove('visible');
+                            bgAnimation.classList.remove('visible');
+                        }
+
+                        for (var i = 0; i < sectionOffsets.length; i++) {
+                            var s = sectionOffsets[i];
+                            if (scrollY > s.top && scrollY <= s.top + s.height) {
+                                for (var j = 0; j < quickNavArr.length; j++) {
+                                    if (quickNavArr[j].getAttribute('href') === '#' + s.id) {
+                                        quickNavArr[j].classList.add('active');
+                                    } else {
+                                        quickNavArr[j].classList.remove('active');
+                                    }
+                                }
+                                break;
+                            }
+                        }
+
+                        var ctaRect = ctaSection.getBoundingClientRect();
+                        if (ctaRect.top < window.innerHeight && ctaRect.bottom > 0) {
+                            ctaSection.classList.add('visible');
+                        } else {
+                            ctaSection.classList.remove('visible');
+                        }
+
+                        scrollTicking = false;
+                    });
+                    scrollTicking = true;
+                }
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+
+            onScroll();
+
+            for (var q = 0; q < quickNavArr.length; q++) {
+                quickNavArr[q].addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var targetId = this.getAttribute('href').substring(1);
+                    var targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        window.scrollTo({ top: targetSection.offsetTop - 80, behavior: 'smooth' });
+                    }
+                });
+            }
+
+            var menuToggle = document.getElementById('menuToggle');
+            var navLinks = document.getElementById('navLinks');
+            var menuSpans = menuToggle.querySelectorAll('span');
+
+            menuToggle.addEventListener('click', function() {
+                var isActive = navLinks.classList.toggle('active');
+                if (isActive) {
+                    menuSpans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    menuSpans[1].style.opacity = '0';
+                    menuSpans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    menuSpans[0].style.transform = 'none';
+                    menuSpans[1].style.opacity = '1';
+                    menuSpans[2].style.transform = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+
+            var navAnchors = navLinks.querySelectorAll('a');
+            for (var n = 0; n < navAnchors.length; n++) {
+                navAnchors[n].addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    menuSpans[0].style.transform = 'none';
+                    menuSpans[1].style.opacity = '1';
+                    menuSpans[2].style.transform = 'none';
+                    document.body.style.overflow = '';
+                });
+            }
+
+            document.addEventListener('click', function(e) {
+                if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                    menuSpans[0].style.transform = 'none';
+                    menuSpans[1].style.opacity = '1';
+                    menuSpans[2].style.transform = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuSpans[0].style.transform = 'none';
+                    menuSpans[1].style.opacity = '1';
+                    menuSpans[2].style.transform = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+
+            var allAnchors = document.querySelectorAll('a[href^="#"]');
+            for (var a = 0; a < allAnchors.length; a++) {
+                allAnchors[a].addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var href = this.getAttribute('href');
+                    if (href.length > 1) {
+                        var target = document.querySelector(href);
+                        if (target) {
+                            window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                        }
+                    }
+                });
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                for (var i = 0; i < entries.length; i++) {
+                    if (entries[i].isIntersecting) {
+                        entries[i].target.style.opacity = '1';
+                        entries[i].target.style.transform = 'translateY(0)';
+                        observer.unobserve(entries[i].target);
+                    }
+                }
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            var animatedElements = document.querySelectorAll('.info-card, .program-card, .platform-feature, .step-card, .campus-life-card, .facility-item, .placement-stat, .recruiter-logo, .testimonial-card');
+            for (var o = 0; o < animatedElements.length; o++) {
+                animatedElements[o].style.opacity = '0';
+                animatedElements[o].style.transform = 'translateY(30px)';
+                animatedElements[o].style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(animatedElements[o]);
+            }
+        });
+    </script>
+</body>
+</html>

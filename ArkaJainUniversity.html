@@ -1,0 +1,2005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arka Jain University, Jharkhand - Excellence in Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00E0FF;
+            --secondary: #2CE6C2;
+            --accent: #00E0FF;
+            --cta-start: #FF6A3D;
+            --cta-end: #FF8A50;
+            --dark: #0B0F2A;
+            --darker: #080C1E;
+            --card-dark: #0F172A;
+            --card-mid: #13203A;
+            --card-light: #1A2E4A;
+            --light: #FFFFFF;
+            --text: #B0B8D1;
+            --text-bright: #FFFFFF;
+            --text-muted: #94A3B8;
+            --border-soft: rgba(148, 163, 184, 0.1);
+            --border-medium: rgba(148, 163, 184, 0.15);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --gradient-accent: linear-gradient(135deg, var(--primary), var(--secondary));
+            --gradient-cta: linear-gradient(135deg, var(--cta-start), var(--cta-end));
+            --glow-cyan: 0 0 20px rgba(0, 224, 255, 0.15);
+            --glow-cyan-strong: 0 0 30px rgba(0, 224, 255, 0.25);
+            --glow-cta: 0 0 20px rgba(255, 106, 61, 0.2);
+            --cat-engineering: #3B82F6;
+            --cat-engineering-end: #60A5FA;
+            --cat-management: #22C55E;
+            --cat-management-end: #4ADE80;
+            --cat-computer: #A855F7;
+            --cat-computer-end: #EC4899;
+            --cat-commerce: #F59E0B;
+            --cat-commerce-end: #FBBF24;
+            --cat-science: #14B8A6;
+            --cat-science-end: #2DD4BF;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .bg-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: var(--dark);
+            background-image:
+                radial-gradient(ellipse at 20% 0%, rgba(26, 46, 74, 0.6) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(15, 23, 42, 0.8) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(17, 26, 58, 0.4) 0%, transparent 70%);
+        }
+
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(0, 224, 255, 0.15);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            width: 0%;
+            z-index: 9999;
+            will-change: width;
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
+        }
+
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+            opacity: 0;
+            backface-visibility: hidden;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            to {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(11, 15, 42, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 1000;
+            transition: background 0.3s ease, box-shadow 0.3s ease, border-bottom-color 0.3s ease, padding 0.3s ease;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .navbar.scrolled {
+            background: rgba(11, 15, 42, 0.95);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 224, 255, 0.05);
+            border-bottom-color: rgba(0, 224, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-accent);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px rgba(0, 224, 255, 0.4);
+        }
+
+        .nav-links a:hover { color: var(--text-bright); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .quick-nav {
+            position: fixed;
+            right: 30px;
+            top: 60%;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .quick-nav-item {
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 224, 255, 0.04);
+            border: 1px solid rgba(0, 224, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .quick-nav-item:hover {
+            background: rgba(0, 224, 255, 0.1);
+            border-color: rgba(0, 224, 255, 0.3);
+            transform: scale(1.1);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .quick-nav-item.active {
+            background: rgba(0, 224, 255, 0.15);
+            border-color: var(--primary);
+            box-shadow: var(--glow-cyan-strong);
+        }
+
+        .quick-nav-item i {
+            color: var(--text-muted);
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .quick-nav-item.active i { color: var(--primary); }
+
+        .quick-nav-item[data-tooltip]::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            color: var(--text);
+            padding: 6px 12px;
+            border-radius: 8px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            font-size: 0.8rem;
+            border: 1px solid var(--border-soft);
+        }
+
+        .quick-nav-item:hover[data-tooltip]::before { opacity: 1; }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(ellipse at 50% 40%, rgba(0, 224, 255, 0.06) 0%, rgba(44, 230, 194, 0.02) 30%, transparent 70%);
+            position: relative;
+            z-index: 2;
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            text-align: center;
+            padding: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0.5rem 0;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: var(--gradient-cta);
+            color: var(--light);
+            box-shadow: var(--glow-cta);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 106, 61, 0.4);
+        }
+
+        .btn-white {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border-medium);
+        }
+
+        .btn-white:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(0, 224, 255, 0.05);
+            transform: translateY(-3px);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .section {
+            padding: 80px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 10px 25px;
+            background: var(--glass-bg);
+            border: 1px solid var(--border-soft);
+            color: var(--text-muted);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            white-space: nowrap;
+            backdrop-filter: blur(8px);
+            font-size: 0.9rem;
+        }
+
+        .tab-btn:hover {
+            background: rgba(0, 224, 255, 0.06);
+            border-color: rgba(0, 224, 255, 0.2);
+            color: var(--text);
+        }
+
+        .tab-btn.active {
+            background: rgba(0, 224, 255, 0.1);
+            border-color: rgba(0, 224, 255, 0.3);
+            color: var(--primary);
+            box-shadow: var(--glow-cyan);
+        }
+
+        /* ==============================================
+           ENHANCED PROGRAM CARDS — All 14 Features
+           ============================================== */
+        .program-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .program-card {
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.03) 0%,
+                var(--card-dark) 30%,
+                var(--card-mid) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-soft);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: opacity 0.6s ease,
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.4s ease,
+                        border-color 0.4s ease,
+                        background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .program-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .program-card[data-category="engineering"]::before {
+            background: linear-gradient(90deg, transparent 0%, var(--cat-engineering) 30%, var(--cat-engineering-end) 70%, transparent 100%);
+        }
+        .program-card[data-category="management"]::before {
+            background: linear-gradient(90deg, transparent 0%, var(--cat-management) 30%, var(--cat-management-end) 70%, transparent 100%);
+        }
+        .program-card[data-category="computer"]::before {
+            background: linear-gradient(90deg, transparent 0%, var(--cat-computer) 30%, var(--cat-computer-end) 70%, transparent 100%);
+        }
+        .program-card[data-category="commerce"]::before {
+            background: linear-gradient(90deg, transparent 0%, var(--cat-commerce) 30%, var(--cat-commerce-end) 70%, transparent 100%);
+        }
+        .program-card[data-category="science"]::before {
+            background: linear-gradient(90deg, transparent 0%, var(--cat-science) 30%, var(--cat-science-end) 70%, transparent 100%);
+        }
+
+        .program-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 15%;
+            right: 15%;
+            height: 1px;
+            opacity: 0;
+            transition: opacity 0.4s ease 0.05s;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .program-card[data-category="engineering"]::after {
+            background: linear-gradient(90deg, transparent, var(--cat-engineering), transparent);
+        }
+        .program-card[data-category="management"]::after {
+            background: linear-gradient(90deg, transparent, var(--cat-management), transparent);
+        }
+        .program-card[data-category="computer"]::after {
+            background: linear-gradient(90deg, transparent, var(--cat-computer), transparent);
+        }
+        .program-card[data-category="commerce"]::after {
+            background: linear-gradient(90deg, transparent, var(--cat-commerce), transparent);
+        }
+        .program-card[data-category="science"]::after {
+            background: linear-gradient(90deg, transparent, var(--cat-science), transparent);
+        }
+
+        .program-card:hover::before { opacity: 1; }
+        .program-card:hover::after { opacity: 0.4; }
+
+        .program-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.06) 0%,
+                var(--card-dark) 30%,
+                var(--card-mid) 100%
+            );
+            border-color: var(--border-medium);
+        }
+
+        .program-card[data-category="engineering"]:hover {
+            background:
+                radial-gradient(ellipse at top left, rgba(59, 130, 246, 0.06), transparent 60%),
+                linear-gradient(160deg, rgba(255, 255, 255, 0.06) 0%, var(--card-dark) 30%, var(--card-mid) 100%);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(59, 130, 246, 0.15),
+                0 0 60px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        .program-card[data-category="management"]:hover {
+            background:
+                radial-gradient(ellipse at top left, rgba(34, 197, 94, 0.06), transparent 60%),
+                linear-gradient(160deg, rgba(255, 255, 255, 0.06) 0%, var(--card-dark) 30%, var(--card-mid) 100%);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(34, 197, 94, 0.15),
+                0 0 60px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+        .program-card[data-category="computer"]:hover {
+            background:
+                radial-gradient(ellipse at top left, rgba(168, 85, 247, 0.06), transparent 60%),
+                linear-gradient(160deg, rgba(255, 255, 255, 0.06) 0%, var(--card-dark) 30%, var(--card-mid) 100%);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(168, 85, 247, 0.15),
+                0 0 60px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+        .program-card[data-category="commerce"]:hover {
+            background:
+                radial-gradient(ellipse at top left, rgba(245, 158, 11, 0.06), transparent 60%),
+                linear-gradient(160deg, rgba(255, 255, 255, 0.06) 0%, var(--card-dark) 30%, var(--card-mid) 100%);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(245, 158, 11, 0.15),
+                0 0 60px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+        .program-card[data-category="science"]:hover {
+            background:
+                radial-gradient(ellipse at top left, rgba(20, 184, 166, 0.06), transparent 60%),
+                linear-gradient(160deg, rgba(255, 255, 255, 0.06) 0%, var(--card-dark) 30%, var(--card-mid) 100%);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(20, 184, 166, 0.15),
+                0 0 60px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-color: rgba(20, 184, 166, 0.3);
+        }
+
+        .program-card[data-category="engineering"] h4 { color: var(--cat-engineering); }
+        .program-card[data-category="management"] h4 { color: var(--cat-management); }
+        .program-card[data-category="computer"] h4 {
+            background: linear-gradient(135deg, var(--cat-computer), var(--cat-computer-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .program-card[data-category="commerce"] h4 { color: var(--cat-commerce); }
+        .program-card[data-category="science"] h4 { color: var(--cat-science); }
+
+        .program-card h4 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            transition: text-shadow 0.4s ease, filter 0.4s ease;
+        }
+
+        .program-card:hover h4 {
+            text-shadow: 0 0 15px currentColor;
+        }
+
+        .program-card[data-category="computer"]:hover h4 {
+            text-shadow: none;
+            filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.5));
+        }
+
+        .program-card p {
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .program-card:hover p {
+            color: var(--text);
+        }
+
+        /* ==============================================
+           ENHANCED INFO CARDS — All 14 Features
+           ============================================== */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-card {
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.03) 0%,
+                var(--card-dark) 30%,
+                var(--card-mid) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-soft);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: opacity 0.6s ease,
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.4s ease,
+                        border-color 0.4s ease,
+                        background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--primary) 30%, var(--secondary) 70%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .info-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease 0.05s;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .info-card:hover::before { opacity: 1; }
+        .info-card:hover::after { opacity: 0.4; }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.06) 0%,
+                var(--card-dark) 30%,
+                var(--card-mid) 100%
+            );
+            border-color: rgba(0, 224, 255, 0.3);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(0, 224, 255, 0.15),
+                0 0 60px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: text-shadow 0.4s ease;
+        }
+
+        .info-card h3 i {
+            font-size: 1.2rem;
+        }
+
+        .info-card:hover h3 {
+            text-shadow: 0 0 15px rgba(0, 224, 255, 0.35);
+        }
+
+        .info-card ul {
+            list-style: none;
+        }
+
+        .info-card li {
+            padding: 0.5rem 0;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            transition: color 0.3s ease, transform 0.25s ease;
+        }
+
+        .info-card li i {
+            color: var(--secondary);
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            transition: text-shadow 0.3s ease, transform 0.25s ease;
+        }
+
+        .info-card:hover li {
+            color: var(--text-bright);
+        }
+
+        .info-card:hover li i {
+            text-shadow: 0 0 10px rgba(44, 230, 194, 0.4);
+        }
+
+        .info-card li:hover {
+            transform: translateX(5px);
+        }
+
+        .info-card li:hover i {
+            transform: scale(1.15);
+        }
+
+        .info-card p {
+            color: var(--text);
+            line-height: 1.8;
+            transition: color 0.3s ease;
+        }
+
+        .info-card:hover p {
+            color: var(--text-bright);
+        }
+
+        /* ==============================================
+           ENHANCED STEP CARDS — Fixed Circles
+           ============================================== */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .step-card {
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.03) 0%,
+                var(--card-dark) 30%,
+                var(--card-mid) 100%
+            );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-soft);
+            border-radius: 16px;
+            padding: 3.5rem 1rem 2rem;
+            text-align: center;
+            position: relative;
+            transition: opacity 0.6s ease,
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.4s ease,
+                        border-color 0.4s ease,
+                        background 0.4s ease;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--primary) 30%, var(--secondary) 70%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .step-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease 0.05s;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .step-card:hover::before { opacity: 1; }
+        .step-card:hover::after { opacity: 0.4; }
+
+        .step-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.06) 0%,
+                var(--card-dark) 30%,
+                var(--card-mid) 100%
+            );
+            border-color: rgba(0, 224, 255, 0.3);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(0, 224, 255, 0.15),
+                0 0 60px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .step-number {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--dark);
+            box-shadow: var(--glow-cyan-strong);
+            transition: box-shadow 0.4s ease, transform 0.4s ease;
+            z-index: 3;
+        }
+
+        .step-card:hover .step-number {
+            box-shadow: 0 0 30px rgba(0, 224, 255, 0.4), 0 0 60px rgba(0, 224, 255, 0.2);
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin: 0.5rem 0 1rem;
+            opacity: 0.8;
+            transition: filter 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
+        }
+
+        .step-card:hover .step-icon {
+            opacity: 1;
+            filter: drop-shadow(0 0 15px rgba(0, 224, 255, 0.4));
+            transform: scale(1.08);
+        }
+
+        .step-card h4 {
+            color: var(--text-bright);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            transition: text-shadow 0.4s ease;
+        }
+
+        .step-card:hover h4 {
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .step-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .step-card:hover p {
+            color: var(--text);
+        }
+
+        /* ==============================================
+           ENHANCED CTA SECTION — All 14 Features
+           ============================================== */
+        .cta-section {
+            background: linear-gradient(135deg, var(--cta-start), var(--cta-end));
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: opacity 0.6s ease,
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.4s ease;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .cta-section.visible::before {
+            opacity: 1;
+            animation: rotate 20s linear infinite;
+            will-change: transform;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .cta-section:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 12px 40px rgba(255, 106, 61, 0.3),
+                0 0 60px rgba(255, 106, 61, 0.15),
+                0 0 100px rgba(0, 0, 0, 0.15);
+        }
+
+        .cta-section:hover::after {
+            opacity: 1;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            color: var(--light);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            transition: text-shadow 0.4s ease;
+        }
+
+        .cta-section:hover h2 {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
+        }
+
+        .cta-section p {
+            color: var(--light);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        .cta-section:hover p {
+            opacity: 1;
+        }
+
+        .cta-section .btn-white {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--light);
+            backdrop-filter: blur(8px);
+        }
+
+        .cta-section .btn-white:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: var(--light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 106, 61, 0.3);
+        }
+
+        .contact {
+            background: linear-gradient(180deg, transparent, rgba(0, 224, 255, 0.02), transparent);
+        }
+
+        .contact .info-card p {
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        footer {
+            background: var(--darker);
+            padding: 3rem 0 1rem;
+            border-top: 1px solid var(--border-soft);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section p {
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-section p i {
+            color: var(--text-muted);
+            margin-right: 8px;
+            width: 18px;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section p:hover i { color: var(--primary); }
+
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: 0.5rem; }
+
+        .footer-section ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease, padding-left 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary);
+            padding-left: 4px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-soft);
+            color: var(--text-muted);
+            opacity: 0.8;
+            font-size: 0.85rem;
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN
+           ======================================== */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero-content { padding: 1rem; }
+            .program-cards { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+            .info-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+            .container { padding: 0 1.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            .section { padding: 60px 0; }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(11, 15, 42, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.3s ease;
+                padding-top: 2rem;
+            }
+
+            .nav-links.active { right: 0; }
+            .menu-toggle { display: flex; z-index: 1001; }
+
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1.1rem; letter-spacing: 1px; }
+            .btn-group { flex-direction: column; width: 100%; }
+            .btn { width: 100%; justify-content: center; margin: 0.5rem 0; }
+
+            .section-title { font-size: 2rem; }
+            .section-subtitle { font-size: 1rem; }
+
+            .quick-nav { display: none; }
+
+            .tabs {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+                -webkit-overflow-scrolling: touch;
+                gap: 0.5rem;
+            }
+            .tab-btn { flex: 0 0 auto; font-size: 0.85rem; padding: 8px 16px; }
+
+            .program-cards,
+            .info-grid,
+            .steps,
+            .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
+
+            .info-card li { font-size: 0.9rem; }
+            .step-card { padding: 3rem 1rem 1.5rem; }
+
+            .cta-section { padding: 2rem; }
+            .cta-section h2 { font-size: 1.6rem; }
+            .cta-section .btn-group { flex-direction: column; }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container { padding: 1rem; }
+            .section { padding: 40px 0; }
+            .hero h1 { font-size: 1.8rem; line-height: 1.1; }
+            .container { padding: 0 1rem; }
+            .section-title { font-size: 1.6rem; }
+            .program-card { padding: 1.5rem; }
+            .program-card h4 { font-size: 1.1rem; }
+            .info-card { padding: 1.5rem; }
+            .info-card h3 { font-size: 1.2rem; }
+            .footer-content { grid-template-columns: 1fr; text-align: center; }
+            .footer-section ul { padding-left: 0; }
+            .step-card { padding: 2.5rem 1rem 1.2rem; }
+            .step-number { width: 35px; height: 35px; top: 10px; font-size: 1rem; }
+            .step-icon { font-size: 2.5rem; margin: 0.3rem 0 0.8rem; }
+        }
+
+        /* Touch device — disable hover transforms */
+        @media (hover: none) and (pointer: coarse) {
+            .btn:hover { transform: none; }
+            .info-card:hover,
+            .program-card:hover,
+            .step-card:hover,
+            .cta-section:hover { transform: none; }
+            .quick-nav-item:hover { transform: none; }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .particle { animation: none; display: none; }
+            .cta-section::before { animation: none; }
+            .cta-section.visible::before { animation: none; }
+            .hero-content { animation: none; }
+            .loading-spinner { animation: none; border-top-color: var(--primary); }
+        }
+
+        /* Print */
+        @media print {
+            .quick-nav, #particles, .progress-bar, .loading, .navbar, .menu-toggle, .bg-fixed {
+                display: none !important;
+            }
+            body { background: white; color: black; }
+            .section { page-break-inside: avoid; padding: 20px 0; }
+            .info-card, .program-card, .step-card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ccc;
+                transform: none;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                background: #f9f9f9;
+            }
+            .info-card::before, .info-card::after,
+            .program-card::before, .program-card::after,
+            .step-card::before, .step-card::after,
+            .cta-section::after {
+                display: none !important;
+            }
+            .btn, .btn-group, .tabs { display: none; }
+            .section-title, .hero h1, .cta-section h2 {
+                -webkit-text-fill-color: initial; color: #333;
+            }
+            footer { background: #f5f5f5; border-top-color: #ccc; }
+            .footer-section h3 { color: #555; }
+            .footer-section p, .footer-section ul li a, .footer-bottom { color: #666; }
+            .step-card { padding-top: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-fixed"></div>
+
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div id="particles"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">Arka Jain University, Jharkhand</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#programs">Programs</a></li>
+                <li><a href="#campus-life">Campus Life</a></li>
+                <li><a href="#facilities">Facilities</a></li>
+                <li><a href="#placements">Placements</a></li>
+                <li><a href="#admission">Admission</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="quick-nav">
+        <div class="quick-nav-item active" data-tooltip="Home">
+            <i class="fas fa-home"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Programs">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Campus Life">
+            <i class="fas fa-users"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Facilities">
+            <i class="fas fa-building"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Placements">
+            <i class="fas fa-briefcase"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Admission">
+            <i class="fas fa-user-plus"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Contact">
+            <i class="fas fa-phone"></i>
+        </div>
+    </div>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Welcome to Arka Jain University</h1>
+            <p>Empowering Minds | Transforming Lives | Building Future</p>
+            <div class="btn-group">
+                <a href="#admission" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    Start Your Journey
+                </a>
+                <a href="#programs" class="btn btn-white">
+                    <i class="fas fa-book"></i>
+                    Explore Programs
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="programs">
+        <div class="container">
+            <h2 class="section-title">Academic Programs</h2>
+            <p class="section-subtitle">Choose Your Path to Excellence</p>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-category="all">All Programs</button>
+                <button class="tab-btn" data-category="engineering">Engineering</button>
+                <button class="tab-btn" data-category="management">Management</button>
+                <button class="tab-btn" data-category="computer">Computer</button>
+                <button class="tab-btn" data-category="commerce">Commerce</button>
+                <button class="tab-btn" data-category="science">Science</button>
+            </div>
+
+            <div class="program-cards">
+                <div class="program-card" data-category="engineering">
+                    <h4>B.Tech Computer Science Engineering</h4>
+                    <p>4 Years | 8 Semesters</p>
+                    <p>AI, Machine Learning, Cloud Computing</p>
+                </div>
+                <div class="program-card" data-category="engineering">
+                    <h4>B.Tech Information Technology</h4>
+                    <p>4 Years | 8 Semesters</p>
+                    <p>Cybersecurity, Data Science, IoT</p>
+                </div>
+                <div class="program-card" data-category="engineering">
+                    <h4>B.Tech Mechanical Engineering</h4>
+                    <p>4 Years | 8 Semesters</p>
+                    <p>Automobile, Robotics, CAD/CAM</p>
+                </div>
+                <div class="program-card" data-category="engineering">
+                    <h4>B.Tech Civil Engineering</h4>
+                    <p>4 Years | 8 Semesters</p>
+                    <p>Smart Cities, Infrastructure</p>
+                </div>
+                <div class="program-card" data-category="engineering">
+                    <h4>B.Tech Electronics & Communication</h4>
+                    <p>4 Years | 8 Semesters</p>
+                    <p>VLSI, Embedded Systems, 5G</p>
+                </div>
+                <div class="program-card" data-category="engineering">
+                    <h4>B.Tech Electrical Engineering</h4>
+                    <p>4 Years | 8 Semesters</p>
+                    <p>Power Systems, Renewable Energy</p>
+                </div>
+                <div class="program-card" data-category="management">
+                    <h4>BBA (Bachelor of Business Admin)</h4>
+                    <p>3 Years | 6 Semesters</p>
+                    <p>Marketing, Finance, HR</p>
+                </div>
+                <div class="program-card" data-category="management">
+                    <h4>MBA (Master of Business Admin)</h4>
+                    <p>2 Years | 4 Semesters</p>
+                    <p>Business Analytics, Digital Marketing</p>
+                </div>
+                <div class="program-card" data-category="computer">
+                    <h4>BCA (Bachelor of Computer Apps)</h4>
+                    <p>3 Years | 6 Semesters</p>
+                    <p>Web Development, App Development</p>
+                </div>
+                <div class="program-card" data-category="computer">
+                    <h4>MCA (Master of Computer Apps)</h4>
+                    <p>2 Years | 4 Semesters</p>
+                    <p>Advanced Computing, AI/ML</p>
+                </div>
+                <div class="program-card" data-category="commerce">
+                    <h4>B.Com (Honors)</h4>
+                    <p>3 Years | 6 Semesters</p>
+                    <p>Accounting, Taxation, Finance</p>
+                </div>
+                <div class="program-card" data-category="commerce">
+                    <h4>M.Com (Master of Commerce)</h4>
+                    <p>2 Years | 4 Semesters</p>
+                    <p>Advanced Commerce, Banking</p>
+                </div>
+                <div class="program-card" data-category="science">
+                    <h4>B.Sc (Computer Science)</h4>
+                    <p>3 Years | 6 Semesters</p>
+                    <p>Programming, Data Structures</p>
+                </div>
+                <div class="program-card" data-category="science">
+                    <h4>B.Sc (Mathematics)</h4>
+                    <p>3 Years | 6 Semesters</p>
+                    <p>Pure & Applied Mathematics</p>
+                </div>
+                <div class="program-card" data-category="science">
+                    <h4>B.Sc (Physics)</h4>
+                    <p>3 Years | 6 Semesters</p>
+                    <p>Quantum Physics, Electronics</p>
+                </div>
+                <div class="program-card" data-category="science">
+                    <h4>B.Sc (Chemistry)</h4>
+                    <p>3 Years | 6 Semesters</p>
+                    <p>Organic, Inorganic, Physical</p>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Find Your Perfect Program!</h2>
+                    <p>16+ Programs to Choose From</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-download"></i>
+                            Download Brochure
+                        </a>
+                        <a href="#admission" class="btn btn-white">
+                            <i class="fas fa-info-circle"></i>
+                            Program Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="campus-life">
+        <div class="container">
+            <h2 class="section-title">Vibrant Campus Life</h2>
+            <p class="section-subtitle">Experience the Best College Life in Jharkhand</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-users"></i> Student Activities</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 30+ Student Clubs</li>
+                        <li><i class="fas fa-check"></i> Technical Fest - TechnoFest</li>
+                        <li><i class="fas fa-check"></i> Cultural Fest - Utkarsh</li>
+                        <li><i class="fas fa-check"></i> Sports Tournament</li>
+                        <li><i class="fas fa-check"></i> Hackathons & Workshops</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-home"></i> Hostel Facilities</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> AC & Non-AC Rooms</li>
+                        <li><i class="fas fa-check"></i> 24/7 Security & WiFi</li>
+                        <li><i class="fas fa-check"></i> Mess with Multi-Cuisine</li>
+                        <li><i class="fas fa-check"></i> Gym & Recreation Room</li>
+                        <li><i class="fas fa-check"></i> Laundry & Housekeeping</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-trophy"></i> Sports & Recreation</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Cricket & Football Ground</li>
+                        <li><i class="fas fa-check"></i> Basketball & Volleyball Courts</li>
+                        <li><i class="fas fa-check"></i> Indoor Sports Complex</li>
+                        <li><i class="fas fa-check"></i> Badminton Courts</li>
+                        <li><i class="fas fa-check"></i> Fitness Center & Gym</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Join Our Thriving Community!</h2>
+                    <p>6000+ Happy Students</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-video"></i>
+                            Virtual Campus Tour
+                        </a>
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-calendar"></i>
+                            Upcoming Events
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="facilities">
+        <div class="container">
+            <h2 class="section-title">State-of-the-Art Facilities</h2>
+            <p class="section-subtitle">World-Class Infrastructure for Learning</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-flask"></i> Advanced Laboratories</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Computer Science Labs</li>
+                        <li><i class="fas fa-check"></i> Physics & Chemistry Labs</li>
+                        <li><i class="fas fa-check"></i> Electronics Workshops</li>
+                        <li><i class="fas fa-check"></i> Mechanical Workshops</li>
+                        <li><i class="fas fa-check"></i> Language Lab</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-book-open"></i> Digital Library</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 60,000+ Books Collection</li>
+                        <li><i class="fas fa-check"></i> E-Library & Digital Resources</li>
+                        <li><i class="fas fa-check"></i> International Journals Access</li>
+                        <li><i class="fas fa-check"></i> Online Learning Platforms</li>
+                        <li><i class="fas fa-check"></i> 24/7 Study Halls</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-university"></i> Academic Infrastructure</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Smart Digital Classrooms</li>
+                        <li><i class="fas fa-check"></i> 800-Seater Auditorium</li>
+                        <li><i class="fas fa-check"></i> Conference & Seminar Halls</li>
+                        <li><i class="fas fa-check"></i> Innovation & Incubation Center</li>
+                        <li><i class="fas fa-check"></i> Research & Development Labs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Explore Our Modern Campus!</h2>
+                    <p>Experience Premium Learning Environment</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-tour"></i>
+                            360° Campus Tour
+                        </a>
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-info-circle"></i>
+                            Know More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="placements">
+        <div class="container">
+            <h2 class="section-title">Campus Placements & Careers</h2>
+            <p class="section-subtitle">250+ Companies Recruit from Our Campus</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-handshake"></i> Placement Assistance</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Dedicated Training & Placement Cell</li>
+                        <li><i class="fas fa-check"></i> Professional Resume Building</li>
+                        <li><i class="fas fa-check"></i> GD & PI Preparation</li>
+                        <li><i class="fas fa-check"></i> Aptitude & Technical Training</li>
+                        <li><i class="fas fa-check"></i> Industry Internship Programs</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-chart-bar"></i> Top Recruiters</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> TCS, Infosys, Wipro, HCL</li>
+                        <li><i class="fas fa-check"></i> Tech Mahindra, Capgemini</li>
+                        <li><i class="fas fa-check"></i> Amazon, Microsoft, IBM</li>
+                        <li><i class="fas fa-check"></i> Deloitte, KPMG, EY</li>
+                        <li><i class="fas fa-check"></i> Jindal Steel & Power</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-rupee-sign"></i> Placement Statistics</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 96% Placement Rate</li>
+                        <li><i class="fas fa-check"></i> Average Package: 7-15 LPA</li>
+                        <li><i class="fas fa-check"></i> Highest Package: 42+ LPA</li>
+                        <li><i class="fas fa-check"></i> 600+ Job Offers Annually</li>
+                        <li><i class="fas fa-check"></i> Startup Incubation Support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Build Your Career with Arka Jain!</h2>
+                    <p>Get Placed in Top Companies</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-briefcase"></i>
+                            View Placement Report
+                        </a>
+                        <a href="#contact" class="btn btn-white">
+                            <i class="fas fa-phone-alt"></i>
+                            Contact Placement Cell
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="admission">
+        <div class="container">
+            <h2 class="section-title">Admission Process</h2>
+            <p class="section-subtitle">Your Gateway to Excellence</p>
+
+            <div class="steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h4>Online Application</h4>
+                    <p>Fill the application form with accurate details</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h4>Entrance Examination</h4>
+                    <p>Appear for JEE/JCET/University Entrance</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h4>Counseling & Admission</h4>
+                    <p>Document verification and fee payment</p>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-list-check"></i> Eligibility Criteria</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 10+2 with 60% for UG Programs</li>
+                        <li><i class="fas fa-check"></i> Bachelor's Degree for PG Programs</li>
+                        <li><i class="fas fa-check"></i> Valid Entrance Score Required</li>
+                        <li><i class="fas fa-check"></i> Age Limit: 17-25 Years</li>
+                        <li><i class="fas fa-check"></i> Open for All Indian States</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-file-upload"></i> Documents Required</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 10th & 12th Mark Sheets</li>
+                        <li><i class="fas fa-check"></i> Transfer & Migration Certificates</li>
+                        <li><i class="fas fa-check"></i> Entrance Exam Score Card</li>
+                        <li><i class="fas fa-check"></i> Character Certificate</li>
+                        <li><i class="fas fa-check"></i> Recent Passport Photos</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-rupee-sign"></i> Fee Structure</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Affordable Fee Structure</li>
+                        <li><i class="fas fa-check"></i> Merit-Based Scholarships</li>
+                        <li><i class="fas fa-check"></i> Education Loan Assistance</li>
+                        <li><i class="fas fa-check"></i> Special Discounts for Toppers</li>
+                        <li><i class="fas fa-check"></i> Transparent Fee Policy</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Begin Your Journey at Arka Jain!</h2>
+                    <p>Admissions Open for 2024-25 Session</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-user-plus"></i>
+                            Apply Now
+                        </a>
+                        <a href="tel:06572223333" class="btn btn-white">
+                            <i class="fas fa-phone"></i>
+                            Call: 0657-2223333
+                        </a>
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-download"></i>
+                            Download Brochure
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="section-subtitle">We're Here to Guide You</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-phone-alt"></i> Contact Numbers</h3>
+                    <p>Admissions: 0657-2223333<br>
+                    Campus Office: 0657-2224444<br>
+                    WhatsApp: +91-9876543210</p>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-envelope"></i> Email Addresses</h3>
+                    <p>Admissions: admissions@arkajain.ac.in<br>
+                    Information: info@arkajain.ac.in<br>
+                    Support: support@arkajain.ac.in</p>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Campus Location</h3>
+                    <p>Arka Jain University<br>
+                    Gamharia, Seraikela-Kharsawan<br>
+                    Jamshedpur, Jharkhand - 832108</p>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Visit Our Premier Campus!</h2>
+                    <p>Experience World-Class Education</p>
+                    <div class="btn-group">
+                        <a href="tel:06572223333" class="btn btn-white">
+                            <i class="fas fa-phone"></i>
+                            Call Now: 0657-2223333
+                        </a>
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-calendar"></i>
+                            Schedule Campus Visit
+                        </a>
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-map"></i>
+                            Get Directions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Arka Jain University</h3>
+                    <p>Gamharia, Jamshedpur, Jharkhand</p>
+                    <p>UGC Recognized University</p>
+                    <p>AICTE Approved Programs</p>
+                    <p>NAAC Accredited Institution</p>
+                    <p>#1 University in Jharkhand</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#campus-life">Campus Life</a></li>
+                        <li><a href="#facilities">Facilities</a></li>
+                        <li><a href="#placements">Placements</a></li>
+                        <li><a href="#admission">Admission</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Popular Courses</h3>
+                    <ul>
+                        <li><a href="#">B.Tech Computer Science</a></li>
+                        <li><a href="#">B.Tech Information Technology</a></li>
+                        <li><a href="#">Bachelor of Business Admin</a></li>
+                        <li><a href="#">Master of Business Admin</a></li>
+                        <li><a href="#">Bachelor of Computer Apps</a></li>
+                        <li><a href="#">B.Com (Honors)</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <p><i class="fab fa-facebook"></i> Facebook</p>
+                    <p><i class="fab fa-youtube"></i> YouTube</p>
+                    <p><i class="fab fa-linkedin"></i> LinkedIn</p>
+                    <p><i class="fab fa-instagram"></i> Instagram</p>
+                    <p><i class="fab fa-twitter"></i> Twitter</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Arka Jain University, Jharkhand. All Rights Reserved.</p>
+                <p>Leading University in Eastern India | Excellence in Education | Bright Future Ahead</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var particlesContainer = document.getElementById('particles');
+            for (var i = 0; i < 12; i++) {
+                var particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+
+            setTimeout(function() {
+                document.getElementById('loading').classList.add('hide');
+            }, 800);
+
+            var quickNavItems = document.querySelectorAll('.quick-nav-item');
+            var sections = document.querySelectorAll('section[id]');
+            var progressBar = document.getElementById('progressBar');
+            var navbar = document.getElementById('navbar');
+            var sectionsArr = Array.prototype.slice.call(sections);
+            var quickNavArr = Array.prototype.slice.call(quickNavItems);
+
+            var tooltipMap = {
+                'home': 'Home',
+                'programs': 'Programs',
+                'campus-life': 'Campus Life',
+                'facilities': 'Facilities',
+                'placements': 'Placements',
+                'admission': 'Admission',
+                'contact': 'Contact'
+            };
+
+            var sectionMap = {
+                'Home': 'home',
+                'Programs': 'programs',
+                'Campus Life': 'campus-life',
+                'Facilities': 'facilities',
+                'Placements': 'placements',
+                'Admission': 'admission',
+                'Contact': 'contact'
+            };
+
+            var sectionOffsets = [];
+            function cacheSectionOffsets() {
+                sectionOffsets = sectionsArr.map(function(section) {
+                    return {
+                        id: section.getAttribute('id'),
+                        top: section.offsetTop - 100,
+                        height: section.offsetHeight
+                    };
+                });
+            }
+            cacheSectionOffsets();
+            var resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(cacheSectionOffsets, 200);
+            });
+
+            var scrollTicking = false;
+            function onScroll() {
+                if (!scrollTicking) {
+                    requestAnimationFrame(function() {
+                        var scrollY = window.pageYOffset;
+
+                        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                        if (height > 0) {
+                            progressBar.style.width = ((scrollY / height) * 100) + '%';
+                        }
+
+                        if (scrollY > 50) {
+                            navbar.classList.add('scrolled');
+                        } else {
+                            navbar.classList.remove('scrolled');
+                        }
+
+                        for (var i = 0; i < sectionOffsets.length; i++) {
+                            var s = sectionOffsets[i];
+                            if (scrollY > s.top && scrollY <= s.top + s.height) {
+                                for (var j = 0; j < quickNavArr.length; j++) {
+                                    if (quickNavArr[j].getAttribute('data-tooltip') === tooltipMap[s.id]) {
+                                        quickNavArr[j].classList.add('active');
+                                    } else {
+                                        quickNavArr[j].classList.remove('active');
+                                    }
+                                }
+                                break;
+                            }
+                        }
+
+                        scrollTicking = false;
+                    });
+                    scrollTicking = true;
+                }
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+
+            for (var q = 0; q < quickNavArr.length; q++) {
+                quickNavArr[q].addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var targetId = sectionMap[this.getAttribute('data-tooltip')];
+                    var targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        window.scrollTo({ top: targetSection.offsetTop - 80, behavior: 'smooth' });
+                    }
+                });
+            }
+
+            var menuToggle = document.getElementById('menuToggle');
+            var navLinks = document.getElementById('navLinks');
+            var menuSpans = menuToggle.querySelectorAll('span');
+
+            menuToggle.addEventListener('click', function() {
+                var isActive = navLinks.classList.toggle('active');
+                if (isActive) {
+                    menuSpans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    menuSpans[1].style.opacity = '0';
+                    menuSpans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                } else {
+                    menuSpans[0].style.transform = 'none';
+                    menuSpans[1].style.opacity = '1';
+                    menuSpans[2].style.transform = 'none';
+                }
+            });
+
+            var navAnchors = navLinks.querySelectorAll('a');
+            for (var n = 0; n < navAnchors.length; n++) {
+                navAnchors[n].addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    menuSpans[0].style.transform = 'none';
+                    menuSpans[1].style.opacity = '1';
+                    menuSpans[2].style.transform = 'none';
+                });
+            }
+
+            var allAnchors = document.querySelectorAll('a[href^="#"]');
+            for (var a = 0; a < allAnchors.length; a++) {
+                allAnchors[a].addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var href = this.getAttribute('href');
+                    if (href.length > 1) {
+                        var target = document.querySelector(href);
+                        if (target) {
+                            window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                        }
+                    }
+                });
+            }
+
+            var tabBtns = document.querySelectorAll('.tab-btn');
+            var programCards = document.querySelectorAll('.program-card');
+            var tabArr = Array.prototype.slice.call(tabBtns);
+            var cardArr = Array.prototype.slice.call(programCards);
+
+            for (var t = 0; t < tabArr.length; t++) {
+                tabArr[t].addEventListener('click', function() {
+                    var category = this.getAttribute('data-category');
+                    for (var b = 0; b < tabArr.length; b++) {
+                        tabArr[b].classList.remove('active');
+                    }
+                    this.classList.add('active');
+
+                    for (var c = 0; c < cardArr.length; c++) {
+                        var card = cardArr[c];
+                        if (card.getAttribute('data-category') === category || category === 'all') {
+                            card.style.display = 'block';
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                for (var i = 0; i < entries.length; i++) {
+                    var entry = entries[i];
+                    var el = entry.target;
+                    if (entry.isIntersecting) {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                        if (el.classList.contains('cta-section')) {
+                            el.classList.add('visible');
+                        }
+                        if (!el.classList.contains('cta-section')) {
+                            observer.unobserve(el);
+                        }
+                    } else {
+                        if (el.classList.contains('cta-section')) {
+                            el.classList.remove('visible');
+                        }
+                    }
+                }
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            var animatedElements = document.querySelectorAll('.info-card, .cta-section, .program-card, .step-card');
+            for (var o = 0; o < animatedElements.length; o++) {
+                animatedElements[o].style.opacity = '0';
+                animatedElements[o].style.transform = 'translateY(30px)';
+                observer.observe(animatedElements[o]);
+            }
+
+            tabArr[0].click();
+        });
+    </script>
+</body>
+</html>

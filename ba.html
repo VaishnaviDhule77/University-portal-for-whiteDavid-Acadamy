@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BA Admission 2024 - Bachelor of Arts | Whitedavid Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00E0FF;
+            --primary-dark: #00B8D4;
+            --secondary: #2CE6C2;
+            --cta-start: #FF6A3D;
+            --cta-end: #FF8A50;
+            --dark: #0B0F2A;
+            --darker: #080C1E;
+            --darkest: #060916;
+            --light: #0F172A;
+            --lighter: #13203A;
+            --lighter-alt: #1A2E4A;
+            --text: #B0B8D1;
+            --text-bright: #FFFFFF;
+            --text-dim: #94A3B8;
+            --border: rgba(148, 163, 184, 0.1);
+            --border-medium: rgba(148, 163, 184, 0.15);
+            --glow: rgba(0, 224, 255, 0.5);
+            --glow-secondary: rgba(44, 230, 194, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--darkest);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .body-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background:
+                radial-gradient(ellipse at 20% 0%, rgba(26, 46, 74, 0.5) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(15, 23, 42, 0.6) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(17, 26, 58, 0.3) 0%, transparent 70%);
+        }
+
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darkest);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(0, 224, 255, 0.15);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(11, 15, 42, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--primary));
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-animation 3s ease infinite;
+            will-change: background-position;
+        }
+
+        @keyframes gradient-animation {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .hero {
+            margin-top: 80px;
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0, 224, 255, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(44, 230, 194, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(0, 184, 212, 0.04) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), #00B8D4, var(--primary));
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 4s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.6s;
+        }
+
+        .btn:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cta-start), var(--cta-end));
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 106, 61, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 106, 61, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border-medium);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(0, 224, 255, 0.05);
+            box-shadow: 0 5px 20px rgba(0, 224, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .quick-nav {
+            position: relative;
+            top: 80px;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 1rem 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        .quick-nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .quick-nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s ease, background 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            position: relative;
+            font-size: 0.9rem;
+            border: 1px solid transparent;
+        }
+
+        .quick-nav-links a.active {
+            background: rgba(0, 224, 255, 0.12);
+            color: var(--primary);
+            border-color: rgba(0, 224, 255, 0.25);
+            box-shadow: 0 3px 15px rgba(0, 224, 255, 0.15);
+        }
+
+        .quick-nav-links a:hover {
+            color: var(--primary);
+            background: rgba(0, 224, 255, 0.06);
+        }
+
+        .section {
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-dim);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .column-content,
+        .info-card,
+        .comparison-card {
+            --cat: #00E0FF;
+            --cat-glow: rgba(0, 224, 255, 0.1);
+            --cat-border: rgba(0, 224, 255, 0.2);
+        }
+
+        /* ===== COLUMN CONTENT — Full 14-feature interactive hover ===== */
+        .column-content {
+            background: linear-gradient(160deg, rgba(15, 23, 42, 0.92), rgba(19, 32, 58, 0.88));
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                        box-shadow 0.4s ease,
+                        border-color 0.4s ease,
+                        background 0.4s ease;
+            cursor: default;
+        }
+        .column-content::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cat), var(--secondary), var(--primary));
+            opacity: 0.35;
+            transition: opacity 0.4s ease, height 0.4s ease;
+            z-index: 2;
+        }
+        .column-content::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at top left, var(--cat-glow), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 20px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .column-content:hover::before { opacity: 1; height: 4px; }
+        .column-content:hover::after { opacity: 1; }
+        .column-content:hover {
+            transform: translateY(-10px) scale(1.01);
+            border-color: var(--cat-border);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+                        0 0 40px var(--cat-glow),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            background: linear-gradient(160deg, rgba(15, 23, 42, 0.96), rgba(19, 32, 58, 0.94));
+        }
+        .column-content h3 {
+            color: var(--cat);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 3;
+            transition: text-shadow 0.4s ease, transform 0.4s ease;
+        }
+        .column-content:hover h3 {
+            text-shadow: 0 0 18px var(--cat);
+            transform: translateX(4px);
+        }
+        .column-content ul {
+            list-style: none;
+            position: relative;
+            z-index: 3;
+        }
+        .column-content li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+            transition: padding-left 0.35s ease, color 0.35s ease, transform 0.35s ease, text-shadow 0.35s ease, border-color 0.35s ease;
+        }
+        .column-content:hover li:not(:last-child) {
+            border-bottom-color: rgba(148, 163, 184, 0.1);
+        }
+        .column-content li:hover {
+            padding-left: 1rem;
+            color: var(--cat);
+            border-color: rgba(148, 163, 184, 0.15);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+        }
+        .column-content li:last-child { border-bottom: none; }
+        .column-content li strong {
+            color: var(--cat);
+            transition: text-shadow 0.4s ease;
+        }
+        .column-content:hover li strong {
+            text-shadow: 0 0 10px var(--cat);
+        }
+        .column-content p {
+            color: var(--text);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        /* ===== INFO CARD — Full 14-feature interactive hover ===== */
+        .info-card {
+            background: linear-gradient(160deg, rgba(15, 23, 42, 0.92), rgba(19, 32, 58, 0.88));
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                        box-shadow 0.4s ease,
+                        border-color 0.4s ease,
+                        background 0.4s ease;
+            cursor: default;
+        }
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cat), var(--secondary), var(--primary));
+            opacity: 0.35;
+            transition: opacity 0.4s ease, height 0.4s ease;
+            z-index: 2;
+        }
+        .info-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at top left, var(--cat-glow), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 20px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .info-card:hover::before { opacity: 1; height: 4px; }
+        .info-card:hover::after { opacity: 1; }
+        .info-card:hover {
+            transform: translateY(-12px) scale(1.015);
+            border-color: var(--cat-border);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+                        0 0 40px var(--cat-glow),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            background: linear-gradient(160deg, rgba(15, 23, 42, 0.96), rgba(19, 32, 58, 0.94));
+        }
+        .info-card h3 {
+            color: var(--cat);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 3;
+            transition: text-shadow 0.4s ease, transform 0.4s ease;
+        }
+        .info-card:hover h3 {
+            text-shadow: 0 0 18px var(--cat);
+            transform: translateX(4px);
+        }
+        .info-card h3 i {
+            font-size: 1.2rem;
+            animation: bounce 2s ease infinite;
+            will-change: transform;
+            transition: text-shadow 0.4s ease, transform 0.4s ease;
+        }
+        .info-card:hover h3 i {
+            text-shadow: 0 0 14px var(--cat);
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .info-card ul {
+            list-style: none;
+            position: relative;
+            z-index: 3;
+        }
+        .info-card li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+            transition: color 0.35s ease, padding-left 0.35s ease, transform 0.35s ease, text-shadow 0.35s ease, border-color 0.35s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        .info-card:hover li:not(:last-child) {
+            border-bottom-color: rgba(148, 163, 184, 0.1);
+        }
+        .info-card li:hover {
+            color: var(--cat);
+            padding-left: 0.5rem;
+            border-color: rgba(148, 163, 184, 0.15);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+        }
+        .info-card li strong {
+            color: var(--secondary);
+            transition: text-shadow 0.4s ease;
+        }
+        .info-card:hover li strong {
+            text-shadow: 0 0 10px var(--secondary);
+        }
+        .info-card li i {
+            color: var(--secondary);
+            flex-shrink: 0;
+            margin-top: 3px;
+            transition: text-shadow 0.4s ease, transform 0.4s ease;
+        }
+        .info-card:hover li i {
+            text-shadow: 0 0 10px var(--secondary);
+            transform: scale(1.15);
+        }
+
+        .comparison-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        /* ===== COMPARISON CARD — Full 14-feature interactive hover ===== */
+        .comparison-card {
+            background: linear-gradient(160deg, rgba(15, 23, 42, 0.92), rgba(19, 32, 58, 0.88));
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                        box-shadow 0.4s ease,
+                        border-color 0.4s ease,
+                        background 0.4s ease;
+            cursor: default;
+        }
+        .comparison-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cat), var(--secondary), var(--primary));
+            opacity: 0.35;
+            transition: opacity 0.4s ease, height 0.4s ease;
+            z-index: 2;
+        }
+        .comparison-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at top left, var(--cat-glow), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 20px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .comparison-card:hover::before { opacity: 1; height: 4px; }
+        .comparison-card:hover::after { opacity: 1; }
+        .comparison-card:hover {
+            transform: translateY(-12px) scale(1.015);
+            border-color: var(--cat-border);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45),
+                        0 0 50px var(--cat-glow),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            background: linear-gradient(160deg, rgba(15, 23, 42, 0.96), rgba(19, 32, 58, 0.94));
+        }
+        .comparison-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-medium);
+            position: relative;
+            z-index: 3;
+            transition: box-shadow 0.4s ease;
+        }
+        .comparison-card:hover .comparison-header {
+            box-shadow: 0 4px 30px var(--cat-glow);
+        }
+        .comparison-header h3 {
+            color: var(--cat);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            transition: transform 0.4s ease, text-shadow 0.4s ease;
+        }
+        .comparison-card:hover .comparison-header h3 {
+            transform: scale(1.05);
+            text-shadow: 0 0 18px var(--cat);
+        }
+        .comparison-header p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+        }
+        .comparison-body {
+            position: relative;
+            z-index: 3;
+        }
+        .comparison-body ul {
+            list-style: none;
+        }
+        .comparison-body li {
+            padding: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.35s ease, color 0.35s ease, text-shadow 0.35s ease;
+        }
+        .comparison-card:hover .comparison-body li:hover {
+            transform: translateX(6px);
+            color: var(--cat);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+        }
+        .comparison-body li i {
+            color: var(--secondary);
+            transition: text-shadow 0.4s ease, transform 0.4s ease;
+        }
+        .comparison-card:hover .comparison-body li i {
+            text-shadow: 0 0 10px var(--secondary);
+            transform: scale(1.15);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: linear-gradient(160deg, rgba(15, 23, 42, 0.95), rgba(19, 32, 58, 0.92));
+        }
+
+        th {
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.15), rgba(44, 230, 194, 0.1));
+            color: var(--primary);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            white-space: normal;
+            border-bottom: 1px solid var(--border-medium);
+        }
+
+        td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+            transition: background 0.3s ease, color 0.3s ease;
+            white-space: normal;
+            vertical-align: top;
+            color: var(--text);
+        }
+
+        tr:hover td {
+            background: rgba(0, 224, 255, 0.04);
+            color: var(--text-bright);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        td strong {
+            color: var(--text-bright);
+        }
+
+        .cta-section {
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                rgba(255, 106, 61, 0.12),
+                rgba(255, 138, 80, 0.08),
+                rgba(255, 106, 61, 0.05));
+            opacity: 0.8;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 106, 61, 0.08), rgba(255, 138, 80, 0.04));
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 106, 61, 0.15);
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-bright);
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        .cta-content .btn-primary {
+            box-shadow: 0 5px 20px rgba(255, 106, 61, 0.3);
+        }
+
+        .cta-content .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: var(--text-bright);
+        }
+
+        .cta-content .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.35);
+            color: var(--text-bright);
+            box-shadow: 0 5px 20px rgba(255, 106, 61, 0.2);
+        }
+
+        footer {
+            background: var(--darker);
+            padding: 3rem 0 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p {
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-section li i {
+            color: var(--text-dim);
+            margin-right: 8px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            contain: strict;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 50%;
+            will-change: transform, opacity;
+            animation: float 18s infinite linear;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darkest);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
+        }
+
+        /* Category-Based Multi-Accent System */
+
+        #what-is-ba .column-content:nth-child(1) {
+            --cat: #3B82F6;
+            --cat-glow: rgba(59, 130, 246, 0.12);
+            --cat-border: rgba(59, 130, 246, 0.25);
+        }
+        #what-is-ba .column-content:nth-child(2) {
+            --cat: #14B8A6;
+            --cat-glow: rgba(20, 184, 166, 0.12);
+            --cat-border: rgba(20, 184, 166, 0.25);
+        }
+
+        #eligibility .info-card:nth-child(1) {
+            --cat: #3B82F6;
+            --cat-glow: rgba(59, 130, 246, 0.12);
+            --cat-border: rgba(59, 130, 246, 0.25);
+        }
+        #eligibility .info-card:nth-child(2) {
+            --cat: #FF6A3D;
+            --cat-glow: rgba(255, 106, 61, 0.12);
+            --cat-border: rgba(255, 106, 61, 0.25);
+        }
+        #eligibility .info-card:nth-child(3) {
+            --cat: #22C55E;
+            --cat-glow: rgba(34, 197, 94, 0.12);
+            --cat-border: rgba(34, 197, 94, 0.25);
+        }
+
+        #fees .info-card:nth-child(1) {
+            --cat: #22C55E;
+            --cat-glow: rgba(34, 197, 94, 0.12);
+            --cat-border: rgba(34, 197, 94, 0.25);
+        }
+        #fees .info-card:nth-child(2) {
+            --cat: #3B82F6;
+            --cat-glow: rgba(59, 130, 246, 0.12);
+            --cat-border: rgba(59, 130, 246, 0.25);
+        }
+
+        #colleges .info-card:nth-child(1) {
+            --cat: #3B82F6;
+            --cat-glow: rgba(59, 130, 246, 0.12);
+            --cat-border: rgba(59, 130, 246, 0.25);
+        }
+        #colleges .info-card:nth-child(2) {
+            --cat: #A855F7;
+            --cat-glow: rgba(168, 85, 247, 0.12);
+            --cat-border: rgba(168, 85, 247, 0.25);
+        }
+        #colleges .info-card:nth-child(3) {
+            --cat: #14B8A6;
+            --cat-glow: rgba(20, 184, 166, 0.12);
+            --cat-border: rgba(20, 184, 166, 0.25);
+        }
+
+        #career .info-card:nth-child(1) {
+            --cat: #FF6A3D;
+            --cat-glow: rgba(255, 106, 61, 0.12);
+            --cat-border: rgba(255, 106, 61, 0.25);
+        }
+        #career .info-card:nth-child(2) {
+            --cat: #3B82F6;
+            --cat-glow: rgba(59, 130, 246, 0.12);
+            --cat-border: rgba(59, 130, 246, 0.25);
+        }
+        #career .info-card:nth-child(3) {
+            --cat: #A855F7;
+            --cat-glow: rgba(168, 85, 247, 0.12);
+            --cat-border: rgba(168, 85, 247, 0.25);
+        }
+
+        #specializations .info-card:nth-child(1) {
+            --cat: #A855F7;
+            --cat-glow: rgba(168, 85, 247, 0.12);
+            --cat-border: rgba(168, 85, 247, 0.25);
+        }
+        #specializations .info-card:nth-child(2) {
+            --cat: #F59E0B;
+            --cat-glow: rgba(245, 158, 11, 0.12);
+            --cat-border: rgba(245, 158, 11, 0.25);
+        }
+        #specializations .info-card:nth-child(3) {
+            --cat: #3B82F6;
+            --cat-glow: rgba(59, 130, 246, 0.12);
+            --cat-border: rgba(59, 130, 246, 0.25);
+        }
+        #specializations .info-card:nth-child(4) {
+            --cat: #14B8A6;
+            --cat-glow: rgba(20, 184, 166, 0.12);
+            --cat-border: rgba(20, 184, 166, 0.25);
+        }
+        #specializations .info-card:nth-child(5) {
+            --cat: #FF6A3D;
+            --cat-glow: rgba(255, 106, 61, 0.12);
+            --cat-border: rgba(255, 106, 61, 0.25);
+        }
+        #specializations .info-card:nth-child(6) {
+            --cat: #22C55E;
+            --cat-glow: rgba(34, 197, 94, 0.12);
+            --cat-border: rgba(34, 197, 94, 0.25);
+        }
+
+        #admission .comparison-card:nth-child(1) {
+            --cat: #3B82F6;
+            --cat-glow: rgba(59, 130, 246, 0.12);
+            --cat-border: rgba(59, 130, 246, 0.25);
+        }
+        #admission .comparison-card:nth-child(2) {
+            --cat: #14B8A6;
+            --cat-glow: rgba(20, 184, 166, 0.12);
+            --cat-border: rgba(20, 184, 166, 0.25);
+        }
+        #admission .comparison-card:nth-child(3) {
+            --cat: #A855F7;
+            --cat-glow: rgba(168, 85, 247, 0.12);
+            --cat-border: rgba(168, 85, 247, 0.25);
+        }
+        #admission .comparison-card:nth-child(4) {
+            --cat: #22C55E;
+            --cat-glow: rgba(34, 197, 94, 0.12);
+            --cat-border: rgba(34, 197, 94, 0.25);
+        }
+
+        #higher-studies .info-card:nth-child(1) {
+            --cat: #A855F7;
+            --cat-glow: rgba(168, 85, 247, 0.12);
+            --cat-border: rgba(168, 85, 247, 0.25);
+        }
+        #higher-studies .info-card:nth-child(2) {
+            --cat: #3B82F6;
+            --cat-glow: rgba(59, 130, 246, 0.12);
+            --cat-border: rgba(59, 130, 246, 0.25);
+        }
+        #higher-studies .info-card:nth-child(3) {
+            --cat: #FF6A3D;
+            --cat-glow: rgba(255, 106, 61, 0.12);
+            --cat-border: rgba(255, 106, 61, 0.25);
+        }
+        #higher-studies .info-card:nth-child(4) {
+            --cat: #22C55E;
+            --cat-glow: rgba(34, 197, 94, 0.12);
+            --cat-border: rgba(34, 197, 94, 0.25);
+        }
+        #higher-studies .info-card:nth-child(5) {
+            --cat: #14B8A6;
+            --cat-glow: rgba(20, 184, 166, 0.12);
+            --cat-border: rgba(20, 184, 166, 0.25);
+        }
+        #higher-studies .info-card:nth-child(6) {
+            --cat: #F59E0B;
+            --cat-glow: rgba(245, 158, 11, 0.12);
+            --cat-border: rgba(245, 158, 11, 0.25);
+        }
+
+        /* ===== TOUCH DEVICES — disable hover microinteractions ===== */
+        @media (hover: none) and (pointer: coarse) {
+            .column-content:hover { transform: none; background: linear-gradient(160deg, rgba(15, 23, 42, 0.92), rgba(19, 32, 58, 0.88)); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255,255,255,0.04); border-color: rgba(255, 255, 255, 0.08); }
+            .column-content:hover::before { opacity: 0.35; height: 3px; }
+            .column-content:hover::after { opacity: 0; }
+            .column-content:hover h3 { text-shadow: none; transform: none; }
+            .column-content:hover li { border-color: rgba(148, 163, 184, 0.06); }
+            .column-content:hover li:hover { text-shadow: none; }
+            .column-content:hover li strong { text-shadow: none; }
+
+            .info-card:hover { transform: none; background: linear-gradient(160deg, rgba(15, 23, 42, 0.92), rgba(19, 32, 58, 0.88)); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255,255,255,0.04); border-color: rgba(255, 255, 255, 0.08); }
+            .info-card:hover::before { opacity: 0.35; height: 3px; }
+            .info-card:hover::after { opacity: 0; }
+            .info-card:hover h3 { text-shadow: none; transform: none; }
+            .info-card:hover h3 i { text-shadow: none; }
+            .info-card:hover li { border-color: rgba(148, 163, 184, 0.06); }
+            .info-card:hover li:hover { text-shadow: none; }
+            .info-card:hover li i { text-shadow: none; transform: none; }
+            .info-card:hover li strong { text-shadow: none; }
+
+            .comparison-card:hover { transform: none; background: linear-gradient(160deg, rgba(15, 23, 42, 0.92), rgba(19, 32, 58, 0.88)); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255,255,255,0.04); border-color: rgba(255, 255, 255, 0.08); }
+            .comparison-card:hover::before { opacity: 0.35; height: 3px; }
+            .comparison-card:hover::after { opacity: 0; }
+            .comparison-card:hover .comparison-header { box-shadow: none; }
+            .comparison-card:hover .comparison-header h3 { transform: none; text-shadow: none; }
+            .comparison-card:hover .comparison-body li:hover { transform: none; text-shadow: none; }
+            .comparison-card:hover .comparison-body li i { text-shadow: none; transform: none; }
+
+            .btn-primary:hover { transform: none; box-shadow: 0 5px 20px rgba(255, 106, 61, 0.25); }
+            .btn-secondary:hover { transform: none; box-shadow: none; }
+            tr:hover td { background: transparent; color: var(--text); }
+        }
+
+        /* ===== REDUCED MOTION ===== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .particle { display: none; }
+        }
+
+        /* ===== RESPONSIVE — scaled hover at each breakpoint ===== */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 2.8rem; }
+            .two-column { gap: 1.5rem; }
+            .info-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+            .column-content:hover { transform: translateY(-8px) scale(1.008); }
+            .info-card:hover { transform: translateY(-10px) scale(1.01); }
+            .comparison-card:hover { transform: translateY(-10px) scale(1.01); }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            nav ul.active {
+                display: flex;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(11, 15, 42, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 0;
+                padding-top: 2rem;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero { padding: 5rem 0; margin-top: 70px; }
+            .hero h1 { font-size: 2.2rem; line-height: 1.2; }
+            .hero p { font-size: 1.1rem; }
+
+            .quick-nav { display: none; }
+
+            .section { padding: 3rem 0; }
+
+            .two-column { grid-template-columns: 1fr; gap: 1.5rem; }
+            .info-grid { grid-template-columns: 1fr; }
+            .comparison-container { grid-template-columns: 1fr; }
+
+            .section-title { font-size: 2rem; }
+            .section-subtitle { font-size: 1rem; margin-bottom: 2rem; }
+            .info-card h3 { font-size: 1.2rem; }
+
+            .column-content:hover { transform: translateY(-6px) scale(1.005); }
+            .info-card:hover { transform: translateY(-8px) scale(1.008); }
+            .comparison-card:hover { transform: translateY(-8px) scale(1.008); }
+
+            table { display: block; overflow-x: auto; }
+            th, td {
+                padding: 0.8rem 0.5rem;
+                white-space: normal;
+                font-size: 0.9rem;
+            }
+            th {
+                position: static;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 0 1rem; }
+
+            .hero h1 { font-size: 1.8rem; }
+            .section-title { font-size: 1.6rem; }
+            .column-content, .info-card { padding: 1.5rem; border-radius: 16px; }
+            .comparison-card { padding: 1.5rem; border-radius: 16px; }
+
+            .column-content:hover { transform: translateY(-4px) scale(1.003); }
+            .info-card:hover { transform: translateY(-6px) scale(1.005); }
+            .comparison-card:hover { transform: translateY(-6px) scale(1.005); }
+
+            th, td {
+                padding: 0.6rem 0.4rem;
+                font-size: 0.8rem;
+            }
+
+            .footer-content { grid-template-columns: 1fr; text-align: center; }
+        }
+
+        @media (max-width: 400px) {
+            .container { padding: 0 0.75rem; }
+            .hero h1 { font-size: 1.55rem; }
+            .section-title { font-size: 1.4rem; }
+            .column-content, .info-card, .comparison-card { padding: 1.25rem; border-radius: 14px; }
+            .column-content:hover, .info-card:hover, .comparison-card:hover { transform: translateY(-3px) scale(1.002); }
+            .btn { padding: 0.8rem 1.5rem; font-size: 1rem; }
+        }
+
+        @media (max-width: 350px) {
+            .container { padding: 0 0.6rem; }
+            .hero h1 { font-size: 1.4rem; }
+            .section-title { font-size: 1.25rem; }
+            .column-content, .info-card, .comparison-card { padding: 1rem; border-radius: 12px; }
+            .column-content:hover, .info-card:hover, .comparison-card:hover { transform: translateY(-2px) scale(1.001); }
+        }
+
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero { padding: 3rem 0; margin-top: 60px; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 1rem; margin-bottom: 1rem; }
+            .section { padding: 2rem 0; }
+            .section-title { font-size: 1.5rem; margin-bottom: 0.5rem; }
+            .section-subtitle { margin-bottom: 1.5rem; }
+            .cta-section { padding: 3rem 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="body-bg"></div>
+
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="particles" id="particles"></div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Whitedavid Academy</div>
+                <nav>
+                    <ul id="navLinks">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#courses">Courses</a></li>
+                        <li><a href="index.html#universities">Universities</a></li>
+                        <li><a href="index.html#support">Support</a></li>
+                        <li><a href="tel:+919876543210">Contact</a></li>
+                    </ul>
+                </nav>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>BA Admission 2024</h1>
+                <p>Pursue Bachelor of Arts in Top Colleges | Build Your Career in Humanities & Social Sciences</p>
+                <div class="btn-group">
+                    <a href="tel:+919876543210" class="btn btn-primary">
+                        <i class="fas fa-phone"></i> Call Now
+                    </a>
+                    <a href="#eligibility" class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i> Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="quick-nav">
+        <div class="container">
+            <div class="quick-nav-links">
+                <a href="#what-is-ba" class="active">What is BA</a>
+                <a href="#eligibility">Eligibility</a>
+                <a href="#fees">Fees Structure</a>
+                <a href="#colleges">Top Colleges</a>
+                <a href="#admission">Admission Process</a>
+                <a href="#career">Career Scope</a>
+                <a href="#specializations">Specializations</a>
+                <a href="#higher-studies">Higher Studies</a>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <section class="section" id="what-is-ba">
+            <h2 class="section-title">What is BA (Bachelor of Arts)?</h2>
+            <p class="section-subtitle">Understanding the Bachelor of Arts Degree Program</p>
+
+            <div class="two-column">
+                <div class="column-content">
+                    <h3><i class="fas fa-graduation-cap"></i> Program Overview</h3>
+                    <p>BA (Bachelor of Arts) is a 3-year undergraduate degree program focusing on humanities, social sciences, and liberal arts. It develops critical thinking, communication, and analytical skills.</p>
+                    <ul>
+                        <li><strong>Duration:</strong> 3 Years (6 Semesters)</li>
+                        <li><strong>Level:</strong> Undergraduate Degree</li>
+                        <li><strong>Field:</strong> Arts, Humanities & Social Sciences</li>
+                        <li><strong>Mode:</strong> Regular/Distance/Online</li>
+                    </ul>
+                </div>
+                <div class="column-content">
+                    <h3><i class="fas fa-bullseye"></i> Key Features</h3>
+                    <p>BA program offers diverse specializations with flexible curriculum options and interdisciplinary learning opportunities.</p>
+                    <ul>
+                        <li><strong>Specializations:</strong> 20+ Subjects Available</li>
+                        <li><strong>Curriculum:</strong> Theory + Practical Projects</li>
+                        <li><strong>Skills:</strong> Communication, Critical Analysis</li>
+                        <li><strong>Assessment:</strong> Exams + Assignments</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="eligibility">
+            <h2 class="section-title">BA Eligibility Criteria</h2>
+            <p class="section-subtitle">Requirements for BA Admission 2024</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-user-graduate"></i> Academic Requirements</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> <strong>10+2 Qualified:</strong> From recognized board</li>
+                        <li><i class="fas fa-check"></i> <strong>Minimum Marks:</strong> 45-50% (varies by college)</li>
+                        <li><i class="fas fa-check"></i> <strong>Stream:</strong> Any stream (Arts/Science/Commerce)</li>
+                        <li><i class="fas fa-check"></i> <strong>Age Limit:</strong> No specific age limit</li>
+                        <li><i class="fas fa-check"></i> <strong>Subjects:</strong> English compulsory</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-file-alt"></i> Entrance Exams</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> <strong>DUET:</strong> Delhi University Entrance Test</li>
+                        <li><i class="fas fa-check"></i> <strong>JNUEE:</strong> JNU Entrance Exam</li>
+                        <li><i class="fas fa-check"></i> <strong>BHU UET:</strong> Banaras Hindu University</li>
+                        <li><i class="fas fa-check"></i> <strong>IPU CET:</strong> Guru Gobind Singh University</li>
+                        <li><i class="fas fa-check"></i> <strong>State CET:</strong> State-level entrance tests</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-clipboard-list"></i> Reservation Policy</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> <strong>SC/ST:</strong> 15% & 7.5% reservation</li>
+                        <li><i class="fas fa-check"></i> <strong>OBC:</strong> 27% reservation</li>
+                        <li><i class="fas fa-check"></i> <strong>EWS:</strong> 10% reservation</li>
+                        <li><i class="fas fa-check"></i> <strong>PWD:</strong> 5% reservation</li>
+                        <li><i class="fas fa-check"></i> <strong>Sports:</strong> Quota available</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="fees">
+            <h2 class="section-title">BA Fees Structure</h2>
+            <p class="section-subtitle">Complete Fee Breakdown for BA Program</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>College Type</th>
+                            <th>Annual Fees</th>
+                            <th>Total 3 Years</th>
+                            <th>Additional Costs</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Government Colleges</strong></td>
+                            <td>₹5,000 - ₹15,000</td>
+                            <td>₹15,000 - ₹45,000</td>
+                            <td>Exam fees, Library</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Private Universities</strong></td>
+                            <td>₹50,000 - ₹1,50,000</td>
+                            <td>₹1.5L - ₹4.5L</td>
+                            <td>Hostel, Transport</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Deemed Universities</strong></td>
+                            <td>₹80,000 - ₹2,00,000</td>
+                            <td>₹2.4L - ₹6L</td>
+                            <td>Lab, Equipment</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ivy League Colleges</strong></td>
+                            <td>₹2,00,000 - ₹5,00,000</td>
+                            <td>₹6L - ₹15L</td>
+                            <td>All inclusive</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-money-bill-wave"></i> Scholarship Options</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Merit-Based:</strong> Up to 100% waiver</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Need-Based:</strong> Financial aid</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Government:</strong> NSP scholarships</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Minority:</strong> Community schemes</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-credit-card"></i> Payment Options</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Semester-wise:</strong> 6 installments</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Annual:</strong> 3 installments</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Bank Loan:</strong> Easy EMI options</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Online:</strong> Net banking/UPI</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="colleges">
+            <h2 class="section-title">Top BA Colleges in India</h2>
+            <p class="section-subtitle">Best Arts & Humanities Colleges for BA Admission</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-university"></i> Delhi University Colleges</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>SRCC:</strong> Economics Hons.</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>LSR:</strong> All Arts Specializations</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>St. Stephen's:</strong> English, History</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Hindu College:</strong> Political Science</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Miranda House:</strong> All BA Courses</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-building"></i> Central Universities</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>JNU:</strong> Social Sciences</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>BHU:</strong> Arts Faculty</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>AMU:</strong> Arts & Languages</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Jamia Millia:</strong> Liberal Arts</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>University of Delhi:</strong> North/South Campus</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-star"></i> Private Universities</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>OP Jindal:</strong> Liberal Arts & Humanities</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Ashoka University:</strong> Liberal Arts</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>FLAME University:</strong> Liberal Education</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Kalinga Institute:</strong> Social Sciences</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Shiv Nadar University:</strong> Humanities</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="admission">
+            <h2 class="section-title">BA Admission Process</h2>
+            <p class="section-subtitle">Step-by-Step Guide to Secure Your BA Seat</p>
+
+            <div class="comparison-container">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <h3><i class="fas fa-search"></i> Step 1</h3>
+                        <p>Research & Apply</p>
+                    </div>
+                    <div class="comparison-body">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Shortlist colleges</li>
+                            <li><i class="fas fa-check"></i> Check eligibility</li>
+                            <li><i class="fas fa-check"></i> Fill application forms</li>
+                            <li><i class="fas fa-check"></i> Pay registration fees</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <h3><i class="fas fa-pencil-alt"></i> Step 2</h3>
+                        <p>Entrance & Selection</p>
+                    </div>
+                    <div class="comparison-body">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Appear for entrance</li>
+                            <li><i class="fas fa-check"></i> Check cut-off lists</li>
+                            <li><i class="fas fa-check"></i> Verify merit list</li>
+                            <li><i class="fas fa-check"></i> Interview rounds</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <h3><i class="fas fa-list"></i> Step 3</h3>
+                        <p>Counseling & Allotment</p>
+                    </div>
+                    <div class="comparison-body">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Register for counseling</li>
+                            <li><i class="fas fa-check"></i> Fill preferences</li>
+                            <li><i class="fas fa-check"></i> Seat allotment</li>
+                            <li><i class="fas fa-check"></i> Report to college</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <h3><i class="fas fa-check-circle"></i> Step 4</h3>
+                        <p>Final Admission</p>
+                    </div>
+                    <div class="comparison-body">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Document verification</li>
+                            <li><i class="fas fa-check"></i> Fee payment</li>
+                            <li><i class="fas fa-check"></i> Complete formalities</li>
+                            <li><i class="fas fa-check"></i> Join orientation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="career">
+            <h2 class="section-title">Career Scope & Opportunities</h2>
+            <p class="section-subtitle">Explore Diverse Career Paths After BA</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-briefcase"></i> Job Opportunities</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Content Writer:</strong> Creative Writing</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Journalist:</strong> Media & News</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Public Relations:</strong> Corporate Communications</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Social Worker:</strong> NGO Sector</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Teacher:</strong> Education Sector</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-industry"></i> Top Sectors</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Media & Entertainment:</strong> TV, Films, Digital</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Education:</strong> Schools, Colleges</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Advertising:</strong> Creative Agencies</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Publishing:</strong> Books, Magazines</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Government:</strong> Civil Services</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-certificate"></i> Higher Studies</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>MA:</strong> Master of Arts</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>MBA:</strong> Business Administration</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>LLB:</strong> Law Degree</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>B.Ed:</strong> Education</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>MSW:</strong> Social Work</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="specializations">
+            <h2 class="section-title">Popular BA Specializations</h2>
+            <p class="section-subtitle">Explore Different Arts & Humanities Streams</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-language"></i> English Literature</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Scope:</strong> Writing, Publishing, Teaching</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Salary:</strong> 3-15 LPA</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Top Colleges:</strong> DU, JNU, BHU</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Skills:</strong> Writing, Communication</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-history"></i> History</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Scope:</strong> Research, Teaching, Archives</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Salary:</strong> 3-12 LPA</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Top Colleges:</strong> JNU, DU, AMU</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Skills:</strong> Research, Analysis</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-calculator"></i> Economics</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Scope:</strong> Banking, Finance, Research</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Salary:</strong> 4-20 LPA</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Top Colleges:</strong> SRCC, LSR, St. Stephen's</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Skills:</strong> Analytical, Quantitative</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-users"></i> Sociology</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Scope:</strong> Social Work, Research, NGOs</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Salary:</strong> 3-10 LPA</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Top Colleges:</strong> JNU, DU, TISS</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Skills:</strong> Social Analysis, Empathy</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-balance-scale"></i> Political Science</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Scope:</strong> Civil Services, Politics, Law</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Salary:</strong> 4-25 LPA</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Top Colleges:</strong> JNU, DU, BHU</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Skills:</strong> Leadership, Analysis</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-palette"></i> Psychology</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Scope:</strong> Counseling, HR, Therapy</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Salary:</strong> 3-18 LPA</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Top Colleges:</strong> DU, JNU, TISS</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Skills:</strong> Empathy, Analysis</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="higher-studies">
+            <h2 class="section-title">Higher Studies After BA</h2>
+            <p class="section-subtitle">Explore Post-Graduation and Advanced Study Options</p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-graduation-cap"></i> MA Programs</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Duration:</strong> 2 Years</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Entrance:</strong> University-specific exams</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Specializations:</strong> 20+ streams</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Top Colleges:</strong> JNU, DU, BHU</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Benefits:</strong> Deep knowledge, Research</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-briefcase"></i> MBA Programs</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Duration:</strong> 2 Years</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Entrance:</strong> CAT, XAT, GMAT</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Specializations:</strong> Marketing, Finance, HR</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Top Colleges:</strong> IIMs, XLRI, FMS</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Benefits:</strong> Management roles, High salary</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-balance-scale"></i> Law Programs</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>LLB:</strong> 3 Years (after BA)</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Entrance:</strong> CLAT, LSAT</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Top Colleges:</strong> NLSIU, NALSAR, NUJS</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>LLM:</strong> Master of Laws</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Benefits:</strong> Legal profession, Judiciary</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-chalkboard-teacher"></i> Education Programs</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>B.Ed:</strong> Bachelor of Education</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>M.Ed:</strong> Master of Education</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Entrance:</strong> State-level exams</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Top Colleges:</strong> DU, JNU, BHU</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Benefits:</strong> Teaching profession</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-globe"></i> International Studies</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>MS Programs:</strong> 1-2 Years</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Entrance:</strong> GRE, TOEFL, IELTS</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Top Countries:</strong> USA, UK, Canada</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Universities:</strong> Harvard, Oxford, Cambridge</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Benefits:</strong> Global exposure, Research</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-certificate"></i> Professional Courses</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Journalism:</strong> Mass Communication</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Design:</strong> NID, NIFT</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Hotel Management:</strong> IHM</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Social Work:</strong> MSW, TISS</li>
+                        <li><i class="fas fa-chevron-right"></i> <strong>Benefits:</strong> Specialized skills</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Start Your BA Journey?</h2>
+                    <p>Get expert guidance for BA admission in top arts & humanities colleges across India. Our counselors help you choose the right specialization and college.</p>
+                    <div class="btn-group">
+                        <a href="tel:+919876543210" class="btn btn-primary">
+                            <i class="fas fa-phone"></i> Call Now
+                        </a>
+                        <a href="mailto:info@whitedavidacademy.com" class="btn btn-secondary">
+                            <i class="fas fa-envelope"></i> Email Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Whitedavid Academy</h3>
+                    <p>Your trusted partner for arts & humanities education guidance and admission assistance. We help students find the right path to achieve their academic and career goals.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#courses">All Courses</a></li>
+                        <li><a href="index.html#universities">Universities</a></li>
+                        <li><a href="index.html#support">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>BA Information</h3>
+                    <ul>
+                        <li><a href="#what-is-ba">What is BA</a></li>
+                        <li><a href="#eligibility">Eligibility</a></li>
+                        <li><a href="#fees">Fees Structure</a></li>
+                        <li><a href="#career">Career Scope</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +91 9876543210</li>
+                        <li><i class="fas fa-envelope"></i> info@whitedavidacademy.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Delhi, India</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Whitedavid Academy. All Rights Reserved.</p>
+                <p>Leading University in Eastern India | Excellence in Education | Bright Future Ahead</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Loading screen
+            setTimeout(function() {
+                document.getElementById('loading').classList.add('hide');
+            }, 800);
+
+            // Particles
+            var isMobile = window.innerWidth <= 768;
+            var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var particlesContainer = document.getElementById('particles');
+            var pCount = isMobile ? 6 : 15;
+
+            if (!reducedMotion) {
+                for (var i = 0; i < pCount; i++) {
+                    var particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = (Math.random() * 18) + 's';
+                    particle.style.animationDuration = (18 + Math.random() * 12) + 's';
+                    particlesContainer.appendChild(particle);
+                }
+            }
+
+            // Cache DOM
+            var menuToggle = document.getElementById('menuToggle');
+            var navLinks = document.getElementById('navLinks');
+            var menuIcon = menuToggle.querySelector('i');
+            var quickNavLinks = document.querySelectorAll('.quick-nav-links a');
+            var sections = document.querySelectorAll('section[id]');
+
+            // Mobile menu
+            menuToggle.addEventListener('click', function() {
+                var isActive = navLinks.classList.toggle('active');
+                menuIcon.classList.toggle('fa-bars', !isActive);
+                menuIcon.classList.toggle('fa-times', isActive);
+            });
+
+            var navLinkAnchors = document.querySelectorAll('#navLinks a');
+            for (var i = 0; i < navLinkAnchors.length; i++) {
+                navLinkAnchors[i].addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    menuIcon.classList.add('fa-bars');
+                    menuIcon.classList.remove('fa-times');
+                });
+            }
+
+            // Quick nav active state
+            function updateActiveNav() {
+                var scrollY = window.pageYOffset;
+                var current = '';
+
+                for (var i = 0; i < sections.length; i++) {
+                    if (scrollY >= (sections[i].offsetTop - 100)) {
+                        current = sections[i].getAttribute('id');
+                    }
+                }
+
+                for (var j = 0; j < quickNavLinks.length; j++) {
+                    var hrefId = quickNavLinks[j].getAttribute('href').slice(1);
+                    if (hrefId === current) {
+                        quickNavLinks[j].classList.add('active');
+                    } else {
+                        quickNavLinks[j].classList.remove('active');
+                    }
+                }
+            }
+
+            // Single rAF scroll loop
+            var ticking = false;
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    requestAnimationFrame(function() {
+                        updateActiveNav();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+
+            // Smooth scrolling
+            var allAnchors = document.querySelectorAll('a[href^="#"]');
+            for (var i = 0; i < allAnchors.length; i++) {
+                allAnchors[i].addEventListener('click', function(e) {
+                    var href = this.getAttribute('href');
+                    if (href.length > 1) {
+                        var target = document.querySelector(href);
+                        if (target) {
+                            e.preventDefault();
+                            window.scrollTo({
+                                top: target.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            }
+
+            // Intersection Observer for staggered fade-in
+            var animatedElements = document.querySelectorAll('.info-card, .column-content, .comparison-card');
+            for (var i = 0; i < animatedElements.length; i++) {
+                var delay = (i % 3) * 0.12;
+                animatedElements[i].style.opacity = '0';
+                animatedElements[i].style.transform = 'translateY(30px)';
+                animatedElements[i].style.transition = 'opacity 0.6s ease ' + delay + 's, transform 0.6s ease ' + delay + 's';
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                for (var i = 0; i < entries.length; i++) {
+                    if (entries[i].isIntersecting) {
+                        entries[i].target.style.opacity = '1';
+                        entries[i].target.style.transform = 'translateY(0)';
+                        observer.unobserve(entries[i].target);
+                        entries[i].target.addEventListener('transitionend', function handler() {
+                            this.style.transition = '';
+                            this.removeEventListener('transitionend', handler);
+                        });
+                    }
+                }
+            }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+            for (var i = 0; i < animatedElements.length; i++) {
+                observer.observe(animatedElements[i]);
+            }
+
+            updateActiveNav();
+        });
+    </script>
+</body>
+</html>

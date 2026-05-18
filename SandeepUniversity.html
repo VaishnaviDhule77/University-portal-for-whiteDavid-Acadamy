@@ -1,0 +1,2225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandeep University, Madhubani - Excellence in Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3B82F6;
+            --secondary: #00E0FF;
+            --accent: #2CE6C2;
+            --bg-dark: #0B0F2A;
+            --bg-darker: #070B1A;
+            --text-light: #FFFFFF;
+            --text-dim: #94A3B8;
+            --card-bg: rgba(15, 23, 42, 0.5);
+            --gradient-primary: linear-gradient(135deg, #00E0FF, #2CE6C2);
+            --gradient-accent: linear-gradient(135deg, #3B82F6, #60A5FA);
+            --gradient-cta: linear-gradient(135deg, #FF6A3D, #FF8A50);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Loading Screen */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-darker);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s;
+        }
+
+        #loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 3px solid transparent;
+            border-top-color: var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 20px var(--secondary);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Progress Bar */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            z-index: 9999;
+            transition: width 0.2s;
+            box-shadow: 0 0 10px var(--secondary);
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 224, 255, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(44, 230, 194, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(59, 130, 246, 0.07) 0%, transparent 50%);
+            z-index: -2;
+        }
+
+        /* Particles */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--secondary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--secondary);
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation */
+        #navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(7, 11, 26, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s;
+            border-bottom: 1px solid rgba(0, 224, 255, 0.15);
+        }
+
+        #navbar.scrolled {
+            background: rgba(7, 11, 26, 0.95);
+            box-shadow: 0 10px 30px rgba(0, 224, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 3%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 224, 255, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--secondary);
+            margin: 3px 0;
+            transition: 0.3s;
+            box-shadow: 0 0 10px var(--secondary);
+        }
+
+        /* Quick Navigation */
+        .quick-nav {
+            position: fixed;
+            right: 30px;
+            top: 60%;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .quick-nav-item {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 224, 255, 0.06);
+            border: 1px solid rgba(0, 224, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            color: var(--text-dim);
+        }
+
+        .quick-nav-item:hover {
+            background: rgba(0, 224, 255, 0.15);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.3);
+            color: var(--secondary);
+        }
+
+        .quick-nav-item.active {
+            background: var(--gradient-primary);
+            box-shadow: 0 0 30px rgba(0, 224, 255, 0.4);
+            color: var(--bg-dark);
+        }
+
+        .quick-nav-item::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: 60px;
+            background: rgba(7, 11, 26, 0.95);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            border: 1px solid rgba(0, 224, 255, 0.2);
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .quick-nav-item:hover::before {
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(0, 224, 255, 0.06) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 0 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 50px rgba(0, 224, 255, 0.4);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-cta);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 106, 61, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 106, 61, 0.35);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--secondary);
+            color: var(--secondary);
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.12);
+            transform: translateY(-3px);
+        }
+
+        .btn-white {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-white:hover {
+            background: white;
+            color: var(--bg-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 100px 3%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-dim);
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+        }
+
+        /* Program Tabs */
+        .program-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 224, 255, 0.05);
+            border: 1px solid rgba(0, 224, 255, 0.15);
+            color: var(--text-light);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .tab-btn:hover {
+            background: rgba(0, 224, 255, 0.12);
+            border-color: rgba(0, 224, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: var(--gradient-primary);
+            border-color: transparent;
+            color: var(--bg-dark);
+            box-shadow: 0 10px 30px rgba(0, 224, 255, 0.25);
+        }
+
+        /* Cards Grid */
+        .programs-grid, .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .program-card, .info-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(148, 163, 184, 0.08);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(16px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ===== ENHANCED: Base elevation shadow for all cards ===== */
+        .program-card,
+        .info-card,
+        .step-card {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        }
+
+        /* ===== ENHANCED: Subtle inner gradient overlay for depth ===== */
+        .program-card,
+        .info-card,
+        .step-card {
+            background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+        }
+
+        /* Subtle card glow overlay */
+        .program-card::after {
+            content: '';
+            position: absolute;
+            top: -60%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200%;
+            height: 80%;
+            border-radius: 50%;
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .program-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Multi-accent: Engineering - Trust Blue */
+        .program-card[data-category="engineering"] .program-icon {
+            background: linear-gradient(135deg, #3B82F6, #60A5FA);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.25);
+        }
+        .program-card[data-category="engineering"]::after {
+            background: radial-gradient(ellipse, #3B82F6, transparent 70%);
+        }
+        .program-card[data-category="engineering"]:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.15),
+                        0 0 30px rgba(59, 130, 246, 0.08),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        .program-card[data-category="engineering"] h3 {
+            color: #60A5FA;
+        }
+
+        /* Multi-accent: Management - Sunset Orange */
+        .program-card[data-category="management"] .program-icon {
+            background: linear-gradient(135deg, #FF6A3D, #FF8A50);
+            box-shadow: 0 10px 30px rgba(255, 106, 61, 0.25);
+        }
+        .program-card[data-category="management"]::after {
+            background: radial-gradient(ellipse, #FF6A3D, transparent 70%);
+        }
+        .program-card[data-category="management"]:hover {
+            border-color: rgba(255, 106, 61, 0.4);
+            box-shadow: 0 20px 50px rgba(255, 106, 61, 0.15),
+                        0 0 30px rgba(255, 106, 61, 0.08),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        .program-card[data-category="management"] h3 {
+            color: #FF8A50;
+        }
+
+        /* Multi-accent: Sciences - AI Neon Purple/Pink */
+        .program-card[data-category="sciences"] .program-icon {
+            background: linear-gradient(135deg, #A855F7, #EC4899);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.25);
+        }
+        .program-card[data-category="sciences"]::after {
+            background: radial-gradient(ellipse, #A855F7, transparent 70%);
+        }
+        .program-card[data-category="sciences"]:hover {
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 20px 50px rgba(168, 85, 247, 0.15),
+                        0 0 30px rgba(168, 85, 247, 0.08),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        .program-card[data-category="sciences"] h3 {
+            color: #C084FC;
+        }
+
+        /* Multi-accent: Agriculture - Growth Green */
+        .program-card[data-category="agriculture"] .program-icon {
+            background: linear-gradient(135deg, #22C55E, #4ADE80);
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.25);
+        }
+        .program-card[data-category="agriculture"]::after {
+            background: radial-gradient(ellipse, #22C55E, transparent 70%);
+        }
+        .program-card[data-category="agriculture"]:hover {
+            border-color: rgba(34, 197, 94, 0.4);
+            box-shadow: 0 20px 50px rgba(34, 197, 94, 0.15),
+                        0 0 30px rgba(34, 197, 94, 0.08),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        .program-card[data-category="agriculture"] h3 {
+            color: #4ADE80;
+        }
+
+        /* Multi-accent: Arts - Investigation Amber */
+        .program-card[data-category="arts"] .program-icon {
+            background: linear-gradient(135deg, #F59E0B, #FBBF24);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.25);
+        }
+        .program-card[data-category="arts"]::after {
+            background: radial-gradient(ellipse, #F59E0B, transparent 70%);
+        }
+        .program-card[data-category="arts"]:hover {
+            border-color: rgba(245, 158, 11, 0.4);
+            box-shadow: 0 20px 50px rgba(245, 158, 11, 0.15),
+                        0 0 30px rgba(245, 158, 11, 0.08),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        .program-card[data-category="arts"] h3 {
+            color: #FBBF24;
+        }
+
+        .program-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            /* ===== ENHANCED: Icon hover scale ===== */
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.4s ease;
+        }
+
+        .program-card h3, .info-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+            /* ===== ENHANCED: Title hover glow ===== */
+            transition: text-shadow 0.4s ease;
+        }
+
+        .program-card p, .info-card p {
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+        }
+
+        .info-card {
+            text-align: left;
+            /* ===== ENHANCED: Required for top accent line clipping ===== */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .info-card ul {
+            list-style: none;
+        }
+
+        .info-card li {
+            padding: 0.5rem 0;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            /* ===== ENHANCED: List item hover microinteraction ===== */
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        /* ===== ENHANCED: List item hover - text highlight + slide ===== */
+        .info-card li:hover {
+            color: var(--text-light);
+            transform: translateX(6px);
+        }
+
+        .info-card li i {
+            color: var(--accent);
+            flex-shrink: 0;
+            /* ===== ENHANCED: Icon hover glow ===== */
+            transition: text-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Section-specific info card accents */
+        #campus .info-card h3 i,
+        #campus .info-card li i { color: #2CE6C2; }
+        #campus .info-card h3 { color: #2CE6C2; }
+        #campus .info-card:hover {
+            border-color: rgba(44, 230, 194, 0.35);
+            box-shadow: 0 20px 50px rgba(44, 230, 194, 0.12),
+                        0 0 30px rgba(44, 230, 194, 0.06),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        #facilities .info-card h3 i,
+        #facilities .info-card li i { color: #60A5FA; }
+        #facilities .info-card h3 { color: #60A5FA; }
+        #facilities .info-card:hover {
+            border-color: rgba(96, 165, 250, 0.35);
+            box-shadow: 0 20px 50px rgba(96, 165, 250, 0.12),
+                        0 0 30px rgba(96, 165, 250, 0.06),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        #placements .info-card h3 i,
+        #placements .info-card li i { color: #4ADE80; }
+        #placements .info-card h3 { color: #4ADE80; }
+        #placements .info-card:hover {
+            border-color: rgba(74, 222, 128, 0.35);
+            box-shadow: 0 20px 50px rgba(74, 222, 128, 0.12),
+                        0 0 30px rgba(74, 222, 128, 0.06),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        #admission .info-card h3 i,
+        #admission .info-card li i { color: #FBBF24; }
+        #admission .info-card h3 { color: #FBBF24; }
+        #admission .info-card:hover {
+            border-color: rgba(251, 191, 36, 0.35);
+            box-shadow: 0 20px 50px rgba(251, 191, 36, 0.12),
+                        0 0 30px rgba(251, 191, 36, 0.06),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        #contact .info-card h3 i { color: #C084FC; }
+        #contact .info-card h3 { color: #C084FC; }
+        #contact .info-card:hover {
+            border-color: rgba(168, 85, 247, 0.35);
+            box-shadow: 0 20px 50px rgba(168, 85, 247, 0.12),
+                        0 0 30px rgba(168, 85, 247, 0.06),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        /* ===== ENHANCED: Section-specific list icon hover glow ===== */
+        #campus .info-card li:hover i {
+            text-shadow: 0 0 10px rgba(44, 230, 194, 0.6);
+            transform: scale(1.15);
+        }
+        #facilities .info-card li:hover i {
+            text-shadow: 0 0 10px rgba(96, 165, 250, 0.6);
+            transform: scale(1.15);
+        }
+        #placements .info-card li:hover i {
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.6);
+            transform: scale(1.15);
+        }
+        #admission .info-card li:hover i {
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.6);
+            transform: scale(1.15);
+        }
+        #contact .info-card li:hover i {
+            text-shadow: 0 0 10px rgba(192, 132, 252, 0.6);
+            transform: scale(1.15);
+        }
+
+        /* ===== ENHANCED: Section-specific info card title hover glow ===== */
+        #campus .info-card h3:hover { text-shadow: 0 0 15px rgba(44, 230, 194, 0.45); }
+        #facilities .info-card h3:hover { text-shadow: 0 0 15px rgba(96, 165, 250, 0.45); }
+        #placements .info-card h3:hover { text-shadow: 0 0 15px rgba(74, 222, 128, 0.45); }
+        #admission .info-card h3:hover { text-shadow: 0 0 15px rgba(251, 191, 36, 0.45); }
+        #contact .info-card h3:hover { text-shadow: 0 0 15px rgba(192, 132, 252, 0.45); }
+
+        /* Steps */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .step-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(148, 163, 184, 0.08);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(16px);
+            /* ===== ENHANCED: Top accent line via border-top ===== */
+            border-top: 2px solid rgba(251, 191, 36, 0.25);
+        }
+
+        .step-card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(251, 191, 36, 0.35);
+            box-shadow: 0 20px 50px rgba(251, 191, 36, 0.12),
+                        0 0 30px rgba(251, 191, 36, 0.06),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            /* ===== ENHANCED: Top accent line brightens on hover ===== */
+            border-top-color: rgba(251, 191, 36, 0.85);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #F59E0B, #FBBF24);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--bg-dark);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            margin: 1rem auto;
+            background: linear-gradient(135deg, #F59E0B, #FBBF24);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.25);
+            /* ===== ENHANCED: Step icon hover scale ===== */
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.4s ease;
+        }
+
+        .step-card:hover .step-icon {
+            transform: scale(1.12);
+            box-shadow: 0 12px 35px rgba(245, 158, 11, 0.35);
+        }
+
+        .step-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #FBBF24;
+            /* ===== ENHANCED: Step title hover glow ===== */
+            transition: text-shadow 0.4s ease;
+        }
+
+        .step-card:hover h4 {
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.45);
+        }
+
+        .step-card p {
+            color: var(--text-dim);
+        }
+
+        /* ============================================================
+           ENHANCED CARD FEATURES - Top Accent Lines (Gradient Border)
+           ============================================================ */
+
+        /* Program cards - top gradient accent line */
+        .program-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            border-radius: 0 0 4px 4px;
+            z-index: 2;
+            opacity: 0.5;
+            transition: opacity 0.4s ease, left 0.4s ease, right 0.4s ease;
+        }
+
+        .program-card:hover::before {
+            opacity: 1;
+            left: 8%;
+            right: 8%;
+        }
+
+        .program-card[data-category="engineering"]::before {
+            background: linear-gradient(90deg, transparent, #3B82F6, #60A5FA, #3B82F6, transparent);
+        }
+        .program-card[data-category="management"]::before {
+            background: linear-gradient(90deg, transparent, #FF6A3D, #FF8A50, #FF6A3D, transparent);
+        }
+        .program-card[data-category="sciences"]::before {
+            background: linear-gradient(90deg, transparent, #A855F7, #EC4899, #A855F7, transparent);
+        }
+        .program-card[data-category="agriculture"]::before {
+            background: linear-gradient(90deg, transparent, #22C55E, #4ADE80, #22C55E, transparent);
+        }
+        .program-card[data-category="arts"]::before {
+            background: linear-gradient(90deg, transparent, #F59E0B, #FBBF24, #F59E0B, transparent);
+        }
+
+        /* Info cards - top gradient accent line */
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            border-radius: 0 0 4px 4px;
+            z-index: 2;
+            opacity: 0.5;
+            transition: opacity 0.4s ease, left 0.4s ease, right 0.4s ease;
+        }
+
+        .info-card:hover::before {
+            opacity: 1;
+            left: 8%;
+            right: 8%;
+        }
+
+        #campus .info-card::before {
+            background: linear-gradient(90deg, transparent, #2CE6C2, #00E0FF, #2CE6C2, transparent);
+        }
+        #facilities .info-card::before {
+            background: linear-gradient(90deg, transparent, #60A5FA, #3B82F6, #60A5FA, transparent);
+        }
+        #placements .info-card::before {
+            background: linear-gradient(90deg, transparent, #4ADE80, #22C55E, #4ADE80, transparent);
+        }
+        #admission .info-card::before {
+            background: linear-gradient(90deg, transparent, #FBBF24, #F59E0B, #FBBF24, transparent);
+        }
+        #contact .info-card::before {
+            background: linear-gradient(90deg, transparent, #C084FC, #A855F7, #C084FC, transparent);
+        }
+
+        /* ===== ENHANCED: Program card title hover glow per category ===== */
+        .program-card[data-category="engineering"]:hover h3 {
+            text-shadow: 0 0 18px rgba(59, 130, 246, 0.55);
+        }
+        .program-card[data-category="management"]:hover h3 {
+            text-shadow: 0 0 18px rgba(255, 106, 61, 0.55);
+        }
+        .program-card[data-category="sciences"]:hover h3 {
+            text-shadow: 0 0 18px rgba(168, 85, 247, 0.55);
+        }
+        .program-card[data-category="agriculture"]:hover h3 {
+            text-shadow: 0 0 18px rgba(34, 197, 94, 0.55);
+        }
+        .program-card[data-category="arts"]:hover h3 {
+            text-shadow: 0 0 18px rgba(245, 158, 11, 0.55);
+        }
+
+        /* ===== ENHANCED: Program icon hover scale + glow per category ===== */
+        .program-card:hover .program-icon {
+            transform: scale(1.1);
+        }
+        .program-card[data-category="engineering"]:hover .program-icon {
+            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.4);
+        }
+        .program-card[data-category="management"]:hover .program-icon {
+            box-shadow: 0 12px 35px rgba(255, 106, 61, 0.4);
+        }
+        .program-card[data-category="sciences"]:hover .program-icon {
+            box-shadow: 0 12px 35px rgba(168, 85, 247, 0.4);
+        }
+        .program-card[data-category="agriculture"]:hover .program-icon {
+            box-shadow: 0 12px 35px rgba(34, 197, 94, 0.4);
+        }
+        .program-card[data-category="arts"]:hover .program-icon {
+            box-shadow: 0 12px 35px rgba(245, 158, 11, 0.4);
+        }
+
+        /* ===== ENHANCED: Unified hover elevation for all cards ===== */
+        .program-card:hover,
+        .info-card:hover {
+            transform: translateY(-12px);
+        }
+
+        /* ===== ENHANCED: Program card description text highlight on hover ===== */
+        .program-card p {
+            transition: color 0.3s ease;
+        }
+        .program-card:hover p {
+            color: #cbd5e1;
+        }
+
+        /* ===== ENHANCED: Program card button highlight on card hover ===== */
+        .program-card:hover .btn-secondary {
+            border-color: rgba(148, 163, 184, 0.35);
+            color: var(--text-light);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 224, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            backdrop-filter: blur(16px);
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.4s ease,
+                        border-color 0.4s ease;
+        }
+
+        /* ===== ENHANCED: CTA top accent line ===== */
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            border-radius: 0 0 4px 4px;
+            z-index: 2;
+            background: linear-gradient(90deg, transparent, #00E0FF, #2CE6C2, #00E0FF, transparent);
+            opacity: 0.5;
+            transition: opacity 0.4s ease, left 0.4s ease, right 0.4s ease;
+        }
+
+        .cta-section:hover::before {
+            opacity: 1;
+            left: 8%;
+            right: 8%;
+        }
+
+        .cta-section:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 224, 255, 0.2);
+            box-shadow: 0 15px 40px rgba(0, 224, 255, 0.08),
+                        0 0 25px rgba(0, 224, 255, 0.04),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.04) 0%, transparent 70%);
+            max-width: none;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-darker);
+            padding: 3rem 3% 1rem;
+            border-top: 1px solid rgba(0, 224, 255, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            padding: 0.3rem 0;
+        }
+
+        .footer-section a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+        }
+
+        .footer-section p {
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        .footer-section p i {
+            margin-right: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 224, 255, 0.06);
+            color: var(--text-dim);
+        }
+
+        .footer-bottom p {
+            margin-bottom: 0.3rem;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #00E0FF, #2CE6C2);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #3B82F6, #00E0FF);
+        }
+
+        /* ============================================
+           RESPONSIVE STYLES
+           ============================================ */
+
+        @media (max-width: 1200px) {
+            .hero h1 { font-size: 3.2rem; }
+            .hero p { font-size: 1.3rem; }
+            .section-title { font-size: 2.5rem; }
+            .cta-content h2 { font-size: 2rem; }
+            .nav-links { gap: 1.5rem; }
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1.15rem; }
+            .section-title { font-size: 2.2rem; }
+            .section-subtitle { font-size: 1.05rem; }
+            .section { padding: 80px 4%; }
+            .cta-content h2 { font-size: 1.7rem; }
+            .cta-content p { font-size: 1.05rem; }
+            .btn { padding: 0.85rem 1.6rem; font-size: 0.95rem; }
+            .info-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+            .programs-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+            .cta-section { padding: 2.5rem 1.5rem; }
+            .quick-nav { right: 12px; gap: 8px; }
+            .quick-nav-item { width: 42px; height: 42px; }
+            .quick-nav-item::before { display: none; }
+            .tab-btn { font-size: 0.88rem; padding: 0.7rem 1.2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: 100vh;
+                background: rgba(7, 11, 26, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                transition: right 0.4s ease;
+                padding: 2rem 0;
+                border-left: 1px solid rgba(0, 224, 255, 0.2);
+                overflow-y: auto;
+            }
+            .nav-links.active { right: 0; }
+            .nav-links li { width: 100%; border-bottom: 1px solid rgba(0, 224, 255, 0.06); }
+            .nav-links a { display: block; padding: 1rem 1.5rem; font-size: 1.1rem; }
+            .menu-toggle { display: flex; }
+            .quick-nav { display: none; }
+            .hero { min-height: 100vh; height: auto; padding: 120px 5% 60px; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1.05rem; margin-bottom: 1.5rem; }
+            .hero-content { padding: 0; }
+            .section { padding: 60px 4%; }
+            .section-title { font-size: 1.9rem; }
+            .section-subtitle { font-size: 0.95rem; margin-bottom: 2rem; }
+            .info-grid { grid-template-columns: 1fr; margin-bottom: 2rem; }
+            .programs-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; margin-bottom: 2rem; }
+            .steps { grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 2rem; }
+            .step-card { max-width: 400px; margin: 0 auto; }
+            .program-tabs { gap: 0.6rem; margin-bottom: 2rem; }
+            .tab-btn { padding: 0.6rem 1rem; font-size: 0.82rem; }
+            .program-card { padding: 1.5rem; }
+            .program-icon { width: 65px; height: 65px; font-size: 1.6rem; }
+            .program-card h3 { font-size: 1.2rem; }
+            .info-card { padding: 1.5rem; }
+            .info-card h3 { font-size: 1.2rem; }
+            .cta-section { padding: 2rem 1.2rem; margin-top: 2rem; }
+            .cta-content h2 { font-size: 1.4rem; }
+            .cta-content p { font-size: 0.95rem; margin-bottom: 1.5rem; }
+            .btn-group { gap: 0.7rem; }
+            .btn { padding: 0.75rem 1.3rem; font-size: 0.9rem; }
+            .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
+            footer { padding: 2rem 4% 1rem; }
+            .logo { font-size: 1.3rem; }
+            .nav-container { padding: 0.9rem 4%; }
+        }
+
+        @media (max-width: 576px) {
+            .hero { padding: 110px 5% 50px; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 0.95rem; margin-bottom: 1.5rem; }
+            .section { padding: 50px 5%; }
+            .section-title { font-size: 1.6rem; }
+            .section-subtitle { font-size: 0.9rem; margin-bottom: 1.5rem; }
+            .programs-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .program-card { padding: 1.3rem; }
+            .program-icon { width: 58px; height: 58px; font-size: 1.4rem; margin-bottom: 0.8rem; }
+            .program-card h3 { font-size: 1.15rem; margin-bottom: 0.3rem; }
+            .program-card p { font-size: 0.88rem; margin-bottom: 1rem; }
+            .program-tabs { gap: 0.45rem; margin-bottom: 1.5rem; }
+            .tab-btn { padding: 0.5rem 0.85rem; font-size: 0.78rem; border-radius: 20px; }
+            .info-card { padding: 1.2rem; }
+            .info-card h3 { font-size: 1.05rem; margin-bottom: 0.8rem; }
+            .info-card li { font-size: 0.88rem; padding: 0.35rem 0; }
+            .info-card p { font-size: 0.88rem; }
+            .step-card { padding: 1.5rem 1.2rem; }
+            .step-icon { width: 50px; height: 50px; font-size: 1.3rem; margin: 0.8rem auto; }
+            .step-card h4 { font-size: 1.05rem; }
+            .step-card p { font-size: 0.88rem; }
+            .step-number { width: 35px; height: 35px; top: -12px; font-size: 0.9rem; }
+            .cta-section { padding: 1.5rem 1rem; margin-top: 1.5rem; border-radius: 15px; }
+            .cta-content h2 { font-size: 1.2rem; }
+            .cta-content p { font-size: 0.88rem; margin-bottom: 1.2rem; }
+            .btn-group { flex-direction: column; align-items: center; gap: 0.6rem; }
+            .btn { width: 100%; max-width: 320px; justify-content: center; padding: 0.75rem 1.2rem; font-size: 0.88rem; }
+            .logo { font-size: 1.15rem; }
+            .nav-container { padding: 0.8rem 5%; }
+            .menu-toggle span { width: 22px; height: 2.5px; }
+            footer { padding: 1.5rem 5% 1rem; }
+            .footer-section h3 { font-size: 1.05rem; }
+            .footer-section p, .footer-section a { font-size: 0.88rem; }
+            .footer-bottom p { font-size: 0.78rem; }
+        }
+
+        @media (max-width: 380px) {
+            .hero h1 { font-size: 1.55rem; }
+            .hero p { font-size: 0.85rem; }
+            .section-title { font-size: 1.4rem; }
+            .section-subtitle { font-size: 0.85rem; }
+            .tab-btn { padding: 0.42rem 0.7rem; font-size: 0.72rem; }
+            .program-card { padding: 1.1rem; }
+            .program-card h3 { font-size: 1.05rem; }
+            .program-card p { font-size: 0.82rem; }
+            .program-icon { width: 50px; height: 50px; font-size: 1.2rem; }
+            .info-card { padding: 1rem; }
+            .info-card h3 { font-size: 0.98rem; }
+            .info-card li { font-size: 0.82rem; }
+            .info-card p { font-size: 0.82rem; }
+            .step-number { width: 30px; height: 30px; font-size: 0.8rem; }
+            .step-icon { width: 45px; height: 45px; font-size: 1.1rem; }
+            .step-card h4 { font-size: 0.98rem; }
+            .step-card p { font-size: 0.82rem; }
+            .cta-content h2 { font-size: 1.08rem; }
+            .cta-content p { font-size: 0.82rem; }
+            .btn { font-size: 0.82rem; padding: 0.7rem 1rem; }
+            .logo { font-size: 1.05rem; }
+            .footer-section h3 { font-size: 0.98rem; }
+            .footer-section p, .footer-section a { font-size: 0.82rem; }
+            .footer-bottom p { font-size: 0.72rem; }
+        }
+
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero { min-height: auto; height: auto; padding: 100px 5% 40px; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; margin-bottom: 1rem; }
+            .section { padding: 40px 5%; }
+            .section-title { font-size: 1.8rem; }
+            .section-subtitle { margin-bottom: 1.5rem; }
+            .cta-section { padding: 1.5rem; margin-top: 1.5rem; }
+            .cta-content h2 { font-size: 1.5rem; }
+        }
+
+        /* ===== Hover disabled on touch devices - UPDATED with new effects ===== */
+        @media (hover: none) and (pointer: coarse) {
+            .program-card:hover {
+                transform: none;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.03);
+                border-color: rgba(148, 163, 184, 0.08);
+            }
+
+            .info-card:hover {
+                transform: none;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.03);
+                border-color: rgba(148, 163, 184, 0.08);
+            }
+
+            .step-card:hover {
+                transform: none;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.03);
+                border-color: rgba(148, 163, 184, 0.08);
+                border-top-color: rgba(251, 191, 36, 0.25);
+            }
+
+            .cta-section:hover {
+                transform: none;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.03);
+                border-color: rgba(0, 224, 255, 0.1);
+            }
+
+            .btn-primary:hover { transform: none; }
+            .btn-secondary:hover { transform: none; }
+            .btn-white:hover { transform: none; }
+            .tab-btn:hover { transform: none; }
+            .quick-nav-item:hover { transform: none; }
+
+            /* ===== NEW: Neutralize enhanced hover effects on touch ===== */
+            .info-card li:hover {
+                color: var(--text-dim);
+                transform: none;
+            }
+
+            .info-card li:hover i {
+                text-shadow: none;
+                transform: none;
+            }
+
+            .program-card h3:hover,
+            .info-card h3:hover,
+            .step-card h4:hover {
+                text-shadow: none;
+            }
+
+            .program-card:hover h3 {
+                text-shadow: none;
+            }
+
+            .program-card:hover p {
+                color: var(--text-dim);
+            }
+
+            .program-card:hover .program-icon {
+                transform: none;
+            }
+
+            .program-card[data-category="engineering"]:hover .program-icon { box-shadow: 0 10px 30px rgba(59, 130, 246, 0.25); }
+            .program-card[data-category="management"]:hover .program-icon { box-shadow: 0 10px 30px rgba(255, 106, 61, 0.25); }
+            .program-card[data-category="sciences"]:hover .program-icon { box-shadow: 0 10px 30px rgba(168, 85, 247, 0.25); }
+            .program-card[data-category="agriculture"]:hover .program-icon { box-shadow: 0 10px 30px rgba(34, 197, 94, 0.25); }
+            .program-card[data-category="arts"]:hover .program-icon { box-shadow: 0 10px 30px rgba(245, 158, 11, 0.25); }
+
+            .step-card:hover .step-icon {
+                transform: none;
+                box-shadow: 0 10px 30px rgba(245, 158, 11, 0.25);
+            }
+
+            .program-card:hover .btn-secondary {
+                border-color: rgba(148, 163, 184, 0.25);
+                color: var(--text-dim);
+            }
+
+            /* Accent lines stay subtle on touch */
+            .program-card:hover::before,
+            .info-card:hover::before,
+            .cta-section:hover::before {
+                opacity: 0.5;
+                left: 15%;
+                right: 15%;
+            }
+        }
+
+        /* ===== Prefers reduced motion - UPDATED with new transitions ===== */
+        @media (prefers-reduced-motion: reduce) {
+            .particle { animation: none; }
+            .hero-content { animation: none; }
+            .loader { animation: none; }
+            .btn::before { transition: none; }
+
+            .program-card,
+            .info-card,
+            .step-card,
+            .cta-section,
+            .btn,
+            .tab-btn,
+            .quick-nav-item {
+                transition: none;
+            }
+
+            .program-icon,
+            .step-icon,
+            .program-card h3,
+            .info-card h3,
+            .step-card h4,
+            .program-card p,
+            .info-card li,
+            .info-card li i,
+            .program-card::before,
+            .info-card::before,
+            .cta-section::before {
+                transition: none;
+            }
+
+            #loading { transition: none; }
+            #navbar { transition: none; }
+            .nav-links { transition: none; }
+            .menu-toggle span { transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div id="progressBar"></div>
+
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+    <div id="particles"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">Sandeep University</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#programs">Programs</a></li>
+                <li><a href="#campus">Campus Life</a></li>
+                <li><a href="#facilities">Facilities</a></li>
+                <li><a href="#placements">Placements</a></li>
+                <li><a href="#admission">Admission</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Quick Navigation -->
+    <div class="quick-nav">
+        <div class="quick-nav-item active" data-tooltip="Home">
+            <i class="fas fa-home"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Programs">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Campus">
+            <i class="fas fa-university"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Facilities">
+            <i class="fas fa-building"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Placements">
+            <i class="fas fa-briefcase"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Admission">
+            <i class="fas fa-user-plus"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Contact">
+            <i class="fas fa-phone"></i>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Sandeep University</h1>
+            <p>Madhubani, Bihar - Shaping Future Leaders</p>
+            <div class="btn-group">
+                <a href="#admission" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    Apply Now
+                </a>
+                <a href="#programs" class="btn btn-secondary">
+                    <i class="fas fa-book"></i>
+                    Explore Programs
+                </a>
+                <a href="tel:18001234567" class="btn btn-white">
+                    <i class="fas fa-phone"></i>
+                    Call: 1800-123-4567
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="section" id="programs">
+        <div class="container">
+            <h2 class="section-title">Academic Programs</h2>
+            <p class="section-subtitle">Industry-Focused Regular Courses</p>
+            
+            <div class="program-tabs">
+                <button class="tab-btn active" data-category="engineering">Engineering</button>
+                <button class="tab-btn" data-category="management">Management</button>
+                <button class="tab-btn" data-category="sciences">Sciences</button>
+                <button class="tab-btn" data-category="agriculture">Agriculture</button>
+                <button class="tab-btn" data-category="arts">Arts & Humanities</button>
+            </div>
+
+            <div class="programs-grid">
+                <div class="program-card" data-category="engineering">
+                    <div class="program-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>B.Tech CSE</h3>
+                    <p>4 Years • Computer Science Engineering</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+
+                <div class="program-card" data-category="engineering">
+                    <div class="program-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3>B.Tech ECE</h3>
+                    <p>4 Years • Electronics & Communication</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+
+                <div class="program-card" data-category="engineering">
+                    <div class="program-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>B.Tech Mechanical</h3>
+                    <p>4 Years • Mechanical Engineering</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+
+                <div class="program-card" data-category="engineering">
+                    <div class="program-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>B.Tech Civil</h3>
+                    <p>4 Years • Civil Engineering</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+
+                <div class="program-card" data-category="management">
+                    <div class="program-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>BBA</h3>
+                    <p>3 Years • Business Administration</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+
+                <div class="program-card" data-category="management">
+                    <div class="program-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>MBA</h3>
+                    <p>2 Years • Master of Business Admin</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+
+                <div class="program-card" data-category="sciences">
+                    <div class="program-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>B.Sc Physics</h3>
+                    <p>3 Years • Honors in Physics</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+
+                <div class="program-card" data-category="sciences">
+                    <div class="program-icon">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <h3>B.Sc Chemistry</h3>
+                    <p>3 Years • Honors in Chemistry</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+
+                <div class="program-card" data-category="agriculture">
+                    <div class="program-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3>B.Sc Agriculture</h3>
+                    <p>4 Years • Agricultural Sciences</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+
+                <div class="program-card" data-category="agriculture">
+                    <div class="program-icon">
+                        <i class="fas fa-tractor"></i>
+                    </div>
+                    <h3>B.Tech Agriculture</h3>
+                    <p>4 Years • Agricultural Engineering</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+
+                <div class="program-card" data-category="arts">
+                    <div class="program-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>BA English</h3>
+                    <p>3 Years • English Literature</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+
+                <div class="program-card" data-category="arts">
+                    <div class="program-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>BA History</h3>
+                    <p>3 Years • History Honors</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Discover Your Perfect Program!</h2>
+                    <p>Get Expert Career Guidance</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                            Explore All Programs
+                        </a>
+                        <a href="tel:18001234567" class="btn btn-white">
+                            <i class="fas fa-phone"></i>
+                            Talk to Counselor
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campus Life Section -->
+    <section class="section" id="campus">
+        <div class="container">
+            <h2 class="section-title">Dynamic Campus Life</h2>
+            <p class="section-subtitle">Experience Excellence in Campus Living</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-user-friends"></i> Student Activities</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 25+ Active Student Clubs</li>
+                        <li><i class="fas fa-check"></i> Annual Cultural Fest</li>
+                        <li><i class="fas fa-check"></i> Technical Symposiums</li>
+                        <li><i class="fas fa-check"></i> Sports Tournaments</li>
+                        <li><i class="fas fa-check"></i> Skill Development Workshops</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-bed"></i> Hostel Facilities</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Separate Boys & Girls Hostels</li>
+                        <li><i class="fas fa-check"></i> 24/7 Security & CCTV</li>
+                        <li><i class="fas fa-check"></i> Hygienic Mess Services</li>
+                        <li><i class="fas fa-check"></i> Common Recreation Rooms</li>
+                        <li><i class="fas fa-check"></i> High-Speed WiFi</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-trophy"></i> Sports & Fitness</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> International Cricket Ground</li>
+                        <li><i class="fas fa-check"></i> Football & Hockey Fields</li>
+                        <li><i class="fas fa-check"></i> Basketball & Volleyball Courts</li>
+                        <li><i class="fas fa-check"></i> Modern Gymnasium</li>
+                        <li><i class="fas fa-check"></i> Indoor Sports Complex</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Join Our Thriving Campus Community!</h2>
+                    <p>Learn, Grow & Excel Together</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-video"></i>
+                            Virtual Campus Tour
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            <i class="fas fa-calendar"></i>
+                            Upcoming Events
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section class="section" id="facilities">
+        <div class="container">
+            <h2 class="section-title">State-of-the-Art Facilities</h2>
+            <p class="section-subtitle">World-Class Infrastructure for Learning</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-flask"></i> Advanced Laboratories</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Computer Science Labs</li>
+                        <li><i class="fas fa-check"></i> Physics & Chemistry Labs</li>
+                        <li><i class="fas fa-check"></i> Electronics Workshops</li>
+                        <li><i class="fas fa-check"></i> Mechanical Workshops</li>
+                        <li><i class="fas fa-check"></i> Agriculture Research Labs</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-book-open"></i> Digital Library</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 75,000+ Books Collection</li>
+                        <li><i class="fas fa-check"></i> E-Library & Digital Resources</li>
+                        <li><i class="fas fa-check"></i> International Journals Access</li>
+                        <li><i class="fas fa-check"></i> Online Learning Platforms</li>
+                        <li><i class="fas fa-check"></i> Silent Study Halls</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-university"></i> Academic Infrastructure</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Smart Digital Classrooms</li>
+                        <li><i class="fas fa-check"></i> 1000-Seater Auditorium</li>
+                        <li><i class="fas fa-check"></i> Conference & Seminar Halls</li>
+                        <li><i class="fas fa-check"></i> Faculty Research Centers</li>
+                        <li><i class="fas fa-check"></i> Innovation & Incubation Cell</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Explore Our Modern Campus!</h2>
+                    <p>Experience Premium Learning Environment</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-tour"></i>
+                            360° Campus Tour
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            <i class="fas fa-info-circle"></i>
+                            Know More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Placements Section -->
+    <section class="section" id="placements">
+        <div class="container">
+            <h2 class="section-title">Campus Placements & Careers</h2>
+            <p class="section-subtitle">250+ Companies Recruit from Our Campus</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-handshake"></i> Placement Assistance</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Dedicated Training & Placement Cell</li>
+                        <li><i class="fas fa-check"></i> Professional Resume Building</li>
+                        <li><i class="fas fa-check"></i> GD & PI Preparation</li>
+                        <li><i class="fas fa-check"></i> Aptitude & Technical Training</li>
+                        <li><i class="fas fa-check"></i> Industry Internship Programs</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-chart-bar"></i> Top Recruiters</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> TCS, Infosys, Wipro, HCL</li>
+                        <li><i class="fas fa-check"></i> Tech Mahindra, Capgemini</li>
+                        <li><i class="fas fa-check"></i> Amazon, Microsoft, Google</li>
+                        <li><i class="fas fa-check"></i> Banking & Finance Sector</li>
+                        <li><i class="fas fa-check"></i> Government & PSUs</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-rupee-sign"></i> Placement Statistics</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 90% Placement Rate</li>
+                        <li><i class="fas fa-check"></i> Average Package: 5-10 LPA</li>
+                        <li><i class="fas fa-check"></i> Highest Package: 25+ LPA</li>
+                        <li><i class="fas fa-check"></i> 800+ Job Offers Annually</li>
+                        <li><i class="fas fa-check"></i> Startup Incubation Support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Build Your Career with Sandeep University!</h2>
+                    <p>Get Placed in Top Companies</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-briefcase"></i>
+                            View Placement Report
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            <i class="fas fa-phone-alt"></i>
+                            Contact Placement Cell
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admission Section -->
+    <section class="section" id="admission">
+        <div class="container">
+            <h2 class="section-title">Admission Process</h2>
+            <p class="section-subtitle">Your Gateway to Excellence</p>
+            
+            <div class="steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h4>Online Application</h4>
+                    <p>Fill the application form with accurate details</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h4>Entrance Examination</h4>
+                    <p>Appear for SUET or qualifying examination</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h4>Counseling & Admission</h4>
+                    <p>Document verification and fee payment</p>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-list-check"></i> Eligibility Criteria</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 10+2 with 55% for UG Programs</li>
+                        <li><i class="fas fa-check"></i> Bachelor's Degree for PG Programs</li>
+                        <li><i class="fas fa-check"></i> Valid Entrance Score Required</li>
+                        <li><i class="fas fa-check"></i> Age Limit: 17-25 Years</li>
+                        <li><i class="fas fa-check"></i> Open for All Indian States</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-file-upload"></i> Documents Required</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 10th & 12th Mark Sheets</li>
+                        <li><i class="fas fa-check"></i> Transfer & Migration Certificates</li>
+                        <li><i class="fas fa-check"></i> Entrance Exam Score Card</li>
+                        <li><i class="fas fa-check"></i> Character Certificate</li>
+                        <li><i class="fas fa-check"></i> Recent Passport Photos</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-rupee-sign"></i> Fee Structure</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Competitive Fee Structure</li>
+                        <li><i class="fas fa-check"></i> Merit-Based Scholarships</li>
+                        <li><i class="fas fa-check"></i> Education Loan Assistance</li>
+                        <li><i class="fas fa-check"></i> Special Discounts for Toppers</li>
+                        <li><i class="fas fa-check"></i> Transparent Fee Policy</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Begin Your Journey at Sandeep University!</h2>
+                    <p>Admissions Open for 2024-25 Session</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-user-plus"></i>
+                            Apply Now
+                        </a>
+                        <a href="tel:18001234567" class="btn btn-secondary">
+                            <i class="fas fa-phone"></i>
+                            Call: 1800-123-4567
+                        </a>
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-download"></i>
+                            Download Brochure
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="section-subtitle">We're Here to Guide You</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-phone-alt"></i> Contact Numbers</h3>
+                    <p>Admissions: 1800-123-4567 (Toll-Free)<br>
+                    Campus Office: +91-6472-333333<br>
+                    WhatsApp: +91-9876543210</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-envelope"></i> Email Addresses</h3>
+                    <p>Admissions: admissions@sandeepuniversity.in<br>
+                    Information: info@sandeepuniversity.in<br>
+                    Support: support@sandeepuniversity.in</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Campus Location</h3>
+                    <p>Sandeep University<br>
+                    Madhubani, Bihar - 847211<br>
+                    India (Located on NH-57 Highway)</p>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Visit Our Premier Campus!</h2>
+                    <p>Experience World-Class Education</p>
+                    <div class="btn-group">
+                        <a href="tel:18001234567" class="btn btn-primary">
+                            <i class="fas fa-phone"></i>
+                            Call Now: 1800-123-4567
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            <i class="fas fa-calendar"></i>
+                            Schedule Campus Visit
+                        </a>
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-map"></i>
+                            Get Directions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Sandeep University</h3>
+                    <p>Madhubani, Bihar - 847211</p>
+                    <p>UGC Recognized University</p>
+                    <p>AICTE Approved Programs</p>
+                    <p>NAAC 'A' Grade Accredited</p>
+                    <p>#1 Emerging University in Bihar</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#campus">Campus Life</a></li>
+                        <li><a href="#facilities">Facilities</a></li>
+                        <li><a href="#placements">Placements</a></li>
+                        <li><a href="#admission">Admission</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Popular Courses</h3>
+                    <ul>
+                        <li><a href="#">B.Tech Computer Science</a></li>
+                        <li><a href="#">B.Tech Electronics</a></li>
+                        <li><a href="#">Bachelor of Business Admin</a></li>
+                        <li><a href="#">Master of Business Admin</a></li>
+                        <li><a href="#">B.Sc Agriculture</a></li>
+                        <li><a href="#">BA English Honors</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <p><i class="fab fa-facebook"></i> Facebook</p>
+                    <p><i class="fab fa-youtube"></i> YouTube</p>
+                    <p><i class="fab fa-linkedin"></i> LinkedIn</p>
+                    <p><i class="fab fa-instagram"></i> Instagram</p>
+                    <p><i class="fab fa-twitter"></i> Twitter</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Sandeep University, Madhubani. All Rights Reserved.</p>
+                <p>Premier University in Bihar | Excellence in Education | Bright Future Ahead</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Generate particles - fewer on mobile for performance
+            const isMobile = window.innerWidth <= 768;
+            const particleCount = isMobile ? 15 : 50;
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+
+            // Hide loading screen
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hide');
+            }, 1000);
+
+            // Quick Navigation Active State
+            const quickNavItems = document.querySelectorAll('.quick-nav-item');
+            const sections = document.querySelectorAll('section[id]');
+
+            function updateQuickNavActive() {
+                const scrollY = window.pageYOffset;
+                
+                sections.forEach(section => {
+                    const sectionHeight = section.offsetHeight;
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                        quickNavItems.forEach(item => {
+                            item.classList.remove('active');
+                            if (item.getAttribute('data-tooltip').toLowerCase().replace(' ', '-') === sectionId) {
+                                item.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateQuickNavActive);
+
+            // Quick Navigation Smooth Scroll
+            quickNavItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('data-tooltip').toLowerCase().replace(' ', '-');
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        const offsetTop = targetSection.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+            
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                const spans = this.querySelectorAll('span');
+                spans.forEach((span, index) => {
+                    if (navLinks.classList.contains('active')) {
+                        if (index === 0) span.style.transform = 'rotate(45deg) translate(5px, 5px)';
+                        if (index === 1) span.style.opacity = '0';
+                        if (index === 2) span.style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                    } else {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    }
+                });
+            });
+
+            // Close mobile menu on link click
+            document.querySelectorAll('#navLinks a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    const spans = menuToggle.querySelectorAll('span');
+                    spans.forEach(span => {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    });
+                });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (navLinks.classList.contains('active') && 
+                    !navLinks.contains(e.target) && 
+                    !menuToggle.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                    const spans = menuToggle.querySelectorAll('span');
+                    spans.forEach(span => {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    });
+                }
+            });
+
+            // Prevent body scroll when mobile menu is open
+            function toggleBodyScroll() {
+                if (navLinks.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            }
+
+            const menuObserver = new MutationObserver(toggleBodyScroll);
+            menuObserver.observe(navLinks, { attributes: true, attributeFilter: ['class'] });
+
+            // Scroll progress bar
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const offsetTop = target.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Program Tabs
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const programCards = document.querySelectorAll('.program-card');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // Update active tab
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter programs
+                    programCards.forEach(card => {
+                        if (card.getAttribute('data-category') === category || category === 'all') {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 10);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            const animatedElements = document.querySelectorAll('.info-card, .cta-section, .program-card, .step-card');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(element);
+            });
+
+            // Initialize first tab
+            tabBtns[0].click();
+
+            // Handle resize - close mobile menu and restore scroll
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    if (window.innerWidth > 768) {
+                        navLinks.classList.remove('active');
+                        const spans = menuToggle.querySelectorAll('span');
+                        spans.forEach(span => {
+                            span.style.transform = 'none';
+                            span.style.opacity = '1';
+                        });
+                        document.body.style.overflow = '';
+                    }
+                }, 150);
+            });
+        });
+    </script>
+</body>
+</html>

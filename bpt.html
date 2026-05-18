@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BPT Course - WhiteDavid Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00E0FF;
+            --primary-dark: #0A9CC5;
+            --secondary: #2CE6C2;
+            --accent: #FF6A3D;
+            --dark: #0F172A;
+            --darker: #0B0F2A;
+            --darkest: #070B1A;
+            --light: #13203A;
+            --lighter: #1A2E4A;
+            --text: #FFFFFF;
+            --text-dim: #94A3B8;
+            --border: rgba(148,163,184,0.12);
+            --glow: rgba(0, 224, 255, 0.35);
+            --glow-secondary: rgba(44, 230, 194, 0.35);
+            --cta-start: #FF6A3D;
+            --cta-end: #FF8A50;
+            --cat-orange: #FF6A3D;
+            --cat-blue: #3B82F6;
+            --cat-purple: #A855F7;
+            --cat-pink: #EC4899;
+            --cat-green: #22C55E;
+            --cat-amber: #F59E0B;
+            --cat-teal: #14B8A6;
+            --cat-rose: #F43F5E;
+            --cat-indigo: #818CF8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--darker) 0%, var(--darkest) 100%);
+            color: var(--text);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--darker); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 5px; box-shadow: 0 0 10px var(--glow); }
+
+        .loading-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--dark), var(--darkest));
+            display: flex; justify-content: center; align-items: center;
+            z-index: 10000; transition: opacity 0.5s ease;
+        }
+        .loading-screen.hidden { opacity: 0; pointer-events: none; }
+        .loading-spinner {
+            width: 60px; height: 60px; border: 3px solid var(--border);
+            border-top: 3px solid var(--primary); border-radius: 50%;
+            animation: spin 1s linear infinite; box-shadow: 0 0 20px var(--glow);
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .animated-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .radial-glow { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.25; animation: float-glow 20s infinite ease-in-out; }
+        .radial-glow:nth-child(1) { width: 650px; height: 650px; background: radial-gradient(circle, var(--primary), transparent); top: -250px; left: -200px; }
+        .radial-glow:nth-child(2) { width: 500px; height: 500px; background: radial-gradient(circle, var(--secondary), transparent); bottom: -180px; right: -180px; animation-delay: 6s; }
+        .radial-glow:nth-child(3) { width: 400px; height: 400px; background: radial-gradient(circle, var(--accent), transparent); top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 12s; opacity: 0.12; }
+        @keyframes float-glow { 0%, 100% { transform: translateY(0) translateX(0); } 25% { transform: translateY(-20px) translateX(10px); } 50% { transform: translateY(10px) translateX(-10px); } 75% { transform: translateY(-10px) translateX(20px); } }
+
+        #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .particle { position: absolute; width: 2px; height: 2px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--glow); animation: float 20s infinite linear; opacity: 0.4; }
+        @keyframes float { 0% { transform: translateY(100vh) translateX(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-100vh) translateX(100px); opacity: 0; } }
+
+        header {
+            position: fixed; top: 0; width: 100%;
+            background: linear-gradient(135deg, rgba(11, 15, 42, 0.92), rgba(7, 11, 26, 0.92));
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            z-index: 1000; transition: all 0.3s ease; border-bottom: 1px solid var(--border);
+        }
+        nav { max-width: 1400px; margin: 0 auto; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: bold; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% 200%; animation: gradient-animation 3s ease infinite; }
+        @keyframes gradient-animation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .nav-links { display: flex; list-style: none; gap: 2rem; }
+        .nav-links a { color: var(--text); text-decoration: none; transition: all 0.3s ease; position: relative; padding: 0.5rem 0; }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.3s ease; }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--primary); text-shadow: 0 0 12px var(--glow); }
+        .menu-toggle { display: none; flex-direction: column; cursor: pointer; z-index: 1002; }
+        .menu-toggle span { width: 25px; height: 3px; background: var(--primary); margin: 3px 0; transition: 0.3s; border-radius: 3px; box-shadow: 0 0 6px var(--glow); }
+
+        .hero {
+            padding: 8rem 5% 4rem; text-align: center; position: relative; z-index: 2;
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.04), rgba(44, 230, 194, 0.04)); overflow: hidden;
+        }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 50% 50%, rgba(0, 224, 255, 0.07) 0%, transparent 70%); animation: rotate 30s linear infinite; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradient-shift 3s ease infinite; position: relative; z-index: 2; }
+        @keyframes gradient-shift { 0%, 100% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(15deg); } }
+        .hero p { font-size: 1.3rem; color: var(--text-dim); margin-bottom: 2rem; position: relative; z-index: 2; }
+        .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 2; }
+        .btn { padding: 1rem 2rem; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: inline-block; position: relative; overflow: hidden; }
+        .btn::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.15); transform: translate(-50%, -50%); transition: width 0.6s, height 0.6s; }
+        .btn:hover::before { width: 300px; height: 300px; }
+        .btn-primary { background: linear-gradient(135deg, var(--cta-start), var(--cta-end)); color: white; box-shadow: 0 5px 25px rgba(255, 106, 61, 0.4); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 35px rgba(255, 106, 61, 0.5); }
+        .btn-secondary { background: transparent; color: var(--primary); border: 2px solid rgba(0, 224, 255, 0.4); box-shadow: 0 0 20px rgba(0, 224, 255, 0.12); }
+        .btn-secondary:hover { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: var(--darkest); border-color: transparent; box-shadow: 0 8px 30px var(--glow); }
+
+        .quick-nav { position: static; top: 80px; background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(19, 32, 58, 0.85)); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); z-index: 100; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+        .quick-nav-content { max-width: 1400px; margin: 0 auto; padding: 0 5%; display: flex; gap: 0.75rem; overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--primary) var(--darker); -webkit-overflow-scrolling: touch; }
+        .quick-nav-content::-webkit-scrollbar { height: 4px; }
+        .quick-nav-content::-webkit-scrollbar-track { background: var(--darker); }
+        .quick-nav-content::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+        .quick-nav a { color: var(--text); text-decoration: none; padding: 0.5rem 1rem; border-radius: 25px; background: rgba(0, 224, 255, 0.06); white-space: nowrap; transition: all 0.3s ease; flex-shrink: 0; }
+        .quick-nav a:hover { background: var(--primary); color: var(--darkest); transform: scale(1.05); }
+
+        .section { padding: 4rem 5%; position: relative; z-index: 2; }
+        .section-title { text-align: center; margin-bottom: 3rem; }
+        .section-title h2 { font-size: 2.5rem; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; position: relative; }
+        .section-title h2::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 3px; background: linear-gradient(90deg, var(--primary), var(--secondary)); animation: expand 2s ease forwards; animation-delay: 0.5s; }
+        @keyframes expand { from { width: 0; } to { width: 100px; } }
+        .section-title p { color: var(--text-dim); font-size: 1.1rem; }
+
+        /* ============================================
+           ENHANCED OVERVIEW CARDS
+           ============================================ */
+        .course-overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .overview-card {
+            background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 2rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .overview-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
+        }
+        .overview-card:nth-child(1)::before { background: linear-gradient(90deg, transparent, var(--primary), transparent); }
+        .overview-card:nth-child(2)::before { background: linear-gradient(90deg, transparent, var(--secondary), transparent); }
+        .overview-card:nth-child(3)::before { background: linear-gradient(90deg, transparent, var(--accent), transparent); }
+        .overview-card:nth-child(4)::before { background: linear-gradient(90deg, transparent, var(--cat-blue), transparent); }
+        .overview-card::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%);
+            opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0;
+        }
+        .overview-card:hover::before { opacity: 1; }
+        .overview-card:hover::after { opacity: 1; }
+        .overview-card:nth-child(1):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0, 224, 255, 0.15), 0 0 0 1px rgba(0, 224, 255, 0.2), inset 0 1px 0 rgba(0, 224, 255, 0.1); border-color: rgba(0, 224, 255, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .overview-card:nth-child(2):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(44, 230, 194, 0.15), 0 0 0 1px rgba(44, 230, 194, 0.2), inset 0 1px 0 rgba(44, 230, 194, 0.1); border-color: rgba(44, 230, 194, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .overview-card:nth-child(3):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(255, 106, 61, 0.15), 0 0 0 1px rgba(255, 106, 61, 0.2), inset 0 1px 0 rgba(255, 106, 61, 0.1); border-color: rgba(255, 106, 61, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .overview-card:nth-child(4):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(59, 130, 246, 0.15), 0 0 0 1px rgba(59, 130, 246, 0.2), inset 0 1px 0 rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .overview-card i { font-size: 3rem; margin-bottom: 1rem; position: relative; z-index: 1; transition: all 0.4s ease; }
+        .overview-card:nth-child(1) i { color: var(--primary); filter: drop-shadow(0 0 8px rgba(0, 224, 255, 0.4)); }
+        .overview-card:nth-child(2) i { color: var(--secondary); filter: drop-shadow(0 0 8px rgba(44, 230, 194, 0.4)); }
+        .overview-card:nth-child(3) i { color: var(--accent); filter: drop-shadow(0 0 8px rgba(255, 106, 61, 0.4)); }
+        .overview-card:nth-child(4) i { color: var(--cat-blue); filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.4)); }
+        .overview-card:hover i { transform: scale(1.15) translateY(-5px); }
+        .overview-card:nth-child(1):hover i { filter: drop-shadow(0 0 20px rgba(0, 224, 255, 0.7)); }
+        .overview-card:nth-child(2):hover i { filter: drop-shadow(0 0 20px rgba(44, 230, 194, 0.7)); }
+        .overview-card:nth-child(3):hover i { filter: drop-shadow(0 0 20px rgba(255, 106, 61, 0.7)); }
+        .overview-card:nth-child(4):hover i { filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.7)); }
+        .overview-card h3 { font-size: 1.3rem; margin-bottom: 1rem; color: var(--text); position: relative; z-index: 1; transition: all 0.4s ease; }
+        .overview-card:hover h3 { transform: translateY(-2px); }
+        .overview-card:nth-child(1):hover h3 { color: var(--primary); text-shadow: 0 0 15px rgba(0, 224, 255, 0.5); }
+        .overview-card:nth-child(2):hover h3 { color: var(--secondary); text-shadow: 0 0 15px rgba(44, 230, 194, 0.5); }
+        .overview-card:nth-child(3):hover h3 { color: var(--accent); text-shadow: 0 0 15px rgba(255, 106, 61, 0.5); }
+        .overview-card:nth-child(4):hover h3 { color: var(--cat-blue); text-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
+        .overview-card p { color: var(--text-dim); line-height: 1.6; position: relative; z-index: 1; transition: all 0.4s ease; }
+        .overview-card:hover p { color: #c0c8dd; }
+
+        /* ============================================
+           ENHANCED TWO COLUMN CARDS
+           ============================================ */
+        .two-column { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem; max-width: 1200px; margin: 0 auto; }
+        .column-content {
+            background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 2rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative; overflow: hidden;
+        }
+        .column-content::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
+        }
+        .column-content::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%);
+            opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0;
+        }
+        .column-content:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0, 224, 255, 0.15), 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 224, 255, 0.2), inset 0 1px 0 rgba(0, 224, 255, 0.1); border-color: rgba(0, 224, 255, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .column-content:hover::before { opacity: 1; }
+        .column-content:hover::after { opacity: 1; }
+        .column-content h3 { font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--primary); position: relative; z-index: 1; transition: all 0.4s ease; }
+        .column-content:hover h3 { text-shadow: 0 0 20px rgba(0, 224, 255, 0.6); transform: translateX(5px); }
+        .column-content ul { list-style: none; position: relative; z-index: 1; }
+        .column-content ul li { padding: 0.8rem 0; color: var(--text-dim); border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.35s ease; border-radius: 6px; padding-left: 5px; padding-right: 5px; }
+        .column-content ul li:last-child { border-bottom: none; }
+        .column-content:hover ul li:hover { color: var(--primary); text-shadow: 0 0 10px var(--glow); background: rgba(0, 224, 255, 0.04); padding-left: 15px; transform: translateX(10px); }
+
+        /* ============================================
+           ENHANCED PROCESS STEP CARDS (FIXED)
+           ============================================ */
+        .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2.5rem; max-width: 1200px; margin: 0 auto; }
+        .step-card {
+            background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 2.5rem 2rem 2rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            /* Removed overflow: hidden to prevent number clipping */
+        }
+        .step-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(105deg, transparent 35%, rgba(0, 224, 255, 0.08) 50%, transparent 65%);
+            transform: translateX(-100%);
+            opacity: 0; transition: opacity 0.5s ease;
+            z-index: 0; pointer-events: none;
+            border-radius: 20px;
+        }
+        .step-card:hover::before {
+            animation: scan 0.8s ease-in-out;
+        }
+        @keyframes scan {
+            0% { transform: translateX(-100%); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+        .step-card::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
+        }
+        .step-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0, 224, 255, 0.15), 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 224, 255, 0.2), inset 0 1px 0 rgba(0, 224, 255, 0.1); border-color: rgba(0, 224, 255, 0.25); background: rgba(255, 255, 255, 0.06); }
+        .step-card:hover::after { opacity: 1; }
+        .step-number {
+            position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+            width: 42px; height: 42px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.2rem; color: var(--darkest);
+            box-shadow: 0 5px 20px var(--glow);
+            z-index: 3; transition: all 0.4s ease;
+        }
+        .step-card:hover .step-number { transform: translateX(-50%) scale(1.15); box-shadow: 0 8px 30px rgba(0, 224, 255, 0.6); }
+        .step-card h3 { margin-top: 1rem; margin-bottom: 1rem; color: var(--primary); text-align: center; position: relative; z-index: 1; transition: all 0.4s ease; }
+        .step-card:hover h3 { text-shadow: 0 0 20px rgba(0, 224, 255, 0.5); transform: translateY(-2px); }
+        .step-card p { color: var(--text-dim); line-height: 1.6; text-align: center; position: relative; z-index: 1; transition: all 0.4s ease; }
+        .step-card:hover p { color: #c0c8dd; }
+
+        /* ============================================
+           ENHANCED CAREER CARDS
+           ============================================ */
+        .career-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .career-card {
+            background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 2rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative; overflow: hidden;
+        }
+        .career-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
+        }
+        .career-card:nth-child(1)::before { background: linear-gradient(90deg, transparent, var(--cat-orange), transparent); }
+        .career-card:nth-child(2)::before { background: linear-gradient(90deg, transparent, var(--cat-blue), transparent); }
+        .career-card:nth-child(3)::before { background: linear-gradient(90deg, transparent, var(--cat-purple), transparent); }
+        .career-card:nth-child(4)::before { background: linear-gradient(90deg, transparent, var(--cat-green), transparent); }
+        .career-card:nth-child(5)::before { background: linear-gradient(90deg, transparent, var(--cat-amber), transparent); }
+        .career-card:nth-child(6)::before { background: linear-gradient(90deg, transparent, var(--cat-teal), transparent); }
+        .career-card::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%);
+            opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0;
+        }
+        .career-card:hover::before { opacity: 1; }
+        .career-card:hover::after { opacity: 1; }
+        .career-card:nth-child(1):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(255, 106, 61, 0.15), 0 0 0 1px rgba(255, 106, 61, 0.2), inset 0 1px 0 rgba(255, 106, 61, 0.1); border-color: rgba(255, 106, 61, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .career-card:nth-child(2):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(59, 130, 246, 0.15), 0 0 0 1px rgba(59, 130, 246, 0.2), inset 0 1px 0 rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .career-card:nth-child(3):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(168, 85, 247, 0.15), 0 0 0 1px rgba(168, 85, 247, 0.2), inset 0 1px 0 rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .career-card:nth-child(4):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(34, 197, 94, 0.15), 0 0 0 1px rgba(34, 197, 94, 0.2), inset 0 1px 0 rgba(34, 197, 94, 0.1); border-color: rgba(34, 197, 94, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .career-card:nth-child(5):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(245, 158, 11, 0.15), 0 0 0 1px rgba(245, 158, 11, 0.2), inset 0 1px 0 rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .career-card:nth-child(6):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(20, 184, 166, 0.15), 0 0 0 1px rgba(20, 184, 166, 0.2), inset 0 1px 0 rgba(20, 184, 166, 0.1); border-color: rgba(20, 184, 166, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .career-card h3 { margin-bottom: 1rem; font-size: 1.3rem; position: relative; z-index: 1; transition: all 0.4s ease; }
+        .career-card:nth-child(1) h3 { color: var(--cat-orange); }
+        .career-card:nth-child(2) h3 { color: var(--cat-blue); }
+        .career-card:nth-child(3) h3 { color: var(--cat-purple); }
+        .career-card:nth-child(4) h3 { color: var(--cat-green); }
+        .career-card:nth-child(5) h3 { color: var(--cat-amber); }
+        .career-card:nth-child(6) h3 { color: var(--cat-teal); }
+        .career-card:hover h3 { transform: translateY(-2px); }
+        .career-card:nth-child(1):hover h3 { text-shadow: 0 0 15px rgba(255, 106, 61, 0.5); }
+        .career-card:nth-child(2):hover h3 { text-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
+        .career-card:nth-child(3):hover h3 { text-shadow: 0 0 15px rgba(168, 85, 247, 0.5); }
+        .career-card:nth-child(4):hover h3 { text-shadow: 0 0 15px rgba(34, 197, 94, 0.5); }
+        .career-card:nth-child(5):hover h3 { text-shadow: 0 0 15px rgba(245, 158, 11, 0.5); }
+        .career-card:nth-child(6):hover h3 { text-shadow: 0 0 15px rgba(20, 184, 166, 0.5); }
+        .salary { background: rgba(255, 255, 255, 0.05); padding: 0.5rem 1rem; border-radius: 20px; display: inline-block; margin-bottom: 1rem; font-weight: 600; position: relative; z-index: 1; transition: all 0.4s ease; }
+        .career-card:nth-child(1) .salary { color: var(--cat-orange); background: rgba(255, 106, 61, 0.1); }
+        .career-card:nth-child(2) .salary { color: var(--cat-blue); background: rgba(59, 130, 246, 0.1); }
+        .career-card:nth-child(3) .salary { color: var(--cat-purple); background: rgba(168, 85, 247, 0.1); }
+        .career-card:nth-child(4) .salary { color: var(--cat-green); background: rgba(34, 197, 94, 0.1); }
+        .career-card:nth-child(5) .salary { color: var(--cat-amber); background: rgba(245, 158, 11, 0.1); }
+        .career-card:nth-child(6) .salary { color: var(--cat-teal); background: rgba(20, 184, 166, 0.1); }
+        .career-card:hover .salary { transform: scale(1.05); }
+        .career-card:nth-child(1):hover .salary { box-shadow: 0 0 15px rgba(255, 106, 61, 0.3); }
+        .career-card:nth-child(2):hover .salary { box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+        .career-card:nth-child(3):hover .salary { box-shadow: 0 0 15px rgba(168, 85, 247, 0.3); }
+        .career-card:nth-child(4):hover .salary { box-shadow: 0 0 15px rgba(34, 197, 94, 0.3); }
+        .career-card:nth-child(5):hover .salary { box-shadow: 0 0 15px rgba(245, 158, 11, 0.3); }
+        .career-card:nth-child(6):hover .salary { box-shadow: 0 0 15px rgba(20, 184, 166, 0.3); }
+        .career-card p { color: var(--text-dim); line-height: 1.6; position: relative; z-index: 1; transition: all 0.4s ease; }
+        .career-card:hover p { color: #c0c8dd; }
+
+        /* ============================================
+           ENHANCED COLLEGE CARDS
+           ============================================ */
+        .college-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .college-card {
+            background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 2rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative; overflow: hidden;
+        }
+        .college-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
+        }
+        .college-card::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%);
+            opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0;
+        }
+        .college-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0, 224, 255, 0.15), 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 224, 255, 0.2), inset 0 1px 0 rgba(0, 224, 255, 0.1); border-color: rgba(0, 224, 255, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .college-card:hover::before { opacity: 1; }
+        .college-card:hover::after { opacity: 1; }
+        .college-rank { position: absolute; top: -10px; right: 20px; background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600; color: var(--darkest); box-shadow: 0 5px 15px var(--glow); flex-shrink: 0; z-index: 1; transition: all 0.4s ease; }
+        .college-card:hover .college-rank { transform: scale(1.1); box-shadow: 0 8px 25px rgba(0, 224, 255, 0.5); }
+        .college-card h3 { color: var(--text); margin-bottom: 1rem; font-size: 1.3rem; position: relative; z-index: 1; transition: all 0.4s ease; }
+        .college-card:hover h3 { color: var(--primary); text-shadow: 0 0 20px rgba(0, 224, 255, 0.5); transform: translateX(5px); }
+        .location { color: var(--text-dim); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; position: relative; z-index: 1; transition: all 0.4s ease; }
+        .location i { color: var(--secondary); transition: all 0.3s ease; }
+        .college-card:hover .location { color: #c0c8dd; }
+        .college-card:hover .location i { filter: drop-shadow(0 0 6px var(--glow-secondary)); }
+        .college-details { display: flex; flex-direction: column; gap: 0.5rem; position: relative; z-index: 1; }
+        .college-details span { color: var(--text-dim); font-size: 0.95rem; transition: all 0.4s ease; }
+        .college-card:hover .college-details span { color: #c0c8dd; }
+        .college-card:hover .college-details span strong { color: var(--primary); }
+
+        /* ============================================
+           ENHANCED EXAM CARDS
+           ============================================ */
+        .exam-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .exam-card {
+            background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 2rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative; overflow: hidden;
+        }
+        .exam-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
+        }
+        .exam-card:nth-child(1)::before { background: linear-gradient(90deg, transparent, var(--cat-blue), #60A5FA, transparent); }
+        .exam-card:nth-child(2)::before { background: linear-gradient(90deg, transparent, var(--cat-purple), var(--cat-pink), transparent); }
+        .exam-card:nth-child(3)::before { background: linear-gradient(90deg, transparent, var(--cat-teal), #2DD4BF, transparent); }
+        .exam-card:nth-child(4)::before { background: linear-gradient(90deg, transparent, var(--cat-orange), var(--cat-amber), transparent); }
+        .exam-card::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%);
+            opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0;
+        }
+        .exam-card:hover::before { opacity: 1; }
+        .exam-card:hover::after { opacity: 1; }
+        .exam-card:nth-child(1):hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 15px 50px rgba(59, 130, 246, 0.15), 0 0 0 1px rgba(59, 130, 246, 0.2), inset 0 1px 0 rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .exam-card:nth-child(2):hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 15px 50px rgba(168, 85, 247, 0.15), 0 0 0 1px rgba(168, 85, 247, 0.2), inset 0 1px 0 rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .exam-card:nth-child(3):hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 15px 50px rgba(20, 184, 166, 0.15), 0 0 0 1px rgba(20, 184, 166, 0.2), inset 0 1px 0 rgba(20, 184, 166, 0.1); border-color: rgba(20, 184, 166, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .exam-card:nth-child(4):hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 15px 50px rgba(255, 106, 61, 0.15), 0 0 0 1px rgba(255, 106, 61, 0.2), inset 0 1px 0 rgba(255, 106, 61, 0.1); border-color: rgba(255, 106, 61, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .exam-card h3 { margin-bottom: 1.5rem; font-size: 1.3rem; text-align: center; position: relative; z-index: 1; transition: all 0.4s ease; }
+        .exam-card:nth-child(1) h3 { color: var(--cat-blue); }
+        .exam-card:nth-child(2) h3 { color: var(--cat-purple); }
+        .exam-card:nth-child(3) h3 { color: var(--cat-teal); }
+        .exam-card:nth-child(4) h3 { color: var(--cat-orange); }
+        .exam-card:nth-child(1):hover h3 { text-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        .exam-card:nth-child(2):hover h3 { text-shadow: 0 0 20px rgba(168, 85, 247, 0.5); }
+        .exam-card:nth-child(3):hover h3 { text-shadow: 0 0 20px rgba(20, 184, 166, 0.5); }
+        .exam-card:nth-child(4):hover h3 { text-shadow: 0 0 20px rgba(255, 106, 61, 0.5); }
+        .exam-details { list-style: none; position: relative; z-index: 1; }
+        .exam-details li { padding: 0.8rem 0; color: var(--text-dim); border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; align-items: center; gap: 1rem; transition: all 0.35s ease; border-radius: 6px; padding-left: 5px; padding-right: 5px; }
+        .exam-details li:last-child { border-bottom: none; }
+        .exam-details li i { width: 20px; flex-shrink: 0; transition: all 0.3s ease; }
+        .exam-card:nth-child(1) .exam-details li i { color: var(--cat-blue); }
+        .exam-card:nth-child(2) .exam-details li i { color: var(--cat-purple); }
+        .exam-card:nth-child(3) .exam-details li i { color: var(--cat-teal); }
+        .exam-card:nth-child(4) .exam-details li i { color: var(--cat-orange); }
+        .exam-card:hover .exam-details li:hover { background: rgba(255, 255, 255, 0.03); padding-left: 12px; transform: translateX(7px); }
+        .exam-card:nth-child(1):hover .exam-details li:hover { color: var(--cat-blue); text-shadow: 0 0 8px rgba(59, 130, 246, 0.4); }
+        .exam-card:nth-child(2):hover .exam-details li:hover { color: var(--cat-purple); text-shadow: 0 0 8px rgba(168, 85, 247, 0.4); }
+        .exam-card:nth-child(3):hover .exam-details li:hover { color: var(--cat-teal); text-shadow: 0 0 8px rgba(20, 184, 166, 0.4); }
+        .exam-card:nth-child(4):hover .exam-details li:hover { color: var(--cat-orange); text-shadow: 0 0 8px rgba(255, 106, 61, 0.4); }
+        .exam-card:nth-child(1):hover .exam-details li:hover i { filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5)); transform: scale(1.15); }
+        .exam-card:nth-child(2):hover .exam-details li:hover i { filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.5)); transform: scale(1.15); }
+        .exam-card:nth-child(3):hover .exam-details li:hover i { filter: drop-shadow(0 0 8px rgba(20, 184, 166, 0.5)); transform: scale(1.15); }
+        .exam-card:nth-child(4):hover .exam-details li:hover i { filter: drop-shadow(0 0 8px rgba(255, 106, 61, 0.5)); transform: scale(1.15); }
+
+        /* ============================================
+           ENHANCED SUBJECT CATEGORY CARDS
+           ============================================ */
+        .subjects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .subject-category {
+            background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 2rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative; overflow: hidden;
+        }
+        .subject-category::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
+        }
+        .subject-category:nth-child(1)::before { background: linear-gradient(90deg, transparent, var(--cat-blue), transparent); }
+        .subject-category:nth-child(2)::before { background: linear-gradient(90deg, transparent, var(--cat-purple), transparent); }
+        .subject-category:nth-child(3)::before { background: linear-gradient(90deg, transparent, var(--cat-orange), transparent); }
+        .subject-category:nth-child(4)::before { background: linear-gradient(90deg, transparent, var(--cat-green), transparent); }
+        .subject-category:nth-child(5)::before { background: linear-gradient(90deg, transparent, var(--cat-teal), transparent); }
+        .subject-category:nth-child(6)::before { background: linear-gradient(90deg, transparent, var(--cat-amber), transparent); }
+        .subject-category::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%);
+            opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0;
+        }
+        .subject-category:hover::before { opacity: 1; }
+        .subject-category:hover::after { opacity: 1; }
+        .subject-category:nth-child(1):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(59, 130, 246, 0.15), 0 0 0 1px rgba(59, 130, 246, 0.2), inset 0 1px 0 rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .subject-category:nth-child(2):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(168, 85, 247, 0.15), 0 0 0 1px rgba(168, 85, 247, 0.2), inset 0 1px 0 rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .subject-category:nth-child(3):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(255, 106, 61, 0.15), 0 0 0 1px rgba(255, 106, 61, 0.2), inset 0 1px 0 rgba(255, 106, 61, 0.1); border-color: rgba(255, 106, 61, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .subject-category:nth-child(4):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(34, 197, 94, 0.15), 0 0 0 1px rgba(34, 197, 94, 0.2), inset 0 1px 0 rgba(34, 197, 94, 0.1); border-color: rgba(34, 197, 94, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .subject-category:nth-child(5):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(20, 184, 166, 0.15), 0 0 0 1px rgba(20, 184, 166, 0.2), inset 0 1px 0 rgba(20, 184, 166, 0.1); border-color: rgba(20, 184, 166, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .subject-category:nth-child(6):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(245, 158, 11, 0.15), 0 0 0 1px rgba(245, 158, 11, 0.2), inset 0 1px 0 rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .subject-category h3 { margin-bottom: 1.5rem; font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem; position: relative; z-index: 1; transition: all 0.4s ease; }
+        .subject-category:nth-child(1) h3 { color: var(--cat-blue); }
+        .subject-category:nth-child(2) h3 { color: var(--cat-purple); }
+        .subject-category:nth-child(3) h3 { color: var(--cat-orange); }
+        .subject-category:nth-child(4) h3 { color: var(--cat-green); }
+        .subject-category:nth-child(5) h3 { color: var(--cat-teal); }
+        .subject-category:nth-child(6) h3 { color: var(--cat-amber); }
+        .subject-category h3 i { color: inherit; opacity: 0.7; transition: all 0.4s ease; }
+        .subject-category:hover h3 i { opacity: 1; transform: scale(1.15); filter: drop-shadow(0 0 8px currentColor); }
+        .subject-category:nth-child(1):hover h3 { text-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
+        .subject-category:nth-child(2):hover h3 { text-shadow: 0 0 15px rgba(168, 85, 247, 0.5); }
+        .subject-category:nth-child(3):hover h3 { text-shadow: 0 0 15px rgba(255, 106, 61, 0.5); }
+        .subject-category:nth-child(4):hover h3 { text-shadow: 0 0 15px rgba(34, 197, 94, 0.5); }
+        .subject-category:nth-child(5):hover h3 { text-shadow: 0 0 15px rgba(20, 184, 166, 0.5); }
+        .subject-category:nth-child(6):hover h3 { text-shadow: 0 0 15px rgba(245, 158, 11, 0.5); }
+        .subject-list { list-style: none; position: relative; z-index: 1; }
+        .subject-list li { padding: 0.5rem 0; padding-left: 1.5rem; color: var(--text-dim); border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.35s ease; position: relative; border-radius: 6px; }
+        .subject-list li::before { content: '▸'; position: absolute; left: 0; transition: all 0.3s ease; }
+        .subject-category:nth-child(1) .subject-list li::before { color: var(--cat-blue); }
+        .subject-category:nth-child(2) .subject-list li::before { color: var(--cat-purple); }
+        .subject-category:nth-child(3) .subject-list li::before { color: var(--cat-orange); }
+        .subject-category:nth-child(4) .subject-list li::before { color: var(--cat-green); }
+        .subject-category:nth-child(5) .subject-list li::before { color: var(--cat-teal); }
+        .subject-category:nth-child(6) .subject-list li::before { color: var(--cat-amber); }
+        .subject-list li:last-child { border-bottom: none; }
+        .subject-category:hover .subject-list li:hover { color: var(--text); padding-left: 2rem; background: rgba(255, 255, 255, 0.03); transform: translateX(7px); }
+        .subject-category:hover .subject-list li:hover::before { transform: translateX(5px) scale(1.2); filter: drop-shadow(0 0 4px currentColor); }
+
+        /* ============================================
+           ENHANCED TIMELINE CARDS
+           ============================================ */
+        .higher-studies-container { max-width: 1200px; margin: 0 auto; }
+        .studies-timeline { position: relative; padding: 2rem 0; }
+        .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--primary), var(--secondary)); transform: translateX(-50%); box-shadow: 0 0 15px var(--glow); }
+        .timeline-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; position: relative; }
+        .timeline-item:nth-child(even) { flex-direction: row-reverse; }
+        .timeline-content {
+            width: 45%; background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 2rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative; overflow: hidden;
+        }
+        .timeline-content::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
+        }
+        .timeline-content:hover { transform: scale(1.03); box-shadow: 0 15px 40px rgba(0, 224, 255, 0.15), 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 224, 255, 0.2), inset 0 1px 0 rgba(0, 224, 255, 0.1); border-color: rgba(0, 224, 255, 0.3); background: rgba(255, 255, 255, 0.06); }
+        .timeline-content:hover::before { opacity: 1; }
+        .timeline-dot { position: absolute; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 20px var(--glow); z-index: 1; }
+        .timeline-content h3 { color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem; position: relative; z-index: 1; transition: all 0.4s ease; }
+        .timeline-content:hover h3 { text-shadow: 0 0 20px rgba(0, 224, 255, 0.6); transform: translateX(5px); }
+        .timeline-content .duration { color: var(--secondary); font-weight: 600; margin-bottom: 1rem; display: inline-block; background: rgba(44, 230, 194, 0.1); padding: 0.3rem 0.8rem; border-radius: 15px; position: relative; z-index: 1; transition: all 0.4s ease; }
+        .timeline-content:hover .duration { box-shadow: 0 0 15px rgba(44, 230, 194, 0.3); transform: scale(1.05); }
+        .timeline-content p { color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; position: relative; z-index: 1; transition: all 0.4s ease; }
+        .timeline-content:hover p { color: #c0c8dd; }
+        .timeline-content .specializations { display: flex; flex-wrap: wrap; gap: 0.5rem; position: relative; z-index: 1; }
+        .timeline-content .specializations span { background: rgba(0, 224, 255, 0.08); color: var(--primary); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.9rem; border: 1px solid rgba(0, 224, 255, 0.15); transition: all 0.3s ease; }
+        .timeline-content:hover .specializations span:hover { background: rgba(0, 224, 255, 0.15); border-color: rgba(0, 224, 255, 0.3); box-shadow: 0 0 10px rgba(0, 224, 255, 0.2); transform: translateY(-2px); }
+
+        /* ============================================
+           ENHANCED FEE TABLE
+           ============================================ */
+        .table-scroll-wrapper {
+            width: 100%; max-width: 1000px; margin: 3rem auto 0; overflow-x: auto;
+            -webkit-overflow-scrolling: touch; border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.07); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.03); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease; position: relative; overflow: hidden;
+        }
+        .table-scroll-wrapper::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            opacity: 0.5; transition: opacity 0.4s ease; z-index: 2;
+        }
+        .table-scroll-wrapper:hover { box-shadow: 0 15px 50px rgba(0, 224, 255, 0.1), 0 0 0 1px rgba(0, 224, 255, 0.15); border-color: rgba(0, 224, 255, 0.2); }
+        .table-scroll-wrapper:hover::before { opacity: 1; }
+        .fee-table { width: 100%; border-collapse: collapse; min-width: 550px; position: relative; z-index: 1; }
+        .fee-table thead { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+        .fee-table th { padding: 1.5rem; text-align: left; color: var(--darkest); font-weight: 600; font-size: 1.1rem; white-space: nowrap; }
+        .fee-table td { padding: 1.5rem; color: var(--text-dim); border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
+        .fee-table tbody tr { transition: all 0.3s ease; }
+        .fee-table tbody tr:hover { background: rgba(0, 224, 255, 0.06); transform: scale(1.01); }
+        .fee-table tbody tr:hover td { color: var(--primary); text-shadow: 0 0 8px var(--glow); }
+        .fee-table tbody tr:last-child td { border-bottom: none; }
+
+        /* ============================================
+           ENHANCED FAQ ITEMS
+           ============================================ */
+        .faq-container { max-width: 800px; margin: 3rem auto 0; }
+        .faq-item {
+            background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-radius: 16px; margin-bottom: 1rem; border: 1px solid rgba(255, 255, 255, 0.07);
+            overflow: hidden; transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative;
+        }
+        .faq-item::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
+        }
+        .faq-item:hover { box-shadow: 0 10px 30px rgba(0, 224, 255, 0.12), 0 0 0 1px rgba(0, 224, 255, 0.18); border-color: rgba(0, 224, 255, 0.22); transform: translateX(5px); }
+        .faq-item:hover::before { opacity: 1; }
+        .faq-item.active { box-shadow: 0 20px 50px rgba(0, 224, 255, 0.18), 0 0 0 1px rgba(0, 224, 255, 0.25); }
+        .faq-item.active::before { opacity: 1; }
+        .faq-question { padding: 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--text); font-size: 1.1rem; font-weight: 500; transition: all 0.4s ease; gap: 1rem; }
+        .faq-question:hover { color: var(--primary); background: rgba(0, 224, 255, 0.04); text-shadow: 0 0 10px var(--glow); }
+        .faq-question i { transition: transform 0.3s ease, filter 0.3s ease; color: var(--primary); flex-shrink: 0; }
+        .faq-question:hover i { filter: drop-shadow(0 0 10px var(--glow)); }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .faq-item.active .faq-answer { max-height: 300px; }
+        .faq-answer p { padding: 0 1.5rem 1.5rem; color: var(--text-dim); line-height: 1.8; }
+
+        /* CTA Section */
+        .cta-section { padding: 5rem 5%; text-align: center; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); position: relative; overflow: hidden; margin-top: 5rem; border: 1px solid rgba(255, 106, 61, 0.15); }
+        .cta-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(255, 106, 61, 0.1) 0%, transparent 70%); animation: pulse-bg 3s ease-in-out infinite; }
+        @keyframes pulse-bg { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        .cta-section h2 { font-size: 2.5rem; margin-bottom: 1rem; background: linear-gradient(135deg, var(--cta-start), var(--cta-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; position: relative; z-index: 1; }
+        .cta-section p { font-size: 1.2rem; color: var(--text-dim); margin-bottom: 2rem; position: relative; z-index: 1; }
+        .cta-button { display: inline-block; padding: 1.2rem 3rem; background: linear-gradient(135deg, var(--cta-start), var(--cta-end)); color: white; text-decoration: none; border-radius: 50px; font-size: 1.2rem; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 10px 35px rgba(255, 106, 61, 0.4); position: relative; z-index: 1; }
+        .cta-button:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(255, 106, 61, 0.5); }
+
+        /* Footer */
+        footer { background: linear-gradient(135deg, rgba(11, 15, 42, 0.96), rgba(7, 11, 26, 0.96)); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 3rem 5% 1rem; border-top: 1px solid var(--border); }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .footer-section h3 { font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--primary); }
+        .footer-section ul { list-style: none; padding: 0; }
+        .footer-section ul li { padding: 0.5rem 0; }
+        .footer-section ul li a { color: var(--text-dim); text-decoration: none; transition: all 0.3s ease; display: inline-block; }
+        .footer-section ul li a:hover { color: var(--primary); transform: translateX(5px); }
+        .footer-section ul li i { color: var(--secondary); margin-right: 0.5rem; width: 20px; }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--text-dim); }
+
+        .fade-in-up { opacity: 0; transform: translateY(30px); animation: fadeInUp 0.8s ease forwards; }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* =========================================
+           RESPONSIVE DESIGN
+           ========================================= */
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1.15rem; }
+            .section-title h2 { font-size: 2.2rem; }
+            .career-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+            .overview-card:hover, .column-content:hover, .career-card:hover, .college-card:hover, .exam-card:hover, .subject-category:hover { transform: translateY(-7px); }
+            .step-card:hover { transform: translateY(-7px); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: flex; position: fixed; top: 0; right: -100%; width: 80%; height: 100vh; background: linear-gradient(180deg, rgba(11, 15, 42, 0.98), rgba(7, 11, 26, 0.98)); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); flex-direction: column; justify-content: center; align-items: center; transition: right 0.3s ease; z-index: 999; border-left: 1px solid var(--border); box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); gap: 2rem; }
+            .nav-links.active { right: 0; }
+            .menu-toggle { display: flex; }
+            .hero { padding: 6rem 5% 3rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1rem; }
+            .quick-nav-content { padding: 0 1rem; gap: 0.5rem; }
+            .quick-nav a { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+            .section { padding: 3rem 4%; }
+            .section-title { margin-bottom: 2rem; }
+            .section-title h2 { font-size: 1.8rem; }
+            .section-title p { font-size: 1rem; }
+            .two-column { grid-template-columns: 1fr; gap: 1.5rem; }
+            .column-content { padding: 1.5rem; }
+            .column-content h3 { font-size: 1.3rem; }
+            .course-overview, .process-steps, .career-grid, .college-cards, .exam-cards, .subjects-grid { grid-template-columns: 1fr; }
+            .overview-card, .step-card, .career-card, .college-card, .exam-card, .subject-category { padding: 1.5rem; }
+            .timeline-item { flex-direction: column !important; }
+            .timeline-content { width: 100%; }
+            .timeline-line { left: 20px; }
+            .timeline-dot { left: 20px; }
+            .fee-table th, .fee-table td { padding: 1rem; font-size: 0.9rem; }
+            .faq-question { padding: 1.2rem; font-size: 1rem; }
+            .faq-answer p { font-size: 0.95rem; }
+            .cta-section { padding: 3.5rem 4%; margin-top: 3.5rem; }
+            .cta-section h2 { font-size: 1.8rem; }
+            .cta-section p { font-size: 1rem; }
+            .cta-button { padding: 1rem 2rem; font-size: 1.05rem; }
+            footer { padding: 3rem 4% 1rem; }
+            .footer-content { grid-template-columns: 1fr; text-align: center; }
+            .footer-section a:hover { transform: none; }
+            .overview-card:hover, .column-content:hover, .career-card:hover, .college-card:hover, .exam-card:hover, .subject-category:hover, .step-card:hover { transform: translateY(-5px); }
+            .faq-item:hover { transform: none; }
+            /* Step card number responsive fix */
+            .process-steps { gap: 2rem; }
+            .step-card { padding: 2.2rem 1.5rem 1.5rem; }
+            .step-number { top: -18px; width: 38px; height: 38px; font-size: 1.1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .logo { font-size: 1.2rem; }
+            .hero { padding: 5rem 4% 2.5rem; }
+            .hero h1 { font-size: 1.75rem; }
+            .hero p { font-size: 0.95rem; }
+            .btn { padding: 0.8rem 1.5rem; font-size: 1rem; width: 100%; max-width: 260px; text-align: center; }
+            .btn-group { flex-direction: column; align-items: center; }
+            .section { padding: 2.5rem 4%; }
+            .section-title h2 { font-size: 1.5rem; }
+            .section-title p { font-size: 0.95rem; }
+            .overview-card, .step-card, .career-card, .college-card, .exam-card, .subject-category, .column-content { padding: 1.2rem; }
+            .career-card h3, .college-card h3, .subject-category h3 { font-size: 1.1rem; }
+            .salary { font-size: 0.85rem; }
+            .quick-nav a { padding: 0.4rem 0.7rem; font-size: 0.85rem; }
+            .cta-section h2 { font-size: 1.5rem; }
+            .cta-button { padding: 0.9rem 1.5rem; font-size: 1rem; }
+            .overview-card:hover, .column-content:hover, .career-card:hover, .college-card:hover, .exam-card:hover, .subject-category:hover, .step-card:hover { transform: translateY(-3px); }
+            .college-card:hover { transform: none; }
+            .process-steps { gap: 1.5rem; }
+            .step-card { padding: 2rem 1.2rem 1.2rem; }
+            .step-number { top: -16px; width: 34px; height: 34px; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen"><div class="loading-spinner"></div></div>
+
+    <!-- Animated Background -->
+    <div class="animated-bg"><div class="radial-glow"></div><div class="radial-glow"></div><div class="radial-glow"></div></div>
+
+    <!-- Particles Background -->
+    <div id="particles"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <div class="logo">WhiteDavid Academy</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#courses">Courses</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Bachelor of Physiotherapy (BPT)</h1>
+        <p>Transform Lives Through Healing & Rehabilitation</p>
+        <div class="btn-group">
+            <a href="#eligibility" class="btn btn-primary">Check Eligibility</a>
+            <a href="#admission" class="btn btn-secondary">Admission Process</a>
+        </div>
+    </section>
+
+    <!-- Quick Navigation -->
+    <div class="quick-nav">
+        <div class="quick-nav-content">
+            <a href="#overview">Overview</a>
+            <a href="#subjects">Subjects</a>
+            <a href="#eligibility">Eligibility</a>
+            <a href="#admission">Admission</a>
+            <a href="#careers">Careers</a>
+            <a href="#higher-studies">Higher Studies</a>
+            <a href="#colleges">Top Colleges</a>
+            <a href="#exams">Entrance Exams</a>
+            <a href="#fees">Fee Structure</a>
+            <a href="#faq">FAQ</a>
+        </div>
+    </div>
+
+    <main>
+        <!-- Course Overview -->
+        <section class="section" id="overview">
+            <div class="section-title">
+                <h2>Course Overview</h2>
+                <p>Everything you need to know about BPT program</p>
+            </div>
+            <div class="course-overview">
+                <div class="overview-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Program Duration</h3>
+                    <p>4.5 years including 6 months of mandatory internship. Comprehensive training in physiotherapy techniques, patient care, and clinical practice.</p>
+                </div>
+                <div class="overview-card">
+                    <i class="fas fa-user-md"></i>
+                    <h3>Degree Type</h3>
+                    <p>Undergraduate professional degree. Recognized by Indian Association of Physiotherapists (IAP) and approved by PCI.</p>
+                </div>
+                <div class="overview-card">
+                    <i class="fas fa-heartbeat"></i>
+                    <h3>Core Focus</h3>
+                    <p>Physical rehabilitation, therapeutic exercises, manual therapy, electrotherapy, and patient assessment & management.</p>
+                </div>
+                <div class="overview-card">
+                    <i class="fas fa-hospital"></i>
+                    <h3>Clinical Training</h3>
+                    <p>Extensive hands-on training in hospitals, rehabilitation centers, sports clinics, and specialty physiotherapy departments.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subjects Section -->
+        <section class="section" id="subjects">
+            <div class="section-title">
+                <h2>Course Subjects</h2>
+                <p>Comprehensive curriculum covering all aspects of physiotherapy</p>
+            </div>
+            <div class="subjects-grid">
+                <div class="subject-category">
+                    <h3><i class="fas fa-book-medical"></i> Basic Sciences</h3>
+                    <ul class="subject-list">
+                        <li>Human Anatomy</li>
+                        <li>Human Physiology</li>
+                        <li>Biochemistry</li>
+                        <li>Pathology & Microbiology</li>
+                        <li>Biomechanics</li>
+                        <li>Exercise Physiology</li>
+                    </ul>
+                </div>
+                <div class="subject-category">
+                    <h3><i class="fas fa-brain"></i> Clinical Sciences</h3>
+                    <ul class="subject-list">
+                        <li>General Medicine</li>
+                        <li>General Surgery</li>
+                        <li>Orthopedics & Traumatology</li>
+                        <li>Neurology & Neurosurgery</li>
+                        <li>Cardiovascular & Respiratory</li>
+                        <li>Pediatrics & Gynecology</li>
+                    </ul>
+                </div>
+                <div class="subject-category">
+                    <h3><i class="fas fa-dumbbell"></i> Physiotherapy Core</h3>
+                    <ul class="subject-list">
+                        <li>Basic Physiotherapy Techniques</li>
+                        <li>Electrotherapy</li>
+                        <li>Manual Therapy</li>
+                        <li>Therapeutic Exercises</li>
+                        <li>Chest Physiotherapy</li>
+                        <li>Neurological Physiotherapy</li>
+                    </ul>
+                </div>
+                <div class="subject-category">
+                    <h3><i class="fas fa-bone"></i> Specialized Areas</h3>
+                    <ul class="subject-list">
+                        <li>Musculoskeletal Physiotherapy</li>
+                        <li>Sports Physiotherapy</li>
+                        <li>Geriatric Physiotherapy</li>
+                        <li>Community Based Rehabilitation</li>
+                        <li>Rehabilitation Medicine</li>
+                        <li>Research Methodology</li>
+                    </ul>
+                </div>
+                <div class="subject-category">
+                    <h3><i class="fas fa-stethoscope"></i> Clinical Practice</h3>
+                    <ul class="subject-list">
+                        <li>Patient Assessment</li>
+                        <li>Treatment Planning</li>
+                        <li>Clinical Reasoning</li>
+                        <li>Evidence Based Practice</li>
+                        <li>Health Promotion</li>
+                        <li>Professional Ethics</li>
+                    </ul>
+                </div>
+                <div class="subject-category">
+                    <h3><i class="fas fa-microscope"></i> Allied Subjects</h3>
+                    <ul class="subject-list">
+                        <li>Psychology</li>
+                        <li>Sociology</li>
+                        <li>Nutrition & Dietetics</li>
+                        <li>Pharmacology</li>
+                        <li>Communication Skills</li>
+                        <li>Computer Applications</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Eligibility & Admission -->
+        <section class="section" id="eligibility">
+            <div class="section-title">
+                <h2>Eligibility Criteria</h2>
+                <p>Requirements for BPT admission</p>
+            </div>
+            <div class="two-column">
+                <div class="column-content">
+                    <h3>Academic Requirements</h3>
+                    <ul>
+                        <li>10+2 with Physics, Chemistry, Biology</li>
+                        <li>Minimum 50% marks in PCB (45% for reserved categories)</li>
+                        <li>English as a compulsory subject</li>
+                        <li>Age limit: 17-25 years as on admission date</li>
+                        <li>Valid score in NEET or state-level entrance exam</li>
+                        <li>Medical fitness certificate required</li>
+                    </ul>
+                </div>
+                <div class="column-content">
+                    <h3>Recommended Skills</h3>
+                    <ul>
+                        <li>Strong interpersonal and communication skills</li>
+                        <li>Empathy and patience for patient care</li>
+                        <li>Good physical stamina and fitness</li>
+                        <li>Scientific temperament and analytical thinking</li>
+                        <li>Teamwork and collaboration abilities</li>
+                        <li>Continuous learning mindset</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admission Process -->
+        <section class="section" id="admission">
+            <div class="section-title">
+                <h2>Admission Process</h2>
+                <p>Step-by-step guide to secure your BPT seat</p>
+            </div>
+            <div class="process-steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Entrance Exam</h3>
+                    <p>Appear for NEET-UG or state-level physiotherapy entrance exams. Score well to meet cutoff requirements.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Registration</h3>
+                    <p>Register for counseling process with required documents and entrance exam scorecard.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Choice Filling</h3>
+                    <p>Fill preferences for colleges and branches during counseling based on your rank and score.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Seat Allotment</h3>
+                    <p>Get seat allotment based on merit, preferences, and availability. Report to college for admission.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Career Prospects -->
+        <section class="section" id="careers">
+            <div class="section-title">
+                <h2>Career Prospects</h2>
+                <p>Exciting opportunities after BPT</p>
+            </div>
+            <div class="career-grid">
+                <div class="career-card">
+                    <h3>Clinical Physiotherapist</h3>
+                    <div class="salary">Salary: ₹3-6 LPA</div>
+                    <p>Work in hospitals, clinics, and rehabilitation centers treating patients with various physical conditions and injuries.</p>
+                </div>
+                <div class="career-card">
+                    <h3>Sports Physiotherapist</h3>
+                    <div class="salary">Salary: ₹4-8 LPA</div>
+                    <p>Work with sports teams and athletes, providing injury prevention, treatment, and performance enhancement services.</p>
+                </div>
+                <div class="career-card">
+                    <h3>Pediatric Physiotherapist</h3>
+                    <div class="salary">Salary: ₹3-5 LPA</div>
+                    <p>Specialize in treating children with developmental delays, congenital conditions, and pediatric injuries.</p>
+                </div>
+                <div class="career-card">
+                    <h3>Neurological Physiotherapist</h3>
+                    <div class="salary">Salary: ₹4-7 LPA</div>
+                    <p>Treat patients with stroke, spinal cord injuries, and other neurological conditions affecting movement.</p>
+                </div>
+                <div class="career-card">
+                    <h3>Orthopedic Physiotherapist</h3>
+                    <div class="salary">Salary: ₹3-6 LPA</div>
+                    <p>Specialize in musculoskeletal conditions, post-surgical rehabilitation, and joint replacement recovery.</p>
+                </div>
+                <div class="career-card">
+                    <h3>Academician/Researcher</h3>
+                    <div class="salary">Salary: ₹5-10 LPA</div>
+                    <p>Pursue teaching positions in physiotherapy colleges or engage in research to advance the field.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Higher Studies Section -->
+        <section class="section" id="higher-studies">
+            <div class="section-title">
+                <h2>Higher Studies Options</h2>
+                <p>Advanced education pathways after BPT</p>
+            </div>
+            <div class="higher-studies-container">
+                <div class="studies-timeline">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Master of Physiotherapy (MPT)</h3>
+                            <div class="duration">2 Years</div>
+                            <p>Postgraduate specialization in various fields of physiotherapy with advanced clinical training and research.</p>
+                            <div class="specializations"><span>Orthopedics</span><span>Neurology</span><span>Cardiopulmonary</span><span>Sports</span><span>Pediatrics</span></div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Post Graduate Diploma</h3>
+                            <div class="duration">1 Year</div>
+                            <p>Specialized diploma programs for skill enhancement in specific areas of physiotherapy practice.</p>
+                            <div class="specializations"><span>Manual Therapy</span><span>Sports Medicine</span><span>Geriatric Care</span><span>Women's Health</span></div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Ph.D. in Physiotherapy</h3>
+                            <div class="duration">3-5 Years</div>
+                            <p>Doctoral program focusing on research, academia, and advanced clinical practice in physiotherapy.</p>
+                            <div class="specializations"><span>Clinical Research</span><span>Academic Leadership</span><span>Healthcare Management</span></div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Fellowship Programs</h3>
+                            <div class="duration">6 Months - 1 Year</div>
+                            <p>Advanced clinical fellowships for super-specialization in cutting-edge physiotherapy techniques.</p>
+                            <div class="specializations"><span>Hand Therapy</span><span>Spine Rehabilitation</span><span>Vestibular Therapy</span><span>Oncology Rehab</span></div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>International Certifications</h3>
+                            <div class="duration">Variable</div>
+                            <p>Global certifications for international practice recognition and specialized skill development.</p>
+                            <div class="specializations"><span>APTA (USA)</span><span>CSP (UK)</span><span>APA (Australia)</span><span>CPA (Canada)</span></div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Colleges -->
+        <section class="section" id="colleges">
+            <div class="section-title">
+                <h2>Top BPT Colleges</h2>
+                <p>Premier institutions for physiotherapy education</p>
+            </div>
+            <div class="college-cards">
+                <div class="college-card">
+                    <div class="college-rank">NIRF #1</div>
+                    <h3>AIIMS, New Delhi</h3>
+                    <div class="location"><i class="fas fa-map-marker-alt"></i><span>New Delhi, Delhi</span></div>
+                    <div class="college-details"><span><strong>Seats:</strong> 50</span><span><strong>Fee:</strong> ₹1,500/year</span><span><strong>NEET Cutoff:</strong> 650+</span></div>
+                </div>
+                <div class="college-card">
+                    <div class="college-rank">NIRF #2</div>
+                    <h3>PGIMER, Chandigarh</h3>
+                    <div class="location"><i class="fas fa-map-marker-alt"></i><span>Chandigarh</span></div>
+                    <div class="college-details"><span><strong>Seats:</strong> 40</span><span><strong>Fee:</strong> ₹2,000/year</span><span><strong>NEET Cutoff:</strong> 630+</span></div>
+                </div>
+                <div class="college-card">
+                    <div class="college-rank">NIRF #3</div>
+                    <h3>CMC, Vellore</h3>
+                    <div class="location"><i class="fas fa-map-marker-alt"></i><span>Vellore, Tamil Nadu</span></div>
+                    <div class="college-details"><span><strong>Seats:</strong> 60</span><span><strong>Fee:</strong> ₹25,000/year</span><span><strong>NEET Cutoff:</strong> 620+</span></div>
+                </div>
+                <div class="college-card">
+                    <div class="college-rank">NIRF #4</div>
+                    <h3>Kasturba Medical College</h3>
+                    <div class="location"><i class="fas fa-map-marker-alt"></i><span>Manipal, Karnataka</span></div>
+                    <div class="college-details"><span><strong>Seats:</strong> 80</span><span><strong>Fee:</strong> ₹3,50,000/year</span><span><strong>NEET Cutoff:</strong> 600+</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Entrance Exams -->
+        <section class="section" id="exams">
+            <div class="section-title">
+                <h2>Entrance Exams</h2>
+                <p>Key examinations for BPT admission</p>
+            </div>
+            <div class="exam-cards">
+                <div class="exam-card">
+                    <h3>NEET-UG</h3>
+                    <ul class="exam-details">
+                        <li><i class="fas fa-calendar"></i> Conducted: May annually</li>
+                        <li><i class="fas fa-clock"></i> Duration: 3 hours 20 minutes</li>
+                        <li><i class="fas fa-tasks"></i> Sections: Physics, Chemistry, Biology</li>
+                        <li><i class="fas fa-users"></i> Total Seats: 15,000+ BPT</li>
+                    </ul>
+                </div>
+                <div class="exam-card">
+                    <h3>IEMJEE</h3>
+                    <ul class="exam-details">
+                        <li><i class="fas fa-calendar"></i> Conducted: Multiple phases</li>
+                        <li><i class="fas fa-clock"></i> Duration: 2 hours</li>
+                        <li><i class="fas fa-tasks"></i> Sections: PCB + Aptitude</li>
+                        <li><i class="fas fa-users"></i> Seats: 200+ BPT</li>
+                    </ul>
+                </div>
+                <div class="exam-card">
+                    <h3>IPU CET</h3>
+                    <ul class="exam-details">
+                        <li><i class="fas fa-calendar"></i> Conducted: May</li>
+                        <li><i class="fas fa-clock"></i> Duration: 2.5 hours</li>
+                        <li><i class="fas fa-tasks"></i> Sections: Physics, Chemistry, Biology</li>
+                        <li><i class="fas fa-users"></i> Seats: 500+ BPT</li>
+                    </ul>
+                </div>
+                <div class="exam-card">
+                    <h3>State PET</h3>
+                    <ul class="exam-details">
+                        <li><i class="fas fa-calendar"></i> Conducted: Varies by state</li>
+                        <li><i class="fas fa-clock"></i> Duration: 2-3 hours</li>
+                        <li><i class="fas fa-tasks"></i> Sections: PCB + General Knowledge</li>
+                        <li><i class="fas fa-users"></i> Seats: State quota available</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fee Structure -->
+        <section class="section" id="fees">
+            <div class="section-title">
+                <h2>Fee Structure</h2>
+                <p>Estimated costs for BPT program</p>
+            </div>
+            <div class="table-scroll-wrapper">
+                <table class="fee-table">
+                    <thead>
+                        <tr><th>College Type</th><th>Annual Fee Range</th><th>Duration</th><th>Total Fee</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Government College</td><td>₹5,000 - ₹25,000</td><td>4.5 Years</td><td>₹22.5K - ₹1.1L</td></tr>
+                        <tr><td>Private College</td><td>₹80,000 - ₹2,50,000</td><td>4.5 Years</td><td>₹3.6L - ₹11.2L</td></tr>
+                        <tr><td>Deemed University</td><td>₹2,00,000 - ₹4,50,000</td><td>4.5 Years</td><td>₹9L - ₹20.2L</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section" id="faq">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Common queries about BPT program</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question"><span>What is the duration of BPT course?</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer"><p>BPT is a 4.5-year undergraduate program including 6 months of compulsory rotatory internship. The course provides comprehensive training in physiotherapy theory and practical clinical skills.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question"><span>Is NEET mandatory for BPT admission?</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer"><p>Yes, NEET-UG is mandatory for admission to most government and reputed private colleges. However, some private universities conduct their own entrance tests or offer management quota seats.</p></div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question"><span>Can I pursue MPT after BPT?</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer"><p>Yes, after completing BPT and 6 months internship, you can pursue MPT (Master of Physiotherapy) in various specializations like orthopedics, neurology, sports, cardiopulmonary, etc.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question"><span>Is BPT a doctorate degree?</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer"><p>BPT is an undergraduate professional degree. BPT graduates can use the prefix 'Dr.' and are recognized as medical professionals. For higher qualifications, one can pursue MPT and Ph.D.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>Start Your Healing Journey Today!</h2>
+            <p>Get expert guidance for BPT admission</p>
+            <a href="index.html#contact" class="cta-button">Apply Now</a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#courses">All Courses</a></li>
+                    <li><a href="index.html#admission-support">Admission Support</a></li>
+                    <li><a href="index.html#testimonials">Testimonials</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Popular Courses</h3>
+                <ul>
+                    <li><a href="bpt.html">BPT</a></li>
+                    <li><a href="bpharma.html">B.Pharma</a></li>
+                    <li><a href="btech.html">B.Tech</a></li>
+                    <li><a href="mbbs.html">MBBS</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +91 9876543210</li>
+                    <li><i class="fas fa-envelope"></i> info@whitedavidacademy.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Delhi, India</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2024 WhiteDavid Academy. All Rights Reserved.</p></div>
+    </footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => { document.getElementById('loadingScreen').classList.add('hidden'); }, 1000);
+        });
+
+        function createParticles() {
+            const c = document.getElementById('particles');
+            const colors = ['#00E0FF', '#2CE6C2', '#3B82F6', '#A855F7'];
+            for (let i = 0; i < 50; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 15 + 's';
+                p.style.animationDuration = (15 + Math.random() * 10) + 's';
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                p.style.background = color;
+                p.style.boxShadow = `0 0 10px ${color}`;
+                c.appendChild(p);
+            }
+        }
+        createParticles();
+
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const spans = menuToggle.querySelectorAll('span');
+            if (navLinks.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans.forEach(s => { s.style.transform = 'none'; s.style.opacity = '1'; });
+            }
+        });
+        document.querySelectorAll('#navLinks a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuToggle.querySelectorAll('span').forEach(s => { s.style.transform = 'none'; s.style.opacity = '1'; });
+            });
+        });
+
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const item = q.parentElement;
+                const active = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!active) item.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const t = document.querySelector(this.getAttribute('href'));
+                if (t) window.scrollTo({ top: t.offsetTop - 140, behavior: 'smooth' });
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'linear-gradient(135deg, rgba(11, 15, 42, 0.98), rgba(7, 11, 26, 0.98))';
+                header.style.boxShadow = '0 5px 25px rgba(0, 0, 0, 0.5)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, rgba(11, 15, 42, 0.92), rgba(7, 11, 26, 0.92))';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        const sections = document.querySelectorAll('section[id]');
+        const quickNavLinks = document.querySelectorAll('.quick-nav a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(s => { if (scrollY >= (s.offsetTop - 200)) current = s.getAttribute('id'); });
+            quickNavLinks.forEach(l => {
+                l.style.background = 'rgba(0, 224, 255, 0.06)';
+                l.style.color = 'var(--text)';
+                if (l.getAttribute('href').slice(1) === current) {
+                    l.style.background = 'var(--primary)';
+                    l.style.color = 'var(--darkest)';
+                }
+            });
+        });
+
+        // Mouse-follow glow effect on applicable cards
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.overview-card, .column-content, .career-card, .college-card, .exam-card, .subject-category');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                if (e.clientX >= rect.left - 50 && e.clientX <= rect.right + 50 && e.clientY >= rect.top - 50 && e.clientY <= rect.bottom + 50) {
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                }
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; } });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.section').forEach(s => {
+            s.style.opacity = '0'; s.style.transform = 'translateY(30px)'; s.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(s);
+        });
+
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateX(0)'; } });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.timeline-item').forEach((item, i) => {
+            item.style.opacity = '0';
+            item.style.transform = i % 2 === 1 ? 'translateX(50px)' : 'translateX(-50px)';
+            item.style.transition = `all 0.8s ease ${i * 0.2}s`;
+            timelineObserver.observe(item);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaipur National University - Admissions 2024</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00E0FF;
+            --secondary: #2CE6C2;
+            --accent: #00E0FF;
+            --dark: #0B0F2A;
+            --darker: #070A1A;
+            --light: #FFFFFF;
+            --text: #B0B8D1;
+            --text-dim: #94A3B8;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border: rgba(148, 163, 184, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--darker); }
+        ::-webkit-scrollbar-thumb { background: var(--gradient); border-radius: 5px; }
+
+        #loading {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--darker); display: flex; justify-content: center; align-items: center;
+            z-index: 10000; transition: opacity 0.5s, visibility 0.5s;
+        }
+        #loading.hide { opacity: 0; visibility: hidden; }
+        .loader {
+            width: 80px; height: 80px; border: 4px solid var(--border);
+            border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        #progressBar {
+            position: fixed; top: 0; left: 0; height: 3px;
+            background: var(--gradient); z-index: 9999; transition: width 0.2s;
+        }
+
+        #navbar {
+            position: fixed; top: 0; left: 0; right: 0; padding: 1rem 0;
+            background: rgba(11, 15, 42, 0.8); backdrop-filter: blur(10px);
+            z-index: 1000; transition: all 0.3s ease;
+        }
+        #navbar.scrolled {
+            padding: 0.5rem 0; background: rgba(7, 10, 26, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 224, 255, 0.12);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+
+        .logo {
+            font-size: 1.5rem; font-weight: bold;
+            background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-decoration: none; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .logo i { font-size: 2rem; -webkit-text-fill-color: var(--primary); }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            color: var(--text); text-decoration: none; transition: all 0.3s ease;
+            position: relative; padding: 0.5rem 0;
+        }
+        .nav-links a:hover { color: var(--light); }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+            background: var(--gradient); transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        #menuToggle { display: none; flex-direction: column; cursor: pointer; gap: 4px; }
+        #menuToggle span { width: 25px; height: 3px; background: var(--light); transition: all 0.3s ease; }
+
+        /* ============================================== */
+        /* Quick Navigation                               */
+        /* ============================================== */
+        .quick-nav {
+            position: fixed; right: 2rem; top: 60%; transform: translateY(-50%);
+            z-index: 999; display: flex; flex-direction: column; gap: 1rem;
+        }
+        .quick-nav-list { display: contents; }
+        .quick-nav-item {
+            width: 50px; height: 50px; background: var(--card-bg); backdrop-filter: blur(10px);
+            border: 1px solid var(--border); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease; position: relative;
+            text-decoration: none; color: var(--text);
+        }
+        .quick-nav-item i { font-size: 1.2rem; transition: all 0.3s ease; }
+        .quick-nav-item span {
+            position: absolute; right: 60px; background: var(--card-bg); backdrop-filter: blur(10px);
+            border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 8px;
+            white-space: nowrap; opacity: 0; visibility: hidden; transform: translateX(10px);
+            transition: all 0.3s ease; font-size: 0.9rem; pointer-events: none;
+        }
+        .quick-nav-item:hover {
+            background: var(--gradient); border-color: transparent; transform: scale(1.1);
+            color: var(--light); box-shadow: 0 5px 20px rgba(0, 224, 255, 0.3);
+        }
+        .quick-nav-item:hover span { opacity: 1; visibility: visible; transform: translateX(0); }
+        .quick-nav-item.active {
+            background: var(--gradient); border-color: transparent; color: var(--light);
+            box-shadow: 0 5px 20px rgba(0, 224, 255, 0.3);
+        }
+
+        .quick-nav-toggle {
+            display: none; width: 52px; height: 52px;
+            background: var(--card-bg); backdrop-filter: blur(10px);
+            border: 1px solid var(--border); border-radius: 50%;
+            align-items: center; justify-content: center;
+            cursor: pointer; position: relative; z-index: 2;
+            transition: all 0.3s ease; flex-shrink: 0;
+        }
+        .quick-nav-toggle i {
+            color: var(--primary); font-size: 1.4rem;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .quick-nav-toggle:hover { border-color: var(--primary); box-shadow: 0 0 25px rgba(0, 224, 255, 0.3); }
+        .quick-nav-toggle:active { transform: scale(0.95); }
+
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; position: relative;
+            padding: 6rem 0 2rem;
+            background: radial-gradient(ellipse at top, rgba(0, 224, 255, 0.06), transparent 60%),
+                        linear-gradient(180deg, #0B0F2A 0%, #111A3A 50%, #0B0F2A 100%);
+        }
+        #particles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; }
+        .particle {
+            position: absolute; width: 2px; height: 2px; background: var(--accent);
+            border-radius: 50%; animation: float 15s infinite linear; opacity: 0.3;
+        }
+        @keyframes float { from { transform: translateY(100vh) translateX(0); } to { transform: translateY(-10vh) translateX(100px); } }
+
+        .hero-content { position: relative; z-index: 1; text-align: center; max-width: 900px; margin: 0 auto; }
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem); margin-bottom: 1.5rem;
+            background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(0, 224, 255, 0.4)); }
+            to { filter: drop-shadow(0 0 30px rgba(44, 230, 194, 0.7)); }
+        }
+        .hero p { font-size: 1.25rem; color: var(--text); margin-bottom: 2rem; animation: fadeInUp 1s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        .university-badge {
+            display: inline-flex; align-items: center; gap: 1rem;
+            background: var(--card-bg); backdrop-filter: blur(10px);
+            border: 1px solid var(--border); padding: 1rem 2rem; border-radius: 50px;
+            margin-bottom: 2rem; animation: fadeInUp 1s ease 0.2s both;
+        }
+        .badge-icon {
+            width: 60px; height: 60px; background: var(--gradient); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+        }
+        .badge-text h3 { font-size: 1.2rem; margin-bottom: 0.25rem; }
+        .badge-text p { font-size: 0.9rem; color: var(--text); margin: 0; }
+
+        .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeInUp 1s ease 0.4s both; }
+        .btn {
+            padding: 1rem 2rem; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 0.5rem; position: relative; overflow: hidden;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6A3D, #FF8A50); color: var(--light);
+            box-shadow: 0 5px 20px rgba(255, 106, 61, 0.3);
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255, 106, 61, 0.5); }
+        .btn-secondary { background: transparent; color: var(--light); border: 2px solid #6C7A9A; }
+        .btn-secondary:hover { background: rgba(108, 122, 154, 0.1); border-color: var(--primary); transform: translateY(-3px); }
+
+        .section { padding: 5rem 0; position: relative; }
+        .section:nth-child(even) { background: rgba(0, 224, 255, 0.02); }
+        .section-title {
+            font-size: 2.5rem; text-align: center; margin-bottom: 1rem;
+            background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .section-subtitle { text-align: center; color: var(--text); margin-bottom: 3rem; font-size: 1.1rem; }
+
+        /* ============================================== */
+        /* Category-Based Icon Gradients (Multi-Accent)   */
+        /* ============================================== */
+        .accent-blue { --cat-grad: linear-gradient(135deg, #3B82F6, #60A5FA); --cat-color: #3B82F6; --cat-glow: rgba(59, 130, 246, 0.25); --cat-glow-soft: rgba(59, 130, 246, 0.06); }
+        .accent-purple { --cat-grad: linear-gradient(135deg, #A855F7, #EC4899); --cat-color: #A855F7; --cat-glow: rgba(168, 85, 247, 0.25); --cat-glow-soft: rgba(168, 85, 247, 0.06); }
+        .accent-orange { --cat-grad: linear-gradient(135deg, #FF6A3D, #FF8A50); --cat-color: #FF6A3D; --cat-glow: rgba(255, 106, 61, 0.25); --cat-glow-soft: rgba(255, 106, 61, 0.06); }
+        .accent-green { --cat-grad: linear-gradient(135deg, #22C55E, #4ADE80); --cat-color: #22C55E; --cat-glow: rgba(34, 197, 94, 0.25); --cat-glow-soft: rgba(34, 197, 94, 0.06); }
+        .accent-amber { --cat-grad: linear-gradient(135deg, #F59E0B, #FBBF24); --cat-color: #F59E0B; --cat-glow: rgba(245, 158, 11, 0.25); --cat-glow-soft: rgba(245, 158, 11, 0.06); }
+        .accent-teal { --cat-grad: linear-gradient(135deg, #14B8A6, #2DD4BF); --cat-color: #14B8A6; --cat-glow: rgba(20, 184, 166, 0.25); --cat-glow-soft: rgba(20, 184, 166, 0.06); }
+
+        /* ============================================== */
+        /* INFO CARD - All 14 Features + Micro-interaction*/
+        /* ============================================== */
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .info-card {
+            /* 1.Glassmorphism 2.Gradient BG 5.Rounded 14.Dark */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(26, 46, 74, 0.65));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            /* 10.Spacing */
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            /* 12.Shadow Elevation */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        /* 4.Gradient Top Highlight */
+        .info-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--gradient); transform: scaleX(0); transition: transform 0.3s ease;
+            z-index: 1;
+        }
+        .info-card:hover::before { transform: scaleX(1); }
+        /* 11.Hover Interaction + 3.Neon Glow + 12.Enhanced Shadow */
+        .info-card:hover {
+            transform: translateY(-10px) scale(1.01);
+            box-shadow: 0 25px 60px rgba(0, 224, 255, 0.15), 0 10px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+        /* 8.Typography Hierarchy + 6.Flexbox */
+        .info-card h3 {
+            font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--light);
+            display: flex; align-items: center; gap: 12px;
+            transition: text-shadow 0.3s ease;
+        }
+        .info-card h3 i { color: var(--primary); transition: text-shadow 0.3s ease; }
+        /* Micro-interaction: Title glow on hover */
+        .info-card:hover h3 { text-shadow: 0 0 20px rgba(0, 224, 255, 0.4); }
+        .info-card:hover h3 i { text-shadow: 0 0 15px rgba(0, 224, 255, 0.5); }
+        /* 7.Icon-Based List + 6.Flexbox + 9.Contrast + 10.Spacing */
+        .info-card ul { list-style: none; }
+        .info-card ul li {
+            padding: 10px 0;
+            color: var(--text);
+            display: flex; align-items: center; gap: 12px;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        .info-card ul li:last-child { border-bottom: none; }
+        .info-card ul li i { color: var(--accent); font-size: 0.8rem; flex-shrink: 0; transition: text-shadow 0.3s ease; }
+        /* Micro-interaction: Text highlight on hover */
+        .info-card:hover ul li { color: var(--light); }
+        .info-card ul li:hover {
+            color: var(--primary);
+            padding-left: 8px;
+            text-shadow: 0 0 8px rgba(0, 224, 255, 0.3);
+        }
+        .info-card ul li:hover i { text-shadow: 0 0 10px rgba(0, 224, 255, 0.5); }
+
+        /* Info Card accent overrides */
+        .info-card[class*="accent-"]::before { background: var(--cat-grad); }
+        .info-card[class*="accent-"] h3 i { color: var(--cat-color); }
+        .info-card[class*="accent-"]:hover {
+            border-color: var(--cat-color);
+            box-shadow: 0 25px 60px var(--cat-glow), inset 0 0 50px var(--cat-glow-soft), 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        .info-card[class*="accent-"] ul li i { color: var(--cat-color); }
+        .info-card[class*="accent-"]:hover h3 { text-shadow: 0 0 20px var(--cat-glow); }
+        .info-card[class*="accent-"]:hover h3 i { text-shadow: 0 0 15px var(--cat-glow); }
+        .info-card[class*="accent-"] ul li:hover { text-shadow: 0 0 8px var(--cat-glow); }
+        .info-card[class*="accent-"] ul li:hover i { text-shadow: 0 0 10px var(--cat-glow); }
+
+        /* ============================================== */
+        /* STAT CARD - All 14 Features + Micro-interaction*/
+        /* ============================================== */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .stat-card {
+            /* 1.Glassmorphism 2.Gradient BG 5.Rounded 14.Dark */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(26, 46, 74, 0.65));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            /* 10.Spacing */
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            /* 12.Shadow Elevation */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        /* 4.Gradient Top Highlight */
+        .stat-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--gradient); transform: scaleX(0); transition: transform 0.3s ease;
+            z-index: 1;
+        }
+        .stat-card:hover::before { transform: scaleX(1); }
+        /* 11.Hover + 3.Neon Glow + 12.Enhanced Shadow */
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(0, 224, 255, 0.15), 0 10px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+        /* 8.Typography Hierarchy */
+        .stat-number {
+            font-size: 2.5rem; font-weight: bold; background: var(--gradient);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            transition: filter 0.3s ease;
+        }
+        /* Micro-interaction: Number glow */
+        .stat-card:hover .stat-number { filter: drop-shadow(0 0 15px rgba(0, 224, 255, 0.5)); }
+        /* 9.Color Contrast */
+        .stat-label {
+            color: var(--text-dim); font-size: 0.9rem;
+            text-transform: uppercase; letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        .stat-card:hover .stat-label { color: var(--text); }
+
+        /* ============================================== */
+        /* COURSE CATEGORY - All 14 Features              */
+        /* ============================================== */
+        .course-category {
+            /* 1.Glassmorphism 2.Gradient BG 5.Rounded 14.Dark */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(26, 46, 74, 0.65));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            /* 10.Spacing */
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            /* 12.Shadow Elevation */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        /* 4.Gradient Top Highlight */
+        .course-category::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--gradient); transform: scaleX(0); transition: transform 0.3s ease;
+            z-index: 1;
+        }
+        .course-category:hover::before { transform: scaleX(1); }
+        /* 11.Hover + 3.Neon Glow + 12.Enhanced Shadow */
+        .course-category:hover {
+            transform: translateY(-8px) scale(1.005);
+            box-shadow: 0 25px 60px rgba(0, 224, 255, 0.15), 0 10px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+        /* 8.Typography + 6.Flexbox */
+        .course-category h4 {
+            font-size: 1.3rem; margin-bottom: 1rem; color: var(--light);
+            display: flex; align-items: center; gap: 12px;
+            transition: text-shadow 0.3s ease;
+        }
+        .course-category h4 i { color: var(--primary); transition: text-shadow 0.3s ease; }
+        .course-category:hover h4 { text-shadow: 0 0 20px rgba(0, 224, 255, 0.4); }
+        .course-category:hover h4 i { text-shadow: 0 0 15px rgba(0, 224, 255, 0.5); }
+        /* 7.Icon-Based List (using ::before) */
+        .course-category ul {
+            list-style: none;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.5rem;
+        }
+        .course-category ul li {
+            color: var(--text); padding: 8px 0 8px 1.5rem;
+            position: relative; transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border);
+        }
+        .course-category ul li:last-child { border-bottom: none; }
+        .course-category ul li::before {
+            content: '▸'; position: absolute; left: 0; color: var(--accent);
+            transition: all 0.3s ease;
+        }
+        .course-category:hover ul li { color: var(--light); }
+        .course-category ul li:hover {
+            color: var(--primary); padding-left: 2rem;
+            text-shadow: 0 0 8px rgba(0, 224, 255, 0.3);
+        }
+        .course-category ul li:hover::before {
+            color: var(--primary); text-shadow: 0 0 8px rgba(0, 224, 255, 0.4);
+        }
+
+        /* Course Category accent overrides */
+        .course-category[class*="accent-"]::before { background: var(--cat-grad); }
+        .course-category[class*="accent-"] h4 i { color: var(--cat-color); }
+        .course-category[class*="accent-"]:hover {
+            border-color: var(--cat-color);
+            box-shadow: 0 25px 60px var(--cat-glow), inset 0 0 50px var(--cat-glow-soft), 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        .course-category[class*="accent-"] ul li::before { color: var(--cat-color); }
+        .course-category[class*="accent-"]:hover h4 { text-shadow: 0 0 20px var(--cat-glow); }
+        .course-category[class*="accent-"]:hover h4 i { text-shadow: 0 0 15px var(--cat-glow); }
+        .course-category[class*="accent-"] ul li:hover { text-shadow: 0 0 8px var(--cat-glow); }
+        .course-category[class*="accent-"] ul li:hover::before { color: var(--cat-color); text-shadow: 0 0 8px var(--cat-glow); }
+
+        /* ============================================== */
+        /* COMPARISON TABLE - Enhanced Hover              */
+        /* ============================================== */
+        .comparison-table { overflow-x: auto; margin-top: 2rem; -webkit-overflow-scrolling: touch; }
+        .comparison-table table {
+            width: 100%; border-collapse: collapse;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(26, 46, 74, 0.65));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        .comparison-table th {
+            background: var(--gradient); color: var(--light);
+            padding: 1rem; text-align: left; font-weight: 600;
+        }
+        .comparison-table td {
+            padding: 1rem; border-top: 1px solid var(--border); color: var(--text);
+            transition: all 0.3s ease;
+        }
+        .comparison-table tr:hover td { background: rgba(0, 224, 255, 0.05); }
+        .comparison-table tr:hover td:first-child {
+            color: var(--primary); text-shadow: 0 0 8px rgba(0, 224, 255, 0.3);
+        }
+
+        /* ============================================== */
+        /* TIMELINE - All 14 Features                     */
+        /* ============================================== */
+        .timeline { position: relative; margin-top: 3rem; }
+        .timeline::before {
+            content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+            background: var(--gradient); transform: translateX(-50%);
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.2);
+        }
+        .timeline-item { position: relative; margin-bottom: 3rem; display: flex; align-items: center; }
+        .timeline-item:nth-child(odd) { flex-direction: row-reverse; }
+        .timeline-content {
+            flex: 1;
+            /* 1.Glassmorphism 2.Gradient BG 5.Rounded 14.Dark */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(26, 46, 74, 0.65));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            /* 10.Spacing */
+            padding: 2rem;
+            margin: 0 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            /* 12.Shadow Elevation */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        /* 4.Gradient Top Highlight */
+        .timeline-content::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--gradient); transform: scaleX(0); transition: transform 0.3s ease;
+            z-index: 1;
+        }
+        .timeline-content:hover::before { transform: scaleX(1); }
+        /* 11.Hover + 3.Neon Glow + 12.Enhanced Shadow */
+        .timeline-content:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(0, 224, 255, 0.15), 0 10px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+        /* 8.Typography + 9.Contrast */
+        .timeline-content h4 { color: var(--light); margin-bottom: 0.5rem; transition: text-shadow 0.3s ease; }
+        .timeline-content:hover h4 { text-shadow: 0 0 20px rgba(0, 224, 255, 0.4); }
+        .timeline-content p { color: var(--text); margin: 0; transition: color 0.3s ease; }
+        .timeline-content:hover p { color: var(--light); }
+        .timeline-dot {
+            width: 20px; height: 20px; background: var(--gradient); border-radius: 50%;
+            position: absolute; left: 50%; transform: translateX(-50%);
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.4); z-index: 1;
+        }
+        .timeline-year {
+            position: absolute; left: 50%; transform: translateX(-50%); background: var(--gradient);
+            color: var(--light); padding: 0.5rem 1rem; border-radius: 50px;
+            font-weight: 600; font-size: 0.9rem; top: -30px;
+        }
+
+        /* ============================================== */
+        /* HIGHLIGHT BOX - All 14 Features                */
+        /* ============================================== */
+        .highlight-box {
+            /* 1.Glassmorphism 2.Gradient BG 5.Rounded 14.Dark */
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.06), rgba(44, 230, 194, 0.06));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            border-radius: 20px;
+            /* 10.Spacing */
+            padding: 2rem;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+            /* 12.Shadow Elevation */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        /* 4.Gradient Top Highlight */
+        .highlight-box::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0; transition: opacity 0.3s ease; z-index: 1;
+        }
+        .highlight-box:hover::before { opacity: 1; }
+        /* 11.Hover + 3.Neon Glow + 12.Enhanced Shadow */
+        .highlight-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(0, 224, 255, 0.12), 0 10px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+        /* 8.Typography + 6.Flexbox */
+        .highlight-box h4 {
+            color: var(--light); margin-bottom: 1rem;
+            display: flex; align-items: center; gap: 12px;
+            transition: text-shadow 0.3s ease;
+        }
+        .highlight-box h4 i { color: var(--primary); transition: text-shadow 0.3s ease; }
+        .highlight-box:hover h4 { text-shadow: 0 0 20px rgba(0, 224, 255, 0.4); }
+        .highlight-box:hover h4 i { text-shadow: 0 0 15px rgba(0, 224, 255, 0.5); }
+        /* 7.Icon-Based List */
+        .highlight-box ul {
+            list-style: none;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0.5rem;
+        }
+        .highlight-box ul li {
+            color: var(--text); padding: 8px 0 8px 1.5rem;
+            position: relative; transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border);
+        }
+        .highlight-box ul li:last-child { border-bottom: none; }
+        .highlight-box ul li::before {
+            content: '✦'; position: absolute; left: 0; color: var(--accent);
+            transition: all 0.3s ease;
+        }
+        .highlight-box:hover ul li { color: var(--light); }
+        .highlight-box ul li:hover {
+            color: var(--primary); padding-left: 2rem;
+            text-shadow: 0 0 8px rgba(0, 224, 255, 0.3);
+        }
+        .highlight-box ul li:hover::before {
+            color: var(--primary); text-shadow: 0 0 8px rgba(0, 224, 255, 0.4);
+        }
+        .highlight-box ul li strong {
+            color: var(--primary); transition: text-shadow 0.3s ease;
+        }
+        .highlight-box ul li:hover strong { text-shadow: 0 0 10px rgba(0, 224, 255, 0.4); }
+
+        /* ============================================== */
+        /* FACILITY CARD - All 14 Features               */
+        /* ============================================== */
+        .facility-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .facility-card {
+            /* 1.Glassmorphism 2.Gradient BG 5.Rounded 14.Dark */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(26, 46, 74, 0.65));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            /* 10.Spacing */
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            /* 12.Shadow Elevation */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        /* 4.Gradient Top Highlight */
+        .facility-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--gradient); transform: scaleX(0); transition: transform 0.3s ease;
+            z-index: 1;
+        }
+        .facility-card:hover::before { transform: scaleX(1); }
+        /* 11.Hover + 3.Neon Glow + 12.Enhanced Shadow */
+        .facility-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 224, 255, 0.15), 0 10px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 224, 255, 0.3);
+        }
+        /* 8.Typography */
+        .facility-card i {
+            font-size: 3rem; color: var(--primary); margin-bottom: 1rem;
+            display: block; transition: transform 0.3s ease, text-shadow 0.3s ease;
+        }
+        .facility-card:hover i {
+            transform: scale(1.15) rotate(5deg);
+            text-shadow: 0 0 25px rgba(0, 224, 255, 0.5);
+        }
+        .facility-card h4 {
+            color: var(--light); margin-bottom: 0.5rem;
+            transition: text-shadow 0.3s ease;
+        }
+        .facility-card:hover h4 { text-shadow: 0 0 15px rgba(0, 224, 255, 0.3); }
+        .facility-card p {
+            color: var(--text-dim); font-size: 0.9rem; margin: 0;
+            transition: color 0.3s ease;
+        }
+        .facility-card:hover p { color: var(--text); }
+
+        /* Facility Card accent overrides */
+        .facility-card[class*="accent-"] i { color: var(--cat-color); }
+        .facility-card[class*="accent-"]:hover {
+            border-color: var(--cat-color);
+            box-shadow: 0 30px 60px var(--cat-glow), 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        .facility-card[class*="accent-"]:hover i {
+            text-shadow: 0 0 25px var(--cat-glow);
+        }
+        .facility-card[class*="accent-"]:hover h4 { text-shadow: 0 0 15px var(--cat-glow); }
+        .facility-card[class*="accent-"]::after {
+            content: '';
+            position: absolute; bottom: -30%; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 60%;
+            background: radial-gradient(ellipse, var(--cat-glow-soft), transparent 70%);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+        }
+        .facility-card[class*="accent-"]:hover::after { opacity: 1; }
+
+        /* ============================================== */
+        /* CTA SECTION - All 14 Features                 */
+        /* ============================================== */
+        .cta-section {
+            background: linear-gradient(135deg, #0F172A 0%, #1A2B5C 50%, #111A3A 100%);
+            border: 1px solid rgba(0, 224, 255, 0.1);
+            border-radius: 30px;
+            padding: 4rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+        /* 4.Gradient Top Highlight */
+        .cta-section::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(0, 224, 255, 0.04) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
+            z-index: 0;
+        }
+        .cta-section::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, #FF6A3D, var(--primary), var(--secondary));
+            z-index: 2; opacity: 0; transition: opacity 0.3s ease;
+        }
+        .cta-section:hover::after { opacity: 1; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        /* 11.Hover + 3.Neon Glow */
+        .cta-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(0, 224, 255, 0.12), 0 10px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 224, 255, 0.25);
+        }
+        .cta-content { position: relative; z-index: 1; }
+        .cta-section h2 {
+            font-size: 2.5rem; margin-bottom: 1rem; color: var(--light);
+            transition: text-shadow 0.3s ease;
+        }
+        .cta-section:hover h2 { text-shadow: 0 0 25px rgba(0, 224, 255, 0.3); }
+        .cta-section p {
+            font-size: 1.2rem; margin-bottom: 2rem; color: var(--text);
+            transition: color 0.3s ease;
+        }
+        .cta-section:hover p { color: var(--light); }
+        .cta-section .btn { background: var(--light); color: var(--primary); }
+        .cta-section .btn:hover { background: var(--dark); color: var(--light); transform: translateY(-3px); }
+
+        footer { background: var(--darker); padding: 3rem 0 1rem; border-top: 1px solid var(--border); }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .footer-section h3 { color: var(--light); margin-bottom: 1rem; font-size: 1.2rem; }
+        .footer-section p { color: var(--text); margin-bottom: 0.5rem; display: flex; align-items: flex-start; gap: 8px; }
+        .footer-section p i { margin-top: 4px; flex-shrink: 0; }
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: 0.5rem; }
+        .footer-section ul li a { color: var(--text); text-decoration: none; transition: color 0.3s ease; }
+        .footer-section ul li a:hover { color: var(--primary); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--text); }
+
+        /* ============================================ */
+        /* RESPONSIVE - Large Tablets / Small Laptops  */
+        /* ============================================ */
+        @media (max-width: 1024px) {
+            .section-title { font-size: 2.2rem; }
+            .cta-section h2 { font-size: 2.2rem; }
+            .info-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+            .stats-grid { gap: 1.5rem; }
+            .course-category ul { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+            .highlight-box ul { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+            .facility-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+            .quick-nav { right: 1rem; gap: 0.75rem; }
+            .quick-nav-item { width: 45px; height: 45px; }
+            .quick-nav-item i { font-size: 1.1rem; }
+            .quick-nav-item span { display: none; }
+            .timeline-content { margin: 0 1.5rem; padding: 1.5rem; }
+            .container { padding: 0 1.5rem; }
+        }
+
+        /* ============================================ */
+        /* RESPONSIVE - Tablets                       */
+        /* ============================================ */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed; top: 70px; left: -100%; width: 100%; height: calc(100vh - 70px);
+                background: var(--darker); flex-direction: column; padding: 2rem;
+                transition: left 0.3s ease; overflow-y: auto; -webkit-overflow-scrolling: touch;
+            }
+            .nav-links.active { left: 0; }
+            #menuToggle { display: flex; }
+
+            .quick-nav {
+                bottom: 20px; right: 15px; top: auto; transform: none;
+                flex-direction: column; align-items: flex-end; gap: 10px; z-index: 998;
+            }
+            .quick-nav-list {
+                display: flex; flex-direction: column; gap: 8px;
+                background: rgba(7, 10, 26, 0.92); backdrop-filter: blur(14px);
+                border: 1px solid var(--border); border-radius: 14px; padding: 10px;
+                opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.95);
+                transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                pointer-events: none; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            }
+            .quick-nav.expanded .quick-nav-list {
+                opacity: 1; visibility: visible; transform: translateY(0) scale(1); pointer-events: all;
+            }
+            .quick-nav-item {
+                width: 44px; height: 44px; opacity: 0; transform: scale(0.5);
+                transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+            }
+            .quick-nav.expanded .quick-nav-item:nth-child(1) { opacity: 1; transform: scale(1); transition-delay: 0.18s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(2) { opacity: 1; transform: scale(1); transition-delay: 0.15s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(3) { opacity: 1; transform: scale(1); transition-delay: 0.12s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(4) { opacity: 1; transform: scale(1); transition-delay: 0.09s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(5) { opacity: 1; transform: scale(1); transition-delay: 0.07s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(6) { opacity: 1; transform: scale(1); transition-delay: 0.05s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(7) { opacity: 1; transform: scale(1); transition-delay: 0.03s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(8) { opacity: 1; transform: scale(1); transition-delay: 0.01s; }
+            .quick-nav-item:hover { transform: scale(1.08) !important; }
+            .quick-nav-item.active:hover { transform: scale(1.08) !important; }
+            .quick-nav-toggle { display: flex; }
+            .quick-nav-item span { display: none !important; }
+
+            .section { padding: 3.5rem 0; }
+            .section-title { font-size: 2rem; }
+            .section-subtitle { font-size: 1rem; margin-bottom: 2rem; }
+            .container { padding: 0 1.25rem; }
+
+            .hero { padding: 5rem 0 2rem; }
+            .hero p { font-size: 1.1rem; }
+            .university-badge { padding: 0.75rem 1.5rem; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+            .badge-icon { width: 50px; height: 50px; font-size: 1.25rem; }
+            .badge-text h3 { font-size: 1.05rem; }
+            .badge-text p { font-size: 0.85rem; }
+
+            .info-grid { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+            .info-card { padding: 1.5rem; }
+            .info-card h3 { font-size: 1.15rem; margin-bottom: 1rem; }
+
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 2rem; }
+            .stat-card { padding: 1.5rem; }
+            .stat-number { font-size: 2rem; }
+            .stat-label { font-size: 0.8rem; }
+
+            .course-category { padding: 1.5rem; }
+            .course-category h4 { font-size: 1.15rem; }
+            .course-category ul { grid-template-columns: 1fr; }
+
+            .comparison-table { margin-top: 1.5rem; }
+            .comparison-table th, .comparison-table td { padding: 0.75rem; font-size: 0.9rem; }
+
+            .timeline::before { left: 25px; }
+            .timeline-item { flex-direction: column !important; margin-left: 55px; margin-bottom: 2rem; }
+            .timeline-content { margin: 0; padding: 1.25rem; width: 100%; }
+            .timeline-content:hover { transform: none; }
+            .timeline-dot { left: 25px; width: 16px; height: 16px; }
+            .timeline-year { left: 25px; top: -28px; font-size: 0.8rem; padding: 0.4rem 0.8rem; }
+
+            .highlight-box { padding: 1.5rem; margin-top: 1.5rem; }
+            .highlight-box h4 { font-size: 1.15rem; }
+            .highlight-box ul { grid-template-columns: 1fr; }
+
+            .facility-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 2rem; }
+            .facility-card { padding: 1.5rem; }
+            .facility-card i { font-size: 2.5rem; margin-bottom: 0.75rem; }
+            .facility-card h4 { font-size: 1.05rem; }
+            .facility-card p { font-size: 0.85rem; }
+
+            .cta-section { padding: 2.5rem 1.5rem; border-radius: 20px; }
+            .cta-section h2 { font-size: 1.8rem; }
+            .cta-section p { font-size: 1rem; }
+
+            .btn-group { flex-direction: column; align-items: stretch; }
+            .btn { width: 100%; justify-content: center; }
+
+            .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
+            footer { padding: 2rem 0 1rem; }
+        }
+
+        /* ============================================ */
+        /* RESPONSIVE - Small Tablets / Large Phones   */
+        /* ============================================ */
+        @media (max-width: 576px) {
+            .container { padding: 0 1rem; }
+
+            .logo { font-size: 1.3rem; }
+            .logo i { font-size: 1.6rem; }
+
+            .section { padding: 3rem 0; }
+            .section-title { font-size: 1.75rem; }
+            .section-subtitle { font-size: 0.95rem; margin-bottom: 1.5rem; }
+
+            .hero { padding: 4.5rem 0 1.5rem; min-height: auto; }
+            .hero p { font-size: 1rem; margin-bottom: 1.5rem; }
+            .university-badge { padding: 0.6rem 1rem; border-radius: 16px; }
+            .badge-icon { width: 44px; height: 44px; font-size: 1.1rem; }
+            .badge-text h3 { font-size: 0.95rem; }
+            .badge-text p { font-size: 0.8rem; }
+
+            .btn { padding: 0.85rem 1.5rem; font-size: 0.95rem; }
+
+            .info-card { padding: 1.25rem; border-radius: 16px; }
+            .info-card h3 { font-size: 1.05rem; gap: 10px; flex-wrap: wrap; }
+            .info-card h3 i { font-size: 1.2rem; }
+            .info-card ul li { font-size: 0.9rem; padding: 8px 0; }
+
+            .stat-card { padding: 1.25rem; border-radius: 16px; }
+            .stat-number { font-size: 1.75rem; }
+            .stat-label { font-size: 0.75rem; }
+
+            .course-category { padding: 1.25rem; border-radius: 16px; }
+            .course-category h4 { font-size: 1.05rem; }
+            .course-category ul li { font-size: 0.9rem; }
+
+            .comparison-table th, .comparison-table td { padding: 0.6rem; font-size: 0.85rem; }
+
+            .timeline::before { left: 20px; }
+            .timeline-item { margin-left: 45px; margin-bottom: 1.5rem; }
+            .timeline-content { padding: 1rem; border-radius: 16px; }
+            .timeline-content h4 { font-size: 1rem; }
+            .timeline-content p { font-size: 0.9rem; }
+            .timeline-dot { left: 20px; width: 14px; height: 14px; }
+            .timeline-year { left: 20px; top: -26px; font-size: 0.75rem; padding: 0.3rem 0.6rem; }
+
+            .highlight-box { padding: 1.25rem; border-radius: 16px; margin-top: 1.25rem; }
+            .highlight-box h4 { font-size: 1.05rem; }
+            .highlight-box ul li { font-size: 0.9rem; }
+
+            .facility-grid { grid-template-columns: 1fr; gap: 1rem; margin-top: 1.5rem; }
+            .facility-card { padding: 1.25rem; border-radius: 16px; }
+            .facility-card i { font-size: 2.25rem; }
+            .facility-card h4 { font-size: 1rem; }
+            .facility-card p { font-size: 0.85rem; }
+
+            .cta-section { padding: 2rem 1.25rem; border-radius: 16px; }
+            .cta-section h2 { font-size: 1.5rem; }
+            .cta-section p { font-size: 0.95rem; margin-bottom: 1.5rem; }
+
+            .footer-section h3 { font-size: 1.1rem; }
+            .footer-section p { font-size: 0.9rem; }
+            .footer-section ul li a { font-size: 0.9rem; }
+            .footer-bottom p { font-size: 0.85rem; }
+
+            .quick-nav { bottom: 15px; right: 12px; gap: 8px; }
+            .quick-nav-list {
+                display: grid; grid-template-columns: repeat(2, 38px); gap: 8px;
+                padding: 10px; border-radius: 16px; transform-origin: bottom right;
+            }
+            .quick-nav-item { width: 38px; height: 38px; }
+            .quick-nav-item i { font-size: 0.95rem; }
+            .quick-nav.expanded .quick-nav-item:nth-child(1) { transition-delay: 0s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(2) { transition-delay: 0.02s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(3) { transition-delay: 0.04s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(4) { transition-delay: 0.06s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(5) { transition-delay: 0.08s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(6) { transition-delay: 0.10s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(7) { transition-delay: 0.12s; }
+            .quick-nav.expanded .quick-nav-item:nth-child(8) { transition-delay: 0.14s; }
+            .quick-nav-toggle { width: 46px; height: 46px; }
+            .quick-nav-toggle i { font-size: 1.2rem; }
+        }
+
+        /* ============================================ */
+        /* RESPONSIVE - Extra Small Phones             */
+        /* ============================================ */
+        @media (max-width: 375px) {
+            .logo { font-size: 1.15rem; }
+            .logo i { font-size: 1.4rem; }
+
+            .section-title { font-size: 1.5rem; }
+            .section-subtitle { font-size: 0.9rem; }
+
+            .hero p { font-size: 0.95rem; }
+            .university-badge { flex-direction: column; text-align: center; padding: 0.75rem 1rem; }
+            .badge-icon { width: 40px; height: 40px; font-size: 1rem; }
+            .badge-text h3 { font-size: 0.9rem; }
+            .badge-text p { font-size: 0.75rem; }
+
+            .info-card h3 { font-size: 1rem; }
+            .info-card ul li { font-size: 0.85rem; }
+            .stat-number { font-size: 1.5rem; }
+            .stat-label { font-size: 0.7rem; }
+            .course-category h4 { font-size: 1rem; }
+            .course-category ul li { font-size: 0.85rem; }
+            .cta-section h2 { font-size: 1.3rem; }
+            .cta-section p { font-size: 0.9rem; }
+
+            .quick-nav { display: none; }
+        }
+
+        /* ============================================ */
+        /* RESPONSIVE - Landscape Orientation          */
+        /* ============================================ */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero { padding: 4rem 0 1rem; min-height: auto; }
+            .hero p { font-size: 1rem; margin-bottom: 1rem; }
+            .university-badge { padding: 0.5rem 1rem; margin-bottom: 1rem; }
+            .badge-icon { width: 40px; height: 40px; font-size: 1rem; }
+            .badge-text h3 { font-size: 1rem; }
+            .badge-text p { font-size: 0.8rem; }
+            .section { padding: 2.5rem 0; }
+            .section-title { font-size: 1.75rem; }
+            .section-subtitle { margin-bottom: 1.5rem; }
+            .cta-section { padding: 2rem 1.5rem; }
+            .cta-section h2 { font-size: 1.75rem; }
+
+            .quick-nav { bottom: 10px; right: 10px; }
+            .quick-nav-list { padding: 8px; gap: 6px; }
+            .quick-nav-item { width: 34px; height: 34px; }
+            .quick-nav-item i { font-size: 0.85rem; }
+            .quick-nav-toggle { width: 40px; height: 40px; }
+            .quick-nav-toggle i { font-size: 1rem; }
+        }
+
+        /* ============================================ */
+        /* Touch Device Optimizations                  */
+        /* ============================================ */
+        @media (hover: none) and (pointer: coarse) {
+            .btn:hover { transform: none; }
+            .btn:active { transform: scale(0.98); }
+            .info-card:hover { transform: none; }
+            .info-card:active { transform: scale(0.99); }
+            .stat-card:hover { transform: none; }
+            .stat-card:active { transform: scale(0.98); }
+            .course-category:hover { transform: none; }
+            .course-category:active { transform: scale(0.99); }
+            .facility-card:hover { transform: none; }
+            .facility-card:active { transform: scale(0.98); }
+            .timeline-content:hover { transform: none; }
+            .highlight-box:hover { transform: none; }
+            .highlight-box:active { transform: scale(0.99); }
+            .cta-section:hover { transform: none; }
+            .quick-nav-item:hover { transform: scale(1.08) !important; }
+            .quick-nav-item:active { transform: scale(0.92) !important; }
+        }
+
+        /* ============================================ */
+        /* Reduced Motion                              */
+        /* ============================================ */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .particle { display: none; }
+        }
+
+        /* ============================================ */
+        /* High Contrast Mode                          */
+        /* ============================================ */
+        @media (prefers-contrast: high) {
+            .info-card, .stat-card, .course-category, .facility-card,
+            .timeline-content, .highlight-box, .comparison-table,
+            .cta-section, .university-badge {
+                border-width: 2px;
+            }
+            .quick-nav-item { border-width: 2px; }
+            .quick-nav-list { border-width: 2px; }
+            .quick-nav-toggle { border-width: 2px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading"><div class="loader"></div></div>
+    <div id="progressBar"></div>
+
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="#" class="logo"><i class="fas fa-graduation-cap"></i> JNU Jaipur</a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#admission">Admission</a></li>
+                    <li><a href="#campus">Campus</a></li>
+                    <li><a href="#facilities">Facilities</a></li>
+                    <li><a href="#placements">Placements</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div id="menuToggle"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Quick Navigation -->
+    <div class="quick-nav" id="quickNav">
+        <div class="quick-nav-list" id="quickNavList">
+            <a href="#home" class="quick-nav-item active" data-section="home"><i class="fas fa-home"></i><span>Home</span></a>
+            <a href="#about" class="quick-nav-item" data-section="about"><i class="fas fa-info-circle"></i><span>About JNU</span></a>
+            <a href="#courses" class="quick-nav-item" data-section="courses"><i class="fas fa-book"></i><span>Courses</span></a>
+            <a href="#admission" class="quick-nav-item" data-section="admission"><i class="fas fa-user-plus"></i><span>Admission</span></a>
+            <a href="#campus" class="quick-nav-item" data-section="campus"><i class="fas fa-university"></i><span>Campus Life</span></a>
+            <a href="#facilities" class="quick-nav-item" data-section="facilities"><i class="fas fa-building"></i><span>Facilities</span></a>
+            <a href="#placements" class="quick-nav-item" data-section="placements"><i class="fas fa-briefcase"></i><span>Placements</span></a>
+            <a href="#contact" class="quick-nav-item" data-section="contact"><i class="fas fa-phone"></i><span>Contact</span></a>
+        </div>
+        <div class="quick-nav-toggle" id="quickNavToggle"><i class="fas fa-compass"></i></div>
+    </div>
+
+    <section class="hero" id="home">
+        <div id="particles"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="university-badge">
+                    <div class="badge-icon"><i class="fas fa-award"></i></div>
+                    <div class="badge-text"><h3>NAAC 'A' Grade University</h3><p>UGC Approved | Est. 2007</p></div>
+                </div>
+                <h1>Welcome to Jaipur National University</h1>
+                <p>Excellence in Education, Innovation in Research, Global in Outlook</p>
+                <div class="btn-group">
+                    <a href="#admission" class="btn btn-primary"><i class="fas fa-rocket"></i> Apply Now 2024</a>
+                    <a href="#courses" class="btn btn-secondary"><i class="fas fa-book-open"></i> Explore Programs</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">About Jaipur National University</h2>
+            <p class="section-subtitle">Leading Private University in Rajasthan</p>
+            <div class="info-grid">
+                <div class="info-card accent-blue"><h3><i class="fas fa-university"></i> University Overview</h3><ul><li><i class="fas fa-check"></i> Established in 2007</li><li><i class="fas fa-check"></i> Spread over 50+ acres campus</li><li><i class="fas fa-check"></i> 15,000+ students enrolled</li><li><i class="fas fa-check"></i> 500+ faculty members</li><li><i class="fas fa-check"></i> 100+ programs offered</li><li><i class="fas fa-check"></i> 50+ nationalities represented</li><li><i class="fas fa-check"></i> ISO 9001:2015 Certified</li><li><i class="fas fa-check"></i> Member of AIU</li></ul></div>
+                <div class="info-card accent-teal"><h3><i class="fas fa-award"></i> Accreditations & Rankings</h3><ul><li><i class="fas fa-check"></i> NAAC 'A' Grade Accredited</li><li><i class="fas fa-check"></i> UGC Approved University</li><li><i class="fas fa-check"></i> AICTE Approved Programs</li><li><i class="fas fa-check"></i> PCI Approved Pharmacy Courses</li><li><i class="fas fa-check"></i> BCI Approved Law Programs</li><li><i class="fas fa-check"></i> NCTE Approved Education Courses</li><li><i class="fas fa-check"></i> Ranked among Top 100 Universities</li><li><i class="fas fa-check"></i> Best University in Rajasthan 2023</li></ul></div>
+                <div class="info-card accent-purple"><h3><i class="fas fa-bullseye"></i> Vision & Mission</h3><ul><li><i class="fas fa-check"></i> Global Excellence in Education</li><li><i class="fas fa-check"></i> Research & Innovation Focus</li><li><i class="fas fa-check"></i> Industry-Integrated Learning</li><li><i class="fas fa-check"></i> Holistic Student Development</li><li><i class="fas fa-check"></i> Sustainable Growth</li><li><i class="fas fa-check"></i> Community Service</li><li><i class="fas fa-check"></i> Entrepreneurship Promotion</li><li><i class="fas fa-check"></i> Cultural Diversity</li></ul></div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-number">50+</div><div class="stat-label">Acres Campus</div></div>
+                <div class="stat-card"><div class="stat-number">15K+</div><div class="stat-label">Students</div></div>
+                <div class="stat-card"><div class="stat-number">100+</div><div class="stat-label">Programs</div></div>
+                <div class="stat-card"><div class="stat-number">500+</div><div class="stat-label">Faculty</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="courses">
+        <div class="container">
+            <h2 class="section-title">Regular Courses Offered</h2>
+            <p class="section-subtitle">Diverse Programs Across Multiple Disciplines</p>
+            <div class="course-category accent-blue"><h4><i class="fas fa-laptop-code"></i> Engineering & Technology</h4><ul><li>B.Tech Computer Science Engineering</li><li>B.Tech Artificial Intelligence & Machine Learning</li><li>B.Tech Data Science</li><li>B.Tech Information Technology</li><li>B.Tech Mechanical Engineering</li><li>B.Tech Civil Engineering</li><li>B.Tech Electrical Engineering</li><li>B.Tech Electronics & Communication</li></ul></div>
+            <div class="course-category accent-purple"><h4><i class="fas fa-briefcase"></i> Management & Commerce</h4><ul><li>BBA (Bachelor of Business Administration)</li><li>B.Com (Hons)</li><li>B.Com (Regular)</li><li>BA (Hons) Economics</li><li>MBA (Various Specializations)</li><li>M.Com</li><li>PhD Management</li><li>PhD Commerce</li></ul></div>
+            <div class="course-category accent-orange"><h4><i class="fas fa-heartbeat"></i> Medical & Health Sciences</h4><ul><li>MBBS</li><li>BDS</li><li>B.Sc Nursing</li><li>BPT (Physiotherapy)</li><li>B.Sc Medical Lab Technology</li><li>B.Pharm</li><li>D.Pharm</li><li>M.Pharm</li></ul></div>
+            <div class="course-category accent-amber"><h4><i class="fas fa-gavel"></i> Law & Legal Studies</h4><ul><li>BA LLB (Integrated)</li><li>BBA LLB (Integrated)</li><li>LLB (3 Years)</li><li>LLM (Various Specializations)</li><li>PhD Law</li></ul></div>
+            <div class="course-category accent-teal"><h4><i class="fas fa-palette"></i> Humanities & Social Sciences</h4><ul><li>BA English</li><li>BA Psychology</li><li>BA Sociology</li><li>BA Journalism & Mass Communication</li><li>MA English</li><li>MA Psychology</li><li>MA Sociology</li></ul></div>
+            <div class="course-category accent-green"><h4><i class="fas fa-flask"></i> Basic & Applied Sciences</h4><ul><li>B.Sc Physics</li><li>B.Sc Chemistry</li><li>B.Sc Mathematics</li><li>B.Sc Biotechnology</li><li>B.Sc Microbiology</li><li>B.Sc Biochemistry</li><li>M.Sc Physics</li><li>M.Sc Chemistry</li></ul></div>
+            <div class="comparison-table"><table><thead><tr><th>Course Level</th><th>Duration</th><th>Eligibility</th><th>Fee Range/Year</th><th>Intake Capacity</th></tr></thead><tbody><tr><td>UG Programs</td><td>3-5 Years</td><td>10+2 with 50%+</td><td>₹60,000 - ₹2,50,000</td><td>100-300</td></tr><tr><td>PG Programs</td><td>2 Years</td><td>Graduation with 50%+</td><td>₹80,000 - ₹3,00,000</td><td>60-120</td></tr><tr><td>PhD Programs</td><td>3-5 Years</td><td>Master's Degree</td><td>₹1,00,000 - ₹2,00,000</td><td>20-40</td></tr><tr><td>Diploma Programs</td><td>1-3 Years</td><td>10th/10+2</td><td>₹40,000 - ₹1,00,000</td><td>50-150</td></tr></tbody></table></div>
+        </div>
+    </section>
+
+    <section class="section" id="admission">
+        <div class="container">
+            <h2 class="section-title">Admission Process 2024</h2>
+            <p class="section-subtitle">Your Gateway to Quality Education</p>
+            <div class="info-grid">
+                <div class="info-card accent-amber"><h3><i class="fas fa-calendar-alt"></i> Important Dates</h3><ul><li><i class="fas fa-check"></i> Application Start: January 2024</li><li><i class="fas fa-check"></i> JNUET Exam: April-May 2024</li><li><i class="fas fa-check"></i> Result Declaration: June 2024</li><li><i class="fas fa-check"></i> Counseling Start: July 2024</li><li><i class="fas fa-check"></i> Admission Start: August 2024</li><li><i class="fas fa-check"></i> Classes Begin: August 2024</li></ul></div>
+                <div class="info-card accent-blue"><h3><i class="fas fa-tasks"></i> Application Steps</h3><ul><li><i class="fas fa-check"></i> Online Registration</li><li><i class="fas fa-check"></i> Fill Application Form</li><li><i class="fas fa-check"></i> Upload Documents</li><li><i class="fas fa-check"></i> Pay Application Fee</li><li><i class="fas fa-check"></i> Download Admit Card</li><li><i class="fas fa-check"></i> Appear for JNUET</li><li><i class="fas fa-check"></i> Check Result</li><li><i class="fas fa-check"></i> Complete Admission</li></ul></div>
+                <div class="info-card accent-orange"><h3><i class="fas fa-rupee-sign"></i> Fee Structure</h3><ul><li><i class="fas fa-check"></i> Application Fee: ₹1500</li><li><i class="fas fa-check"></i> Registration Fee: ₹10,000</li><li><i class="fas fa-check"></i> Tuition Fee: Course-wise</li><li><i class="fas fa-check"></i> Hostel Fee: ₹90,000/year</li><li><i class="fas fa-check"></i> Mess Fee: ₹60,000/year</li><li><i class="fas fa-check"></i> Transport Fee: ₹30,000/year</li><li><i class="fas fa-check"></i> Library Fee: ₹5,000/year</li></ul></div>
+            </div>
+            <div class="timeline">
+                <h3 style="text-align: center; margin-bottom: 2rem; color: var(--primary);">Admission Timeline</h3>
+                <div class="timeline-item"><div class="timeline-content"><h4>Phase 1: Registration</h4><p>Online application portal opens. Fill details and submit required documents.</p></div><div class="timeline-dot"></div><div class="timeline-year">Jan - Mar</div></div>
+                <div class="timeline-item"><div class="timeline-content"><h4>Phase 2: Entrance Exam</h4><p>Appear for JNUET (Jaipur National University Entrance Test).</p></div><div class="timeline-dot"></div><div class="timeline-year">Apr - May</div></div>
+                <div class="timeline-item"><div class="timeline-content"><h4>Phase 3: Result & Counseling</h4><p>Check results and attend counseling sessions for seat allocation.</p></div><div class="timeline-dot"></div><div class="timeline-year">Jun - Jul</div></div>
+                <div class="timeline-item"><div class="timeline-content"><h4>Phase 4: Admission</h4><p>Complete admission formalities, pay fees, and join the university.</p></div><div class="timeline-dot"></div><div class="timeline-year">Aug</div></div>
+            </div>
+            <div class="highlight-box"><h4><i class="fas fa-exclamation-triangle"></i> Scholarship Opportunities:</h4><ul><li><strong>Merit-Based:</strong> Up to 100% scholarship for toppers</li><li><strong>JEE Main Qualifiers:</strong> 50% scholarship</li><li><strong>NEET Qualifiers:</strong> 50% scholarship</li><li><strong>Sports Quota:</strong> Up to 25% scholarship</li><li><strong>EWS Category:</strong> Special fee concessions</li><li><strong>Alumni Ward:</strong> 10% fee concession</li><li><strong>Early Bird Discount:</strong> 10% for first 100 admissions</li></ul></div>
+        </div>
+    </section>
+
+    <section class="section" id="campus">
+        <div class="container">
+            <h2 class="section-title">Vibrant Campus Life</h2>
+            <p class="section-subtitle">Experience the Best of University Life</p>
+            <div class="info-grid">
+                <div class="info-card accent-purple"><h3><i class="fas fa-users"></i> Student Activities</h3><ul><li><i class="fas fa-check"></i> 50+ Student Clubs</li><li><i class="fas fa-check"></i> Annual Cultural Fest</li><li><i class="fas fa-check"></i> Technical Symposiums</li><li><i class="fas fa-check"></i> Sports Tournaments</li><li><i class="fas fa-check"></i> Debating Society</li><li><i class="fas fa-check"></i> Music & Dance Club</li><li><i class="fas fa-check"></i> Photography Club</li><li><i class="fas fa-check"></i> Drama Society</li></ul></div>
+                <div class="info-card accent-teal"><h3><i class="fas fa-dormitory"></i> Hostel Life</h3><ul><li><i class="fas fa-check"></i> Separate Boys & Girls Hostels</li><li><i class="fas fa-check"></i> AC & Non-AC Rooms</li><li><i class="fas fa-check"></i> 24/7 Security</li><li><i class="fas fa-check"></i> Wi-Fi Connectivity</li><li><i class="fas fa-check"></i> Mess Facilities</li><li><i class="fas fa-check"></i> Common Rooms</li><li><i class="fas fa-check"></i> Gym & Recreation</li><li><i class="fas fa-check"></i> Laundry Service</li></ul></div>
+                <div class="info-card accent-green"><h3><i class="fas fa-utensils"></i> Food & Dining</h3><ul><li><i class="fas fa-check"></i> Multi-Cuisine Mess</li><li><i class="fas fa-check"></i> Cafeteria & Food Courts</li><li><i class="fas fa-check"></i> 24/7 Canteen</li><li><i class="fas fa-check"></i> Juice Bars</li><li><i class="fas fa-check"></i> Coffee Shops</li><li><i class="fas fa-check"></i> Hygienic Food</li><li><i class="fas fa-check"></i> Special Diet Options</li><li><i class="fas fa-check"></i> Food Festivals</li></ul></div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-number">50+</div><div class="stat-label">Student Clubs</div></div>
+                <div class="stat-card"><div class="stat-number">10+</div><div class="stat-label">Annual Events</div></div>
+                <div class="stat-card"><div class="stat-number">2000+</div><div class="stat-label">Hostel Capacity</div></div>
+                <div class="stat-card"><div class="stat-number">100%</div><div class="stat-label">Student Satisfaction</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="facilities">
+        <div class="container">
+            <h2 class="section-title">World-Class Facilities</h2>
+            <p class="section-subtitle">State-of-the-Art Infrastructure for Holistic Development</p>
+            <div class="facility-grid">
+                <div class="facility-card accent-blue"><i class="fas fa-book-reader"></i><h4>Central Library</h4><p>1,00,000+ books, digital resources, e-journals, and study spaces</p></div>
+                <div class="facility-card accent-teal"><i class="fas fa-flask"></i><h4>Laboratories</h4><p>Well-equipped labs for all departments with modern equipment</p></div>
+                <div class="facility-card accent-purple"><i class="fas fa-laptop"></i><h4>Computer Centers</h4><p>High-speed internet, latest software, 1000+ systems</p></div>
+                <div class="facility-card accent-green"><i class="fas fa-running"></i><h4>Sports Complex</h4><p>Olympic-size sports facilities, gym, indoor & outdoor games</p></div>
+                <div class="facility-card accent-orange"><i class="fas fa-hospital"></i><h4>Medical Center</h4><p>24/7 medical facilities with qualified doctors and ambulance</p></div>
+                <div class="facility-card accent-amber"><i class="fas fa-bus"></i><h4>Transport</h4><p>Fleet of buses covering Jaipur city and nearby areas</p></div>
+                <div class="facility-card accent-teal"><i class="fas fa-wifi"></i><h4>Wi-Fi Campus</h4><p>High-speed internet connectivity across entire campus</p></div>
+                <div class="facility-card accent-blue"><i class="fas fa-atm"></i><h4>Banking</h4><p>On-campus bank branch and ATM facilities</p></div>
+            </div>
+            <div class="highlight-box"><h4><i class="fas fa-star"></i> Campus Highlights:</h4><ul><li>Smart classrooms with projectors and audio-visual systems</li><li>Auditorium with 1000+ seating capacity</li><li>Conference halls and seminar rooms</li><li>Innovation and incubation center</li><li>Language lab and communication skills center</li><li>Yoga and meditation center</li><li>Solar power plant for sustainable energy</li><li>Rainwater harvesting system</li></ul></div>
+        </div>
+    </section>
+
+    <section class="section" id="placements">
+        <div class="container">
+            <h2 class="section-title">Placements & Careers</h2>
+            <p class="section-subtitle">Building Successful Careers Through Industry Partnerships</p>
+            <div class="info-grid">
+                <div class="info-card accent-green"><h3><i class="fas fa-chart-line"></i> Placement Statistics</h3><ul><li><i class="fas fa-check"></i> 95% Placement Rate</li><li><i class="fas fa-check"></i> 500+ Companies Visited</li><li><i class="fas fa-check"></i> Highest Package: ₹45 LPA</li><li><i class="fas fa-check"></i> Average Package: ₹6-8 LPA</li><li><i class="fas fa-check"></i> 1000+ Offers Made</li><li><i class="fas fa-check"></i> 200+ Dream Offers</li><li><i class="fas fa-check"></i> 50+ International Placements</li><li><i class="fas fa-check"></i> 80% Students Placed Before Graduation</li></ul></div>
+                <div class="info-card accent-blue"><h3><i class="fas fa-building"></i> Top Recruiters</h3><ul><li><i class="fas fa-check"></i> TCS, Infosys, Wipro</li><li><i class="fas fa-check"></i> Amazon, Microsoft, Google</li><li><i class="fas fa-check"></i> Deloitte, KPMG, EY</li><li><i class="fas fa-check"></i> HDFC Bank, ICICI Bank</li><li><i class="fas fa-check"></i> Reliance, Adani, Tata</li><li><i class="fas fa-check"></i> BYJU'S, Unacademy</li><li><i class="fas fa-check"></i> Mercedes, BMW, Audi</li><li><i class="fas fa-check"></i> Fortis, Apollo, Max Healthcare</li></ul></div>
+                <div class="info-card accent-orange"><h3><i class="fas fa-user-tie"></i> Career Support</h3><ul><li><i class="fas fa-check"></i> Dedicated Placement Cell</li><li><i class="fas fa-check"></i> Training & Workshops</li><li><i class="fas fa-check"></i> Mock Interviews</li><li><i class="fas fa-check"></i> Resume Building</li><li><i class="fas fa-check"></i> GD & PI Preparation</li><li><i class="fas fa-check"></i> Internship Assistance</li><li><i class="fas fa-check"></i> Career Counseling</li><li><i class="fas fa-check"></i> Alumni Network Support</li></ul></div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-number">95%</div><div class="stat-label">Placement Rate</div></div>
+                <div class="stat-card"><div class="stat-number">500+</div><div class="stat-label">Recruiting Companies</div></div>
+                <div class="stat-card"><div class="stat-number">₹45L</div><div class="stat-label">Highest Package</div></div>
+                <div class="stat-card"><div class="stat-number">1000+</div><div class="stat-label">Job Offers</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Start Your Journey at JNU!</h2>
+                    <p>Join Jaipur National University for a transformative educational experience. Admissions Open 2024!</p>
+                    <div class="btn-group">
+                        <a href="tel:+919876543210" class="btn btn-primary"><i class="fas fa-phone"></i> Call: +91 98765 43210</a>
+                        <a href="mailto:admissions@jnujaipur.ac.in" class="btn btn-secondary"><i class="fas fa-envelope"></i> Email Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section"><h3>Jaipur National University</h3><p>A premier private university in Rajasthan, committed to excellence in education, research, and innovation since 2007.</p></div>
+                <div class="footer-section"><h3>Quick Links</h3><ul><li><a href="#home">Home</a></li><li><a href="#about">About JNU</a></li><li><a href="#courses">Courses</a></li><li><a href="#admission">Admission</a></li><li><a href="#campus">Campus Life</a></li><li><a href="#facilities">Facilities</a></li><li><a href="#placements">Placements</a></li></ul></div>
+                <div class="footer-section"><h3>Important Info</h3><ul><li><a href="#">JNUET 2024</a></li><li><a href="#">Scholarships</a></li><li><a href="#">Fee Structure</a></li><li><a href="#">Academic Calendar</a></li></ul></div>
+                <div class="footer-section"><h3>Contact Info</h3><p><i class="fas fa-map-marker-alt"></i> Jagatpura, Jaipur - 302017, Rajasthan</p><p><i class="fas fa-phone"></i> +91 141-2791034</p><p><i class="fas fa-envelope"></i> info@jnujaipur.ac.in</p></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2024 Jaipur National University. All Rights Reserved. | NAAC 'A' Grade | UGC Approved</p></div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+
+            setTimeout(() => { document.getElementById('loading').classList.add('hide'); }, 1000);
+
+            const quickNav = document.getElementById('quickNav');
+            const quickNavToggle = document.getElementById('quickNavToggle');
+            const quickNavItems = document.querySelectorAll('.quick-nav-item');
+            const sections = document.querySelectorAll('section[id]');
+
+            function updateQuickNavActive() {
+                const scrollY = window.pageYOffset;
+                sections.forEach(section => {
+                    const h = section.offsetHeight, top = section.offsetTop - 100, id = section.getAttribute('id');
+                    if (scrollY > top && scrollY <= top + h) {
+                        quickNavItems.forEach(item => {
+                            item.classList.toggle('active', item.getAttribute('data-section') === id);
+                        });
+                    }
+                });
+            }
+            window.addEventListener('scroll', updateQuickNavActive);
+
+            function openQuickNav() {
+                quickNav.classList.add('expanded');
+                quickNavToggle.querySelector('i').style.transform = 'rotate(45deg)';
+            }
+            function closeQuickNav() {
+                quickNav.classList.remove('expanded');
+                quickNavToggle.querySelector('i').style.transform = 'rotate(0deg)';
+            }
+            quickNavToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                quickNav.classList.contains('expanded') ? closeQuickNav() : openQuickNav();
+            });
+
+            quickNavItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const t = document.querySelector('#' + this.getAttribute('data-section'));
+                    if (t) {
+                        window.scrollTo({ top: t.offsetTop - 80, behavior: 'smooth' });
+                        setTimeout(closeQuickNav, 200);
+                    }
+                });
+            });
+
+            document.addEventListener('click', function(e) {
+                if (quickNav.classList.contains('expanded') && !quickNav.contains(e.target)) {
+                    closeQuickNav();
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeQuickNav();
+                    if (document.getElementById('navLinks').classList.contains('active')) closeMenu();
+                }
+            });
+
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+
+            function openMenu() {
+                navLinks.classList.add('active');
+                const s = menuToggle.querySelectorAll('span');
+                s[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                s[1].style.opacity = '0';
+                s[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            }
+            function closeMenu() {
+                navLinks.classList.remove('active');
+                menuToggle.querySelectorAll('span').forEach(s => { s.style.transform = 'none'; s.style.opacity = '1'; });
+            }
+            menuToggle.addEventListener('click', () => { navLinks.classList.contains('active') ? closeMenu() : openMenu(); });
+            document.querySelectorAll('#navLinks a').forEach(link => link.addEventListener('click', closeMenu));
+
+            window.addEventListener('scroll', () => {
+                const s = document.body.scrollTop || document.documentElement.scrollTop;
+                const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                document.getElementById('progressBar').style.width = (s / h) * 100 + '%';
+                document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const t = document.querySelector(this.getAttribute('href'));
+                    if (t) window.scrollTo({ top: t.offsetTop - 80, behavior: 'smooth' });
+                });
+            });
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; } });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            document.querySelectorAll('.info-card, .cta-section, .facility-card, .course-category, .highlight-box, .stat-card, .timeline-item').forEach((el, i) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = `opacity 0.8s ease ${i % 4 * 0.1}s, transform 0.8s ease ${i % 4 * 0.1}s`;
+                observer.observe(el);
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) { closeMenu(); closeQuickNav(); }
+            });
+        });
+    </script>
+</body>
+</html>

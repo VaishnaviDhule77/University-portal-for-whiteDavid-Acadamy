@@ -1,0 +1,2046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BA LL.B Admission 2024 - Whitedavid Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00E0FF;
+            --primary-dark: #0AB4CC;
+            --secondary: #A855F7;
+            --accent: #2CE6C2;
+            --dark: #0F172A;
+            --darker: #0B0F2A;
+            --darkest: #070A1A;
+            --light: #13203A;
+            --lighter: #1A2E4A;
+            --text: #FFFFFF;
+            --text-dim: #94A3B8;
+            --border: rgba(148, 163, 184, 0.1);
+            --border-hover: rgba(148, 163, 184, 0.2);
+            --glow: rgba(0, 224, 255, 0.4);
+            --glow-secondary: rgba(168, 85, 247, 0.4);
+            --accent-orange: #FF6A3D;
+            --accent-orange-light: #FF8A50;
+            --accent-blue: #3B82F6;
+            --accent-blue-light: #60A5FA;
+            --accent-purple: #A855F7;
+            --accent-pink: #EC4899;
+            --accent-green: #22C55E;
+            --accent-green-light: #4ADE80;
+            --accent-amber: #F59E0B;
+            --accent-amber-light: #FBBF24;
+            --accent-teal: #14B8A6;
+            --accent-teal-light: #2DD4BF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--darkest);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darkest);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        #loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 18s infinite linear;
+            will-change: transform, opacity;
+        }
+
+        @keyframes float {
+            0% { transform: translate3d(0, 100vh, 0); opacity: 0; }
+            8% { opacity: 0.5; }
+            88% { opacity: 0.5; }
+            100% { transform: translate3d(80px, -10vh, 0); opacity: 0; }
+        }
+
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            z-index: 10000;
+            width: 0;
+            will-change: width;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(11, 15, 42, 0.96);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(11, 15, 42, 0.99);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            will-change: filter;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(20deg); }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+            z-index: 1002;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .quick-nav {
+            position: fixed;
+            right: 20px;
+            top: 60%;
+            transform: translateY(-50%);
+            background: rgba(15, 23, 42, 0.92);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            padding: 1rem;
+            border-radius: 15px;
+            z-index: 999;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .quick-nav-item {
+            width: 40px;
+            height: 40px;
+            background: rgba(19, 32, 58, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .quick-nav-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, var(--primary), transparent);
+            transition: width 0.3s ease, height 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .quick-nav-item:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        .quick-nav-item:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+
+        .quick-nav-item.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-color: var(--primary);
+            color: var(--darkest);
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        main {
+            position: relative;
+            z-index: 2;
+            padding-top: 80px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 224, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(44, 230, 194, 0.06) 0%, transparent 50%),
+                        linear-gradient(180deg, var(--darkest), var(--darker), var(--darkest));
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--primary), transparent);
+            opacity: 0.05;
+            transform: translate(-50%, -50%);
+            animation: rotate 20s linear infinite;
+            will-change: transform;
+        }
+
+        @keyframes rotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .hero-content {
+            z-index: 2;
+            animation: fadeInUp 1s ease;
+            padding: 0 1rem;
+            width: 100%;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--secondary));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-animation 3s ease infinite;
+            line-height: 1.2;
+        }
+
+        @keyframes gradient-animation {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            margin: 0.5rem;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            font-size: 1rem;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 106, 61, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 106, 61, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(148, 163, 184, 0.1);
+            color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 5px 20px var(--glow);
+        }
+
+        .btn-white {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-dim);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .btn-white:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 5px 20px var(--glow);
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section {
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0;
+            animation: scan 3s linear infinite;
+            animation-play-state: paused;
+            will-change: transform;
+        }
+
+        .section.in-view::before {
+            opacity: 0.5;
+            animation-play-state: running;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+            animation: expand 2s ease infinite;
+            animation-play-state: paused;
+            will-change: width;
+        }
+
+        .section.in-view .section-title::after {
+            animation-play-state: running;
+        }
+
+        @keyframes expand {
+            0%, 100% { width: 100px; }
+            50% { width: 150px; }
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-dim);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* =============================================
+           GLASSMORPHISM CARD BASE — Info Card
+           ============================================= */
+        .info-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            will-change: transform;
+        }
+
+        /* Top gradient highlight line — appears on hover */
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .info-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Frosted glow overlay — appears on hover */
+        .info-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.03), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .info-card:hover::after {
+            opacity: 1;
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(0, 224, 255, 0.12), 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 224, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-card h3 i {
+            font-size: 1.2rem;
+            animation: bounce 2s ease infinite;
+            animation-play-state: paused;
+        }
+
+        .section.in-view .info-card h3 i {
+            animation-play-state: running;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding-left: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-card ul li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            transition: padding-left 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+            font-size: 0.95rem;
+            color: var(--text-dim);
+        }
+
+        .info-card ul li:hover {
+            padding-left: 10px;
+            color: var(--primary);
+            text-shadow: 0 0 8px var(--glow);
+        }
+
+        .info-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .info-card ul li i {
+            color: var(--accent);
+            width: 20px;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* =============================================
+           GLASSMORPHISM — What-is Box
+           ============================================= */
+        .what-is-ballb {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        /* Inner radial glow overlay */
+        .what-is-ballb::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(0, 224, 255, 0.04) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(168, 85, 247, 0.04) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Top highlight line */
+        .what-is-ballb::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .what-is-ballb:hover::after {
+            opacity: 1;
+        }
+
+        .what-is-ballb:hover {
+            box-shadow: 0 0 30px rgba(0, 224, 255, 0.1), 0 15px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .what-is-ballb h3 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .what-is-ballb h3 i {
+            font-size: 1.5rem;
+            animation: pulse 2s ease infinite;
+            animation-play-state: paused;
+        }
+
+        .section.in-view .what-is-ballb h3 i {
+            animation-play-state: running;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .what-is-ballb p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+            color: var(--text-dim);
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .what-is-ballb ul {
+            list-style: none;
+            padding: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .what-is-ballb ul li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-dim);
+            transition: color 0.3s ease, padding-left 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .what-is-ballb ul li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .what-is-ballb ul li:hover {
+            color: var(--primary);
+            padding-left: 2.5rem;
+            text-shadow: 0 0 8px var(--glow);
+        }
+
+        .what-is-ballb ul li:last-child {
+            border-bottom: none;
+        }
+
+        /* =============================================
+           GLASSMORPHISM — Course Card
+           ============================================= */
+        .course-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            will-change: transform;
+        }
+
+        /* Top highlight line */
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .course-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Sweep gradient effect */
+        .course-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 224, 255, 0.04), transparent);
+            transform: rotate(45deg);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .course-card:hover::after {
+            animation: gradient-rotate 1s ease forwards;
+        }
+
+        @keyframes gradient-rotate {
+            0% { transform: rotate(45deg) translateY(0); opacity: 1; }
+            100% { transform: rotate(45deg) translateY(100%); opacity: 0; }
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 224, 255, 0.15), 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 224, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .course-card h3 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .course-card .duration {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .course-card .description {
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .course-card .btn {
+            position: relative;
+            z-index: 1;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* =============================================
+           GLASSMORPHISM — Subject Item
+           ============================================= */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .subject-item {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Top highlight line */
+        .subject-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .subject-item:hover::before {
+            opacity: 1;
+        }
+
+        .subject-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.15), 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(168, 85, 247, 0.15);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .subject-item h4 {
+            color: var(--accent-purple);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+            transition: text-shadow 0.3s ease;
+        }
+
+        .subject-item:hover h4 {
+            text-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+        }
+
+        .subject-item p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* =============================================
+           GLASSMORPHISM — Table
+           ============================================= */
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem -20px;
+            padding: 0 20px;
+            border-radius: 0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (min-width: 768px) {
+            .table-container {
+                margin: 2rem 0;
+                padding: 0;
+                border-radius: 20px;
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            min-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            white-space: nowrap;
+        }
+
+        @media (min-width: 1024px) {
+            td, th { white-space: normal; }
+        }
+
+        th {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(26, 46, 74, 0.5));
+            color: var(--primary);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid var(--border-hover);
+        }
+
+        tr:hover {
+            background: rgba(0, 224, 255, 0.05);
+        }
+
+        tr:hover td {
+            color: var(--primary);
+            text-shadow: 0 0 6px rgba(0, 224, 255, 0.3);
+        }
+
+        /* =============================================
+           GLASSMORPHISM — Highlight Box
+           ============================================= */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        /* Scan line (keep for animation) */
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            animation: scan 2s linear infinite;
+            animation-play-state: paused;
+            will-change: transform;
+        }
+
+        .section.in-view .highlight-box::before {
+            animation-play-state: running;
+        }
+
+        /* Top highlight line — appears on hover */
+        .highlight-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .highlight-box:hover::after {
+            opacity: 1;
+        }
+
+        .highlight-box:hover {
+            box-shadow: 0 0 25px rgba(0, 224, 255, 0.1), 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .highlight-box h4 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .highlight-box ul {
+            list-style: none;
+            padding: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .highlight-box ul li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-dim);
+            transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .highlight-box ul li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .highlight-box ul li:hover {
+            color: var(--primary);
+            transform: translateX(10px);
+            text-shadow: 0 0 8px var(--glow);
+        }
+
+        /* =============================================
+           GLASSMORPHISM — CTA Section
+           ============================================= */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(255, 106, 61, 0.06), rgba(255, 138, 80, 0.02));
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 106, 61, 0.15);
+            border-radius: 20px;
+            padding: 4rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: pulse-bg 3s ease infinite;
+            animation-play-state: paused;
+            will-change: box-shadow;
+        }
+
+        /* Top highlight line */
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-orange-light), var(--accent-amber));
+            opacity: 0.6;
+        }
+
+        .section.in-view .cta-section {
+            animation-play-state: running;
+        }
+
+        @keyframes pulse-bg {
+            0%, 100% { box-shadow: 0 0 30px rgba(255, 106, 61, 0.1), 0 0 60px rgba(255, 106, 61, 0.03); }
+            50% { box-shadow: 0 0 50px rgba(255, 106, 61, 0.2), 0 0 80px rgba(255, 106, 61, 0.05); }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-content h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        footer {
+            background: linear-gradient(180deg, var(--dark), var(--darker));
+            padding: 3rem 0 1rem;
+            border-top: 1px solid var(--border);
+            position: relative;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p {
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul { list-style: none; padding: 0; }
+        .footer-section ul li { margin-bottom: 0.5rem; }
+
+        .footer-section ul li a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s ease, padding-left 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+        }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--darkest); }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--primary-dark), var(--accent));
+        }
+
+        /* ==========================================
+           CATEGORY-BASED MULTI-ACCENT SYSTEM
+           (All category colors preserved — ::before now colors the top highlight line)
+           ========================================== */
+
+        #eligibility .info-card h3 { color: var(--accent-orange); }
+        #eligibility .info-card h3 i { background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        #eligibility .info-card ul li i { color: var(--accent-orange); }
+        #eligibility .info-card ul li:hover { color: var(--accent-orange); text-shadow: 0 0 8px rgba(255,106,61,0.5); }
+        #eligibility .info-card:hover { box-shadow: 0 0 30px rgba(255,106,61,0.15), 0 20px 50px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,106,61,0.2); border-color: rgba(255,106,61,0.25); }
+        #eligibility .info-card::before { background: linear-gradient(90deg, var(--accent-orange), var(--accent-orange-light)); }
+        #eligibility .info-card::after { background: radial-gradient(circle at top left, rgba(255,106,61,0.06), transparent 60%); }
+        #eligibility .highlight-box { background: linear-gradient(135deg, rgba(255,106,61,0.05), rgba(255,138,80,0.02)); border-color: rgba(255,106,61,0.15); }
+        #eligibility .highlight-box::before { background: linear-gradient(90deg, var(--accent-orange), var(--accent-orange-light)); }
+        #eligibility .highlight-box::after { background: linear-gradient(90deg, var(--accent-orange), var(--accent-orange-light)); }
+        #eligibility .highlight-box h4 { color: var(--accent-orange); }
+        #eligibility .highlight-box ul li::before { color: var(--accent-orange); }
+        #eligibility .highlight-box ul li:hover { color: var(--accent-orange); text-shadow: 0 0 8px rgba(255,106,61,0.5); }
+        #eligibility .section-title { background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        #eligibility .section-title::after { background: linear-gradient(90deg, var(--accent-orange), var(--accent-orange-light)); }
+
+        #admission .info-card h3 { color: var(--accent-blue); }
+        #admission .info-card h3 i { background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        #admission .info-card ul li i { color: var(--accent-blue); }
+        #admission .info-card ul li:hover { color: var(--accent-blue); text-shadow: 0 0 8px rgba(59,130,246,0.5); }
+        #admission .info-card:hover { box-shadow: 0 0 30px rgba(59,130,246,0.15), 0 20px 50px rgba(0,0,0,0.3), 0 0 0 1px rgba(59,130,246,0.2); border-color: rgba(59,130,246,0.25); }
+        #admission .info-card::before { background: linear-gradient(90deg, var(--accent-blue), var(--accent-blue-light)); }
+        #admission .info-card::after { background: radial-gradient(circle at top left, rgba(59,130,246,0.06), transparent 60%); }
+        #admission th { color: var(--accent-blue); }
+        #admission .section-title { background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        #admission .section-title::after { background: linear-gradient(90deg, var(--accent-blue), var(--accent-blue-light)); }
+
+        #colleges .info-card h3 { color: var(--accent-amber); }
+        #colleges .info-card h3 i { background: linear-gradient(135deg, var(--accent-amber), var(--accent-amber-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        #colleges .info-card ul li i { color: var(--accent-amber); }
+        #colleges .info-card ul li:hover { color: var(--accent-amber); text-shadow: 0 0 8px rgba(245,158,11,0.5); }
+        #colleges .info-card:hover { box-shadow: 0 0 30px rgba(245,158,11,0.15), 0 20px 50px rgba(0,0,0,0.3), 0 0 0 1px rgba(245,158,11,0.2); border-color: rgba(245,158,11,0.25); }
+        #colleges .info-card::before { background: linear-gradient(90deg, var(--accent-amber), var(--accent-amber-light)); }
+        #colleges .info-card::after { background: radial-gradient(circle at top left, rgba(245,158,11,0.06), transparent 60%); }
+        #colleges .section-title { background: linear-gradient(135deg, var(--accent-amber), var(--accent-amber-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        #colleges .section-title::after { background: linear-gradient(90deg, var(--accent-amber), var(--accent-amber-light)); }
+
+        #career .info-card h3 { color: var(--accent-green); }
+        #career .info-card h3 i { background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        #career .info-card ul li i { color: var(--accent-green); }
+        #career .info-card ul li:hover { color: var(--accent-green); text-shadow: 0 0 8px rgba(34,197,94,0.5); }
+        #career .info-card:hover { box-shadow: 0 0 30px rgba(34,197,94,0.15), 0 20px 50px rgba(0,0,0,0.3), 0 0 0 1px rgba(34,197,94,0.2); border-color: rgba(34,197,94,0.25); }
+        #career .info-card::before { background: linear-gradient(90deg, var(--accent-green), var(--accent-green-light)); }
+        #career .info-card::after { background: radial-gradient(circle at top left, rgba(34,197,94,0.06), transparent 60%); }
+        #career .highlight-box { background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(74,222,128,0.02)); border-color: rgba(34,197,94,0.15); }
+        #career .highlight-box::before { background: linear-gradient(90deg, var(--accent-green), var(--accent-green-light)); }
+        #career .highlight-box::after { background: linear-gradient(90deg, var(--accent-green), var(--accent-green-light)); }
+        #career .highlight-box h4 { color: var(--accent-green); }
+        #career .highlight-box ul li::before { color: var(--accent-green); }
+        #career .highlight-box ul li:hover { color: var(--accent-green); text-shadow: 0 0 8px rgba(34,197,94,0.5); }
+        #career .section-title { background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        #career .section-title::after { background: linear-gradient(90deg, var(--accent-green), var(--accent-green-light)); }
+
+        #higher-studies .info-card h3 { color: var(--accent-teal); }
+        #higher-studies .info-card h3 i { background: linear-gradient(135deg, var(--accent-teal), var(--accent-teal-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        #higher-studies .info-card ul li i { color: var(--accent-teal); }
+        #higher-studies .info-card ul li:hover { color: var(--accent-teal); text-shadow: 0 0 8px rgba(20,184,166,0.5); }
+        #higher-studies .info-card:hover { box-shadow: 0 0 30px rgba(20,184,166,0.15), 0 20px 50px rgba(0,0,0,0.3), 0 0 0 1px rgba(20,184,166,0.2); border-color: rgba(20,184,166,0.25); }
+        #higher-studies .info-card::before { background: linear-gradient(90deg, var(--accent-teal), var(--accent-teal-light)); }
+        #higher-studies .info-card::after { background: radial-gradient(circle at top left, rgba(20,184,166,0.06), transparent 60%); }
+        #higher-studies .highlight-box { background: linear-gradient(135deg, rgba(20,184,166,0.05), rgba(45,212,191,0.02)); border-color: rgba(20,184,166,0.15); }
+        #higher-studies .highlight-box::before { background: linear-gradient(90deg, var(--accent-teal), var(--accent-teal-light)); }
+        #higher-studies .highlight-box::after { background: linear-gradient(90deg, var(--accent-teal), var(--accent-teal-light)); }
+        #higher-studies .highlight-box h4 { color: var(--accent-teal); }
+        #higher-studies .highlight-box ul li::before { color: var(--accent-teal); }
+        #higher-studies .highlight-box ul li:hover { color: var(--accent-teal); text-shadow: 0 0 8px rgba(20,184,166,0.5); }
+        #higher-studies .section-title { background: linear-gradient(135deg, var(--accent-teal), var(--accent-teal-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        #higher-studies .section-title::after { background: linear-gradient(90deg, var(--accent-teal), var(--accent-teal-light)); }
+
+        /* Subject items — purple/pink category */
+        #subjects .subject-item h4 { color: var(--accent-purple); }
+        #subjects .subject-item::before { background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink)); }
+        #subjects .subject-item:hover { box-shadow: 0 0 25px rgba(168,85,247,0.15), 0 15px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(168,85,247,0.2); border-color: rgba(168,85,247,0.25); }
+        #subjects .subject-item:hover h4 { color: var(--accent-pink); text-shadow: 0 0 10px rgba(236,72,153,0.5); }
+        #subjects .section-title { background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        #subjects .section-title::after { background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink)); }
+
+        /* Course cards — cyan accent */
+        #courses .course-card::before { background: linear-gradient(90deg, var(--primary), var(--accent)); }
+        #courses .course-card:hover { box-shadow: 0 0 30px rgba(0,224,255,0.15), 0 20px 50px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,224,255,0.15); }
+
+        /* ==========================================
+           RESPONSIVE — Remove backdrop-filter on mobile
+           ========================================== */
+        @media (max-width: 1024px) {
+            .info-grid, .course-grid, .subjects-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                background: rgba(11, 15, 42, 1);
+                -webkit-backdrop-filter: none;
+                backdrop-filter: none;
+            }
+            header.scrolled {
+                background: rgba(11, 15, 42, 1);
+            }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(11, 15, 42, 1);
+                -webkit-backdrop-filter: none;
+                backdrop-filter: none;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 2rem;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 30px rgba(0,0,0,0.6);
+            }
+            .nav-links.active { right: 0; }
+            .menu-toggle { display: flex; }
+
+            .quick-nav {
+                top: auto;
+                bottom: 20px;
+                right: 50%;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 90%;
+                max-width: 400px;
+                flex-direction: row;
+                justify-content: space-around;
+                padding: 0.8rem;
+                gap: 0.5rem;
+                border-radius: 50px;
+                background: rgba(15, 23, 42, 1);
+                -webkit-backdrop-filter: none;
+                backdrop-filter: none;
+            }
+            .quick-nav-item { width: 45px; height: 45px; }
+            .container { padding: 0 15px; }
+            .section { padding: 50px 0 100px; }
+            .hero h1 { margin-bottom: 1.5rem; }
+            .btn { width: 100%; margin: 0.5rem 0; padding: 14px 30px; }
+            .what-is-ballb { padding: 1.5rem; margin: 2rem 0; }
+            .info-card, .course-card { padding: 1.5rem; }
+            .info-card h3 { font-size: 1.3rem; }
+            .highlight-box { padding: 1.5rem; }
+            .cta-section { padding: 3rem 1.5rem; }
+            .logo { animation: none; }
+
+            /* Remove backdrop-filter on all glassmorphism cards for mobile performance */
+            .info-card, .course-card, .subject-item, .highlight-box, .what-is-ballb, .cta-section, table {
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .info-grid, .course-grid, .subjects-grid, .footer-content { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.2rem; }
+            .section-title { font-size: 1.8rem; }
+            .quick-nav { padding: 0.6rem; }
+            .quick-nav-item { width: 38px; height: 38px; font-size: 0.8rem; }
+        }
+
+        /* Touch devices: disable hover transforms, keep text highlight */
+        @media (hover: none) {
+            .info-card:hover { transform: none; }
+            .info-card:hover::before { opacity: 0; }
+            .info-card:hover::after { opacity: 0; }
+            .course-card:hover { transform: none; }
+            .course-card:hover::before { opacity: 0; }
+            .subject-item:hover { transform: none; }
+            .subject-item:hover::before { opacity: 0; }
+            .what-is-ballb:hover::after { opacity: 0; }
+            .highlight-box:hover::after { opacity: 0; }
+            .btn-primary:hover { transform: none; }
+            .btn-secondary:hover { transform: none; }
+            .btn-white:hover { transform: none; }
+            tr:hover td { text-shadow: none; }
+            .highlight-box ul li:hover { transform: none; }
+            .what-is-ballb ul li:hover { padding-left: 2rem; }
+            .info-card ul li:hover { padding-left: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .particle { display: none; }
+        }
+
+        @media print {
+            #particles, .quick-nav, #progressBar, header, #loading, .btn-group { display: none !important; }
+            body { background: white; color: black; }
+            .info-card, .course-card, .subject-item, .highlight-box, .what-is-ballb, .cta-section, table {
+                background: #f5f5f5;
+                border: 1px solid #ccc;
+                box-shadow: none;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+            .section-title { color: #333; -webkit-text-fill-color: #333; }
+            .section::before { background: #333; }
+            main { padding-top: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading"><div class="loading-spinner"></div></div>
+    <div id="progressBar"></div>
+    <div id="particles"></div>
+
+    <header id="navbar">
+        <nav>
+            <div class="logo"> Whitedavid Academy</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#courses">Courses</a></li>
+                <li><a href="index.html#universities">Universities</a></li>
+                <li><a href="index.html#support">Support</a></li>
+                <li><a href="tel:+919876543210">Call Now</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span><span></span><span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="quick-nav">
+        <a href="#what-is-ballb" class="quick-nav-item" data-section="what-is-ballb" title="About BA LL.B"><i class="fas fa-info"></i></a>
+        <a href="#courses" class="quick-nav-item" data-section="courses" title="Courses"><i class="fas fa-book"></i></a>
+        <a href="#eligibility" class="quick-nav-item" data-section="eligibility" title="Eligibility"><i class="fas fa-check-circle"></i></a>
+        <a href="#admission" class="quick-nav-item" data-section="admission" title="Admission"><i class="fas fa-graduation-cap"></i></a>
+        <a href="#colleges" class="quick-nav-item" data-section="colleges" title="Colleges"><i class="fas fa-university"></i></a>
+        <a href="#career" class="quick-nav-item" data-section="career" title="Career"><i class="fas fa-briefcase"></i></a>
+        <a href="#higher-studies" class="quick-nav-item" data-section="higher-studies" title="Higher Studies"><i class="fas fa-microscope"></i></a>
+        <a href="#contact" class="quick-nav-item" data-section="contact" title="Contact"><i class="fas fa-phone"></i></a>
+    </div>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1>BA LL.B Admission 2024</h1>
+                <p>Your Gateway to Premier Legal Education</p>
+                <div class="btn-group">
+                    <a href="#admission" class="btn btn-primary"><i class="fas fa-rocket"></i> Start Application</a>
+                    <a href="#contact" class="btn btn-secondary"><i class="fas fa-phone"></i> Talk to Counselor</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="what-is-ballb">
+            <div class="container">
+                <div class="what-is-ballb">
+                    <h3><i class="fas fa-gavel"></i> What is BA LL.B?</h3>
+                    <p>BA LL.B is an integrated undergraduate law program that combines Bachelor of Arts and Bachelor of Law degrees. This 5-year course is designed for students who aspire to build a career in the legal field right after their 12th grade.</p>
+                    <p>The program provides a strong foundation in both arts subjects and legal studies, making it one of the most sought-after courses for law aspirants in India.</p>
+                    <ul>
+                        <li><strong>Duration:</strong> 5 Years (10 Semesters)</li>
+                        <li><strong>Eligibility:</strong> 10+2 with minimum 45-50% marks</li>
+                        <li><strong>Age Limit:</strong> Generally 20-22 years (varies by university)</li>
+                        <li><strong>Mode:</strong> Full-time Regular Program</li>
+                        <li><strong>Degree Type:</strong> Integrated Undergraduate Program</li>
+                        <li><strong>Recognition:</strong> Approved by Bar Council of India (BCI)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="courses">
+            <div class="container">
+                <h2 class="section-title">Available Law Courses</h2>
+                <p class="section-subtitle">Choose from various integrated law programs</p>
+                <div class="course-grid">
+                    <div class="course-card">
+                        <h3>BA LL.B</h3>
+                        <div class="duration">5 Years</div>
+                        <div class="description">Bachelor of Arts + Bachelor of Laws. Most popular integrated law program with arts specialization.</div>
+                        <a href="#admission" class="btn btn-primary">Apply Now</a>
+                    </div>
+                    <div class="course-card">
+                        <h3>BBA LL.B</h3>
+                        <div class="duration">5 Years</div>
+                        <div class="description">Bachelor of Business Administration + Bachelor of Laws. Ideal for corporate law career.</div>
+                        <a href="#admission" class="btn btn-primary">Apply Now</a>
+                    </div>
+                    <div class="course-card">
+                        <h3>BCom LL.B</h3>
+                        <div class="duration">5 Years</div>
+                        <div class="description">Bachelor of Commerce + Bachelor of Laws. Perfect for taxation and commercial law.</div>
+                        <a href="#admission" class="btn btn-primary">Apply Now</a>
+                    </div>
+                    <div class="course-card">
+                        <h3>BSW LL.B</h3>
+                        <div class="duration">5 Years</div>
+                        <div class="description">Bachelor of Social Work + Bachelor of Laws. Focus on social justice and human rights.</div>
+                        <a href="#admission" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="subjects">
+            <div class="container">
+                <h2 class="section-title">Core Subjects & Curriculum</h2>
+                <p class="section-subtitle">Comprehensive legal education with diverse subjects</p>
+                <div class="subjects-grid">
+                    <div class="subject-item"><h4>Constitutional Law</h4><p>Indian Constitution, Fundamental Rights, Directive Principles</p></div>
+                    <div class="subject-item"><h4>Criminal Law</h4><p>IPC, CrPC, Evidence Act, Criminal Procedure</p></div>
+                    <div class="subject-item"><h4>Civil Law</h4><p>Contract Law, Property Law, Family Law, Tort Law</p></div>
+                    <div class="subject-item"><h4>Corporate Law</h4><p>Company Law, Securities Law, Mergers & Acquisitions</p></div>
+                    <div class="subject-item"><h4>International Law</h4><p>Public International Law, Private International Law, Human Rights</p></div>
+                    <div class="subject-item"><h4>Environmental Law</h4><p>Environmental Protection, Climate Change, Sustainable Development</p></div>
+                    <div class="subject-item"><h4>Intellectual Property</h4><p>Copyright, Trademarks, Patents, Trade Secrets</p></div>
+                    <div class="subject-item"><h4>Taxation Law</h4><p>Income Tax, GST, Corporate Taxation, Tax Planning</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="eligibility">
+            <div class="container">
+                <h2 class="section-title">Eligibility Criteria</h2>
+                <p class="section-subtitle">Check if you qualify for BA LL.B admission</p>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Educational Qualification</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 10+2 from recognized board</li>
+                            <li><i class="fas fa-check"></i> Minimum 45-50% aggregate marks</li>
+                            <li><i class="fas fa-check"></i> 40% for SC/ST candidates</li>
+                            <li><i class="fas fa-check"></i> 42% for OBC candidates</li>
+                            <li><i class="fas fa-check"></i> Valid in any stream (Science/Commerce/Arts)</li>
+                            <li><i class="fas fa-check"></i> English as compulsory subject</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-calendar-alt"></i> Age Requirements</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Maximum 20 years for General category</li>
+                            <li><i class="fas fa-check"></i> 22 years for SC/ST/OBC</li>
+                            <li><i class="fas fa-check"></i> As on date of admission</li>
+                            <li><i class="fas fa-check"></i> Relaxation for PWD candidates</li>
+                            <li><i class="fas fa-check"></i> No upper age limit for some universities</li>
+                            <li><i class="fas fa-check"></i> Age verification required</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-file-alt"></i> Entrance Exams</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> CLAT (Common Law Admission Test)</li>
+                            <li><i class="fas fa-check"></i> AILET (All India Law Entrance Test)</li>
+                            <li><i class="fas fa-check"></i> LSAT India (Law School Admission Test)</li>
+                            <li><i class="fas fa-check"></i> SLAT (Symbiosis Law Admission Test)</li>
+                            <li><i class="fas fa-check"></i> University-specific entrance tests</li>
+                            <li><i class="fas fa-check"></i> Direct admission in private colleges</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight-box">
+                    <h4><i class="fas fa-info-circle"></i> Special Provisions</h4>
+                    <ul>
+                        <li><strong>NRI/NRI Sponsored Quota:</strong> 15% seats in private universities</li>
+                        <li><strong>Management Quota:</strong> Available in selected colleges</li>
+                        <li><strong>Foreign Nationals:</strong> Separate admission process</li>
+                        <li><strong>Sports Quota:</strong> Extra-curricular achievements considered</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="admission">
+            <div class="container">
+                <h2 class="section-title">Admission Process 2024</h2>
+                <p class="section-subtitle">Step-by-step guide to secure your seat</p>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-list-ol"></i> Application Steps</h3>
+                        <ul>
+                            <li><i class="fas fa-arrow-right"></i> Register for entrance exam (CLAT/AILET/LSAT)</li>
+                            <li><i class="fas fa-arrow-right"></i> Fill application form with accurate details</li>
+                            <li><i class="fas fa-arrow-right"></i> Upload required documents</li>
+                            <li><i class="fas fa-arrow-right"></i> Pay application fee online</li>
+                            <li><i class="fas fa-arrow-right"></i> Download admit card</li>
+                            <li><i class="fas fa-arrow-right"></i> Appear for entrance exam</li>
+                            <li><i class="fas fa-arrow-right"></i> Check results & rank</li>
+                            <li><i class="fas fa-arrow-right"></i> Participate in counseling</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-file-import"></i> Required Documents</h3>
+                        <ul>
+                            <li><i class="fas fa-file"></i> 10th Mark Sheet & Certificate</li>
+                            <li><i class="fas fa-file"></i> 12th Mark Sheet & Certificate</li>
+                            <li><i class="fas fa-file"></i> Transfer Certificate</li>
+                            <li><i class="fas fa-file"></i> Character Certificate</li>
+                            <li><i class="fas fa-file"></i> Migration Certificate</li>
+                            <li><i class="fas fa-file"></i> Category Certificate (SC/ST/OBC)</li>
+                            <li><i class="fas fa-file"></i> Domicile Certificate</li>
+                            <li><i class="fas fa-file"></i> Passport size photographs</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-coins"></i> Fee Structure</h3>
+                        <ul>
+                            <li><i class="fas fa-rupee-sign"></i> Application Fee: ₹500-4000</li>
+                            <li><i class="fas fa-rupee-sign"></i> NLU Annual Fee: ₹2-3 Lakhs</li>
+                            <li><i class="fas fa-rupee-sign"></i> Private College: ₹1-2 Lakhs/year</li>
+                            <li><i class="fas fa-rupee-sign"></i> State University: ₹50,000-1 Lakhs/year</li>
+                            <li><i class="fas fa-rupee-sign"></i> Hostel Fee: ₹1-2 Lakhs/year</li>
+                            <li><i class="fas fa-rupee-sign"></i> Scholarship available for meritorious</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Important Dates</th><th>CLAT 2024</th><th>AILET 2024</th><th>LSAT India 2024</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Application Start</td><td>August 2023</td><td>August 2023</td><td>August 2023</td></tr>
+                            <tr><td>Application End</td><td>May 2024</td><td>May 2024</td><td>May 2024</td></tr>
+                            <tr><td>Exam Date</td><td>December 2023</td><td>December 2023</td><td>Multiple Dates</td></tr>
+                            <tr><td>Result Declaration</td><td>January 2024</td><td>January 2024</td><td>January 2024</td></tr>
+                            <tr><td>Counseling Start</td><td>May 2024</td><td>May 2024</td><td>May 2024</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="colleges">
+            <div class="container">
+                <h2 class="section-title">Top Law Colleges in India</h2>
+                <p class="section-subtitle">Premier institutions for legal education</p>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-trophy"></i> National Law Universities (NLUs)</h3>
+                        <ul>
+                            <li><i class="fas fa-university"></i> <strong>NLSIU Bangalore:</strong> #1 Law School</li>
+                            <li><i class="fas fa-university"></i> <strong>NALSAR Hyderabad:</strong> Top Ranked NLU</li>
+                            <li><i class="fas fa-university"></i> <strong>WBNUJS Kolkata:</strong> Premier Institute</li>
+                            <li><i class="fas fa-university"></i> <strong>NLIU Bhopal:</strong> Excellence in Legal Studies</li>
+                            <li><i class="fas fa-university"></i> <strong>RMLNLU Lucknow:</strong> Leading NLU</li>
+                            <li><i class="fas fa-university"></i> <strong>HNLU Raipur:</strong> Emerging Law School</li>
+                            <li><i class="fas fa-university"></i> <strong>NLUO Cuttack:</strong> Eastern India's Best</li>
+                            <li><i class="fas fa-university"></i> <strong>NUSRL Ranchi:</strong> New Generation NLU</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-map-marker-alt"></i> Delhi NCR Colleges</h3>
+                        <ul>
+                            <li><i class="fas fa-university"></i> <strong>NLU Delhi:</strong> AILET Based Admission</li>
+                            <li><i class="fas fa-university"></i> <strong>Delhi University:</strong> Faculty of Law</li>
+                            <li><i class="fas fa-university"></i> <strong>Jamia Millia:</strong> Faculty of Law</li>
+                            <li><i class="fas fa-university"></i> <strong>IP University:</strong> Multiple Law Colleges</li>
+                            <li><i class="fas fa-university"></i> <strong>Amity University:</strong> Law School</li>
+                            <li><i class="fas fa-university"></i> <strong>Sharda University:</strong> Law Faculty</li>
+                            <li><i class="fas fa-university"></i> <strong>Galgotias University:</strong> Law College</li>
+                            <li><i class="fas fa-university"></i> <strong>SRM University:</strong> School of Law</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-map-marked-alt"></i> Other Top Colleges</h3>
+                        <ul>
+                            <li><i class="fas fa-university"></i> <strong>SLS Pune:</strong> Symbiosis Law School</li>
+                            <li><i class="fas fa-university"></i> <strong>ILS Law Pune:</strong> Prestigious Institute</li>
+                            <li><i class="fas fa-university"></i> <strong>GLC Mumbai:</strong> Government Law College</li>
+                            <li><i class="fas fa-university"></i> <strong>Jindal Global:</strong> OP Jindal Global University</li>
+                            <li><i class="fas fa-university"></i> <strong>Christ University:</strong> School of Law</li>
+                            <li><i class="fas fa-university"></i> <strong>Loyola Chennai:</strong> Law College</li>
+                            <li><i class="fas fa-university"></i> <strong>ICFAI University:</strong> Law Schools</li>
+                            <li><i class="fas fa-university"></i> <strong>BMS College:</strong> Bangalore Law College</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="career">
+            <div class="container">
+                <h2 class="section-title">Career Opportunities & Growth</h2>
+                <p class="section-subtitle">Explore diverse career paths in legal profession</p>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-briefcase"></i> Job Profiles</h3>
+                        <ul>
+                            <li><i class="fas fa-gavel"></i> <strong>Lawyer:</strong> ₹5-50 LPA</li>
+                            <li><i class="fas fa-balance-scale"></i> <strong>Judge:</strong> ₹15-80 LPA</li>
+                            <li><i class="fas fa-briefcase"></i> <strong>Corporate Counsel:</strong> ₹8-40 LPA</li>
+                            <li><i class="fas fa-landmark"></i> <strong>Legal Advisor:</strong> ₹6-35 LPA</li>
+                            <li><i class="fas fa-shield-alt"></i> <strong>Public Prosecutor:</strong> ₹6-30 LPA</li>
+                            <li><i class="fas fa-graduation-cap"></i> <strong>Legal Academic:</strong> ₹5-25 LPA</li>
+                            <li><i class="fas fa-file-contract"></i> <strong>Company Secretary:</strong> ₹4-20 LPA</li>
+                            <li><i class="fas fa-globe"></i> <strong>Legal Consultant:</strong> ₹7-45 LPA</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-building"></i> Top Recruiters</h3>
+                        <ul>
+                            <li><i class="fas fa-briefcase"></i> <strong>Amarchand Mangaldas:</strong> Top Law Firm</li>
+                            <li><i class="fas fa-briefcase"></i> <strong>Cyril Amarchand:</strong> Leading Firm</li>
+                            <li><i class="fas fa-briefcase"></i> <strong>Khaitan & Co:</strong> Prestigious Firm</li>
+                            <li><i class="fas fa-briefcase"></i> <strong>Shardul Amarchand:</strong> Top Tier</li>
+                            <li><i class="fas fa-building"></i> <strong>TCS:</strong> Legal Department</li>
+                            <li><i class="fas fa-building"></i> <strong>Infosys:</strong> In-house Counsel</li>
+                            <li><i class="fas fa-landmark"></i> <strong>Supreme Court:</strong> Judicial Services</li>
+                            <li><i class="fas fa-landmark"></i> <strong>High Courts:</strong> State Judiciary</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-globe"></i> Global Opportunities</h3>
+                        <ul>
+                            <li><i class="fas fa-gavel"></i> <strong>UK Bar:</strong> Qualified Lawyer Transfer</li>
+                            <li><i class="fas fa-gavel"></i> <strong>US Bar:</strong> LLM + Bar Exam</li>
+                            <li><i class="fas fa-globe"></i> <strong>International Courts:</strong> ICJ, ICC</li>
+                            <li><i class="fas fa-globe"></i> <strong>UN Organizations:</strong> Legal Positions</li>
+                            <li><i class="fas fa-briefcase"></i> <strong>Magic Circle Firms:</strong> London Firms</li>
+                            <li><i class="fas fa-briefcase"></i> <strong>Big Law:</strong> US Top Firms</li>
+                            <li><i class="fas fa-globe"></i> <strong>World Bank:</strong> Legal Counsel</li>
+                            <li><i class="fas fa-globe"></i> <strong>WTO:</strong> Trade Law Expert</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight-box">
+                    <h4><i class="fas fa-rocket"></i> Career Growth Path:</h4>
+                    <ul>
+                        <li><strong>Junior Associate (0-3 years):</strong> Learning & Research</li>
+                        <li><strong>Senior Associate (3-7 years):</strong> Client Management</li>
+                        <li><strong>Partner (7+ years):</strong> Firm Leadership</li>
+                        <li><strong>Managing Partner:</strong> Strategic Direction</li>
+                        <li><strong>Judicial Services:</strong> Civil Judge → High Court → Supreme Court</li>
+                        <li><strong>Corporate Ladder:</strong> Legal Executive → Head Legal → CLO</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="higher-studies">
+            <div class="container">
+                <h2 class="section-title">Higher Studies After BA LL.B</h2>
+                <p class="section-subtitle">Advanced education options for law graduates</p>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-masters"></i> Master of Laws (LL.M)</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> <strong>Duration:</strong> 1-2 Years</li>
+                            <li><i class="fas fa-check"></i> <strong>Specializations:</strong> Corporate, International, Human Rights</li>
+                            <li><i class="fas fa-check"></i> <strong>Top Institutes:</strong> NLSIU, NALSAR, JGLS</li>
+                            <li><i class="fas fa-check"></i> <strong>Entrance:</strong> CLAT PG, AILET PG</li>
+                            <li><i class="fas fa-check"></i> <strong>Fee Range:</strong> ₹2-8 Lakhs</li>
+                            <li><i class="fas fa-check"></i> <strong>Career Boost:</strong> Academics, Specialized Practice</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-globe-americas"></i> Foreign LLM Programs</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> <strong>USA:</strong> Harvard, Yale, Columbia</li>
+                            <li><i class="fas fa-check"></i> <strong>UK:</strong> Oxford, Cambridge, LSE</li>
+                            <li><i class="fas fa-check"></i> <strong>Canada:</strong> Toronto, McGill</li>
+                            <li><i class="fas fa-check"></i> <strong>Australia:</strong> Melbourne, Sydney</li>
+                            <li><i class="fas fa-check"></i> <strong>Requirements:</strong> IELTS/TOEFL, LSAT</li>
+                            <li><i class="fas fa-check"></i> <strong>Cost:</strong> ₹30-60 Lakhs</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-certificate"></i> Diploma & Certificate Courses</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> <strong>Intellectual Property:</strong> 6 Months</li>
+                            <li><i class="fas fa-check"></i> <strong>Cyber Law:</strong> 3 Months</li>
+                            <li><i class="fas fa-check"></i> <strong>Taxation:</strong> 1 Year</li>
+                            <li><i class="fas fa-check"></i> <strong>Arbitration:</strong> 6 Months</li>
+                            <li><i class="fas fa-check"></i> <strong>Corporate Law:</strong> 1 Year</li>
+                            <li><i class="fas fa-check"></i> <strong>Human Rights:</strong> 6 Months</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-grid" style="margin-top: 2rem;">
+                    <div class="info-card">
+                        <h3><i class="fas fa-user-tie"></i> Professional Certifications</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> <strong>Company Secretary (CS):</strong> ICSI</li>
+                            <li><i class="fas fa-check"></i> <strong>Chartered Financial Analyst (CFA):</strong> Finance</li>
+                            <li><i class="fas fa-check"></i> <strong>Forensic Accounting:</strong> Fraud Detection</li>
+                            <li><i class="fas fa-check"></i> <strong>Compliance Officer:</strong> Regulatory</li>
+                            <li><i class="fas fa-check"></i> <strong>Mediator Certification:</strong> ADR</li>
+                            <li><i class="fas fa-check"></i> <strong>Legal Tech:</strong> Technology Law</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Ph.D in Law</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> <strong>Duration:</strong> 3-5 Years</li>
+                            <li><i class="fas fa-check"></i> <strong>Eligibility:</strong> LL.M with 55%</li>
+                            <li><i class="fas fa-check"></i> <strong>Entrance:</strong> UGC NET, JRF</li>
+                            <li><i class="fas fa-check"></i> <strong>Research Areas:</strong> Constitutional, International</li>
+                            <li><i class="fas fa-check"></i> <strong>Career:</strong> Professor, Researcher</li>
+                            <li><i class="fas fa-check"></i> <strong>Fellowship:</strong> ₹25,000-50,000/month</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-briefcase"></i> Integrated Programs</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> <strong>BA LL.B + MBA:</strong> 5 Years</li>
+                            <li><i class="fas fa-check"></i> <strong>BA LL.B + CS:</strong> 5 Years</li>
+                            <li><i class="fas fa-check"></i> <strong>BA LL.B + CFA:</strong> 5 Years</li>
+                            <li><i class="fas fa-check"></i> <strong>BA LL.B + LLM:</strong> 6 Years</li>
+                            <li><i class="fas fa-check"></i> <strong>Benefits:</strong> Dual Expertise</li>
+                            <li><i class="fas fa-check"></i> <strong>Placement:</strong> Higher Packages</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight-box">
+                    <h4><i class="fas fa-lightbulb"></i> Why Pursue Higher Studies?</h4>
+                    <ul>
+                        <li><strong>Specialization:</strong> Deep expertise in specific law areas</li>
+                        <li><strong>Global Opportunities:</strong> Practice law internationally</li>
+                        <li><strong>Academic Career:</strong> Teaching and research positions</li>
+                        <li><strong>Higher Salary:</strong> 30-50% increase in compensation</li>
+                        <li><strong>Leadership Roles:</strong> Partner, General Counsel positions</li>
+                        <li><strong>Consulting:</strong> Legal advisory and consulting roles</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="contact">
+            <div class="container">
+                <div class="cta-section">
+                    <div class="cta-content">
+                        <h2>Start Your Legal Career Today!</h2>
+                        <p>Get expert guidance for BA LL.B admission in top NLUs and law colleges. 100% placement assistance guaranteed.</p>
+                        <div class="btn-group">
+                            <a href="tel:+919876543210" class="btn btn-primary"><i class="fas fa-phone"></i> Call Now: +91 98765 43210</a>
+                            <a href="mailto:info@whitedavidacademy.com" class="btn btn-white"><i class="fas fa-envelope"></i> Email Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Whitedavid Academy</h3>
+                    <p>Leading education consultancy providing expert guidance for law courses with 15+ years of experience and 5000+ successful admissions.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#what-is-ballb">About BA LL.B</a></li>
+                        <li><a href="#courses">Courses</a></li>
+                        <li><a href="#subjects">Subjects</a></li>
+                        <li><a href="#eligibility">Eligibility</a></li>
+                        <li><a href="#admission">Admission</a></li>
+                        <li><a href="#colleges">Colleges</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Popular Exams</h3>
+                    <ul>
+                        <li><a href="#">CLAT</a></li>
+                        <li><a href="#">AILET</a></li>
+                        <li><a href="#">LSAT India</a></li>
+                        <li><a href="#">SLAT</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                    <p><i class="fas fa-envelope"></i> info@whitedavidacademy.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Connaught Place, New Delhi</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Whitedavid Academy. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var particlesContainer = document.getElementById('particles');
+        var isMobile = window.innerWidth < 768;
+        var particleCount = isMobile ? 8 : 14;
+        for (var i = 0; i < particleCount; i++) {
+            var p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDelay = (Math.random() * 18) + 's';
+            p.style.animationDuration = (18 + Math.random() * 12) + 's';
+            particlesContainer.appendChild(p);
+        }
+
+        setTimeout(function() {
+            document.getElementById('loading').classList.add('hide');
+        }, 500);
+
+        var navbar = document.getElementById('navbar');
+        var progressBar = document.getElementById('progressBar');
+        var menuToggle = document.getElementById('menuToggle');
+        var navLinks = document.getElementById('navLinks');
+        var quickNavItems = document.querySelectorAll('.quick-nav-item');
+        var sections = document.querySelectorAll('section[id]');
+        var docEl = document.documentElement;
+
+        var sectionMap = [];
+        function computeSections() {
+            sectionMap = [];
+            for (var i = 0; i < sections.length; i++) {
+                sectionMap.push({
+                    id: sections[i].id,
+                    top: sections[i].offsetTop - 120,
+                    bottom: sections[i].offsetTop + sections[i].offsetHeight - 120
+                });
+            }
+        }
+        computeSections();
+        var resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(computeSections, 250);
+        }, { passive: true });
+
+        var sectionObserver = new IntersectionObserver(function(entries) {
+            for (var i = 0; i < entries.length; i++) {
+                if (entries[i].isIntersecting) {
+                    entries[i].target.classList.add('in-view');
+                } else {
+                    entries[i].target.classList.remove('in-view');
+                }
+            }
+        }, { threshold: 0.02, rootMargin: '50px 0px' });
+
+        for (var s = 0; s < sections.length; s++) {
+            sectionObserver.observe(sections[s]);
+        }
+
+        var scrollTicking = false;
+        function onScroll() {
+            if (!scrollTicking) {
+                requestAnimationFrame(updateScroll);
+                scrollTicking = true;
+            }
+        }
+
+        function updateScroll() {
+            var scrollY = window.pageYOffset;
+            var docHeight = docEl.scrollHeight - docEl.clientHeight;
+            progressBar.style.width = docHeight > 0 ? ((scrollY / docHeight) * 100) + '%' : '0%';
+            navbar.classList.toggle('scrolled', scrollY > 50);
+
+            var currentId = '';
+            for (var i = sectionMap.length - 1; i >= 0; i--) {
+                if (scrollY >= sectionMap[i].top) {
+                    currentId = sectionMap[i].id;
+                    break;
+                }
+            }
+            for (var j = 0; j < quickNavItems.length; j++) {
+                var item = quickNavItems[j];
+                if (item.getAttribute('data-section') === currentId) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            }
+            scrollTicking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        for (var q = 0; q < quickNavItems.length; q++) {
+            quickNavItems[q].addEventListener('click', function(e) {
+                e.preventDefault();
+                var target = document.getElementById(this.getAttribute('data-section'));
+                if (target) {
+                    window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                }
+            });
+        }
+
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            var spans = this.querySelectorAll('span');
+            var isActive = navLinks.classList.contains('active');
+            spans[0].style.transform = isActive ? 'rotate(45deg) translate(5px, 5px)' : '';
+            spans[1].style.opacity = isActive ? '0' : '1';
+            spans[2].style.transform = isActive ? 'rotate(-45deg) translate(7px, -6px)' : '';
+        });
+
+        var navAnchors = navLinks.querySelectorAll('a');
+        for (var n = 0; n < navAnchors.length; n++) {
+            navAnchors[n].addEventListener('click', function() {
+                navLinks.classList.remove('active');
+                var spans = menuToggle.querySelectorAll('span');
+                spans[0].style.transform = '';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = '';
+            });
+        }
+
+        var allAnchors = document.querySelectorAll('a[href^="#"]');
+        for (var a = 0; a < allAnchors.length; a++) {
+            allAnchors[a].addEventListener('click', function(e) {
+                var href = this.getAttribute('href');
+                if (href.length > 1 && href.charAt(0) === '#') {
+                    e.preventDefault();
+                    var target = document.querySelector(href);
+                    if (target) {
+                        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                    }
+                }
+            });
+        }
+
+        var revealObserver = new IntersectionObserver(function(entries) {
+            for (var i = 0; i < entries.length; i++) {
+                if (entries[i].isIntersecting) {
+                    entries[i].target.style.opacity = '1';
+                    entries[i].target.style.transform = 'translateY(0)';
+                    revealObserver.unobserve(entries[i].target);
+                }
+            }
+        }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+
+        var animEls = document.querySelectorAll('.course-card, .info-card, .cta-section, .what-is-ballb, .highlight-box, .subject-item');
+        for (var k = 0; k < animEls.length; k++) {
+            animEls[k].style.opacity = '0';
+            animEls[k].style.transform = 'translateY(30px)';
+            animEls[k].style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            revealObserver.observe(animEls[k]);
+        }
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,2132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRM University Delhi-NCR, Haryana | Best Private University</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00E0FF;
+            --primary-dark: #00B8D4;
+            --secondary: #2CE6C2;
+            --accent: #3B82F6;
+            --bg-dark: #0B0F2A;
+            --bg-medium: #070B1A;
+            --bg-light: #111A3A;
+            --bg-card: rgba(15, 23, 42, 0.5);
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --text-highlight: rgba(255, 255, 255, 0.92);
+            --text-muted: #64748B;
+            --border-color: rgba(148, 163, 184, 0.1);
+            --gradient-primary: linear-gradient(135deg, #00E0FF, #2CE6C2);
+            --gradient-accent: linear-gradient(135deg, #3B82F6, #60A5FA);
+            --gradient-cta: linear-gradient(135deg, #FF6A3D, #FF8A50);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--bg-dark), var(--bg-medium));
+            overflow: hidden;
+            pointer-events: none;
+            will-change: transform;
+            contain: strict;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            top: -10%;
+            left: -10%;
+            background: radial-gradient(circle, rgba(0, 224, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle, rgba(44, 230, 194, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+            backface-visibility: hidden;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Particles */
+        #particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+            contain: strict;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Loading Screen */
+        #loading {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        #loading.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(15, 23, 42, 0.5);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 20px var(--primary);
+            will-change: transform;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Progress Bar */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            z-index: 9998;
+            width: 0%;
+            will-change: width;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        /* Navigation */
+        #navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(7, 11, 26, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            border-bottom: 1px solid var(--border-color);
+            will-change: background, box-shadow;
+        }
+
+        #navbar.scrolled {
+            background: rgba(7, 11, 26, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 224, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 2000px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 224, 255, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 80%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            margin: 3px 0;
+            transition: 0.3s;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        /* Quick Navigation */
+        .quick-nav {
+            position: fixed;
+            right: 20px;
+            top: 60%;
+            transform: translateY(-50%);
+            z-index: 900;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .quick-nav-item {
+            width: 50px;
+            height: 50px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .quick-nav-item:hover {
+            background: rgba(0, 224, 255, 0.12);
+            border-color: rgba(0, 224, 255, 0.3);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.3);
+        }
+
+        .quick-nav-item.active {
+            background: var(--gradient-primary);
+            border-color: transparent;
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.4);
+        }
+
+        .quick-nav-item i {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .quick-nav-item.active i {
+            color: var(--bg-dark);
+        }
+
+        .quick-nav-item[data-tooltip]:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: 60px;
+            background: rgba(7, 11, 26, 0.95);
+            color: var(--text-primary);
+            padding: 5px 10px;
+            border-radius: 5px;
+            white-space: nowrap;
+            border: 1px solid rgba(0, 224, 255, 0.2);
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.15);
+            font-size: 0.85rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(0, 224, 255, 0.06) 0%, transparent 70%);
+            overflow: hidden;
+            contain: layout style;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            animation: fadeInUp 1s ease;
+            padding: 0 20px;
+            max-width: 900px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(0, 224, 255, 0.5); }
+            to { text-shadow: 0 0 30px rgba(44, 230, 194, 0.8), 0 0 40px rgba(59, 130, 246, 0.8); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            backface-visibility: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-cta);
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 106, 61, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 106, 61, 0.45);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.12);
+            transform: translateY(-3px);
+        }
+
+        .btn-white {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-white:hover {
+            background: white;
+            color: var(--bg-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            contain: content;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* ============================================================
+           INFO CARDS — ALL 14 FEATURES + TEXT MICROINTERACTIONS
+           ============================================================ */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-card {
+            /* ① Glassmorphism: frosted glass with blur + transparency */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.35));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* ② Gradient Background: directional depth */
+            /* ④ Gradient Border / Top Highlight Line */
+            border: 1px solid var(--border-color);
+            border-top: 2px solid rgba(0, 224, 255, 0.4);
+            /* ⑤ Rounded Corners */
+            border-radius: 20px;
+            /* ⑩ Spacing System */
+            padding: 2rem;
+            margin: 0;
+            /* ⑪ Hover Interaction transition */
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        /* Sweep shine overlay */
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(0, 224, 255, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+            pointer-events: none;
+        }
+
+        .info-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* ⑪ Hover Elevation + ③ Neon Glow + ⑫ Shadow Elevation */
+        .info-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 224, 255, 0.4);
+            border-top-color: rgba(0, 224, 255, 0.8);
+            box-shadow:
+                0 15px 40px rgba(0, 224, 255, 0.12),
+                0 0 30px rgba(0, 224, 255, 0.08),
+                0 0 60px rgba(0, 224, 255, 0.04);
+        }
+
+        /* ⑧ Typography Hierarchy: bold colored title */
+        /* ⑥ Flexbox Alignment: icon + text */
+        /* ⑬ Minimal UI: clean, no clutter */
+        .info-card h3 {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            /* ⑮ Glow Hover Effect on title text */
+            transition: text-shadow 0.3s ease, color 0.3s ease;
+        }
+
+        /* ③ Neon Glow + ⑮ Highlight-on-Hover on title */
+        .info-card:hover h3 {
+            text-shadow: 0 0 18px currentColor, 0 0 40px currentColor;
+            color: var(--text-highlight);
+        }
+
+        .info-card h3 i {
+            font-size: 1.5rem;
+        }
+
+        /* ⑦ Icon-Based List: custom check icons */
+        /* ⑨ Color Contrast: gray text on dark bg */
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .info-card ul li {
+            /* ⑥ Flexbox: icon aligned with text */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            /* ⑨ Color Contrast: muted gray */
+            color: var(--text-secondary);
+            font-weight: 400;
+            /* ⑩ Spacing */
+            padding: 0.5rem 0;
+            margin: 0;
+            /* ⑮ Text Hover Effect per list item */
+            transition: color 0.25s ease, padding-left 0.25s ease, text-shadow 0.25s ease;
+            border-left: 2px solid transparent;
+        }
+
+        /* ⑬ Minimal UI: icons are subtle */
+        .info-card ul li i {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            transition: color 0.25s ease, text-shadow 0.25s ease;
+        }
+
+        /* ⑮ Individual List Item Hover — Text Highlight Microinteraction */
+        .info-card ul li:hover {
+            color: var(--text-highlight);
+            padding-left: 6px;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+        }
+
+        .info-card ul li:hover i {
+            color: var(--text-primary);
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        /* ⑧ Typography Hierarchy: body text is lighter weight, muted color */
+        /* ⑨ Color Contrast: muted gray vs white title */
+        /* ⑩ Spacing System */
+        .info-card p {
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            /* ⑮ Highlight-on-Hover for paragraph text */
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        /* ⑮ Paragraph text brightens on card hover */
+        .info-card:hover p {
+            color: var(--text-highlight);
+            text-shadow: 0 0 6px rgba(255, 255, 255, 0.08);
+        }
+
+        /* ——— Section-specific accent colors ——— */
+        #campus .info-card { border-top: 2px solid rgba(44, 230, 194, 0.4); }
+        #campus .info-card h3 { color: #2CE6C2; }
+        #campus .info-card ul li i { color: #2CE6C2; }
+        #campus .info-card::before { background: linear-gradient(45deg, transparent, rgba(44, 230, 194, 0.05), transparent); }
+        #campus .info-card:hover {
+            border-color: rgba(44, 230, 194, 0.4);
+            border-top-color: rgba(44, 230, 194, 0.8);
+            box-shadow: 0 15px 40px rgba(44, 230, 194, 0.15), 0 0 30px rgba(44, 230, 194, 0.08), 0 0 60px rgba(44, 230, 194, 0.04);
+        }
+
+        #facilities .info-card { border-top: 2px solid rgba(96, 165, 250, 0.4); }
+        #facilities .info-card h3 { color: #60A5FA; }
+        #facilities .info-card ul li i { color: #60A5FA; }
+        #facilities .info-card::before { background: linear-gradient(45deg, transparent, rgba(96, 165, 250, 0.05), transparent); }
+        #facilities .info-card:hover {
+            border-color: rgba(96, 165, 250, 0.4);
+            border-top-color: rgba(96, 165, 250, 0.8);
+            box-shadow: 0 15px 40px rgba(96, 165, 250, 0.15), 0 0 30px rgba(96, 165, 250, 0.08), 0 0 60px rgba(96, 165, 250, 0.04);
+        }
+
+        #placements .info-card { border-top: 2px solid rgba(74, 222, 128, 0.4); }
+        #placements .info-card h3 { color: #4ADE80; }
+        #placements .info-card ul li i { color: #4ADE80; }
+        #placements .info-card::before { background: linear-gradient(45deg, transparent, rgba(74, 222, 128, 0.05), transparent); }
+        #placements .info-card:hover {
+            border-color: rgba(74, 222, 128, 0.4);
+            border-top-color: rgba(74, 222, 128, 0.8);
+            box-shadow: 0 15px 40px rgba(74, 222, 128, 0.15), 0 0 30px rgba(74, 222, 128, 0.08), 0 0 60px rgba(74, 222, 128, 0.04);
+        }
+
+        #admission .info-card { border-top: 2px solid rgba(251, 191, 36, 0.4); }
+        #admission .info-card h3 { color: #FBBF24; }
+        #admission .info-card ul li i { color: #FBBF24; }
+        #admission .info-card::before { background: linear-gradient(45deg, transparent, rgba(251, 191, 36, 0.05), transparent); }
+        #admission .info-card:hover {
+            border-color: rgba(251, 191, 36, 0.4);
+            border-top-color: rgba(251, 191, 36, 0.8);
+            box-shadow: 0 15px 40px rgba(251, 191, 36, 0.15), 0 0 30px rgba(251, 191, 36, 0.08), 0 0 60px rgba(251, 191, 36, 0.04);
+        }
+
+        #contact .info-card { border-top: 2px solid rgba(192, 132, 252, 0.4); }
+        #contact .info-card h3 { color: #C084FC; }
+        #contact .info-card::before { background: linear-gradient(45deg, transparent, rgba(168, 85, 247, 0.05), transparent); }
+        #contact .info-card:hover {
+            border-color: rgba(168, 85, 247, 0.4);
+            border-top-color: rgba(192, 132, 252, 0.8);
+            box-shadow: 0 15px 40px rgba(168, 85, 247, 0.15), 0 0 30px rgba(168, 85, 247, 0.08), 0 0 60px rgba(168, 85, 247, 0.04);
+        }
+
+        /* ============================================================
+           PROGRAM CARDS — ALL 14 FEATURES + TEXT MICROINTERACTIONS
+           ============================================================ */
+        .program-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 10px 25px;
+            background: rgba(0, 224, 255, 0.05);
+            border: 1px solid rgba(0, 224, 255, 0.15);
+            border-radius: 25px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .tab-btn:hover {
+            border-color: rgba(0, 224, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.12);
+        }
+
+        .tab-btn.active {
+            background: var(--gradient-primary);
+            border-color: transparent;
+            color: var(--bg-dark);
+            box-shadow: 0 5px 20px rgba(0, 224, 255, 0.25);
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .program-card {
+            /* ① Glassmorphism */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.35));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* ④ Top Highlight */
+            border: 1px solid var(--border-color);
+            border-top: 2px solid rgba(59, 130, 246, 0.4);
+            /* ⑤ Rounded Corners */
+            border-radius: 20px;
+            /* ⑩ Spacing */
+            padding: 2rem;
+            margin: 0;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        .program-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            border-radius: 50%;
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .program-card:hover::after {
+            opacity: 0.08;
+        }
+
+        .program-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ⑪ Hover Elevation + Scale + ③ Glow + ⑫ Shadow */
+        .program-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow:
+                0 15px 40px rgba(59, 130, 246, 0.12),
+                0 0 30px rgba(59, 130, 246, 0.08),
+                0 0 60px rgba(59, 130, 246, 0.04);
+        }
+
+        /* ⑧ Typography Hierarchy */
+        .program-card h3 {
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            /* ⑮ Glow Hover on title */
+            transition: text-shadow 0.3s ease, color 0.3s ease;
+        }
+
+        /* ③ Neon Glow + ⑮ Highlight-on-Hover */
+        .program-card:hover h3 {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 0 0 35px rgba(255, 255, 255, 0.3);
+            color: var(--text-highlight);
+        }
+
+        .program-card p {
+            /* ⑨ Color Contrast: muted gray */
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            /* ⑮ Text Highlight */
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        /* ⑮ Description text brightens */
+        .program-card:hover p {
+            color: var(--text-highlight);
+            text-shadow: 0 0 6px rgba(255, 255, 255, 0.08);
+        }
+
+        /* Per-category accents */
+        .program-card[data-category="engineering"] .program-icon {
+            background: linear-gradient(135deg, #3B82F6, #60A5FA);
+            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.3);
+        }
+        .program-card[data-category="engineering"]::after { background: radial-gradient(circle, #3B82F6, transparent 70%); }
+        .program-card[data-category="engineering"] { border-top: 2px solid rgba(59, 130, 246, 0.4); }
+        .program-card[data-category="engineering"]:hover {
+            border-color: rgba(59, 130, 246, 0.4); border-top-color: rgba(59, 130, 246, 0.8);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.15), 0 0 30px rgba(59, 130, 246, 0.08), 0 0 60px rgba(59, 130, 246, 0.04);
+        }
+
+        .program-card[data-category="management"] .program-icon {
+            background: linear-gradient(135deg, #FF6A3D, #FF8A50);
+            box-shadow: 0 5px 20px rgba(255, 106, 61, 0.3);
+        }
+        .program-card[data-category="management"]::after { background: radial-gradient(circle, #FF6A3D, transparent 70%); }
+        .program-card[data-category="management"] { border-top: 2px solid rgba(255, 106, 61, 0.4); }
+        .program-card[data-category="management"]:hover {
+            border-color: rgba(255, 106, 61, 0.4); border-top-color: rgba(255, 106, 61, 0.8);
+            box-shadow: 0 15px 40px rgba(255, 106, 61, 0.15), 0 0 30px rgba(255, 106, 61, 0.08), 0 0 60px rgba(255, 106, 61, 0.04);
+        }
+
+        .program-card[data-category="sciences"] .program-icon {
+            background: linear-gradient(135deg, #A855F7, #EC4899);
+            box-shadow: 0 5px 20px rgba(168, 85, 247, 0.3);
+        }
+        .program-card[data-category="sciences"]::after { background: radial-gradient(circle, #A855F7, transparent 70%); }
+        .program-card[data-category="sciences"] { border-top: 2px solid rgba(168, 85, 247, 0.4); }
+        .program-card[data-category="sciences"]:hover {
+            border-color: rgba(168, 85, 247, 0.4); border-top-color: rgba(168, 85, 247, 0.8);
+            box-shadow: 0 15px 40px rgba(168, 85, 247, 0.15), 0 0 30px rgba(168, 85, 247, 0.08), 0 0 60px rgba(168, 85, 247, 0.04);
+        }
+
+        .program-card[data-category="law"] .program-icon {
+            background: linear-gradient(135deg, #F59E0B, #FBBF24);
+            box-shadow: 0 5px 20px rgba(245, 158, 11, 0.3);
+        }
+        .program-card[data-category="law"]::after { background: radial-gradient(circle, #F59E0B, transparent 70%); }
+        .program-card[data-category="law"] { border-top: 2px solid rgba(245, 158, 11, 0.4); }
+        .program-card[data-category="law"]:hover {
+            border-color: rgba(245, 158, 11, 0.4); border-top-color: rgba(245, 158, 11, 0.8);
+            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.15), 0 0 30px rgba(245, 158, 11, 0.08), 0 0 60px rgba(245, 158, 11, 0.04);
+        }
+
+        .program-card[data-category="architecture"] .program-icon {
+            background: linear-gradient(135deg, #22C55E, #4ADE80);
+            box-shadow: 0 5px 20px rgba(34, 197, 94, 0.3);
+        }
+        .program-card[data-category="architecture"]::after { background: radial-gradient(circle, #22C55E, transparent 70%); }
+        .program-card[data-category="architecture"] { border-top: 2px solid rgba(34, 197, 94, 0.4); }
+        .program-card[data-category="architecture"]:hover {
+            border-color: rgba(34, 197, 94, 0.4); border-top-color: rgba(34, 197, 94, 0.8);
+            box-shadow: 0 15px 40px rgba(34, 197, 94, 0.15), 0 0 30px rgba(34, 197, 94, 0.08), 0 0 60px rgba(34, 197, 94, 0.04);
+        }
+
+        .program-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        /* ============================================================
+           CTA SECTION — ALL 14 FEATURES + TEXT MICROINTERACTIONS
+           ============================================================ */
+        .cta-section {
+            /* ① Glassmorphism */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.5), rgba(15, 23, 42, 0.25));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* ④ Top Highlight */
+            border: 1px solid rgba(0, 224, 255, 0.1);
+            border-top: 2px solid rgba(0, 224, 255, 0.4);
+            /* ⑤ Rounded Corners */
+            border-radius: 20px;
+            /* ⑩ Spacing */
+            padding: 3rem;
+            margin: 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+            backface-visibility: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 224, 255, 0.03), transparent);
+            animation: rotate 10s linear infinite;
+            pointer-events: none;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ⑪ Hover + ③ Glow + ⑫ Elevation */
+        .cta-section:hover {
+            border-color: rgba(0, 224, 255, 0.35);
+            border-top-color: rgba(0, 224, 255, 0.8);
+            box-shadow:
+                0 15px 40px rgba(0, 224, 255, 0.1),
+                0 0 30px rgba(0, 224, 255, 0.06),
+                0 0 60px rgba(0, 224, 255, 0.03);
+        }
+
+        /* ⑧ Typography Hierarchy */
+        .cta-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* ⑮ Glow on hover */
+            transition: filter 0.3s ease;
+        }
+
+        /* ③ Neon Glow on CTA title (via filter since gradient text can't use text-shadow) */
+        .cta-section:hover h2 {
+            filter: drop-shadow(0 0 12px rgba(0, 224, 255, 0.5)) drop-shadow(0 0 30px rgba(44, 230, 194, 0.3));
+        }
+
+        .cta-section p {
+            /* ⑨ Color Contrast */
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            /* ⑮ Text Highlight */
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        /* ⑮ CTA description brightens on hover */
+        .cta-section:hover p {
+            color: var(--text-highlight);
+            text-shadow: 0 0 6px rgba(255, 255, 255, 0.08);
+        }
+
+        /* ============================================================
+           STEP CARDS — ALL 14 FEATURES + TEXT MICROINTERACTIONS
+           ============================================================ */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .step-card {
+            /* ① Glassmorphism */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.35));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* ④ Top Highlight */
+            border: 1px solid var(--border-color);
+            border-top: 2px solid rgba(251, 191, 36, 0.4);
+            /* ⑤ Rounded Corners */
+            border-radius: 20px;
+            /* ⑩ Spacing */
+            padding: 2rem;
+            margin: 0;
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        /* ⑪ Hover + ③ Glow + ⑫ Elevation */
+        .step-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(251, 191, 36, 0.4);
+            border-top-color: rgba(251, 191, 36, 0.8);
+            box-shadow:
+                0 15px 40px rgba(251, 191, 36, 0.15),
+                0 0 30px rgba(251, 191, 36, 0.08),
+                0 0 60px rgba(251, 191, 36, 0.04);
+        }
+
+        /* ⑧ Typography Hierarchy */
+        .step-card h4 {
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+            /* ⑮ Glow Hover */
+            transition: text-shadow 0.3s ease, color 0.3s ease;
+        }
+
+        /* ③ Neon Glow + ⑮ Highlight-on-Hover on step title */
+        .step-card:hover h4 {
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.6), 0 0 35px rgba(251, 191, 36, 0.3);
+            color: var(--text-highlight);
+        }
+
+        .step-card p {
+            /* ⑨ Color Contrast */
+            color: var(--text-secondary);
+            font-weight: 400;
+            /* ⑩ Spacing */
+            margin: 0;
+            /* ⑮ Text Highlight */
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        /* ⑮ Step description brightens */
+        .step-card:hover p {
+            color: var(--text-highlight);
+            text-shadow: 0 0 6px rgba(255, 255, 255, 0.08);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #F59E0B, #FBBF24);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--bg-dark);
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .step-icon {
+            width: 70px;
+            height: 70px;
+            margin: 1rem auto;
+            background: rgba(251, 191, 36, 0.08);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #FBBF24;
+        }
+
+        /* ============================================================
+           TESTIMONIAL CARDS — ALL 14 FEATURES + TEXT MICROINTERACTIONS
+           ============================================================ */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            /* ① Glassmorphism */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.35));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* ④ Top Highlight */
+            border: 1px solid var(--border-color);
+            border-top: 2px solid rgba(0, 224, 255, 0.4);
+            /* ⑤ Rounded Corners */
+            border-radius: 20px;
+            /* ⑩ Spacing */
+            padding: 2rem;
+            margin: 0;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            will-change: transform;
+            backface-visibility: hidden;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(0, 224, 255, 0.04), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+            pointer-events: none;
+        }
+
+        .testimonial-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* ⑪ Hover + ③ Glow + ⑫ Elevation */
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 224, 255, 0.4);
+            border-top-color: rgba(0, 224, 255, 0.8);
+            box-shadow:
+                0 15px 40px rgba(0, 224, 255, 0.12),
+                0 0 30px rgba(0, 224, 255, 0.08),
+                0 0 60px rgba(0, 224, 255, 0.04);
+        }
+
+        .testimonial-rating {
+            color: #FBBF24;
+            margin-bottom: 1rem;
+        }
+
+        /* ⑧ Typography Hierarchy: italic quote text */
+        /* ⑨ Color Contrast: muted gray */
+        .testimonial-text {
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            /* ⑩ Spacing */
+            line-height: 1.7;
+            /* ⑮ Text Highlight */
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        /* ⑮ Quote text brightens on card hover */
+        .testimonial-card:hover .testimonial-text {
+            color: var(--text-highlight);
+            text-shadow: 0 0 6px rgba(255, 255, 255, 0.08);
+        }
+
+        /* ⑥ Flexbox Alignment */
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-dark);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* ⑧ Typography Hierarchy: bold author name */
+        .author-info h5 {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+            /* ⑮ Glow Hover */
+            transition: text-shadow 0.3s ease, color 0.3s ease;
+        }
+
+        /* ③ Neon Glow + ⑮ Highlight-on-Hover on author name */
+        .testimonial-card:hover .author-info h5 {
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+            color: var(--text-highlight);
+        }
+
+        /* ⑨ Color Contrast: muted subtitle */
+        .author-info p {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 0.9rem;
+            margin: 0;
+            /* ⑮ Text Highlight */
+            transition: color 0.3s ease;
+        }
+
+        /* ⑮ Subtitle brightens */
+        .testimonial-card:hover .author-info p {
+            color: var(--text-secondary);
+        }
+
+        /* Contact center alignment */
+        .contact .info-card {
+            text-align: center;
+        }
+
+        .contact .info-card h3 {
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact .info-card p {
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-medium);
+            border-top: 1px solid rgba(0, 224, 255, 0.08);
+            padding: 3rem 5% 1rem;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            line-height: 1.8;
+        }
+
+        .footer-section p i {
+            margin-right: 0.5rem;
+            color: var(--primary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 224, 255, 0.06);
+            color: var(--text-secondary);
+        }
+
+        .footer-bottom p {
+            margin-bottom: 0.3rem;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(45deg, #00E0FF, #2CE6C2); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: linear-gradient(45deg, #3B82F6, #00E0FF); }
+
+        /* ============================================
+           RESPONSIVE STYLES
+           ============================================ */
+
+        @media (max-width: 1200px) {
+            .hero h1 { font-size: 3.2rem; }
+            .hero p { font-size: 1.3rem; }
+            .section-title { font-size: 2.2rem; }
+            .cta-section h2 { font-size: 1.7rem; }
+            .nav-links { gap: 1.5rem; }
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1.15rem; }
+            .section-title { font-size: 2rem; }
+            .section-subtitle { font-size: 1rem; }
+            .section { padding: 70px 4%; }
+            .cta-section h2 { font-size: 1.5rem; }
+            .cta-section p { font-size: 1rem; }
+            .btn { padding: 10px 24px; font-size: 0.95rem; }
+            .info-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+            .programs-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+            .testimonials-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+            .cta-section { padding: 2.5rem 1.5rem; }
+            .quick-nav { right: 12px; gap: 10px; }
+            .quick-nav-item { width: 42px; height: 42px; }
+            .quick-nav-item i { font-size: 1rem; }
+            .quick-nav-item[data-tooltip]:hover::after { display: none; }
+            .tab-btn { font-size: 0.88rem; padding: 8px 20px; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed; left: -100%; top: 0;
+                flex-direction: column;
+                background: rgba(7, 11, 26, 0.98);
+                width: 80%; max-width: 320px; height: 100vh;
+                text-align: center; transition: left 0.4s ease;
+                padding: 5rem 0 2rem;
+                border-right: 1px solid rgba(0, 224, 255, 0.15);
+                overflow-y: auto; will-change: left; backface-visibility: hidden;
+            }
+            .nav-links.active { left: 0; }
+            .nav-links li { border-bottom: 1px solid rgba(148, 163, 184, 0.06); }
+            .nav-links a { display: block; padding: 1rem 1.5rem; font-size: 1.05rem; }
+            .menu-toggle { display: flex; }
+            .quick-nav { display: none; }
+            .hero { min-height: 100vh; height: auto; padding: 120px 5% 60px; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1.05rem; margin-bottom: 1.5rem; }
+            .section { padding: 60px 4%; }
+            .section-title { font-size: 1.8rem; }
+            .section-subtitle { font-size: 0.95rem; margin-bottom: 2rem; }
+            .info-grid { grid-template-columns: 1fr; margin-bottom: 2rem; }
+            .programs-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; margin-bottom: 2rem; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 2rem; }
+            .step-card { max-width: 400px; margin: 0 auto; }
+            .program-tabs { gap: 0.6rem; margin-bottom: 2rem; }
+            .tab-btn { padding: 7px 14px; font-size: 0.82rem; }
+            .program-card { padding: 1.5rem; }
+            .program-icon { width: 65px; height: 65px; font-size: 1.6rem; }
+            .info-card { padding: 1.5rem; }
+            .info-card h3 { font-size: 1.15rem; }
+            .cta-section { padding: 2rem 1.2rem; margin-top: 2rem; }
+            .cta-section h2 { font-size: 1.35rem; }
+            .cta-section p { font-size: 0.95rem; margin-bottom: 1.5rem; }
+            .btn-group { gap: 0.7rem; }
+            .btn { padding: 10px 20px; font-size: 0.9rem; }
+            .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
+            footer { padding: 2rem 4% 1rem; margin-top: 60px; }
+            .logo { font-size: 1.3rem; }
+            nav { padding: 0.9rem 4%; }
+        }
+
+        @media (max-width: 576px) {
+            .hero { padding: 110px 5% 50px; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 0.95rem; margin-bottom: 1.5rem; }
+            .section { padding: 50px 5%; }
+            .section-title { font-size: 1.55rem; }
+            .section-subtitle { font-size: 0.9rem; margin-bottom: 1.5rem; }
+            .programs-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .program-card { padding: 1.3rem; }
+            .program-icon { width: 58px; height: 58px; font-size: 1.4rem; margin-bottom: 0.8rem; }
+            .program-card h3 { font-size: 1.15rem; margin-bottom: 0.3rem; }
+            .program-card p { font-size: 0.88rem; margin-bottom: 1rem; }
+            .program-tabs { gap: 0.45rem; margin-bottom: 1.5rem; }
+            .tab-btn { padding: 6px 11px; font-size: 0.76rem; border-radius: 20px; }
+            .info-card { padding: 1.2rem; }
+            .info-card h3 { font-size: 1.05rem; margin-bottom: 0.8rem; }
+            .info-card li { font-size: 0.88rem; padding: 0.35rem 0; }
+            .info-card p { font-size: 0.88rem; }
+            .step-card { padding: 1.5rem 1.2rem; }
+            .step-icon { width: 56px; height: 56px; font-size: 1.4rem; margin: 0.8rem auto; }
+            .step-card h4 { font-size: 1.05rem; }
+            .step-card p { font-size: 0.88rem; }
+            .step-number { width: 35px; height: 35px; top: -12px; font-size: 0.9rem; }
+            .cta-section { padding: 1.5rem 1rem; margin-top: 1.5rem; border-radius: 15px; }
+            .cta-section h2 { font-size: 1.2rem; }
+            .cta-section p { font-size: 0.88rem; margin-bottom: 1.2rem; }
+            .btn-group { flex-direction: column; align-items: center; gap: 0.6rem; }
+            .btn { width: 100%; max-width: 320px; justify-content: center; padding: 10px 18px; font-size: 0.88rem; }
+            .logo { font-size: 1.15rem; }
+            nav { padding: 0.8rem 5%; }
+            .menu-toggle span { width: 22px; height: 2.5px; }
+            footer { padding: 1.5rem 5% 1rem; margin-top: 50px; }
+            .footer-section h3 { font-size: 1.05rem; }
+            .footer-section p, .footer-section a { font-size: 0.88rem; }
+            .footer-bottom p { font-size: 0.78rem; }
+            .testimonial-card { padding: 1.5rem; }
+            .testimonial-text { font-size: 0.9rem; }
+        }
+
+        @media (max-width: 380px) {
+            .hero h1 { font-size: 1.55rem; }
+            .hero p { font-size: 0.85rem; }
+            .section-title { font-size: 1.35rem; }
+            .section-subtitle { font-size: 0.85rem; }
+            .tab-btn { padding: 5px 9px; font-size: 0.7rem; }
+            .program-card { padding: 1.1rem; }
+            .program-card h3 { font-size: 1.05rem; }
+            .program-card p { font-size: 0.82rem; }
+            .program-icon { width: 50px; height: 50px; font-size: 1.2rem; }
+            .info-card { padding: 1rem; }
+            .info-card h3 { font-size: 0.98rem; }
+            .info-card li { font-size: 0.82rem; }
+            .info-card p { font-size: 0.82rem; }
+            .step-number { width: 30px; height: 30px; font-size: 0.8rem; }
+            .step-icon { width: 48px; height: 48px; font-size: 1.2rem; }
+            .step-card h4 { font-size: 0.98rem; }
+            .step-card p { font-size: 0.82rem; }
+            .cta-section h2 { font-size: 1.08rem; }
+            .cta-section p { font-size: 0.82rem; }
+            .btn { font-size: 0.82rem; padding: 9px 14px; }
+            .logo { font-size: 1.05rem; }
+            .footer-section h3 { font-size: 0.98rem; }
+            .footer-section p, .footer-section a { font-size: 0.82rem; }
+            .footer-bottom p { font-size: 0.72rem; }
+            .testimonial-card { padding: 1.2rem; }
+            .testimonial-text { font-size: 0.85rem; }
+            .author-avatar { width: 42px; height: 42px; font-size: 0.85rem; }
+        }
+
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero { min-height: auto; height: auto; padding: 100px 5% 40px; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; margin-bottom: 1rem; }
+            .section { padding: 40px 5%; }
+            .section-title { font-size: 1.8rem; }
+            .section-subtitle { margin-bottom: 1.5rem; }
+            .cta-section { padding: 1.5rem; margin-top: 1.5rem; }
+            .cta-section h2 { font-size: 1.5rem; }
+        }
+
+        /* ============================================
+           TOUCH DEVICES — Disable ALL hover effects
+           ============================================ */
+        @media (hover: none) and (pointer: coarse) {
+            .info-card:hover {
+                transform: none;
+                box-shadow: none;
+                border-color: var(--border-color);
+                border-top-color: rgba(0, 224, 255, 0.4);
+            }
+            .info-card:hover::before { transform: translateX(-100%); }
+            .info-card:hover h3 { text-shadow: none; color: var(--primary); }
+            .info-card:hover ul li { color: var(--text-secondary); padding-left: 0; text-shadow: none; }
+            .info-card:hover ul li i { color: var(--secondary); text-shadow: none; }
+            .info-card:hover p { color: var(--text-secondary); text-shadow: none; }
+
+            #campus .info-card:hover { border-top-color: rgba(44, 230, 194, 0.4); }
+            #campus .info-card:hover h3 { color: #2CE6C2; }
+            #facilities .info-card:hover { border-top-color: rgba(96, 165, 250, 0.4); }
+            #facilities .info-card:hover h3 { color: #60A5FA; }
+            #placements .info-card:hover { border-top-color: rgba(74, 222, 128, 0.4); }
+            #placements .info-card:hover h3 { color: #4ADE80; }
+            #admission .info-card:hover { border-top-color: rgba(251, 191, 36, 0.4); }
+            #admission .info-card:hover h3 { color: #FBBF24; }
+            #contact .info-card:hover { border-top-color: rgba(192, 132, 252, 0.4); }
+            #contact .info-card:hover h3 { color: #C084FC; }
+
+            .program-card:hover {
+                transform: none; box-shadow: none;
+                border-color: var(--border-color); border-top-color: rgba(59, 130, 246, 0.4);
+            }
+            .program-card:hover::after { opacity: 0.04; }
+            .program-card:hover h3 { text-shadow: none; color: var(--text-primary); }
+            .program-card:hover p { color: var(--text-secondary); text-shadow: none; }
+            .program-card[data-category="engineering"]:hover { border-top-color: rgba(59, 130, 246, 0.4); }
+            .program-card[data-category="management"]:hover { border-top-color: rgba(255, 106, 61, 0.4); }
+            .program-card[data-category="sciences"]:hover { border-top-color: rgba(168, 85, 247, 0.4); }
+            .program-card[data-category="law"]:hover { border-top-color: rgba(245, 158, 11, 0.4); }
+            .program-card[data-category="architecture"]:hover { border-top-color: rgba(34, 197, 94, 0.4); }
+
+            .step-card:hover {
+                transform: none; box-shadow: none;
+                border-color: var(--border-color); border-top-color: rgba(251, 191, 36, 0.4);
+            }
+            .step-card:hover h4 { text-shadow: none; color: var(--text-primary); }
+            .step-card:hover p { color: var(--text-secondary); text-shadow: none; }
+
+            .testimonial-card:hover {
+                transform: none; box-shadow: none;
+                border-color: var(--border-color); border-top-color: rgba(0, 224, 255, 0.4);
+            }
+            .testimonial-card:hover::before { transform: translateX(-100%); }
+            .testimonial-card:hover .testimonial-text { color: var(--text-secondary); text-shadow: none; }
+            .testimonial-card:hover .author-info h5 { text-shadow: none; color: var(--text-primary); }
+            .testimonial-card:hover .author-info p { color: var(--text-muted); }
+
+            .cta-section:hover {
+                box-shadow: none; border-color: rgba(0, 224, 255, 0.1); border-top-color: rgba(0, 224, 255, 0.4);
+            }
+            .cta-section:hover h2 { filter: none; }
+            .cta-section:hover p { color: var(--text-secondary); text-shadow: none; }
+
+            .btn-primary:hover { transform: none; }
+            .btn-secondary:hover { transform: none; }
+            .btn-white:hover { transform: none; }
+            .tab-btn:hover { box-shadow: none; }
+            .quick-nav-item:hover { transform: none; }
+        }
+
+        /* ============================================
+           REDUCED MOTION — Disable ALL animations
+           ============================================ */
+        @media (prefers-reduced-motion: reduce) {
+            .particle, .hero-content, .bg-animation::before,
+            .cta-section::before, .loader { animation: none; }
+            .btn::before, .info-card::before, .testimonial-card::before,
+            .program-card::after { transition: none; }
+            .info-card, .info-card h3, .info-card ul li, .info-card ul li i, .info-card p,
+            .program-card, .program-card h3, .program-card p,
+            .step-card, .step-card h4, .step-card p,
+            .testimonial-card, .testimonial-text, .author-info h5, .author-info p,
+            .cta-section, .cta-section h2, .cta-section p,
+            .btn, .tab-btn, .quick-nav-item, .nav-links a, #navbar,
+            .menu-toggle span, #loading { transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div id="progressBar"></div>
+
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+    <div id="particles"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo">SRM University Delhi-NCR</div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#programs">Programs</a></li>
+            <li><a href="#campus">Campus Life</a></li>
+            <li><a href="#facilities">Facilities</a></li>
+            <li><a href="#placements">Placements</a></li>
+            <li><a href="#admission">Admission</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Quick Navigation -->
+    <div class="quick-nav">
+        <div class="quick-nav-item active" data-tooltip="Home">
+            <i class="fas fa-home"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Programs">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Campus">
+            <i class="fas fa-university"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Facilities">
+            <i class="fas fa-building"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Placements">
+            <i class="fas fa-briefcase"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Admission">
+            <i class="fas fa-user-plus"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Contact">
+            <i class="fas fa-phone"></i>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>SRM University Delhi-NCR</h1>
+            <p>Where Innovation Meets Excellence</p>
+            <div class="btn-group">
+                <a href="#admission" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    Apply Now
+                </a>
+                <a href="#programs" class="btn btn-secondary">
+                    <i class="fas fa-book"></i>
+                    Explore Programs
+                </a>
+                <a href="tel:18001234567" class="btn btn-white">
+                    <i class="fas fa-phone"></i>
+                    Call: 1800-123-4567
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="section" id="programs">
+        <div class="container">
+            <h2 class="section-title">Academic Programs</h2>
+            <p class="section-subtitle">Industry-Relevant Regular Courses</p>
+            
+            <div class="program-tabs">
+                <button class="tab-btn active" data-category="engineering">Engineering</button>
+                <button class="tab-btn" data-category="management">Management</button>
+                <button class="tab-btn" data-category="sciences">Sciences</button>
+                <button class="tab-btn" data-category="law">Law</button>
+                <button class="tab-btn" data-category="architecture">Architecture</button>
+            </div>
+
+            <div class="programs-grid">
+                <div class="program-card" data-category="engineering">
+                    <div class="program-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>B.Tech CSE</h3>
+                    <p>4 Years • AI & Machine Learning Specialization</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="engineering">
+                    <div class="program-icon"><i class="fas fa-microchip"></i></div>
+                    <h3>B.Tech ECE</h3>
+                    <p>4 Years • Electronics & Communication</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="engineering">
+                    <div class="program-icon"><i class="fas fa-cogs"></i></div>
+                    <h3>B.Tech Mechanical</h3>
+                    <p>4 Years • Automotive Engineering</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="management">
+                    <div class="program-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>BBA</h3>
+                    <p>3 Years • Business Administration</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="management">
+                    <div class="program-icon"><i class="fas fa-briefcase"></i></div>
+                    <h3>MBA</h3>
+                    <p>2 Years • Multiple Specializations</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="sciences">
+                    <div class="program-icon"><i class="fas fa-flask"></i></div>
+                    <h3>B.Sc Biotechnology</h3>
+                    <p>3 Years • Research & Development</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="sciences">
+                    <div class="program-icon"><i class="fas fa-atom"></i></div>
+                    <h3>B.Sc Physics</h3>
+                    <p>3 Years • Applied Physics</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="law">
+                    <div class="program-icon"><i class="fas fa-balance-scale"></i></div>
+                    <h3>BA LLB</h3>
+                    <p>5 Years • Integrated Law Program</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="architecture">
+                    <div class="program-icon"><i class="fas fa-drafting-compass"></i></div>
+                    <h3>B.Arch</h3>
+                    <p>5 Years • Architecture & Design</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Find Your Perfect Program!</h2>
+                    <p>Get Free Career Counseling</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary"><i class="fas fa-search"></i> Explore All Programs</a>
+                        <a href="tel:18001234567" class="btn btn-white"><i class="fas fa-phone"></i> Talk to Counselor</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campus Life Section -->
+    <section class="section" id="campus">
+        <div class="container">
+            <h2 class="section-title">Vibrant Campus Life</h2>
+            <p class="section-subtitle">Experience World-Class Campus Living</p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-user-friends"></i> Student Activities</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 50+ Student Clubs</li>
+                        <li><i class="fas fa-check"></i> Cultural Festivals</li>
+                        <li><i class="fas fa-check"></i> Technical Events</li>
+                        <li><i class="fas fa-check"></i> Sports Competitions</li>
+                        <li><i class="fas fa-check"></i> Workshops & Seminars</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-bed"></i> Hostel Facilities</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> AC & Non-AC Rooms</li>
+                        <li><i class="fas fa-check"></i> 24/7 Security</li>
+                        <li><i class="fas fa-check"></i> Mess & Cafeteria</li>
+                        <li><i class="fas fa-check"></i> Gym & Recreation</li>
+                        <li><i class="fas fa-check"></i> WiFi Connectivity</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-trophy"></i> Sports & Fitness</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Olympic Size Swimming Pool</li>
+                        <li><i class="fas fa-check"></i> Cricket & Football Grounds</li>
+                        <li><i class="fas fa-check"></i> Basketball & Tennis Courts</li>
+                        <li><i class="fas fa-check"></i> Modern Gymnasium</li>
+                        <li><i class="fas fa-check"></i> Indoor Sports Complex</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Join Our Vibrant Campus Community!</h2>
+                    <p>Learn, Grow & Excel Together</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary"><i class="fas fa-video"></i> Virtual Campus Tour</a>
+                        <a href="#" class="btn btn-secondary"><i class="fas fa-calendar"></i> Upcoming Events</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section class="section" id="facilities">
+        <div class="container">
+            <h2 class="section-title">World-Class Campus Facilities</h2>
+            <p class="section-subtitle">State-of-the-Art Infrastructure</p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-flask"></i> Laboratories</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Advanced Computer Labs</li>
+                        <li><i class="fas fa-check"></i> AI & Robotics Lab</li>
+                        <li><i class="fas fa-check"></i> Electronics & VLSI Lab</li>
+                        <li><i class="fas fa-check"></i> Mechanical Workshop</li>
+                        <li><i class="fas fa-check"></i> Biotechnology Research Lab</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-book-open"></i> Library</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 1,00,000+ Books</li>
+                        <li><i class="fas fa-check"></i> Digital Library</li>
+                        <li><i class="fas fa-check"></i> Research Journals</li>
+                        <li><i class="fas fa-check"></i> E-Learning Resources</li>
+                        <li><i class="fas fa-check"></i> 24/7 Study Areas</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-university"></i> Academic Buildings</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Smart Classrooms</li>
+                        <li><i class="fas fa-check"></i> Auditoriums</li>
+                        <li><i class="fas fa-check"></i> Conference Halls</li>
+                        <li><i class="fas fa-check"></i> Seminar Rooms</li>
+                        <li><i class="fas fa-check"></i> Faculty Chambers</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Explore Our Modern Campus!</h2>
+                    <p>Experience Premium Learning Infrastructure</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary"><i class="fas fa-tour"></i> 360° Campus Tour</a>
+                        <a href="#" class="btn btn-secondary"><i class="fas fa-info-circle"></i> Know More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Placements Section -->
+    <section class="section" id="placements">
+        <div class="container">
+            <h2 class="section-title">Campus Placements & Careers</h2>
+            <p class="section-subtitle">500+ Companies Visit Our Campus</p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-handshake"></i> Placement Support</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Dedicated Placement Cell</li>
+                        <li><i class="fas fa-check"></i> Resume Building Workshops</li>
+                        <li><i class="fas fa-check"></i> Mock Interviews</li>
+                        <li><i class="fas fa-check"></i> Aptitude Training</li>
+                        <li><i class="fas fa-check"></i> Internship Programs</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-chart-bar"></i> Top Recruiters</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Microsoft, Google, Amazon</li>
+                        <li><i class="fas fa-check"></i> TCS, Infosys, Wipro</li>
+                        <li><i class="fas fa-check"></i> Deloitte, KPMG, EY</li>
+                        <li><i class="fas fa-check"></i> Samsung, Intel, NVIDIA</li>
+                        <li><i class="fas fa-check"></i> Leading Startups</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-rupee-sign"></i> Placement Records</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 95% Placement Rate</li>
+                        <li><i class="fas fa-check"></i> Average: 8-12 LPA</li>
+                        <li><i class="fas fa-check"></i> Highest: 45+ LPA</li>
+                        <li><i class="fas fa-check"></i> 2000+ Job Offers</li>
+                        <li><i class="fas fa-check"></i> International Placements</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Build Your Career with SRM!</h2>
+                    <p>Get Placed in Dream Companies</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary"><i class="fas fa-briefcase"></i> View Placement Report</a>
+                        <a href="#" class="btn btn-secondary"><i class="fas fa-phone-alt"></i> Contact Placement Cell</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admission Section -->
+    <section class="section" id="admission">
+        <div class="container">
+            <h2 class="section-title">Admission Process</h2>
+            <p class="section-subtitle">Simple Steps to Join SRM</p>
+            <div class="steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-edit"></i></div>
+                    <h4>Apply Online</h4>
+                    <p>Fill application form with required details</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-file-alt"></i></div>
+                    <h4>Entrance Exam</h4>
+                    <p>Appear for SRMJEEE or qualifying exam</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+                    <h4>Counseling & Admission</h4>
+                    <p>Document verification & fee payment</p>
+                </div>
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-list-check"></i> Eligibility</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 10+2 with 60% for UG</li>
+                        <li><i class="fas fa-check"></i> Graduation for PG Programs</li>
+                        <li><i class="fas fa-check"></i> Valid Entrance Score</li>
+                        <li><i class="fas fa-check"></i> Age: 17-25 Years</li>
+                        <li><i class="fas fa-check"></i> NRI/Foreign Students Welcome</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-file-upload"></i> Required Documents</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 10th & 12th Mark Sheets</li>
+                        <li><i class="fas fa-check"></i> Transfer Certificate</li>
+                        <li><i class="fas fa-check"></i> Migration Certificate</li>
+                        <li><i class="fas fa-check"></i> Entrance Exam Score Card</li>
+                        <li><i class="fas fa-check"></i> Passport Size Photos</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-rupee-sign"></i> Fee Structure</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Competitive Fee Structure</li>
+                        <li><i class="fas fa-check"></i> Scholarship Programs</li>
+                        <li><i class="fas fa-check"></i> Education Loan Support</li>
+                        <li><i class="fas fa-check"></i> Merit-Based Discounts</li>
+                        <li><i class="fas fa-check"></i> Transparent Fee Policy</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Start Your Journey at SRM!</h2>
+                    <p>Admissions Open for 2024-25</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary"><i class="fas fa-user-plus"></i> Apply Now</a>
+                        <a href="tel:18001234567" class="btn btn-secondary"><i class="fas fa-phone"></i> Call: 1800-123-4567</a>
+                        <a href="#" class="btn btn-white"><i class="fas fa-download"></i> Download Brochure</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="section-subtitle">We're Here to Help You</p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-phone-alt"></i> Contact Numbers</h3>
+                    <p>Admissions: 1800-123-4567 (Toll-Free)<br>
+                    Campus: +91-124-4779000<br>
+                    WhatsApp: +91-9876543210</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-envelope"></i> Email Addresses</h3>
+                    <p>Admissions: admissions@srmist.edu.in<br>
+                    Info: info@srmist.edu.in<br>
+                    International: international@srmist.edu.in</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Campus Address</h3>
+                    <p>SRM University Delhi-NCR, Sonepat<br>
+                    Delhi-NCR, Haryana - 131029<br>
+                    India (Near Rajiv Gandhi Education City)</p>
+                </div>
+            </div>
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Visit Our Beautiful Campus!</h2>
+                    <p>Experience Excellence in Education</p>
+                    <div class="btn-group">
+                        <a href="tel:18001234567" class="btn btn-primary"><i class="fas fa-phone"></i> Call Now: 1800-123-4567</a>
+                        <a href="#" class="btn btn-secondary"><i class="fas fa-calendar"></i> Schedule Visit</a>
+                        <a href="#" class="btn btn-white"><i class="fas fa-map"></i> Get Directions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SRM University Delhi-NCR</h3>
+                    <p>Sonepat, Delhi-NCR, Haryana - 131029</p>
+                    <p>NAAC A++ Accredited</p>
+                    <p>UGC Approved</p>
+                    <p>AICTE Approved</p>
+                    <p>#1 Private University in Haryana</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#campus">Campus Life</a></li>
+                        <li><a href="#facilities">Facilities</a></li>
+                        <li><a href="#placements">Placements</a></li>
+                        <li><a href="#admission">Admission</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Popular Programs</h3>
+                    <ul>
+                        <li><a href="#">B.Tech CSE</a></li>
+                        <li><a href="#">B.Tech ECE</a></li>
+                        <li><a href="#">BBA</a></li>
+                        <li><a href="#">MBA</a></li>
+                        <li><a href="#">B.Sc Biotechnology</a></li>
+                        <li><a href="#">BA LLB</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <p><i class="fab fa-facebook"></i> Facebook</p>
+                    <p><i class="fab fa-youtube"></i> YouTube</p>
+                    <p><i class="fab fa-linkedin"></i> LinkedIn</p>
+                    <p><i class="fab fa-instagram"></i> Instagram</p>
+                    <p><i class="fab fa-twitter"></i> Twitter</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SRM University Delhi-NCR, Sonepat. All Rights Reserved.</p>
+                <p>Best Private University in Delhi-NCR | 500+ Companies for Placements</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var isMobile = window.innerWidth <= 768;
+            var particleCount = isMobile ? 12 : 35;
+            var particlesContainer = document.getElementById('particles');
+            var frag = document.createDocumentFragment();
+            for (var i = 0; i < particleCount; i++) {
+                var particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = (Math.random() * 100) + '%';
+                particle.style.animationDelay = (Math.random() * 15) + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                frag.appendChild(particle);
+            }
+            particlesContainer.appendChild(frag);
+
+            setTimeout(function() {
+                document.getElementById('loading').classList.add('hide');
+            }, 1000);
+
+            var quickNavItems = document.querySelectorAll('.quick-nav-item');
+            var sections = document.querySelectorAll('section[id]');
+            var progressBar = document.getElementById('progressBar');
+            var navbar = document.getElementById('navbar');
+            var scrollTicking = false;
+
+            function onScroll() {
+                if (!scrollTicking) {
+                    window.requestAnimationFrame(function() {
+                        var scrollY = window.pageYOffset;
+                        var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                        var scrolled = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+                        progressBar.style.width = scrolled + '%';
+                        if (scrollY > 50) { navbar.classList.add('scrolled'); }
+                        else { navbar.classList.remove('scrolled'); }
+                        for (var i = 0; i < sections.length; i++) {
+                            var section = sections[i];
+                            var sectionTop = section.offsetTop - 100;
+                            if (scrollY >= sectionTop && scrollY < sectionTop + section.offsetHeight) {
+                                var sectionId = section.getAttribute('id');
+                                for (var j = 0; j < quickNavItems.length; j++) {
+                                    var item = quickNavItems[j];
+                                    var tooltip = item.getAttribute('data-tooltip').toLowerCase().replace(' ', '-');
+                                    if (tooltip === sectionId) { item.classList.add('active'); }
+                                    else { item.classList.remove('active'); }
+                                }
+                                break;
+                            }
+                        }
+                        scrollTicking = false;
+                    });
+                    scrollTicking = true;
+                }
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+
+            for (var q = 0; q < quickNavItems.length; q++) {
+                quickNavItems[q].addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var targetId = this.getAttribute('data-tooltip').toLowerCase().replace(' ', '-');
+                    var targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        window.scrollTo({ top: targetSection.offsetTop - 80, behavior: 'smooth' });
+                    }
+                });
+            }
+
+            var menuToggle = document.getElementById('menuToggle');
+            var navLinks = document.getElementById('navLinks');
+            var menuSpans = menuToggle.querySelectorAll('span');
+
+            function closeMenu() {
+                navLinks.classList.remove('active');
+                for (var s = 0; s < menuSpans.length; s++) {
+                    menuSpans[s].style.transform = 'none';
+                    menuSpans[s].style.opacity = '1';
+                }
+                document.body.style.overflow = '';
+            }
+
+            menuToggle.addEventListener('click', function() {
+                var isOpen = navLinks.classList.toggle('active');
+                if (isOpen) {
+                    menuSpans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    menuSpans[1].style.opacity = '0';
+                    menuSpans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                    document.body.style.overflow = 'hidden';
+                } else { closeMenu(); }
+            });
+
+            var navAnchors = document.querySelectorAll('#navLinks a');
+            for (var a = 0; a < navAnchors.length; a++) {
+                navAnchors[a].addEventListener('click', closeMenu);
+            }
+
+            document.addEventListener('click', function(e) {
+                if (navLinks.classList.contains('active') &&
+                    !navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                    closeMenu();
+                }
+            });
+
+            var allAnchors = document.querySelectorAll('a[href^="#"]');
+            for (var an = 0; an < allAnchors.length; an++) {
+                allAnchors[an].addEventListener('click', function(e) {
+                    var href = this.getAttribute('href');
+                    if (href === '#') return;
+                    e.preventDefault();
+                    var target = document.querySelector(href);
+                    if (target) {
+                        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                    }
+                });
+            }
+
+            var tabBtns = document.querySelectorAll('.tab-btn');
+            var programCards = document.querySelectorAll('.program-card');
+
+            for (var t = 0; t < tabBtns.length; t++) {
+                tabBtns[t].addEventListener('click', function() {
+                    var category = this.getAttribute('data-category');
+                    for (var b = 0; b < tabBtns.length; b++) { tabBtns[b].classList.remove('active'); }
+                    this.classList.add('active');
+                    for (var c = 0; c < programCards.length; c++) {
+                        var card = programCards[c];
+                        if (card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            }
+
+            var animatedElements = document.querySelectorAll('.info-card, .cta-section, .program-card, .step-card, .testimonial-card');
+            var observer = new IntersectionObserver(function(entries) {
+                for (var e = 0; e < entries.length; e++) {
+                    if (entries[e].isIntersecting) {
+                        entries[e].target.style.opacity = '1';
+                        entries[e].target.style.transform = 'translateY(0)';
+                        observer.unobserve(entries[e].target);
+                    }
+                }
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            for (var o = 0; o < animatedElements.length; o++) {
+                animatedElements[o].style.opacity = '0';
+                animatedElements[o].style.transform = 'translateY(30px)';
+                animatedElements[o].style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(animatedElements[o]);
+            }
+
+            tabBtns[0].click();
+
+            var resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    if (window.innerWidth > 768 && navLinks.classList.contains('active')) { closeMenu(); }
+                }, 150);
+            });
+        });
+    </script>
+</body>
+</html>

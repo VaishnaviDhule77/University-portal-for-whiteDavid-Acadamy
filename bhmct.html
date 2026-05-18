@@ -1,0 +1,2200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BHMCt Course | Whitedavid Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark Gradient Background */
+            --darkest: #050819;
+            --darker: #080C22;
+            --dark: #0B0F2A;
+            --light: #111A3A;
+            --lighter: #1A2E4A;
+
+            /* Neon Cyan/Teal Accent */
+            --primary: #00E0FF;
+            --primary-dark: #00B8D4;
+            --secondary: #2CE6C2;
+
+            /* Warm CTA Gradient */
+            --cta-start: #FF6A3D;
+            --cta-end: #FF8A50;
+
+            /* Multi-Accent System */
+            --accent-orange: linear-gradient(135deg, #FF6A3D, #FF8A50);
+            --accent-blue: linear-gradient(135deg, #3B82F6, #60A5FA);
+            --accent-purple: linear-gradient(135deg, #A855F7, #EC4899);
+            --accent-green: linear-gradient(135deg, #22C55E, #4ADE80);
+            --accent-amber: linear-gradient(135deg, #F59E0B, #FBBF24);
+            --accent-teal: linear-gradient(135deg, #14B8A6, #2DD4BF);
+
+            /* Soft White Typography */
+            --text: #FFFFFF;
+            --text-dim: #B0B8D1;
+            --text-muted: #94A3B8;
+
+            /* Low-Contrast Borders */
+            --border: rgba(148, 163, 184, 0.1);
+            --border-hover: rgba(148, 163, 184, 0.25);
+
+            /* Outline Button */
+            --outline-border: #6C7A9A;
+
+            /* Glow Effects */
+            --glow: rgba(0, 224, 255, 0.3);
+            --glow-secondary: rgba(44, 230, 194, 0.3);
+            --glow-cta: rgba(255, 106, 61, 0.4);
+
+            /* Utility */
+            --success: #22C55E;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --gradient-cta: linear-gradient(135deg, var(--cta-start) 0%, var(--cta-end) 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--darkest);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        /* Loading Screen */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darkest);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        #loading.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Progress Bar */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--cta-start));
+            z-index: 9999;
+            transition: width 0.2s;
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        /* Navbar */
+        #navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(11, 15, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s;
+            border-bottom: 1px solid var(--border);
+        }
+
+        #navbar.scrolled {
+            background: rgba(8, 12, 34, 0.98);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+            z-index: 1002;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s;
+            box-shadow: 0 0 5px var(--glow);
+        }
+
+        /* Quick Navigation */
+        .quick-nav {
+            position: fixed;
+            right: 20px;
+            top: 60%;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .quick-nav-item {
+            width: 50px;
+            height: 50px;
+            background: rgba(17, 26, 58, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid var(--border);
+        }
+
+        .quick-nav-item i {
+            color: var(--text-muted);
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .quick-nav-item:hover {
+            background: var(--gradient);
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px var(--glow);
+        }
+
+        .quick-nav-item:hover i {
+            color: white;
+            transform: scale(1.2);
+        }
+
+        .quick-nav-item.active {
+            background: var(--gradient);
+            box-shadow: 0 5px 20px var(--glow);
+        }
+
+        .quick-nav-item.active i {
+            color: white;
+        }
+
+        /* Section Name on Hover */
+        .quick-nav-item .section-name {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(17, 26, 58, 0.95);
+            color: var(--text);
+            padding: 8px 15px;
+            border-radius: 8px;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            pointer-events: none;
+            border: 1px solid var(--border);
+        }
+
+        .quick-nav-item:hover .section-name {
+            opacity: 1;
+            visibility: visible;
+            right: 65px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0, 224, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(44, 230, 194, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 106, 61, 0.05) 0%, transparent 50%),
+                linear-gradient(180deg, var(--darkest) 0%, var(--dark) 50%, var(--darker) 100%);
+            overflow: hidden;
+        }
+
+        #particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--glow);
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--cta-start));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-dim);
+            animation: fadeInUp 1s ease 0.2s;
+            animation-fill-mode: both;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.4s;
+            animation-fill-mode: both;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid transparent;
+        }
+
+        /* Primary CTA - Warm Orange */
+        .btn-primary {
+            background: var(--gradient-cta);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--glow-cta);
+        }
+
+        /* Secondary - Outline/Ghost */
+        .btn-outline {
+            background: transparent;
+            color: var(--text-dim);
+            border-color: var(--outline-border);
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 224, 255, 0.1);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--glow);
+        }
+
+        /* White Ghost */
+        .btn-white {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            border-color: rgba(148, 163, 184, 0.2);
+        }
+
+        .btn-white:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(148, 163, 184, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(148, 163, 184, 0.1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Glassmorphism Info Cards */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 46, 74, 0.6));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px var(--glow);
+            border-color: var(--border-hover);
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-card ul {
+            list-style: none;
+        }
+
+        .info-card ul li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .info-card ul li i {
+            color: var(--cta-start);
+            width: 20px;
+        }
+
+        /* Detail Cards */
+        .course-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .detail-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 46, 74, 0.6));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px var(--glow);
+            border-color: var(--border-hover);
+        }
+
+        .detail-card h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .detail-card ul {
+            list-style: none;
+        }
+
+        .detail-card ul li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .detail-card ul li:hover {
+            padding-left: 10px;
+            color: var(--primary);
+        }
+
+        .detail-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .detail-card ul li i {
+            color: var(--cta-start);
+            width: 20px;
+        }
+
+        /* Specializations Grid - Multi-Accent */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .spec-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 46, 74, 0.6));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spec-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .spec-card:nth-child(1)::before { background: linear-gradient(135deg, rgba(255, 106, 61, 0.08), transparent); }
+        .spec-card:nth-child(2)::before { background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), transparent); }
+        .spec-card:nth-child(3)::before { background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), transparent); }
+        .spec-card:nth-child(4)::before { background: linear-gradient(135deg, rgba(34, 197, 94, 0.08), transparent); }
+        .spec-card:nth-child(5)::before { background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), transparent); }
+        .spec-card:nth-child(6)::before { background: linear-gradient(135deg, rgba(20, 184, 166, 0.08), transparent); }
+        .spec-card:nth-child(7)::before { background: linear-gradient(135deg, rgba(255, 106, 61, 0.08), transparent); }
+        .spec-card:nth-child(8)::before { background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), transparent); }
+
+        .spec-card:hover::before {
+            opacity: 1;
+        }
+
+        .spec-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px var(--glow);
+            border-color: var(--border-hover);
+        }
+
+        .spec-card i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+            display: block;
+        }
+
+        /* Multi-Accent Icon Colors */
+        .spec-card:nth-child(1) i { background: var(--accent-orange); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .spec-card:nth-child(2) i { background: var(--accent-blue); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .spec-card:nth-child(3) i { background: var(--accent-purple); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .spec-card:nth-child(4) i { background: var(--accent-green); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .spec-card:nth-child(5) i { background: var(--accent-amber); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .spec-card:nth-child(6) i { background: var(--accent-teal); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .spec-card:nth-child(7) i { background: var(--accent-orange); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .spec-card:nth-child(8) i { background: var(--accent-blue); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .spec-card:hover i {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .spec-card h3 {
+            color: var(--text);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .spec-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Careers Grid */
+        .careers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .career-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 46, 74, 0.6));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .career-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px var(--glow);
+            border-color: var(--border-hover);
+        }
+
+        .career-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .salary {
+            background: var(--gradient-cta);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .career-card p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .career-card ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .career-card ul li {
+            background: rgba(0, 224, 255, 0.08);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(0, 224, 255, 0.2);
+        }
+
+        /* Colleges Grid */
+        .colleges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .college-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 46, 74, 0.6));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .college-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient);
+        }
+
+        .college-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px var(--glow);
+            border-color: var(--border-hover);
+        }
+
+        .college-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+        }
+
+        .college-type {
+            background: rgba(0, 224, 255, 0.1);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(0, 224, 255, 0.2);
+        }
+
+        .college-card p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .fees {
+            color: var(--success);
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .fees::before {
+            content: '💰';
+        }
+
+        /* Eligibility Grid */
+        .eligibility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .eligibility-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 46, 74, 0.6));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .eligibility-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px var(--glow);
+            border-color: var(--border-hover);
+        }
+
+        .eligibility-card h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .eligibility-card ul {
+            list-style: none;
+        }
+
+        .eligibility-card ul li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .eligibility-card ul li:hover {
+            padding-left: 10px;
+            color: var(--primary);
+        }
+
+        .eligibility-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .eligibility-card ul li i {
+            color: var(--primary);
+            width: 20px;
+        }
+
+        /* Fees Container */
+        .fees-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .fee-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 46, 74, 0.6));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .fee-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px var(--glow);
+            border-color: var(--border-hover);
+        }
+
+        .fee-card.featured {
+            border: 2px solid var(--primary);
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.1), rgba(26, 46, 74, 0.6));
+        }
+
+        .fee-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .fee-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+
+        .fee-amount span {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .fee-details {
+            list-style: none;
+            text-align: left;
+        }
+
+        .fee-details li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .fee-details li:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            color: var(--text);
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-hover);
+        }
+
+        /* Higher Studies Grid - Multi-Accent Icons */
+        .higher-studies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .higher-study-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 46, 74, 0.6));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .higher-study-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px var(--glow);
+            border-color: var(--border-hover);
+        }
+
+        .higher-study-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .higher-study-card p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .higher-study-card ul {
+            list-style: none;
+        }
+
+        .higher-study-card ul li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .higher-study-card ul li:hover {
+            padding-left: 10px;
+            color: var(--primary);
+        }
+
+        .higher-study-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .higher-study-card ul li i {
+            color: var(--primary);
+            width: 20px;
+        }
+
+        /* Admission Steps */
+        .admission-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .admission-step {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 46, 74, 0.6));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            position: relative;
+            text-align: center;
+        }
+
+        .admission-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px var(--glow);
+            border-color: var(--border-hover);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            color: var(--darkest);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px var(--glow);
+        }
+
+        .admission-step i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .admission-step h3 {
+            color: var(--text);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .admission-step p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(255, 106, 61, 0.15), rgba(0, 224, 255, 0.1));
+            border-radius: 30px;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 106, 61, 0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255, 106, 61, 0.08), transparent);
+            animation: pulse-bg 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-bg {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.6; }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--cta-start), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark), var(--darker));
+            padding: 3rem 0 1rem;
+            border-top: 1px solid var(--border);
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 5px var(--glow);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 5px;
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+        }
+
+        /* =========================================
+           RESPONSIVE DESIGN
+           ========================================= */
+
+        /* Tablet Adjustments */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .info-grid, .course-details, .specs-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        /* Mobile Portrait & Landscape */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(11, 15, 42, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 2rem;
+                transition: right 0.3s ease;
+                gap: 1.5rem;
+                text-align: center;
+                border-top: 1px solid var(--border);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+                z-index: 1003;
+            }
+
+            .quick-nav {
+                top: auto;
+                bottom: 20px;
+                right: 50%;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 90%;
+                max-width: 400px;
+                flex-direction: row;
+                justify-content: space-around;
+                padding: 10px 15px;
+                border-radius: 50px;
+                overflow-x: auto;
+                background: rgba(17, 26, 58, 0.95);
+                border: 1px solid var(--border);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+                z-index: 998;
+            }
+
+            .quick-nav-item {
+                width: 40px;
+                height: 40px;
+            }
+
+            .quick-nav-item i {
+                font-size: 16px;
+            }
+
+            .quick-nav-item .section-name {
+                display: none;
+            }
+
+            .section {
+                padding: 60px 0;
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .info-grid,
+            .course-details,
+            .specs-grid,
+            .careers-grid,
+            .colleges-grid,
+            .eligibility-grid,
+            .fees-container,
+            .higher-studies-grid,
+            .admission-steps {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .info-card, .detail-card, .spec-card, .career-card, .college-card, .eligibility-card, .fee-card, .higher-study-card, .admission-step {
+                padding: 1.5rem;
+            }
+
+            .cta-section {
+                padding: 3rem 1.5rem;
+            }
+
+            .cta-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+
+        /* Very Small Screens */
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+            }
+
+            .quick-nav {
+                width: 95%;
+                padding: 8px;
+            }
+
+            .quick-nav-item {
+                width: 35px;
+                height: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div id="progressBar"></div>
+
+    <!-- Navbar -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">Whitedavid Academy</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#courses">Courses</a></li>
+                <li><a href="index.html#universities">Universities</a></li>
+                <li><a href="index.html#support">Support</a></li>
+                <li><a href="tel:+919876543210">Call Now</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Quick Navigation -->
+    <div class="quick-nav">
+        <div class="quick-nav-item" data-section="home">
+            <i class="fas fa-home"></i>
+            <span class="section-name">Home</span>
+        </div>
+        <div class="quick-nav-item" data-section="about">
+            <i class="fas fa-info-circle"></i>
+            <span class="section-name">About BHMCt</span>
+        </div>
+        <div class="quick-nav-item" data-section="courses">
+            <i class="fas fa-book"></i>
+            <span class="section-name">Courses</span>
+        </div>
+        <div class="quick-nav-item" data-section="careers">
+            <i class="fas fa-briefcase"></i>
+            <span class="section-name">Careers</span>
+        </div>
+        <div class="quick-nav-item" data-section="colleges">
+            <i class="fas fa-university"></i>
+            <span class="section-name">Colleges</span>
+        </div>
+        <div class="quick-nav-item" data-section="eligibility">
+            <i class="fas fa-user-check"></i>
+            <span class="section-name">Eligibility</span>
+        </div>
+        <div class="quick-nav-item" data-section="fees">
+            <i class="fas fa-money-bill-wave"></i>
+            <span class="section-name">Fees</span>
+        </div>
+        <div class="quick-nav-item" data-section="higher-studies">
+            <i class="fas fa-graduation-cap"></i>
+            <span class="section-name">Higher Studies</span>
+        </div>
+        <div class="quick-nav-item" data-section="admission">
+            <i class="fas fa-edit"></i>
+            <span class="section-name">Admission</span>
+        </div>
+        <div class="quick-nav-item" data-section="contact">
+            <i class="fas fa-phone"></i>
+            <span class="section-name">Contact</span>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div id="particles"></div>
+        <div class="hero-content">
+            <h1>Bachelor of Hotel Management & Catering Technology</h1>
+            <p>Start your journey in the dynamic hospitality industry with comprehensive BHMCt program</p>
+            <div class="btn-group">
+                <a href="#about" class="btn btn-primary">
+                    <i class="fas fa-arrow-right"></i>
+                    Explore Course
+                </a>
+                <a href="#contact" class="btn btn-outline">
+                    <i class="fas fa-phone"></i>
+                    Get Free Counseling
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <h2 class="section-title">About BHMCt Course</h2>
+        <p class="section-subtitle">Complete overview of Bachelor of Hotel Management & Catering Technology</p>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Course Duration</h3>
+                <ul>
+                    <li><i class="fas fa-clock"></i> 4 Years (8 Semesters)</li>
+                    <li><i class="fas fa-calendar"></i> Annual Examination System</li>
+                    <li><i class="fas fa-industry"></i> 6 Months Industrial Training</li>
+                    <li><i class="fas fa-certificate"></i> UGC Recognized Degree</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>Course Highlights</h3>
+                <ul>
+                    <li><i class="fas fa-star"></i> 100% Placement Assistance</li>
+                    <li><i class="fas fa-globe"></i> International Internship Opportunities</li>
+                    <li><i class="fas fa-hands-helping"></i> Practical Training Focus</li>
+                    <li><i class="fas fa-award"></i> Industry-Recognized Certifications</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>Learning Outcomes</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Hospitality Management Skills</li>
+                    <li><i class="fas fa-utensils"></i> Culinary Expertise</li>
+                    <li><i class="fas fa-users"></i> Customer Service Excellence</li>
+                    <li><i class="fas fa-chart-line"></i> Business Acumen</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="course-details">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> What You'll Learn</h3>
+                <ul>
+                    <li><i class="fas fa-chevron-right"></i> Food Production & Culinary Arts</li>
+                    <li><i class="fas fa-chevron-right"></i> Food & Beverage Service</li>
+                    <li><i class="fas fa-chevron-right"></i> Front Office Operations</li>
+                    <li><i class="fas fa-chevron-right"></i> Housekeeping Management</li>
+                    <li><i class="fas fa-chevron-right"></i> Hotel Accounting & Finance</li>
+                    <li><i class="fas fa-chevron-right"></i> Human Resource Management</li>
+                    <li><i class="fas fa-chevron-right"></i> Marketing & Sales</li>
+                    <li><i class="fas fa-chevron-right"></i> Tourism & Travel Management</li>
+                </ul>
+            </div>
+
+            <div class="detail-card">
+                <h3><i class="fas fa-briefcase"></i> Career Prospects</h3>
+                <ul>
+                    <li><i class="fas fa-chevron-right"></i> Hotel Manager</li>
+                    <li><i class="fas fa-chevron-right"></i> Executive Chef</li>
+                    <li><i class="fas fa-chevron-right"></i> Food & Beverage Manager</li>
+                    <li><i class="fas fa-chevron-right"></i> Front Office Manager</li>
+                    <li><i class="fas fa-chevron-right"></i> Housekeeping Manager</li>
+                    <li><i class="fas fa-chevron-right"></i> Event Manager</li>
+                    <li><i class="fas fa-chevron-right"></i> Restaurant Owner</li>
+                    <li><i class="fas fa-chevron-right"></i> Hospitality Consultant</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="section" id="courses">
+        <h2 class="section-title">Course Specializations</h2>
+        <p class="section-subtitle">Comprehensive curriculum covering all aspects of hospitality</p>
+
+        <div class="specs-grid">
+            <div class="spec-card">
+                <i class="fas fa-utensils"></i>
+                <h3>Food Production</h3>
+                <p>Master culinary arts, kitchen management, food safety, menu planning, and international cuisine techniques</p>
+            </div>
+
+            <div class="spec-card">
+                <i class="fas fa-wine-glass"></i>
+                <h3>Food & Beverage Service</h3>
+                <p>Learn restaurant operations, bar management, banquet service, wine appreciation, and guest relations</p>
+            </div>
+
+            <div class="spec-card">
+                <i class="fas fa-concierge-bell"></i>
+                <h3>Front Office Operations</h3>
+                <p>Develop skills in reception management, reservation systems, guest services, and hotel administration</p>
+            </div>
+
+            <div class="spec-card">
+                <i class="fas fa-bed"></i>
+                <h3>Accommodation Operations</h3>
+                <p>Expertise in housekeeping management, laundry operations, room maintenance, and quality control</p>
+            </div>
+
+            <div class="spec-card">
+                <i class="fas fa-calculator"></i>
+                <h3>Hotel Accounting</h3>
+                <p>Understand financial management, cost control, budgeting, and hotel accounting systems</p>
+            </div>
+
+            <div class="spec-card">
+                <i class="fas fa-users"></i>
+                <h3>Human Resource Management</h3>
+                <p>Learn staff recruitment, training, performance management, and employee relations in hospitality</p>
+            </div>
+
+            <div class="spec-card">
+                <i class="fas fa-bullhorn"></i>
+                <h3>Marketing & Sales</h3>
+                <p>Master hospitality marketing, sales strategies, brand management, and customer acquisition</p>
+            </div>
+
+            <div class="spec-card">
+                <i class="fas fa-plane"></i>
+                <h3>Tourism Management</h3>
+                <p>Explore travel industry, tour operations, tourism marketing, and destination management</p>
+            </div>
+        </div>
+
+        <div class="course-details" style="margin-top: 3rem;">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Core Subjects</h3>
+                <ul>
+                    <li><i class="fas fa-chevron-right"></i> Principles of Management</li>
+                    <li><i class="fas fa-chevron-right"></i> Food & Beverage Service</li>
+                    <li><i class="fas fa-chevron-right"></i> Food Production</li>
+                    <li><i class="fas fa-chevron-right"></i> Front Office Management</li>
+                    <li><i class="fas fa-chevron-right"></i> Housekeeping Operations</li>
+                    <li><i class="fas fa-chevron-right"></i> Nutrition Science</li>
+                    <li><i class="fas fa-chevron-right"></i> Hotel Accounting</li>
+                    <li><i class="fas fa-chevron-right"></i> Business Law</li>
+                </ul>
+            </div>
+
+            <div class="detail-card">
+                <h3><i class="fas fa-cogs"></i> Practical Training</h3>
+                <ul>
+                    <li><i class="fas fa-chevron-right"></i> Kitchen Training</li>
+                    <li><i class="fas fa-chevron-right"></i> Restaurant Service</li>
+                    <li><i class="fas fa-chevron-right"></i> Housekeeping Practical</li>
+                    <li><i class="fas fa-chevron-right"></i> Front Desk Operations</li>
+                    <li><i class="fas fa-chevron-right"></i> Event Management</li>
+                    <li><i class="fas fa-chevron-right"></i> Industrial Training</li>
+                    <li><i class="fas fa-chevron-right"></i> Internship Programs</li>
+                    <li><i class="fas fa-chevron-right"></i> On-Job Training</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Careers Section -->
+    <section class="section" id="careers">
+        <h2 class="section-title">Career Opportunities & Placements</h2>
+        <p class="section-subtitle">Diverse career paths in the global hospitality industry</p>
+
+        <div class="careers-grid">
+            <div class="career-card">
+                <h3>Hotel Manager</h3>
+                <div class="salary">Salary: ₹8L - 25L per annum</div>
+                <p>Oversee all hotel operations, manage staff, ensure guest satisfaction, and drive profitability</p>
+                <ul>
+                    <li>5-star hotels</li>
+                    <li>Resort chains</li>
+                    <li>Boutique hotels</li>
+                </ul>
+            </div>
+
+            <div class="career-card">
+                <h3>Executive Chef</h3>
+                <div class="salary">Salary: ₹6L - 20L per annum</div>
+                <p>Lead kitchen operations, create menus, manage food costs, and maintain quality standards</p>
+                <ul>
+                    <li>Fine dining restaurants</li>
+                    <li>Hotel kitchens</li>
+                    <li>Cruise lines</li>
+                </ul>
+            </div>
+
+            <div class="career-card">
+                <h3>Food & Beverage Manager</h3>
+                <div class="salary">Salary: ₹5L - 18L per annum</div>
+                <p>Manage restaurants, bars, and banquet operations, ensuring exceptional service standards</p>
+                <ul>
+                    <li>Restaurant chains</li>
+                    <li>Hotel F&B departments</li>
+                    <li>Catering companies</li>
+                </ul>
+            </div>
+
+            <div class="career-card">
+                <h3>Front Office Manager</h3>
+                <div class="salary">Salary: ₹4L - 15L per annum</div>
+                <p>Handle guest check-ins, reservations, and overall front desk operations</p>
+                <ul>
+                    <li>Hotels & resorts</li>
+                    <li>Service apartments</li>
+                    <li>Business centers</li>
+                </ul>
+            </div>
+
+            <div class="career-card">
+                <h3>Event Manager</h3>
+                <div class="salary">Salary: ₹4L - 16L per annum</div>
+                <p>Plan and execute weddings, conferences, and corporate events</p>
+                <ul>
+                    <li>Event management companies</li>
+                    <li>Hotels</li>
+                    <li>Convention centers</li>
+                </ul>
+            </div>
+
+            <div class="career-card">
+                <h3>Entrepreneur</h3>
+                <div class="salary">Earning Potential: Unlimited</div>
+                <p>Start your own restaurant, hotel, cafe, or hospitality business</p>
+                <ul>
+                    <li>Restaurants</li>
+                    <li>Hotels</li>
+                    <li>Catering services</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Colleges Section -->
+    <section class="section" id="colleges">
+        <h2 class="section-title">Top IHM Colleges for BHMCt</h2>
+        <p class="section-subtitle">Premier institutes offering quality hospitality education</p>
+
+        <div class="colleges-grid">
+            <div class="college-card">
+                <h3>IHM Delhi</h3>
+                <span class="college-type">Government</span>
+                <p>Pusa Institute of Hotel Management, Catering Technology & Applied Nutrition - Premier government institute with excellent placement records</p>
+                <div class="fees">Fees: ₹50K - 1L per year</div>
+            </div>
+
+            <div class="college-card">
+                <h3>IHM Mumbai</h3>
+                <span class="college-type">Government</span>
+                <p>Institute of Hotel Management, Catering Technology & Applied Nutrition - Top-ranked institute with industry connections</p>
+                <div class="fees">Fees: ₹60K - 1.2L per year</div>
+            </div>
+
+            <div class="college-card">
+                <h3>IHM Bangalore</h3>
+                <span class="college-type">Government</span>
+                <p>Food Craft Institute - Known for modern infrastructure and international internship programs</p>
+                <div class="fees">Fees: ₹55K - 1.1L per year</div>
+            </div>
+
+            <div class="college-card">
+                <h3>IHM Chennai</h3>
+                <span class="college-type">Government</span>
+                <p>Institute of Hotel Management & Catering Technology - Excellent faculty and training facilities</p>
+                <div class="fees">Fees: ₹45K - 90K per year</div>
+            </div>
+
+            <div class="college-card">
+                <h3>IHM Kolkata</h3>
+                <span class="college-type">Government</span>
+                <p>Institute of Hotel Management - Heritage institute with strong alumni network</p>
+                <div class="fees">Fees: ₹40K - 85K per year</div>
+            </div>
+
+            <div class="college-card">
+                <h3>Welcomgroup Graduate School</h3>
+                <span class="college-type">Private</span>
+                <p>Manipal - Premium private institute with international collaborations and 100% placement</p>
+                <div class="fees">Fees: ₹2L - 3L per year</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eligibility Section -->
+    <section class="section" id="eligibility">
+        <h2 class="section-title">Eligibility & Admission Requirements</h2>
+        <p class="section-subtitle">Qualification criteria for BHMCt program</p>
+
+        <div class="eligibility-grid">
+            <div class="eligibility-card">
+                <h3><i class="fas fa-graduation-cap"></i> Educational Qualification</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> 10+2 from recognized board</li>
+                    <li><i class="fas fa-check"></i> Minimum 50% aggregate marks</li>
+                    <li><i class="fas fa-check"></i> English as compulsory subject</li>
+                    <li><i class="fas fa-check"></i> Age limit: 22 years (25 for SC/ST)</li>
+                    <li><i class="fas fa-check"></i> No upper age limit for NRI/Foreign</li>
+                </ul>
+            </div>
+
+            <div class="eligibility-card">
+                <h3><i class="fas fa-pencil-alt"></i> Entrance Exam</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> NCHM JEE (National Level)</li>
+                    <li><i class="fas fa-check"></i> State-level hotel management exams</li>
+                    <li><i class="fas fa-check"></i> University-specific entrance tests</li>
+                    <li><i class="fas fa-check"></i> Direct admission for management quota</li>
+                    <li><i class="fas fa-check"></i> NRI/Foreign student category</li>
+                </ul>
+            </div>
+
+            <div class="eligibility-card">
+                <h3><i class="fas fa-user"></i> Personal Attributes</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> Excellent communication skills</li>
+                    <li><i class="fas fa-check"></i> Pleasing personality</li>
+                    <li><i class="fas fa-check"></i> Team player attitude</li>
+                    <li><i class="fas fa-check"></i> Customer service orientation</li>
+                    <li><i class="fas fa-check"></i> Leadership qualities</li>
+                </ul>
+            </div>
+
+            <div class="eligibility-card">
+                <h3><i class="fas fa-file-alt"></i> Required Documents</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> 10th and 12th mark sheets</li>
+                    <li><i class="fas fa-check"></i> Transfer certificate</li>
+                    <li><i class="fas fa-check"></i> Character certificate</li>
+                    <li><i class="fas fa-check"></i> Migration certificate</li>
+                    <li><i class="fas fa-check"></i> Birth certificate</li>
+                    <li><i class="fas fa-check"></i> Passport size photographs</li>
+                    <li><i class="fas fa-check"></i> Category certificate (if applicable)</li>
+                    <li><i class="fas fa-check"></i> Medical fitness certificate</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fees Section -->
+    <section class="section" id="fees">
+        <h2 class="section-title">Course Fees Structure</h2>
+        <p class="section-subtitle">Investment details for BHMCt program</p>
+
+        <div class="fees-container">
+            <div class="fee-card">
+                <h3>Government IHM Colleges</h3>
+                <div class="fee-amount">
+                    ₹50K - 1.5L <span>/ Year</span>
+                </div>
+                <ul class="fee-details">
+                    <li>Tuition Fees: ₹40K - 1L</li>
+                    <li>Hostel Fees: ₹30K - 60K</li>
+                    <li>Mess Fees: ₹40K - 50K</li>
+                    <li>Other Charges: ₹10K - 20K</li>
+                    <li>Total 4 Years: ₹4L - 8L</li>
+                </ul>
+            </div>
+
+            <div class="fee-card featured">
+                <h3>Private Colleges</h3>
+                <div class="fee-amount">
+                    ₹1.5L - 3L <span>/ Year</span>
+                </div>
+                <ul class="fee-details">
+                    <li>Tuition Fees: ₹1L - 2.5L</li>
+                    <li>Hostel Fees: ₹60K - 1.2L</li>
+                    <li>Mess Fees: ₹50K - 80K</li>
+                    <li>Other Charges: ₹30K - 50K</li>
+                    <li>Total 4 Years: ₹10L - 20L</li>
+                </ul>
+            </div>
+
+            <div class="fee-card">
+                <h3>Deemed Universities</h3>
+                <div class="fee-amount">
+                    ₹2L - 4L <span>/ Year</span>
+                </div>
+                <ul class="fee-details">
+                    <li>Tuition Fees: ₹1.5L - 3L</li>
+                    <li>Hostel Fees: ₹80K - 1.5L</li>
+                    <li>Mess Fees: ₹60K - 1L</li>
+                    <li>Other Charges: ₹40K - 60K</li>
+                    <li>Total 4 Years: ₹15L - 25L</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="course-details" style="margin-top: 3rem;">
+            <div class="detail-card">
+                <h3><i class="fas fa-money-bill-wave"></i> Scholarship Opportunities</h3>
+                <ul>
+                    <li><i class="fas fa-chevron-right"></i> Merit-based scholarships</li>
+                    <li><i class="fas fa-chevron-right"></i> Need-based financial aid</li>
+                    <li><i class="fas fa-chevron-right"></i> Category scholarships (SC/ST/OBC)</li>
+                    <li><i class="fas fa-chevron-right"></i> EWS scholarship</li>
+                    <li><i class="fas fa-chevron-right"></i> Sports quota scholarships</li>
+                    <li><i class="fas fa-chevron-right"></i> Alumni scholarships</li>
+                    <li><i class="fas fa-chevron-right"></i> Corporate-sponsored scholarships</li>
+                    <li><i class="fas fa-chevron-right"></i> Government education loans</li>
+                </ul>
+            </div>
+
+            <div class="detail-card">
+                <h3><i class="fas fa-credit-card"></i> Payment Options</h3>
+                <ul>
+                    <li><i class="fas fa-chevron-right"></i> Semester-wise payment</li>
+                    <li><i class="fas fa-chevron-right"></i> Annual payment plans</li>
+                    <li><i class="fas fa-chevron-right"></i> Installment facilities</li>
+                    <li><i class="fas fa-chevron-right"></i> Online payment gateway</li>
+                    <li><i class="fas fa-chevron-right"></i> Bank transfer options</li>
+                    <li><i class="fas fa-chevron-right"></i> Cheque/DD payments</li>
+                    <li><i class="fas fa-chevron-right"></i> Educational loan tie-ups</li>
+                    <li><i class="fas fa-chevron-right"></i> International student payments</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Higher Studies Section -->
+    <section class="section" id="higher-studies">
+        <h2 class="section-title">Higher Studies Options</h2>
+        <p class="section-subtitle">Advanced education pathways after BHMCt</p>
+
+        <div class="higher-studies-grid">
+            <div class="higher-study-card">
+                <h3><i class="fas fa-masters"></i> Master's Programs</h3>
+                <p>Pursue specialized master's degrees for career advancement</p>
+                <ul>
+                    <li><i class="fas fa-check"></i> MBA in Hospitality Management</li>
+                    <li><i class="fas fa-check"></i> M.Sc. Hotel Management</li>
+                    <li><i class="fas fa-check"></i> MA in Tourism Management</li>
+                    <li><i class="fas fa-check"></i> M.Sc. Culinary Arts</li>
+                    <li><i class="fas fa-check"></i> International Hospitality MBA</li>
+                </ul>
+            </div>
+
+            <div class="higher-study-card">
+                <h3><i class="fas fa-globe"></i> International Programs</h3>
+                <p>Global education opportunities for enhanced career prospects</p>
+                <ul>
+                    <li><i class="fas fa-check"></i> MS in Hospitality (USA/UK)</li>
+                    <li><i class="fas fa-check"></i> MBA in Hotel Management (Canada)</li>
+                    <li><i class="fas fa-check"></i> M.Sc. Tourism (Australia)</li>
+                    <li><i class="fas fa-check"></i> Hospitality Management (Switzerland)</li>
+                    <li><i class="fas fa-check"></i> Culinary Arts (France/Italy)</li>
+                </ul>
+            </div>
+
+            <div class="higher-study-card">
+                <h3><i class="fas fa-certificate"></i> Professional Certifications</h3>
+                <p>Industry-recognized certifications for skill enhancement</p>
+                <ul>
+                    <li><i class="fas fa-check"></i> Certified Hotel Administrator (CHA)</li>
+                    <li><i class="fas fa-check"></i> Sommelier Certification</li>
+                    <li><i class="fas fa-check"></i> Food Safety Management</li>
+                    <li><i class="fas fa-check"></i> Digital Marketing for Hospitality</li>
+                    <li><i class="fas fa-check"></i> Revenue Management Certification</li>
+                </ul>
+            </div>
+
+            <div class="higher-study-card">
+                <h3><i class="fas fa-briefcase"></i> Diploma & PG Diploma</h3>
+                <p>Short-term programs for quick skill upgradation</p>
+                <ul>
+                    <li><i class="fas fa-check"></i> PG Diploma in Hotel Management</li>
+                    <li><i class="fas fa-check"></i> Diploma in Culinary Arts</li>
+                    <li><i class="fas fa-check"></i> Bakery & Confectionery</li>
+                    <li><i class="fas fa-check"></i> Event Management Diploma</li>
+                    <li><i class="fas fa-check"></i> Travel & Tourism Diploma</li>
+                </ul>
+            </div>
+
+            <div class="higher-study-card">
+                <h3><i class="fas fa-university"></i> Research Programs</h3>
+                <p>Academic research opportunities in hospitality</p>
+                <ul>
+                    <li><i class="fas fa-check"></i> Ph.D. in Hotel Management</li>
+                    <li><i class="fas fa-check"></i> Ph.D. in Tourism Studies</li>
+                    <li><i class="fas fa-check"></i> M.Phil. Hospitality</li>
+                    <li><i class="fas fa-check"></i> Research Fellowships</li>
+                    <li><i class="fas fa-check"></i> Faculty positions</li>
+                </ul>
+            </div>
+
+            <div class="higher-study-card">
+                <h3><i class="fas fa-chart-line"></i> Career Advancement</h3>
+                <p>Professional development for leadership roles</p>
+                <ul>
+                    <li><i class="fas fa-check"></i> Executive Development Programs</li>
+                    <li><i class="fas fa-check"></i> Leadership Training</li>
+                    <li><i class="fas fa-check"></i> Entrepreneurship Development</li>
+                    <li><i class="fas fa-check"></i> Hotel Consultancy Courses</li>
+                    <li><i class="fas fa-check"></i> Franchise Management Programs</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admission Section -->
+    <section class="section" id="admission">
+        <h2 class="section-title">Admission Process</h2>
+        <p class="section-subtitle">Step-by-step guide to secure your seat</p>
+
+        <div class="admission-steps">
+            <div class="admission-step">
+                <div class="step-number">1</div>
+                <i class="fas fa-search"></i>
+                <h3>Research & Selection</h3>
+                <p>Research colleges, check eligibility, and shortlist preferred institutions based on rankings, fees, and location.</p>
+            </div>
+
+            <div class="admission-step">
+                <div class="step-number">2</div>
+                <i class="fas fa-file-alt"></i>
+                <h3>Application Form</h3>
+                <p>Fill application forms online/offline, upload required documents, and pay application fees before deadline.</p>
+            </div>
+
+            <div class="admission-step">
+                <div class="step-number">3</div>
+                <i class="fas fa-pencil-alt"></i>
+                <h3>Entrance Exam</h3>
+                <p>Appear for NCHM JEE or college-specific entrance tests. Prepare for English, Reasoning, GK, and Service Aptitude.</p>
+            </div>
+
+            <div class="admission-step">
+                <div class="step-number">4</div>
+                <i class="fas fa-comments"></i>
+                <h3>GD & PI</h3>
+                <p>Participate in Group Discussion and Personal Interview rounds. Showcase communication skills and hospitality aptitude.</p>
+            </div>
+
+            <div class="admission-step">
+                <div class="step-number">5</div>
+                <i class="fas fa-list-ol"></i>
+                <h3>Merit List & Counseling</h3>
+                <p>Check merit list, attend counseling sessions, and select college based on rank and seat availability.</p>
+            </div>
+
+            <div class="admission-step">
+                <div class="step-number">6</div>
+                <i class="fas fa-check-circle"></i>
+                <h3>Fee Payment & Admission</h3>
+                <p>Pay admission fees, submit original documents, complete enrollment formalities, and join orientation program.</p>
+            </div>
+        </div>
+
+        <div class="course-details" style="margin-top: 3rem;">
+            <div class="detail-card">
+                <h3><i class="fas fa-calendar-alt"></i> Important Dates</h3>
+                <ul>
+                    <li><i class="fas fa-chevron-right"></i> NCHM JEE Registration: Dec - Feb</li>
+                    <li><i class="fas fa-chevron-right"></i> Entrance Exam: April</li>
+                    <li><i class="fas fa-chevron-right"></i> Result Declaration: May</li>
+                    <li><i class="fas fa-chevron-right"></i> Counseling: June - July</li>
+                    <li><i class="fas fa-chevron-right"></i> Academic Session: August</li>
+                </ul>
+            </div>
+
+            <div class="detail-card">
+                <h3><i class="fas fa-book"></i> Entrance Exam Pattern</h3>
+                <ul>
+                    <li><i class="fas fa-chevron-right"></i> Numerical Ability: 30 questions</li>
+                    <li><i class="fas fa-chevron-right"></i> Reasoning & Logical Deduction: 30 questions</li>
+                    <li><i class="fas fa-chevron-right"></i> General Knowledge: 30 questions</li>
+                    <li><i class="fas fa-chevron-right"></i> English Language: 60 questions</li>
+                    <li><i class="fas fa-chevron-right"></i> Aptitude for Service Sector: 50 questions</li>
+                    <li><i class="fas fa-chevron-right"></i> Total: 200 questions (3 hours)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section" id="contact">
+        <div class="cta-section">
+            <div class="cta-content">
+                <h2>Start Your Hospitality Career Today!</h2>
+                <p>Get expert guidance for BHMCt admission in top hotel management colleges</p>
+                <div class="btn-group">
+                    <a href="tel:+919876543210" class="btn btn-white">
+                        <i class="fas fa-phone"></i>
+                        Call Now: +91 98765 43210
+                    </a>
+                    <a href="mailto:info@whitedavidacademy.com" class="btn btn-primary">
+                        <i class="fas fa-envelope"></i>
+                        Email Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Whitedavid Academy</h3>
+                <p>Leading education consultancy providing expert guidance for hotel management and hospitality courses with 15+ years of experience.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About BHMCt</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#careers">Careers</a></li>
+                    <li><a href="#colleges">Colleges</a></li>
+                    <li><a href="#eligibility">Eligibility</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Popular Courses</h3>
+                <ul>
+                    <li><a href="#">BHM Hotel Management</a></li>
+                    <li><a href="#">BSc Hospitality</a></li>
+                    <li><a href="#">BA Tourism</a></li>
+                    <li><a href="#">Diploma Culinary Arts</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                <p><i class="fas fa-envelope"></i> info@whitedavidacademy.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> Connaught Place, New Delhi</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Whitedavid Academy. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Generate particles
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+
+            // Hide loading screen
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hide');
+            }, 1000);
+
+            // Quick Navigation Active State
+            const quickNavItems = document.querySelectorAll('.quick-nav-item');
+            const sections = document.querySelectorAll('.section[id]');
+
+            function updateQuickNavActive() {
+                const scrollY = window.pageYOffset;
+
+                sections.forEach(section => {
+                    const sectionHeight = section.offsetHeight;
+                    const sectionTop = section.offsetTop - 150;
+                    const sectionId = section.getAttribute('id');
+
+                    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                        quickNavItems.forEach(item => {
+                            item.classList.remove('active');
+                            if (item.getAttribute('data-section') === sectionId) {
+                                item.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateQuickNavActive);
+
+            // Quick Navigation Smooth Scroll
+            quickNavItems.forEach(item => {
+                item.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('data-section');
+                    const targetSection = document.querySelector('#' + targetId);
+
+                    if (targetSection) {
+                        const offsetTop = targetSection.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+
+            menuToggle.addEventListener('click', function () {
+                navLinks.classList.toggle('active');
+                const spans = this.querySelectorAll('span');
+                if (navLinks.classList.contains('active')) {
+                    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                } else {
+                    spans.forEach(span => {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    });
+                }
+            });
+
+            // Close mobile menu on link click
+            document.querySelectorAll('#navLinks a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    const spans = menuToggle.querySelectorAll('span');
+                    spans.forEach(span => {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    });
+                });
+            });
+
+            // Scroll progress bar
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const offsetTop = target.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            const animatedElements = document.querySelectorAll('.info-card, .detail-card, .spec-card, .career-card, .eligibility-card, .fee-card, .higher-study-card, .admission-step');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>

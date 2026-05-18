@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mangalayatan University Distance Education - UGC-DEB Approved Programs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00E0FF;
+            --primary-dark: #00B8D4;
+            --secondary: #FF6A3D;
+            --accent: #2CE6C2;
+            --dark: #111A3A;
+            --darker: #0F172A;
+            --darkest: #0B0F2A;
+            --light: #13203A;
+            --lighter: #1A2E4A;
+            --text: #FFFFFF;
+            --text-dim: #B0B8D1;
+            --border: rgba(148, 163, 184, 0.2);
+            --glow: rgba(0, 224, 255, 0.5);
+            --glow-secondary: rgba(255, 106, 61, 0.5);
+            --glow-accent: rgba(44, 230, 194, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--darkest);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--darker); }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 5px;
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        #loading {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--darkest); display: flex; justify-content: center; align-items: center;
+            z-index: 10000; transition: opacity 0.5s ease;
+        }
+        #loading.hide { opacity: 0; pointer-events: none; }
+        .loading-spinner {
+            width: 50px; height: 50px; border: 3px solid rgba(0, 224, 255, 0.3);
+            border-top: 3px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        #particles {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+        .particle {
+            position: absolute; width: 2px; height: 2px; background: var(--primary);
+            border-radius: 50%; box-shadow: 0 0 10px var(--glow); animation: float 15s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; } 90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        .content-wrapper { position: relative; z-index: 2; }
+
+        #navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(11, 15, 42, 0.95); backdrop-filter: blur(10px);
+            z-index: 1000; transition: all 0.3s ease; border-bottom: 1px solid var(--border);
+        }
+        #navbar.scrolled { background: rgba(11, 15, 42, 0.98); box-shadow: 0 5px 20px var(--glow); }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+
+        .logo {
+            display: flex; align-items: center; font-size: 1.5rem; font-weight: bold;
+            color: var(--text); text-decoration: none; animation: pulse 2s infinite; flex-shrink: 0;
+        }
+        .logo i { color: var(--primary); margin-right: 10px; font-size: 2rem; text-shadow: 0 0 20px var(--glow); }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        #navLinks { display: flex; list-style: none; gap: 2rem; }
+        #navLinks a {
+            color: var(--text); text-decoration: none; font-weight: 500;
+            transition: all 0.3s ease; position: relative; padding: 0.5rem 0; white-space: nowrap;
+        }
+        #navLinks a::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.3s ease;
+        }
+        #navLinks a:hover { color: var(--primary); text-shadow: 0 0 10px var(--glow); }
+        #navLinks a:hover::after { width: 100%; }
+
+        .menu-toggle {
+            display: none; flex-direction: column; cursor: pointer; padding: 5px; z-index: 1001;
+        }
+        .menu-toggle span { width: 25px; height: 3px; background: var(--text); margin: 3px 0; transition: 0.3s; display: block; }
+
+        #progressBar {
+            position: fixed; top: 0; left: 0; height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            z-index: 10000; transition: width 0.2s ease; box-shadow: 0 0 10px var(--glow);
+        }
+
+        .quick-nav {
+            position: fixed; right: 20px; top: 60%; transform: translateY(-50%);
+            background: rgba(19, 32, 58, 0.8); backdrop-filter: blur(20px);
+            border-radius: 50px; padding: 1rem 0.5rem; z-index: 999;
+            box-shadow: 0 10px 30px rgba(11, 15, 42, 0.8); border: 1px solid var(--border);
+        }
+        .quick-nav-item {
+            display: flex; align-items: center; justify-content: center;
+            width: 50px; height: 50px; margin: 0.5rem 0; border-radius: 50%;
+            background: var(--light); color: var(--text-dim); text-decoration: none;
+            transition: all 0.3s ease; position: relative; cursor: pointer; border: 2px solid transparent;
+        }
+        .quick-nav-item i { font-size: 1.2rem; transition: all 0.3s ease; }
+        .quick-nav-item:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white;
+            transform: scale(1.1); box-shadow: 0 5px 20px var(--glow); border-color: var(--primary);
+        }
+        .quick-nav-item.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white;
+            box-shadow: 0 5px 20px var(--glow); border-color: var(--primary);
+        }
+        .quick-nav-item .tooltip {
+            position: absolute; right: 70px; background: rgba(19, 32, 58, 0.95);
+            color: var(--text); padding: 0.5rem 1rem; border-radius: 8px;
+            white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            font-size: 0.9rem; box-shadow: 0 5px 15px rgba(11, 15, 42, 0.5); border: 1px solid var(--border);
+        }
+        .quick-nav-item .tooltip::after {
+            content: ''; position: absolute; left: 100%; top: 50%; transform: translateY(-50%);
+            border: 8px solid transparent; border-left-color: rgba(19, 32, 58, 0.95);
+        }
+        .quick-nav-item:hover .tooltip { opacity: 1; }
+
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; position: relative;
+            background: var(--darkest); overflow: hidden; padding: 5rem 0 2rem;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0, 224, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(44, 230, 194, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 106, 61, 0.05) 0%, transparent 50%);
+            animation: rotate 20s linear infinite; z-index: 0;
+        }
+        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .hero-content { position: relative; z-index: 1; text-align: center; padding: 2rem; }
+        .hero h1 {
+            font-size: 3.5rem; margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; animation: gradient-shift 3s ease infinite;
+        }
+        @keyframes gradient-shift { 0%, 100% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(30deg); } }
+        .hero p { font-size: 1.5rem; color: var(--text-dim); margin-bottom: 2rem; }
+
+        .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            padding: 1rem 2rem; border: none; border-radius: 50px; font-size: 1.1rem;
+            font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-decoration: none;
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            position: relative; overflow: hidden;
+        }
+        .btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn:hover::before { left: 100%; }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white;
+            box-shadow: 0 5px 20px var(--glow);
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px var(--glow); }
+        .btn-secondary { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+        .btn-secondary:hover { background: var(--primary); color: white; box-shadow: 0 5px 20px var(--glow); }
+        .btn-white { background: white; color: var(--primary-dark); }
+        .btn-white:hover { background: var(--light); color: white; box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3); }
+
+        .section { padding: 5rem 0; position: relative; }
+        .section:nth-child(even) { background: var(--darker); }
+        .section-title {
+            text-align: center; font-size: 2.5rem; margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; padding: 0 1rem;
+        }
+        .section-subtitle { text-align: center; color: var(--text-dim); margin-bottom: 3rem; font-size: 1.2rem; padding: 0 1rem; }
+
+        /* ============================================================
+           INFO CARD — ALL 14 FEATURES + INDIVIDUAL TEXT HIGHLIGHT
+           ============================================================ */
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .info-card {
+            background: rgba(19, 32, 58, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        /* 4. Gradient Highlight Line (existing animated — enhanced on hover) */
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            animation: gradient-rotate 3s linear infinite;
+            transition: box-shadow 0.3s ease;
+            pointer-events: none;
+        }
+        .info-card:hover::before {
+            box-shadow: 0 0 15px var(--glow), 0 2px 30px var(--glow);
+        }
+        @keyframes gradient-rotate { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        /* 11. Hover Elevation + 12. Double Shadow */
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--glow), 0 15px 50px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+        /* 8. Typography Hierarchy + 6. Flexbox + individual text highlight */
+        .info-card h3 {
+            color: var(--primary); margin-bottom: 1rem; font-size: 1.5rem;
+            display: flex; align-items: center; gap: 0.5rem;
+            transition: text-shadow 0.3s ease;
+        }
+        .info-card:hover h3 { text-shadow: 0 0 18px var(--glow); }
+        .info-card h3 i {
+            font-size: 1.8rem; text-shadow: 0 0 10px var(--glow); flex-shrink: 0;
+            transition: filter 0.3s ease;
+        }
+        .info-card:hover h3 i { filter: drop-shadow(0 0 8px var(--glow)); }
+        /* 7. Icon-Based List + 9. Color Contrast + individual text highlight */
+        .info-card ul { list-style: none; padding-left: 0; }
+        .info-card ul li {
+            padding: 0.5rem 0; color: var(--text-dim);
+            display: flex; align-items: flex-start; gap: 0.5rem;
+            border-radius: 4px;
+            transition: color 0.3s ease 0s, text-shadow 0.3s ease 0s, padding-left 0.3s ease 0s;
+        }
+        .info-card ul li i {
+            color: var(--secondary); font-size: 0.9rem; flex-shrink: 0; margin-top: 5px;
+            transition: color 0.3s ease 0s, text-shadow 0.3s ease 0s;
+        }
+        /* Cascading stagger on card hover */
+        .info-card:hover li:nth-child(1) { transition-delay: 0s; }
+        .info-card:hover li:nth-child(2) { transition-delay: 0.04s; }
+        .info-card:hover li:nth-child(3) { transition-delay: 0.08s; }
+        .info-card:hover li:nth-child(4) { transition-delay: 0.12s; }
+        .info-card:hover li:nth-child(5) { transition-delay: 0.16s; }
+        .info-card:hover li:nth-child(6) { transition-delay: 0.20s; }
+        .info-card:hover li:nth-child(7) { transition-delay: 0.24s; }
+        .info-card:hover li:nth-child(8) { transition-delay: 0.28s; }
+        .info-card:hover li:nth-child(1) i { transition-delay: 0s; }
+        .info-card:hover li:nth-child(2) i { transition-delay: 0.04s; }
+        .info-card:hover li:nth-child(3) i { transition-delay: 0.08s; }
+        .info-card:hover li:nth-child(4) i { transition-delay: 0.12s; }
+        .info-card:hover li:nth-child(5) i { transition-delay: 0.16s; }
+        .info-card:hover li:nth-child(6) i { transition-delay: 0.20s; }
+        .info-card:hover li:nth-child(7) i { transition-delay: 0.24s; }
+        .info-card:hover li:nth-child(8) i { transition-delay: 0.28s; }
+        .info-card:hover li { color: var(--text); text-shadow: 0 0 8px var(--glow); }
+        .info-card:hover li i { color: var(--primary); text-shadow: 0 0 10px var(--glow); }
+        .info-card:hover li:hover {
+            color: var(--primary); text-shadow: 0 0 14px var(--glow); padding-left: 8px;
+        }
+        .info-card li:hover { color: var(--text); }
+        .info-card p { color: var(--text-dim); line-height: 1.8; transition: color 0.3s ease, text-shadow 0.3s ease; }
+        .info-card:hover p { color: var(--text); text-shadow: 0 0 6px var(--glow); }
+
+        /* ============================================================
+           PROGRAM CARD — ALL 14 FEATURES + INDIVIDUAL TEXT HIGHLIGHT
+           ============================================================ */
+        .program-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .program-card {
+            background: rgba(19, 32, 58, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 15px; padding: 2rem; text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            border: 1px solid var(--border); position: relative; overflow: hidden;
+        }
+        /* 4. Gradient Highlight Line (NEW ::before) */
+        .program-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--accent), transparent);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 2;
+        }
+        .program-card:hover::before { opacity: 1; }
+        /* existing ::after radial overlay */
+        .program-card::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(0, 224, 255, 0.1) 0%, transparent 70%);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .program-card:hover::after { opacity: 1; }
+        /* 11. Hover Elevation + 12. Double Shadow */
+        .program-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 35px var(--glow), 0 15px 50px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+        .program-icon {
+            width: 80px; height: 80px; margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; color: white; box-shadow: 0 10px 25px var(--glow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .program-card:hover .program-icon { transform: scale(1.1); box-shadow: 0 10px 35px var(--glow), 0 0 20px var(--glow); }
+        .program-card h3 {
+            color: var(--text); margin-bottom: 1rem; font-size: 1.4rem;
+            transition: text-shadow 0.3s ease;
+        }
+        .program-card:hover h3 { text-shadow: 0 0 18px var(--glow); }
+        .program-card p {
+            color: var(--text-dim); margin-bottom: 1.5rem;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+        .program-card:hover p { color: var(--text); text-shadow: 0 0 8px var(--glow); }
+        .program-card .btn { padding: 0.8rem 1.5rem; font-size: 1rem; }
+
+        /* ============================================================
+           STEP CARD — ALL 14 FEATURES + INDIVIDUAL TEXT HIGHLIGHT
+           ============================================================ */
+        .steps-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .step-card {
+            background: rgba(19, 32, 58, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2rem; border-radius: 15px; text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            border: 1px solid var(--border); position: relative;
+        }
+        /* existing ::before gradient border — keep */
+        .step-card::before {
+            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            border-radius: 15px; opacity: 0; z-index: -1; transition: opacity 0.3s ease;
+        }
+        .step-card:hover::before { opacity: 1; }
+        /* 4. Gradient Highlight Line (NEW ::after) */
+        .step-card::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--accent), transparent);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 2;
+        }
+        .step-card:hover::after { opacity: 1; }
+        /* 11. Hover + 12. Double Shadow */
+        .step-card:hover {
+            transform: translateY(-5px);
+            background: rgba(26, 46, 74, 0.8);
+            box-shadow: 0 15px 35px var(--glow), 0 15px 50px rgba(0, 0, 0, 0.4);
+        }
+        .step-number {
+            width: 60px; height: 60px; margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: bold; color: white;
+            box-shadow: 0 5px 15px var(--glow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .step-card:hover .step-number { transform: scale(1.12); box-shadow: 0 5px 25px var(--glow), 0 0 20px var(--glow); }
+        .step-card h3 { color: var(--primary); margin-bottom: 1rem; transition: text-shadow 0.3s ease; }
+        .step-card:hover h3 { text-shadow: 0 0 18px var(--glow); }
+        .step-card p { color: var(--text-dim); transition: color 0.3s ease, text-shadow 0.3s ease; }
+        .step-card:hover p { color: var(--text); text-shadow: 0 0 8px var(--glow); }
+
+        /* ============================================================
+           CAMPUS LIFE CARD — ALL 14 FEATURES + INDIVIDUAL TEXT HIGHLIGHT
+           ============================================================ */
+        .campus-life-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .campus-life-card {
+            background: rgba(19, 32, 58, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 15px; overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            border: 1px solid var(--border); position: relative;
+        }
+        .campus-life-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--accent), transparent);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 3;
+        }
+        .campus-life-card:hover::before { opacity: 1; }
+        .campus-life-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--glow), 0 15px 50px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+        .campus-life-image { height: 200px; overflow: hidden; }
+        .campus-life-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+        .campus-life-card:hover .campus-life-image img { transform: scale(1.1); }
+        .campus-life-content { padding: 1.5rem; }
+        .campus-life-content h4 { color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem; transition: text-shadow 0.3s ease; }
+        .campus-life-card:hover .campus-life-content h4 { text-shadow: 0 0 18px var(--glow); }
+        .campus-life-content p { color: var(--text-dim); transition: color 0.3s ease, text-shadow 0.3s ease; }
+        .campus-life-card:hover .campus-life-content p { color: var(--text); text-shadow: 0 0 6px var(--glow); }
+
+        /* ============================================================
+           FACILITY ITEM — ALL 14 FEATURES + INDIVIDUAL TEXT HIGHLIGHT
+           ============================================================ */
+        .facilities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .facility-item {
+            background: rgba(19, 32, 58, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2rem; border-radius: 15px; text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            border: 1px solid var(--border); position: relative; overflow: hidden;
+        }
+        .facility-item::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--accent), transparent);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 2;
+        }
+        .facility-item:hover::before { opacity: 1; }
+        .facility-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px var(--glow), 0 15px 50px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+        .facility-item i {
+            font-size: 3rem; color: var(--secondary); margin-bottom: 1rem;
+            text-shadow: 0 0 20px var(--glow-secondary);
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
+        }
+        .facility-item:hover i { transform: scale(1.15); text-shadow: 0 0 30px var(--glow-secondary); }
+        .facility-item h4 { color: var(--text); margin-bottom: 0.5rem; transition: text-shadow 0.3s ease; }
+        .facility-item:hover h4 { text-shadow: 0 0 18px var(--glow); }
+        .facility-item p { color: var(--text-dim); font-size: 0.9rem; transition: color 0.3s ease, text-shadow 0.3s ease; }
+        .facility-item:hover p { color: var(--text); text-shadow: 0 0 6px var(--glow); }
+
+        /* ============================================================
+           CTA SECTION — ALL 14 FEATURES + INDIVIDUAL TEXT HIGHLIGHT
+           ============================================================ */
+        .cta-section {
+            background: rgba(0, 224, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 4rem 2rem; border-radius: 20px; text-align: center;
+            margin: 3rem 0; position: relative; overflow: hidden; border: 1px solid var(--border);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .cta-section::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(circle at 30% 30%, rgba(0, 224, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(255, 106, 61, 0.08) 0%, transparent 50%);
+            animation: pulse-bg 4s ease-in-out infinite;
+            transition: opacity 0.3s ease;
+        }
+        @keyframes pulse-bg { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        /* 4. Gradient Highlight Line (NEW ::after) */
+        .cta-section::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--accent), transparent);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 2;
+        }
+        .cta-section:hover::after { opacity: 1; }
+        .cta-section:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 30px var(--glow), 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        .cta-section:hover::before { opacity: 1; }
+        .cta-content { position: relative; z-index: 1; }
+        .cta-section h2 {
+            font-size: 2.5rem; margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            transition: filter 0.3s ease;
+        }
+        .cta-section:hover h2 { filter: drop-shadow(0 0 8px var(--glow)); }
+        .cta-section p {
+            font-size: 1.2rem; color: var(--text-dim); margin-bottom: 2rem;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+        .cta-section:hover p { color: var(--text); text-shadow: 0 0 8px var(--glow); }
+
+        /* ============================================================
+           PLACEMENT STAT — ALL 14 FEATURES + INDIVIDUAL TEXT HIGHLIGHT
+           ============================================================ */
+        .placement-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 3rem 0; }
+        .placement-stat {
+            background: rgba(0, 224, 255, 0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2rem; border-radius: 15px; text-align: center;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .placement-stat::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--accent), transparent);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 2;
+        }
+        .placement-stat:hover::before { opacity: 1; }
+        .placement-stat:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px var(--glow), 0 15px 50px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+        .stat-number {
+            font-size: 2.5rem; font-weight: bold; color: var(--primary); margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px var(--glow);
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
+        }
+        .placement-stat:hover .stat-number { transform: scale(1.08); text-shadow: 0 0 30px var(--glow); }
+        .stat-label { color: var(--text-dim); font-size: 1.1rem; transition: color 0.3s ease, text-shadow 0.3s ease; }
+        .placement-stat:hover .stat-label { color: var(--text); text-shadow: 0 0 8px var(--glow); }
+
+        /* ============================================================
+           RECRUITER LOGO — ENHANCED SHADOW
+           ============================================================ */
+        .recruiters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; margin: 3rem 0; }
+        .recruiter-logo {
+            background: rgba(19, 32, 58, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1.5rem; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            height: 100px; transition: all 0.3s ease; border: 1px solid var(--border);
+        }
+        .recruiter-logo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--glow), 0 10px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+        .recruiter-logo img {
+            max-width: 100%; max-height: 60px; filter: grayscale(100%); transition: filter 0.3s ease;
+        }
+        .recruiter-logo:hover img { filter: grayscale(0%); }
+
+        /* ============================================================
+           TESTIMONIAL CARD — ALL 14 FEATURES + INDIVIDUAL TEXT HIGHLIGHT
+           ============================================================ */
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0; }
+        .testimonial-card {
+            background: rgba(19, 32, 58, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2rem; border-radius: 15px; border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .testimonial-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--accent), transparent);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 2;
+        }
+        .testimonial-card:hover::before { opacity: 1; }
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px var(--glow), 0 15px 50px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+        .testimonial-rating { color: var(--accent); margin-bottom: 1rem; transition: text-shadow 0.3s ease; }
+        .testimonial-card:hover .testimonial-rating { text-shadow: 0 0 12px var(--glow-accent); }
+        .testimonial-text {
+            color: var(--text-dim); font-style: italic; margin-bottom: 1.5rem; line-height: 1.8;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+        .testimonial-card:hover .testimonial-text { color: var(--text); text-shadow: 0 0 6px var(--glow); }
+        .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+        .author-avatar {
+            width: 50px; height: 50px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: bold; flex-shrink: 0;
+            transition: box-shadow 0.3s ease;
+        }
+        .testimonial-card:hover .author-avatar { box-shadow: 0 0 15px var(--glow); }
+        .author-info h5 { color: var(--text); margin-bottom: 0.25rem; transition: text-shadow 0.3s ease; }
+        .testimonial-card:hover .author-info h5 { text-shadow: 0 0 10px var(--glow); }
+        .author-info p { color: var(--text-dim); font-size: 0.9rem; transition: color 0.3s ease, text-shadow 0.3s ease; }
+        .testimonial-card:hover .author-info p { color: var(--text); text-shadow: 0 0 6px var(--glow); }
+
+        /* ============================================================
+           LEARNING CARD — ALL 14 FEATURES + INDIVIDUAL TEXT HIGHLIGHT
+           ============================================================ */
+        .learning-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0; }
+        .learning-card {
+            background: rgba(19, 32, 58, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2rem; border-radius: 15px; border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .learning-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--accent), transparent);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 2;
+        }
+        .learning-card:hover::before { opacity: 1; }
+        .learning-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px var(--glow), 0 15px 50px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+        .learning-card h3 {
+            color: var(--primary); margin-bottom: 1rem;
+            display: flex; align-items: center; gap: 0.5rem;
+            transition: text-shadow 0.3s ease;
+        }
+        .learning-card:hover h3 { text-shadow: 0 0 18px var(--glow); }
+        .learning-card h3 i {
+            font-size: 1.5rem; text-shadow: 0 0 10px var(--glow); flex-shrink: 0;
+            transition: filter 0.3s ease;
+        }
+        .learning-card:hover h3 i { filter: drop-shadow(0 0 8px var(--glow)); }
+        .learning-card ul { list-style: none; padding-left: 0; }
+        .learning-card ul li {
+            padding: 0.5rem 0; color: var(--text-dim);
+            display: flex; align-items: flex-start; gap: 0.5rem; border-radius: 4px;
+            transition: color 0.3s ease 0s, text-shadow 0.3s ease 0s, padding-left 0.3s ease 0s;
+        }
+        .learning-card ul li i {
+            color: var(--secondary); font-size: 0.9rem; flex-shrink: 0; margin-top: 5px;
+            transition: color 0.3s ease 0s, text-shadow 0.3s ease 0s;
+        }
+        .learning-card:hover li:nth-child(1) { transition-delay: 0s; }
+        .learning-card:hover li:nth-child(2) { transition-delay: 0.04s; }
+        .learning-card:hover li:nth-child(3) { transition-delay: 0.08s; }
+        .learning-card:hover li:nth-child(4) { transition-delay: 0.12s; }
+        .learning-card:hover li:nth-child(1) i { transition-delay: 0s; }
+        .learning-card:hover li:nth-child(2) i { transition-delay: 0.04s; }
+        .learning-card:hover li:nth-child(3) i { transition-delay: 0.08s; }
+        .learning-card:hover li:nth-child(4) i { transition-delay: 0.12s; }
+        .learning-card:hover li { color: var(--text); text-shadow: 0 0 8px var(--glow); }
+        .learning-card:hover li i { color: var(--primary); text-shadow: 0 0 10px var(--glow); }
+        .learning-card:hover li:hover { color: var(--primary); text-shadow: 0 0 14px var(--glow); padding-left: 8px; }
+        .learning-card li:hover { color: var(--text); }
+
+        /* ============================================================
+           FACILITY SHOWCASE CARD — ALL 14 FEATURES + INDIVIDUAL TEXT HIGHLIGHT
+           ============================================================ */
+        .facility-showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin: 3rem 0; }
+        .facility-showcase-card {
+            background: rgba(19, 32, 58, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 15px; overflow: hidden; border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            position: relative;
+        }
+        .facility-showcase-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--accent), transparent);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 3;
+        }
+        .facility-showcase-card:hover::before { opacity: 1; }
+        .facility-showcase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px var(--glow), 0 15px 50px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+        .facility-showcase-image { height: 200px; overflow: hidden; }
+        .facility-showcase-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+        .facility-showcase-card:hover .facility-showcase-image img { transform: scale(1.1); }
+        .facility-showcase-content { padding: 1.5rem; }
+        .facility-showcase-content h4 { color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem; transition: text-shadow 0.3s ease; }
+        .facility-showcase-card:hover .facility-showcase-content h4 { text-shadow: 0 0 18px var(--glow); }
+        .facility-showcase-content p { color: var(--text-dim); transition: color 0.3s ease, text-shadow 0.3s ease; }
+        .facility-showcase-card:hover .facility-showcase-content p { color: var(--text); text-shadow: 0 0 6px var(--glow); }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer { background: var(--darker); padding: 3rem 0 1rem; border-top: 1px solid var(--border); }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .footer-section h3 { color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem; }
+        .footer-section p { color: var(--text-dim); margin-bottom: 0.5rem; }
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: 0.5rem; }
+        .footer-section ul li a { color: var(--text-dim); text-decoration: none; transition: color 0.3s ease; }
+        .footer-section ul li a:hover { color: var(--primary); text-shadow: 0 0 5px var(--glow); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--text-dim); }
+
+        /* ============================================================
+           RESPONSIVE DESIGN
+           ============================================================ */
+        @media (max-width: 1400px) { .container { max-width: 1140px; } }
+        @media (max-width: 1200px) {
+            .container { max-width: 960px; }
+            .hero h1 { font-size: 3rem; }
+            .section-title { font-size: 2.3rem; }
+            .campus-life-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+            .facility-showcase-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        }
+        @media (max-width: 1024px) {
+            .container { max-width: 720px; }
+            #navLinks { gap: 1.2rem; }
+            #navLinks a { font-size: 0.9rem; }
+            .hero h1 { font-size: 2.6rem; }
+            .hero p { font-size: 1.25rem; }
+            .section-title { font-size: 2.1rem; }
+            .section-subtitle { font-size: 1.1rem; }
+            .quick-nav { right: 10px; padding: 0.8rem 0.4rem; }
+            .quick-nav-item { width: 44px; height: 44px; }
+            .quick-nav-item i { font-size: 1.1rem; }
+            .quick-nav-item .tooltip { display: none; }
+            .info-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+            .program-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+            .steps-container { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+            .campus-life-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+            .facility-showcase-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+            .learning-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+            .testimonials-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+            .footer-content { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        }
+        @media (max-width: 768px) {
+            .container { max-width: 540px; padding: 0 15px; }
+            #navLinks {
+                position: fixed; top: 65px; left: -100%; width: 100%; height: calc(100vh - 65px);
+                background: rgba(11, 15, 42, 0.98); backdrop-filter: blur(10px);
+                flex-direction: column; justify-content: flex-start; align-items: center;
+                padding-top: 2rem; padding-bottom: 2rem; transition: left 0.3s ease;
+                border-top: 1px solid var(--border); gap: 0; overflow-y: auto;
+            }
+            #navLinks.active { left: 0; }
+            #navLinks li { width: 100%; text-align: center; }
+            #navLinks a { display: block; padding: 1rem 1.5rem; font-size: 1.1rem; width: 100%; border-bottom: 1px solid var(--border); }
+            #navLinks a::after { display: none; }
+            .menu-toggle { display: flex; }
+            .hero { min-height: auto; padding: 7rem 0 3rem; }
+            .hero-content { padding: 1rem; }
+            .hero h1 { font-size: 2.2rem; line-height: 1.3; }
+            .hero p { font-size: 1.05rem; margin-bottom: 1.5rem; }
+            .btn-group { flex-direction: column; align-items: center; gap: 0.75rem; }
+            .btn { width: 100%; max-width: 320px; padding: 0.9rem 1.5rem; font-size: 1rem; }
+            .section { padding: 3rem 0; }
+            .section-title { font-size: 1.8rem; margin-bottom: 0.75rem; }
+            .section-subtitle { font-size: 1rem; margin-bottom: 2rem; }
+            .quick-nav { display: none; }
+            .info-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .info-card { padding: 1.5rem; }
+            .info-card h3 { font-size: 1.3rem; }
+            .program-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .program-card { padding: 1.5rem 1rem; }
+            .program-icon { width: 65px; height: 65px; font-size: 1.5rem; }
+            .program-card h3 { font-size: 1.2rem; }
+            .program-card p { font-size: 0.9rem; margin-bottom: 1rem; }
+            .program-card .btn { max-width: none; width: auto; padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+            .steps-container { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .step-card { padding: 1.5rem 1rem; }
+            .step-number { width: 50px; height: 50px; font-size: 1.3rem; }
+            .campus-life-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .campus-life-image { height: 180px; }
+            .facility-showcase-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .facility-showcase-image { height: 180px; }
+            .facilities-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .facility-item { padding: 1.5rem 1rem; }
+            .facility-item i { font-size: 2.5rem; }
+            .placement-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .placement-stat { padding: 1.5rem; }
+            .stat-number { font-size: 2rem; }
+            .stat-label { font-size: 1rem; }
+            .recruiters-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .recruiter-logo { height: 80px; padding: 1rem; }
+            .testimonials-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .testimonial-card { padding: 1.5rem; }
+            .learning-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .learning-card { padding: 1.5rem; }
+            .learning-card h3 { font-size: 1.2rem; }
+            .cta-section { padding: 2.5rem 1.5rem; margin: 2rem 0; border-radius: 15px; }
+            .cta-section h2 { font-size: 1.8rem; }
+            .cta-section p { font-size: 1rem; }
+            .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
+            .footer-bottom p { font-size: 0.9rem; }
+        }
+        @media (max-width: 576px) {
+            .container { max-width: 100%; padding: 0 12px; }
+            .logo { font-size: 1.1rem; }
+            .logo i { font-size: 1.5rem; margin-right: 8px; }
+            .nav-container { padding: 0.8rem 0; }
+            .hero { padding: 6rem 0 2.5rem; }
+            .hero h1 { font-size: 1.9rem; line-height: 1.25; }
+            .hero p { font-size: 0.95rem; }
+            .section { padding: 2.5rem 0; }
+            .section-title { font-size: 1.6rem; }
+            .section-subtitle { font-size: 0.95rem; margin-bottom: 1.5rem; }
+            .program-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+            .program-card { padding: 1.5rem; }
+            .program-icon { width: 70px; height: 70px; font-size: 1.8rem; }
+            .program-card h3 { font-size: 1.3rem; }
+            .program-card p { font-size: 0.95rem; }
+            .steps-container { grid-template-columns: 1fr; gap: 1.25rem; }
+            .step-card { padding: 1.5rem; }
+            .facilities-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .facility-item { padding: 1.25rem 0.75rem; }
+            .facility-item i { font-size: 2rem; }
+            .facility-item h4 { font-size: 0.95rem; }
+            .facility-item p { font-size: 0.8rem; }
+            .placement-stats { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .placement-stat { padding: 1.25rem 1rem; }
+            .stat-number { font-size: 1.75rem; }
+            .stat-label { font-size: 0.9rem; }
+            .recruiters-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .recruiter-logo { height: 70px; padding: 0.75rem; }
+            .info-card { padding: 1.25rem; }
+            .info-card h3 { font-size: 1.2rem; }
+            .info-card h3 i { font-size: 1.4rem; }
+            .info-card ul li { font-size: 0.95rem; padding: 0.4rem 0; }
+            .campus-life-image { height: 160px; }
+            .campus-life-content { padding: 1.25rem; }
+            .campus-life-content h4 { font-size: 1.15rem; }
+            .facility-showcase-image { height: 160px; }
+            .facility-showcase-content { padding: 1.25rem; }
+            .facility-showcase-content h4 { font-size: 1.15rem; }
+            .testimonial-card { padding: 1.25rem; }
+            .testimonial-text { font-size: 0.95rem; }
+            .learning-card { padding: 1.25rem; }
+            .learning-card h3 { font-size: 1.15rem; }
+            .learning-card ul li { font-size: 0.95rem; }
+            .cta-section { padding: 2rem 1rem; border-radius: 12px; }
+            .cta-section h2 { font-size: 1.5rem; }
+            .cta-section p { font-size: 0.95rem; }
+            .btn { max-width: 280px; padding: 0.85rem 1.2rem; font-size: 0.95rem; }
+            .btn i { font-size: 0.9rem; }
+        }
+        @media (max-width: 400px) {
+            .container { padding: 0 10px; }
+            .logo { font-size: 1rem; }
+            .logo i { font-size: 1.3rem; margin-right: 6px; }
+            .hero { padding: 5.5rem 0 2rem; }
+            .hero h1 { font-size: 1.7rem; }
+            .hero p { font-size: 0.9rem; }
+            .section-title { font-size: 1.45rem; }
+            .section-subtitle { font-size: 0.9rem; }
+            .btn { max-width: 260px; padding: 0.8rem 1rem; font-size: 0.9rem; }
+            .program-icon { width: 60px; height: 60px; font-size: 1.5rem; }
+            .program-card h3 { font-size: 1.15rem; }
+            .program-card p { font-size: 0.9rem; }
+            .facilities-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .facility-item { padding: 1.5rem; }
+            .facility-item i { font-size: 2.5rem; }
+            .facility-item h4 { font-size: 1.05rem; }
+            .facility-item p { font-size: 0.9rem; }
+            .stat-number { font-size: 1.6rem; }
+            .stat-label { font-size: 0.85rem; }
+            .cta-section h2 { font-size: 1.35rem; }
+            .campus-life-image, .facility-showcase-image { height: 140px; }
+            .recruiter-logo { height: 65px; }
+        }
+        @media (max-width: 350px) {
+            .hero h1 { font-size: 1.5rem; }
+            .hero p { font-size: 0.85rem; }
+            .section-title { font-size: 1.3rem; }
+            .section-subtitle { font-size: 0.85rem; }
+            .btn { max-width: 100%; padding: 0.75rem 0.9rem; font-size: 0.85rem; }
+            .info-card, .program-card, .step-card, .testimonial-card, .learning-card { padding: 1rem; }
+            .program-card h3 { font-size: 1.1rem; }
+            .stat-number { font-size: 1.4rem; }
+            .cta-section h2 { font-size: 1.2rem; }
+            .author-avatar { width: 40px; height: 40px; }
+            .author-info h5 { font-size: 0.95rem; }
+            .author-info p { font-size: 0.8rem; }
+        }
+        @media (max-height: 600px) {
+            .hero { min-height: auto; padding: 5rem 0 2rem; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; margin-bottom: 1rem; }
+            .btn-group { gap: 0.5rem; }
+            .btn { padding: 0.7rem 1.2rem; font-size: 0.9rem; }
+        }
+        @media (max-width: 768px) and (orientation: landscape) {
+            .hero { padding: 5rem 0 1.5rem; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 0.95rem; margin-bottom: 1rem; }
+            .section { padding: 2rem 0; }
+            .btn-group { flex-direction: row; flex-wrap: wrap; gap: 0.5rem; }
+            .btn { width: auto; max-width: none; padding: 0.6rem 1rem; font-size: 0.85rem; }
+            .campus-life-image, .facility-showcase-image { height: 150px; }
+            .cta-section { padding: 1.5rem 1rem; }
+            .cta-section h2 { font-size: 1.5rem; }
+        }
+
+        /* ============================================================
+           TOUCH DEVICE SAFETY — RESET ALL HOVER EFFECTS
+           ============================================================ */
+        @media (hover: none) and (pointer: coarse) {
+            .btn:hover { transform: none; }
+            .info-card:hover { transform: none; box-shadow: none; border-color: var(--border); }
+            .info-card:hover::before { box-shadow: none; }
+            .info-card:hover h3 { text-shadow: none; }
+            .info-card:hover h3 i { filter: none; }
+            .info-card:hover li { color: var(--text-dim); text-shadow: none; padding-left: inherit; transition-delay: 0s; }
+            .info-card:hover li i { color: var(--secondary); text-shadow: none; transition-delay: 0s; }
+            .info-card:hover li:hover { color: var(--text); text-shadow: none; padding-left: inherit; }
+            .info-card:hover p { color: var(--text-dim); text-shadow: none; }
+            .program-card:hover { transform: none; box-shadow: none; border-color: var(--border); }
+            .program-card:hover::before { opacity: 0; }
+            .program-card:hover .program-icon { transform: none; box-shadow: 0 10px 25px var(--glow); }
+            .program-card:hover h3 { text-shadow: none; }
+            .program-card:hover p { color: var(--text-dim); text-shadow: none; }
+            .step-card:hover { transform: none; box-shadow: none; background: rgba(19, 32, 58, 0.5); }
+            .step-card:hover::after { opacity: 0; }
+            .step-card:hover .step-number { transform: none; box-shadow: 0 5px 15px var(--glow); }
+            .step-card:hover h3 { text-shadow: none; }
+            .step-card:hover p { color: var(--text-dim); text-shadow: none; }
+            .campus-life-card:hover { transform: none; box-shadow: none; border-color: var(--border); }
+            .campus-life-card:hover::before { opacity: 0; }
+            .campus-life-card:hover .campus-life-image img { transform: none; }
+            .campus-life-card:hover .campus-life-content h4 { text-shadow: none; }
+            .campus-life-card:hover .campus-life-content p { color: var(--text-dim); text-shadow: none; }
+            .facility-item:hover { transform: none; box-shadow: none; border-color: var(--border); }
+            .facility-item:hover::before { opacity: 0; }
+            .facility-item:hover i { transform: none; text-shadow: 0 0 20px var(--glow-secondary); }
+            .facility-item:hover h4 { text-shadow: none; }
+            .facility-item:hover p { color: var(--text-dim); text-shadow: none; }
+            .placement-stat:hover { transform: none; box-shadow: none; border-color: var(--border); }
+            .placement-stat:hover::before { opacity: 0; }
+            .placement-stat:hover .stat-number { transform: none; text-shadow: 0 0 20px var(--glow); }
+            .placement-stat:hover .stat-label { color: var(--text-dim); text-shadow: none; }
+            .recruiter-logo:hover { transform: none; box-shadow: none; border-color: var(--border); }
+            .testimonial-card:hover { transform: none; box-shadow: none; border-color: var(--border); }
+            .testimonial-card:hover::before { opacity: 0; }
+            .testimonial-card:hover .testimonial-rating { text-shadow: none; }
+            .testimonial-card:hover .testimonial-text { color: var(--text-dim); text-shadow: none; }
+            .testimonial-card:hover .author-avatar { box-shadow: none; }
+            .testimonial-card:hover .author-info h5 { text-shadow: none; }
+            .testimonial-card:hover .author-info p { color: var(--text-dim); text-shadow: none; }
+            .learning-card:hover { transform: none; box-shadow: none; border-color: var(--border); }
+            .learning-card:hover::before { opacity: 0; }
+            .learning-card:hover h3 { text-shadow: none; }
+            .learning-card:hover h3 i { filter: none; }
+            .learning-card:hover li { color: var(--text-dim); text-shadow: none; padding-left: inherit; transition-delay: 0s; }
+            .learning-card:hover li i { color: var(--secondary); text-shadow: none; transition-delay: 0s; }
+            .learning-card:hover li:hover { color: var(--text); text-shadow: none; padding-left: inherit; }
+            .facility-showcase-card:hover { transform: none; box-shadow: none; border-color: var(--border); }
+            .facility-showcase-card:hover::before { opacity: 0; }
+            .facility-showcase-card:hover .facility-showcase-image img { transform: none; }
+            .facility-showcase-card:hover .facility-showcase-content h4 { text-shadow: none; }
+            .facility-showcase-card:hover .facility-showcase-content p { color: var(--text-dim); text-shadow: none; }
+            .cta-section:hover { box-shadow: none; border-color: var(--border); }
+            .cta-section:hover::after { opacity: 0; }
+            .cta-section:hover::before { opacity: 0.5; }
+            .cta-section:hover h2 { filter: none; }
+            .cta-section:hover p { color: var(--text-dim); text-shadow: none; }
+            .quick-nav-item:hover { transform: none; }
+        }
+
+        /* ============================================================
+           REDUCED MOTION — DISABLE ALL TRANSITIONS
+           ============================================================ */
+        @media (prefers-reduced-motion: reduce) {
+            .particle { animation: none; display: none; }
+            .hero h1 { animation: none; }
+            .hero::before { animation: none; }
+            .info-card::before { animation: none; }
+            .cta-section::before { animation: none; }
+            .info-card, .program-card, .step-card, .campus-life-card, .facility-item,
+            .placement-stat, .recruiter-logo, .testimonial-card, .learning-card,
+            .facility-showcase-card, .cta-section, .btn, #loading, #navbar {
+                transition: none;
+            }
+            .info-card::before, .program-card::before, .program-card::after,
+            .step-card::before, .step-card::after, .cta-section::after,
+            .learning-card::before, .facility-item::before, .placement-stat::before,
+            .testimonial-card::before, .facility-showcase-card::before, .campus-life-card::before {
+                transition: none;
+            }
+            .info-card h3, .info-card h3 i, .info-card li, .info-card li i, .info-card p,
+            .program-card h3, .program-card p, .program-icon,
+            .step-card h3, .step-card p, .step-number,
+            .learning-card h3, .learning-card h3 i, .learning-card li, .learning-card li i,
+            .facility-item i, .facility-item h4, .facility-item p,
+            .placement-stat .stat-number, .placement-stat .stat-label,
+            .testimonial-card .testimonial-rating, .testimonial-card .testimonial-text,
+            .testimonial-card .author-avatar, .testimonial-card .author-info h5,
+            .testimonial-card .author-info p,
+            .facility-showcase-card .facility-showcase-content h4,
+            .facility-showcase-card .facility-showcase-content p,
+            .campus-life-card .campus-life-content h4, .campus-life-card .campus-life-content p,
+            .cta-section h2, .cta-section p {
+                transition: none;
+            }
+        }
+
+        /* ============================================================
+           PRINT STYLES
+           ============================================================ */
+        @media print {
+            #navbar, #progressBar, #particles, .quick-nav, #loading { display: none !important; }
+            body { background: white; color: black; }
+            .section { page-break-inside: avoid; }
+            .info-card, .program-card, .step-card, .campus-life-card, .facility-item,
+            .placement-stat, .testimonial-card, .learning-card, .facility-showcase-card, .cta-section {
+                break-inside: avoid; box-shadow: none; border: 1px solid #ccc;
+                backdrop-filter: none; -webkit-backdrop-filter: none;
+            }
+            .info-card::before, .program-card::before, .program-card::after,
+            .step-card::before, .step-card::after, .cta-section::before, .cta-section::after,
+            .learning-card::before, .facility-item::before, .placement-stat::before,
+            .testimonial-card::before, .facility-showcase-card::before, .campus-life-card::before {
+                display: none;
+            }
+            .btn { display: none; }
+            .info-card h3, .step-card h3, .learning-card h3, .campus-life-content h4,
+            .facility-showcase-content h4 { color: #555; text-shadow: none; }
+            .info-card h3 i, .learning-card h3 i { -webkit-text-fill-color: initial; color: #0a8; filter: none; }
+            .info-card li i, .learning-card li i { color: #0a8; text-shadow: none; }
+            .info-card li, .info-card p, .program-card p, .step-card p, .learning-card li,
+            .campus-life-content p, .facility-showcase-content p, .facility-item p,
+            .placement-stat .stat-label, .testimonial-text, .author-info p,
+            .cta-section p, .section-subtitle, .hero p { color: #666; text-shadow: none; }
+            .program-card h3, .step-card h3, .facility-item h4, .author-info h5,
+            .stat-number, .testimonial-rating { color: #333; text-shadow: none; }
+            .program-icon, .step-number, .author-avatar { box-shadow: none; }
+            .recruiter-logo { box-shadow: none; border: 1px solid #ccc; }
+            .recruiter-logo img { filter: none; }
+            footer { background: #f5f5f5; border-top-color: #ccc; }
+            .footer-section h3 { color: #555; }
+            .footer-section p, .footer-section a, .footer-bottom { color: #666; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading"><div class="loading-spinner"></div></div>
+    <div id="progressBar"></div>
+    <div id="particles"></div>
+
+    <div class="content-wrapper">
+        <header id="navbar">
+            <div class="container">
+                <nav class="nav-container">
+                    <a href="#" class="logo"><i class="fas fa-graduation-cap"></i> Mangalayatan University</a>
+                    <ul id="navLinks">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#admission">Admission</a></li>
+                        <li><a href="#learning">Learning</a></li>
+                        <li><a href="#facilities">Facilities</a></li>
+                        <li><a href="#placements">Placements</a></li>
+                        <li><a href="#campus">Campus</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                    <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+                </nav>
+            </div>
+        </header>
+
+        <div class="quick-nav">
+            <div class="quick-nav-item" data-title="Home"><i class="fas fa-home"></i><span class="tooltip">Home</span></div>
+            <div class="quick-nav-item" data-title="About"><i class="fas fa-info-circle"></i><span class="tooltip">About</span></div>
+            <div class="quick-nav-item" data-title="Programs"><i class="fas fa-book"></i><span class="tooltip">Programs</span></div>
+            <div class="quick-nav-item" data-title="Admission"><i class="fas fa-edit"></i><span class="tooltip">Admission</span></div>
+            <div class="quick-nav-item" data-title="Learning"><i class="fas fa-laptop"></i><span class="tooltip">Learning</span></div>
+            <div class="quick-nav-item" data-title="Facilities"><i class="fas fa-building"></i><span class="tooltip">Facilities</span></div>
+            <div class="quick-nav-item" data-title="Placements"><i class="fas fa-briefcase"></i><span class="tooltip">Placements</span></div>
+            <div class="quick-nav-item" data-title="Campus"><i class="fas fa-university"></i><span class="tooltip">Campus</span></div>
+            <div class="quick-nav-item" data-title="Contact"><i class="fas fa-phone"></i><span class="tooltip">Contact</span></div>
+        </div>
+
+        <section class="hero section" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Mangalayatan University Distance Education</h1>
+                    <p>UGC-DEB Approved | NAAC A+ Accredited | Excellence in Distance Learning</p>
+                    <div class="btn-group">
+                        <a href="#programs" class="btn btn-primary"><i class="fas fa-rocket"></i> Explore Programs</a>
+                        <a href="#admission" class="btn btn-secondary"><i class="fas fa-user-plus"></i> Apply Now</a>
+                        <a href="tel:18001234567" class="btn btn-white"><i class="fas fa-phone"></i> 1800-123-4567</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="about">
+            <div class="container">
+                <h2 class="section-title">Why Choose Mangalayatan Distance Education?</h2>
+                <p class="section-subtitle">Empowering Learners with Flexible, Quality Education</p>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-certificate"></i> UGC-DEB Approved</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> All programs approved by UGC-DEB</li>
+                            <li><i class="fas fa-check"></i> Valid for government jobs</li>
+                            <li><i class="fas fa-check"></i> Recognized worldwide</li>
+                            <li><i class="fas fa-check"></i> Equivalent to regular degrees</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-award"></i> NAAC A+ Accredited</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Highest quality standards</li>
+                            <li><i class="fas fa-check"></i> Excellence in education</li>
+                            <li><i class="fas fa-check"></i> Industry-relevant curriculum</li>
+                            <li><i class="fas fa-check"></i> Experienced faculty</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-laptop"></i> Flexible Learning</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Learn at your own pace</li>
+                            <li><i class="fas fa-check"></i> Online study materials</li>
+                            <li><i class="fas fa-check"></i> Weekend classes available</li>
+                            <li><i class="fas fa-check"></i> No attendance constraints</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="programs">
+            <div class="container">
+                <h2 class="section-title">Popular Distance Programs</h2>
+                <p class="section-subtitle">Choose from a wide range of career-oriented programs</p>
+                <div class="program-grid">
+                    <div class="program-card">
+                        <div class="program-icon"><i class="fas fa-briefcase"></i></div>
+                        <h3>MBA Distance</h3>
+                        <p>2 Years • Multiple Specializations</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-icon"><i class="fas fa-code"></i></div>
+                        <h3>MCA Distance</h3>
+                        <p>3 Years • Computer Applications</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3>BBA Distance</h3>
+                        <p>3 Years • Business Administration</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-icon"><i class="fas fa-laptop-code"></i></div>
+                        <h3>BCA Distance</h3>
+                        <p>3 Years • Computer Applications</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-icon"><i class="fas fa-book-open"></i></div>
+                        <h3>BA Distance</h3>
+                        <p>3 Years • Multiple Subjects</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-icon"><i class="fas fa-calculator"></i></div>
+                        <h3>B.Com Distance</h3>
+                        <p>3 Years • Commerce</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="admission">
+            <div class="container">
+                <h2 class="section-title">Admission Process</h2>
+                <p class="section-subtitle">Simple and hassle-free admission procedure</p>
+                <div class="steps-container">
+                    <div class="step-card"><div class="step-number">1</div><h3>Choose Program</h3><p>Select your desired course from our wide range of programs</p></div>
+                    <div class="step-card"><div class="step-number">2</div><h3>Fill Application</h3><p>Complete the online application form with required details</p></div>
+                    <div class="step-card"><div class="step-number">3</div><h3>Submit Documents</h3><p>Upload necessary documents for verification</p></div>
+                    <div class="step-card"><div class="step-number">4</div><h3>Pay Fees</h3><p>Complete the payment process through secure gateway</p></div>
+                    <div class="step-card"><div class="step-number">5</div><h3>Get Admission</h3><p>Receive confirmation and start your learning journey</p></div>
+                </div>
+                <div class="cta-section">
+                    <div class="cta-content">
+                        <h2>Ready to Start Your Journey?</h2>
+                        <p>Join thousands of successful distance learners</p>
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-primary"><i class="fas fa-download"></i> Download Brochure</a>
+                            <a href="#" class="btn btn-secondary"><i class="fas fa-phone"></i> Talk to Counselor</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="learning">
+            <div class="container">
+                <h2 class="section-title">Distance Learning Experience</h2>
+                <p class="section-subtitle">Modern and interactive learning platform</p>
+                <div class="learning-grid">
+                    <div class="learning-card">
+                        <h3><i class="fas fa-play-circle"></i> Video Lectures</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> HD quality video content</li>
+                            <li><i class="fas fa-check"></i> Expert faculty recordings</li>
+                            <li><i class="fas fa-check"></i> Access anytime, anywhere</li>
+                            <li><i class="fas fa-check"></i> Download for offline viewing</li>
+                        </ul>
+                    </div>
+                    <div class="learning-card">
+                        <h3><i class="fas fa-book"></i> Study Materials</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Comprehensive e-books</li>
+                            <li><i class="fas fa-check"></i> Regular updates</li>
+                            <li><i class="fas fa-check"></i> PDF downloads</li>
+                            <li><i class="fas fa-check"></i> Printed materials option</li>
+                        </ul>
+                    </div>
+                    <div class="learning-card">
+                        <h3><i class="fas fa-tasks"></i> Online Assessments</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Regular assignments</li>
+                            <li><i class="fas fa-check"></i> Online quizzes</li>
+                            <li><i class="fas fa-check"></i> Instant feedback</li>
+                            <li><i class="fas fa-check"></i> Progress tracking</li>
+                        </ul>
+                    </div>
+                    <div class="learning-card">
+                        <h3><i class="fas fa-users"></i> Interactive Sessions</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Live doubt clearing</li>
+                            <li><i class="fas fa-check"></i> Virtual classrooms</li>
+                            <li><i class="fas fa-check"></i> Peer discussions</li>
+                            <li><i class="fas fa-check"></i> Faculty interaction</li>
+                        </ul>
+                    </div>
+                    <div class="learning-card">
+                        <h3><i class="fas fa-certificate"></i> Certification</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Industry-recognized</li>
+                            <li><i class="fas fa-check"></i> UGC-DEB approved</li>
+                            <li><i class="fas fa-check"></i> Verifiable certificates</li>
+                            <li><i class="fas fa-check"></i> Physical delivery</li>
+                        </ul>
+                    </div>
+                    <div class="learning-card">
+                        <h3><i class="fas fa-headset"></i> Student Support</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 24/7 online help</li>
+                            <li><i class="fas fa-check"></i> Dedicated mentors</li>
+                            <li><i class="fas fa-check"></i> Technical assistance</li>
+                            <li><i class="fas fa-check"></i> Academic guidance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="facilities">
+            <div class="container">
+                <h2 class="section-title">World-Class Facilities</h2>
+                <p class="section-subtitle">Everything you need for successful distance learning</p>
+                <div class="facility-showcase-grid">
+                    <div class="facility-showcase-card">
+                        <div class="facility-showcase-image"><img src="https://picsum.photos/seed/lms/400/200" alt="Learning Management System"></div>
+                        <div class="facility-showcase-content"><h4>Advanced LMS Platform</h4><p>State-of-the-art Learning Management System with intuitive interface and seamless navigation</p></div>
+                    </div>
+                    <div class="facility-showcase-card">
+                        <div class="facility-showcase-image"><img src="https://picsum.photos/seed/mobile/400/200" alt="Mobile Learning"></div>
+                        <div class="facility-showcase-content"><h4>Mobile Learning App</h4><p>Learn on-the-go with our dedicated mobile app for iOS and Android devices</p></div>
+                    </div>
+                    <div class="facility-showcase-card">
+                        <div class="facility-showcase-image"><img src="https://picsum.photos/seed/library/400/200" alt="Digital Library"></div>
+                        <div class="facility-showcase-content"><h4>Digital Library</h4><p>Access to thousands of e-books, journals, and research papers 24/7</p></div>
+                    </div>
+                </div>
+                <div class="facilities-grid">
+                    <div class="facility-item"><i class="fas fa-wifi"></i><h4>Online Support</h4><p>24/7 assistance</p></div>
+                    <div class="facility-item"><i class="fas fa-video"></i><h4>Live Classes</h4><p>Interactive sessions</p></div>
+                    <div class="facility-item"><i class="fas fa-cloud"></i><h4>Cloud Storage</h4><p>Unlimited access</p></div>
+                    <div class="facility-item"><i class="fas fa-mobile-alt"></i><h4>Mobile App</h4><p>Learn anywhere</p></div>
+                    <div class="facility-item"><i class="fas fa-graduation-cap"></i><h4>Expert Faculty</h4><p>Industry leaders</p></div>
+                    <div class="facility-item"><i class="fas fa-certificate"></i><h4>Certification</h4><p>Globally recognized</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="placements">
+            <div class="container">
+                <h2 class="section-title">Placement Assistance</h2>
+                <p class="section-subtitle">Dedicated support for your career growth</p>
+                <div class="placement-stats">
+                    <div class="placement-stat"><div class="stat-number">85%</div><div class="stat-label">Placement Rate</div></div>
+                    <div class="placement-stat"><div class="stat-number">500+</div><div class="stat-label">Hiring Partners</div></div>
+                    <div class="placement-stat"><div class="stat-number">6 LPA</div><div class="stat-label">Average Package</div></div>
+                    <div class="placement-stat"><div class="stat-number">12 LPA</div><div class="stat-label">Highest Package</div></div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-briefcase"></i> Career Services</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Resume building workshops</li>
+                            <li><i class="fas fa-check"></i> Interview preparation</li>
+                            <li><i class="fas fa-check"></i> Aptitude training</li>
+                            <li><i class="fas fa-check"></i> Soft skill development</li>
+                            <li><i class="fas fa-check"></i> Career counseling</li>
+                            <li><i class="fas fa-check"></i> Job portal access</li>
+                            <li><i class="fas fa-check"></i> Alumni referrals</li>
+                            <li><i class="fas fa-check"></i> Internship assistance</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-handshake"></i> Industry Partnerships</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Top MNC collaborations</li>
+                            <li><i class="fas fa-check"></i> Startup connections</li>
+                            <li><i class="fas fa-check"></i> Government sector links</li>
+                            <li><i class="fas fa-check"></i> PSU recruitment drives</li>
+                            <li><i class="fas fa-check"></i> IT company tie-ups</li>
+                            <li><i class="fas fa-check"></i> Banking sector partners</li>
+                            <li><i class="fas fa-check"></i> Consultancy firms</li>
+                            <li><i class="fas fa-check"></i> E-commerce companies</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-chart-line"></i> Placement Process</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Profile registration</li>
+                            <li><i class="fas fa-check"></i> Skill assessment</li>
+                            <li><i class="fas fa-check"></i> Training programs</li>
+                            <li><i class="fas fa-check"></i> Mock interviews</li>
+                            <li><i class="fas fa-check"></i> Campus recruitment</li>
+                            <li><i class="fas fa-check"></i> Off-campus drives</li>
+                            <li><i class="fas fa-check"></i> Job fair participation</li>
+                            <li><i class="fas fa-check"></i> Post-placement support</li>
+                        </ul>
+                    </div>
+                </div>
+                <h3 style="text-align: center; margin: 3rem 0 2rem; color: var(--primary);">Top Recruiters</h3>
+                <div class="recruiters-grid">
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/tcs/150/60" alt="TCS"></div>
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/infosys/150/60" alt="Infosys"></div>
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/wipro/150/60" alt="Wipro"></div>
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/hcl/150/60" alt="HCL"></div>
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/ibm/150/60" alt="IBM"></div>
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/microsoft/150/60" alt="Microsoft"></div>
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/amazon/150/60" alt="Amazon"></div>
+                    <div class="recruiter-logo"><img src="https://picsum.photos/seed/deloitte/150/60" alt="Deloitte"></div>
+                </div>
+                <h3 style="text-align: center; margin: 3rem 0 2rem; color: var(--primary);">Student Testimonials</h3>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="testimonial-text">"The distance MBA program from Mangalayatan University helped me advance my career while working. The study materials were comprehensive and the faculty support was excellent."</p>
+                        <div class="testimonial-author"><div class="author-avatar">RK</div><div class="author-info"><h5>Rahul Kumar</h5><p>MBA Distance | Placed at TCS</p></div></div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="testimonial-text">"The flexibility of distance learning allowed me to pursue my MCA while working. The online platform was user-friendly and the placement assistance was remarkable."</p>
+                        <div class="testimonial-author"><div class="author-avatar">PS</div><div class="author-info"><h5>Priya Sharma</h5><p>MCA Distance | Placed at Infosys</p></div></div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="testimonial-text">"The BBA distance program provided me with the right knowledge and skills to start my entrepreneurial journey. The university's support system is outstanding."</p>
+                        <div class="testimonial-author"><div class="author-avatar">AM</div><div class="author-info"><h5>Amit Mehra</h5><p>BBA Distance | Business Owner</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="campus">
+            <div class="container">
+                <h2 class="section-title">Campus & Facilities</h2>
+                <p class="section-subtitle">Modern Infrastructure for Enhanced Learning Experience</p>
+                <div class="campus-life-grid">
+                    <div class="campus-life-card">
+                        <div class="campus-life-image"><img src="https://picsum.photos/seed/library/400/200" alt="Library"></div>
+                        <div class="campus-life-content"><h4>Central Library</h4><p>Well-stocked library with thousands of books, journals, and digital resources for distance learners.</p></div>
+                    </div>
+                    <div class="campus-life-card">
+                        <div class="campus-life-image"><img src="https://picsum.photos/seed/labs/400/200" alt="Labs"></div>
+                        <div class="campus-life-content"><h4>Computer Labs</h4><p>State-of-the-art computer labs with latest software and high-speed internet connectivity.</p></div>
+                    </div>
+                    <div class="campus-life-card">
+                        <div class="campus-life-image"><img src="https://picsum.photos/seed/classroom/400/200" alt="Classrooms"></div>
+                        <div class="campus-life-content"><h4>Smart Classrooms</h4><p>Modern classrooms equipped with audio-visual aids for interactive learning sessions.</p></div>
+                    </div>
+                    <div class="campus-life-card">
+                        <div class="campus-life-image"><img src="https://picsum.photos/seed/sports/400/200" alt="Sports"></div>
+                        <div class="campus-life-content"><h4>Sports Complex</h4><p>Extensive sports facilities including grounds, courts, and gymnasium for physical fitness.</p></div>
+                    </div>
+                    <div class="campus-life-card">
+                        <div class="campus-life-image"><img src="https://picsum.photos/seed/hostel/400/200" alt="Hostel"></div>
+                        <div class="campus-life-content"><h4>Hostel Facilities</h4><p>Comfortable and secure accommodation with all modern amenities for outstation students.</p></div>
+                    </div>
+                    <div class="campus-life-card">
+                        <div class="campus-life-image"><img src="https://picsum.photos/seed/cafeteria/400/200" alt="Cafeteria"></div>
+                        <div class="campus-life-content"><h4>Cafeteria & Food Court</h4><p>Hygienic and multi-cuisine food court serving nutritious meals at affordable prices.</p></div>
+                    </div>
+                </div>
+                <div class="facilities-grid">
+                    <div class="facility-item"><i class="fas fa-wifi"></i><h4>Wi-Fi Campus</h4><p>High-speed internet throughout campus</p></div>
+                    <div class="facility-item"><i class="fas fa-bus"></i><h4>Transportation</h4><p>Fleet of buses for easy commuting</p></div>
+                    <div class="facility-item"><i class="fas fa-hospital"></i><h4>Medical Center</h4><p>24/7 healthcare facilities available</p></div>
+                    <div class="facility-item"><i class="fas fa-atm"></i><h4>Bank & ATM</h4><p>On-campus banking services</p></div>
+                    <div class="facility-item"><i class="fas fa-store"></i><h4>Stationery Shop</h4><p>All study materials available</p></div>
+                    <div class="facility-item"><i class="fas fa-shield-alt"></i><h4>Security</h4><p>24/7 CCTV surveillance</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="contact">
+            <div class="container">
+                <h2 class="section-title">Get in Touch</h2>
+                <p class="section-subtitle">Contact Us for Distance Education Admissions</p>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-map-marker-alt"></i> Campus Location</h3>
+                        <p>Mangalayatan University<br>Beswan, Aligarh - 202145<br>Uttar Pradesh, India</p>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-phone"></i> Contact Numbers</h3>
+                        <p>Admission Helpline: 1800-123-4567<br>Office: +91-571-1234567<br>Mobile: +91-9876543210</p>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-envelope"></i> Email Addresses</h3>
+                        <p>Admissions: distance@mu.ac.in<br>Info: info@mu.ac.in<br>Support: support@mu.ac.in</p>
+                    </div>
+                </div>
+                <div class="cta-section">
+                    <div class="cta-content">
+                        <h2>Start Your Distance Learning Journey!</h2>
+                        <p>Join thousands of successful distance learners at Mangalayatan University</p>
+                        <div class="btn-group">
+                            <a href="tel:18001234567" class="btn btn-primary"><i class="fas fa-phone"></i> Call Now: 1800-123-4567</a>
+                            <a href="mailto:distance@mu.ac.in" class="btn btn-secondary"><i class="fas fa-envelope"></i> Email Us</a>
+                            <a href="#" class="btn btn-white"><i class="fas fa-download"></i> Download Brochure</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>Mangalayatan University</h3>
+                        <p>Distance Education Center</p>
+                        <p>UGC-DEB Approved | NAAC A+ | AICTE | AIU</p>
+                        <p>ISO 9001:2015 Certified</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#home">Home</a></li><li><a href="#about">About Us</a></li>
+                            <li><a href="#programs">Programs</a></li><li><a href="#admission">Admission</a></li>
+                            <li><a href="#learning">Learning</a></li><li><a href="#facilities">Facilities</a></li>
+                            <li><a href="#placements">Placements</a></li><li><a href="#campus">Campus</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Programs</h3>
+                        <ul>
+                            <li><a href="#">MBA Distance</a></li><li><a href="#">MCA Distance</a></li>
+                            <li><a href="#">BBA Distance</a></li><li><a href="#">BCA Distance</a></li>
+                            <li><a href="#">BA Distance</a></li><li><a href="#">B.Com Distance</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Follow Us</h3>
+                        <p><i class="fab fa-facebook"></i> Facebook</p>
+                        <p><i class="fab fa-twitter"></i> Twitter</p>
+                        <p><i class="fab fa-instagram"></i> Instagram</p>
+                        <p><i class="fab fa-linkedin"></i> LinkedIn</p>
+                        <p><i class="fab fa-youtube"></i> YouTube</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Mangalayatan University Distance Education. All Rights Reserved.</p>
+                    <p>Located in Aligarh, Uttar Pradesh | Recognized by UGC-DEB</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const isMobile = window.innerWidth <= 768;
+            const particleCount = isMobile ? 15 : 50;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+
+            setTimeout(() => { document.getElementById('loading').classList.add('hide'); }, 1000);
+
+            const quickNavItems = document.querySelectorAll('.quick-nav-item');
+            const sections = document.querySelectorAll('section[id]');
+
+            function updateQuickNavActive() {
+                const scrollY = window.pageYOffset;
+                sections.forEach(section => {
+                    const sectionHeight = section.offsetHeight;
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionId = section.getAttribute('id');
+                    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                        quickNavItems.forEach(item => {
+                            item.classList.remove('active');
+                            if (item.getAttribute('data-title').toLowerCase() === sectionId) {
+                                item.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateQuickNavActive);
+
+            quickNavItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-title').toLowerCase();
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        window.scrollTo({ top: targetSection.offsetTop - 80, behavior: 'smooth' });
+                    }
+                });
+            });
+
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                const spans = this.querySelectorAll('span');
+                spans.forEach((span, index) => {
+                    if (navLinks.classList.contains('active')) {
+                        if (index === 0) span.style.transform = 'rotate(45deg) translate(5px, 5px)';
+                        if (index === 1) span.style.opacity = '0';
+                        if (index === 2) span.style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                    } else {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    }
+                });
+            });
+
+            function closeMenu() {
+                navLinks.classList.remove('active');
+                menuToggle.querySelectorAll('span').forEach(span => {
+                    span.style.transform = 'none'; span.style.opacity = '1';
+                });
+            }
+
+            document.querySelectorAll('#navLinks a').forEach(link => { link.addEventListener('click', closeMenu); });
+            document.addEventListener('click', function(e) {
+                if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !menuToggle.contains(e.target)) { closeMenu(); }
+            });
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768 && navLinks.classList.contains('active')) { closeMenu(); }
+            });
+
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                document.getElementById('progressBar').style.width = (winScroll / height) * 100 + '%';
+                const navbar = document.getElementById('navbar');
+                navbar.classList.toggle('scrolled', window.scrollY > 50);
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) { window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' }); }
+                });
+            });
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            document.querySelectorAll('.info-card, .cta-section, .program-card, .step-card, .campus-life-card, .facility-item, .placement-stat, .recruiter-logo, .testimonial-card, .learning-card, .facility-showcase-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(el);
+            });
+
+            navLinks.addEventListener('transitionend', function() {
+                document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+            });
+        });
+    </script>
+</body>
+</html>

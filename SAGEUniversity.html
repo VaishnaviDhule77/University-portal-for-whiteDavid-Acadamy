@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAGE University, Indore - Premier Institution in Madhya Pradesh</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00E0FF;
+            --primary-dark: #00B8CC;
+            --secondary: #2CE6C2;
+            --accent: #8A90A4;
+            --dark: #0B0F2A;
+            --darker: #111A3A;
+            --darkest: #080C24;
+            --light: rgba(15, 23, 42, 0.6);
+            --lighter: rgba(26, 46, 74, 0.4);
+            --text: #FFFFFF;
+            --text-dim: #B0B8D1;
+            --muted-text: #94A3B8;
+            --border: rgba(148, 163, 184, 0.1);
+            --glow: rgba(0, 224, 255, 0.4);
+            --glow-secondary: rgba(44, 230, 194, 0.4);
+            --cta-orange: #FF6A3D;
+            --cta-orange-light: #FF8A50;
+            --glow-orange: rgba(255, 106, 61, 0.4);
+            --ghost-border: #6C7A9A;
+        }
+
+        #programs {
+            --s-accent: #00E0FF;
+            --s-accent-end: #2CE6C2;
+            --s-glow: rgba(0, 224, 255, 0.25);
+            --s-glow-strong: rgba(0, 224, 255, 0.35);
+        }
+        #campus {
+            --s-accent: #FF6A3D;
+            --s-accent-end: #FF8A50;
+            --s-glow: rgba(255, 106, 61, 0.25);
+            --s-glow-strong: rgba(255, 106, 61, 0.35);
+        }
+        #facilities {
+            --s-accent: #3B82F6;
+            --s-accent-end: #60A5FA;
+            --s-glow: rgba(59, 130, 246, 0.25);
+            --s-glow-strong: rgba(59, 130, 246, 0.35);
+        }
+        #placements {
+            --s-accent: #A855F7;
+            --s-accent-end: #EC4899;
+            --s-glow: rgba(168, 85, 247, 0.25);
+            --s-glow-strong: rgba(168, 85, 247, 0.35);
+        }
+        #admission {
+            --s-accent: #22C55E;
+            --s-accent-end: #4ADE80;
+            --s-glow: rgba(34, 197, 94, 0.25);
+            --s-glow-strong: rgba(34, 197, 94, 0.35);
+        }
+        #contact {
+            --s-accent: #14B8A6;
+            --s-accent-end: #2DD4BF;
+            --s-glow: rgba(20, 184, 166, 0.25);
+            --s-glow-strong: rgba(20, 184, 166, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--darkest) 0%, var(--darker) 40%, #1A2B5C 100%);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darkest);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+        #loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(0, 224, 255, 0.15);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            will-change: transform;
+            box-shadow: 0 0 15px var(--glow);
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--cta-orange));
+            z-index: 9999;
+            transform: scaleX(0);
+            transform-origin: left;
+            box-shadow: 0 0 10px var(--glow);
+            will-change: transform;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--darkest), var(--darker));
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 50%;
+            will-change: transform, opacity;
+            animation: float 20s infinite linear;
+        }
+        @keyframes float {
+            from { transform: translate3d(0, 100vh, 0); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            to { transform: translate3d(80px, -10vh, 0); opacity: 0; }
+        }
+
+        #navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(8, 12, 36, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            border-bottom: 1px solid rgba(0, 224, 255, 0.1);
+        }
+        #navbar.scrolled {
+            background: rgba(8, 12, 36, 0.95);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 3%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover { color: var(--primary); text-shadow: 0 0 10px var(--glow); }
+        .nav-links a:hover::after { width: 100%; }
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            margin: 3px 0;
+            transition: 0.3s;
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        .quick-nav {
+            position: fixed;
+            right: 20px;
+            top: 60%;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .quick-nav-item {
+            width: 50px;
+            height: 50px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .quick-nav-item:hover {
+            background: rgba(0, 224, 255, 0.15);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--glow);
+        }
+        .quick-nav-item.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 0 30px var(--glow);
+            border-color: transparent;
+        }
+        .quick-nav-item[data-tooltip]::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: 60px;
+            background: var(--light);
+            color: var(--text);
+            padding: 5px 10px;
+            border-radius: 5px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+        .quick-nav-item:hover[data-tooltip]::before { opacity: 1; }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0, 224, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(44, 230, 194, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 106, 61, 0.06) 0%, transparent 50%),
+                var(--darkest);
+            position: relative;
+            overflow: hidden;
+            contain: layout style;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0, 224, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(44, 230, 194, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 106, 61, 0.1) 0%, transparent 50%);
+            opacity: 0.8;
+        }
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 2rem;
+            max-width: 900px;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--cta-orange));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-animation 3s ease infinite;
+        }
+        @keyframes gradient-animation {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            backface-visibility: hidden;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.6s;
+        }
+        .btn:hover::before { transform: translate(-50%, -50%) scale(1); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cta-orange), var(--cta-orange-light));
+            color: white;
+            border: none;
+            box-shadow: 0 5px 20px var(--glow-orange);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 106, 61, 0.5);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--ghost-border);
+        }
+        .btn-secondary:hover {
+            background: rgba(0, 224, 255, 0.08);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 5px 20px var(--glow);
+            transform: translateY(-3px);
+        }
+        .btn-white {
+            background: white;
+            color: var(--dark);
+            border: none;
+        }
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .section {
+            padding: 80px 3%;
+            position: relative;
+            contain: content;
+        }
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 5%, var(--primary) 50%, transparent 95%);
+            opacity: 0.5;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--s-accent, var(--primary)), var(--s-accent-end, var(--secondary)));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: var(--muted-text);
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+        }
+
+        .program-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            color: var(--text);
+            cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            font-size: 0.95rem;
+        }
+        .tab-btn:hover {
+            background: rgba(0, 224, 255, 0.08);
+            border-color: rgba(0, 224, 255, 0.3);
+            color: var(--primary);
+        }
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--s-accent, var(--primary)), var(--s-accent-end, var(--secondary)));
+            color: var(--dark);
+            border-color: var(--s-accent, var(--primary));
+            box-shadow: 0 5px 20px var(--s-glow, var(--glow));
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* ========== PROGRAM CARD - ALL 14 FEATURES ========== */
+        .program-card {
+            /* 1. Glassmorphism */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(26, 46, 74, 0.4));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* 5. Rounded Corners */
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            backface-visibility: hidden;
+            /* 10. Spacing System */
+            /* 11. Hover Interaction */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        /* 4. Gradient Border / Highlight Line */
+        .program-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--s-accent, var(--primary)), var(--s-accent-end, var(--secondary)), transparent);
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .program-card:hover::before { opacity: 1; }
+        /* 11. Hover Interaction + 12. Shadow Elevation */
+        .program-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--s-accent, var(--primary));
+            /* 3. Neon Glow Effect + 12. Shadow Elevation (double shadow) */
+            box-shadow: 0 0 25px var(--s-glow, var(--glow)), 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        /* 8. Typography Hierarchy */
+        .program-card h3 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            /* 11. Hover Interaction - individual text highlight */
+            transition: text-shadow 0.3s ease;
+        }
+        /* 3. Neon Glow on individual text */
+        .program-card:hover h3 {
+            text-shadow: 0 0 18px var(--s-glow, var(--glow));
+        }
+        .program-card p {
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+            /* 11. individual text highlight transition */
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+        .program-card:hover p {
+            color: var(--text);
+            text-shadow: 0 0 8px var(--s-glow, var(--glow));
+        }
+        .program-icon {
+            font-size: 3rem;
+            color: var(--s-accent, var(--primary));
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
+        }
+        .program-card:hover .program-icon {
+            transform: scale(1.15);
+            text-shadow: 0 0 20px var(--s-glow-strong, var(--glow));
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* ========== INFO CARD - ALL 14 FEATURES ========== */
+        .info-card {
+            /* 1. Glassmorphism */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(26, 46, 74, 0.4));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* 5. Rounded Corners */
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            backface-visibility: hidden;
+            /* 10. Spacing System */
+            /* 11. Hover Interaction */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        /* 4. Gradient Border / Highlight Line */
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--s-accent, var(--primary)), var(--s-accent-end, var(--secondary)), transparent);
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .info-card:hover::before { opacity: 1; }
+        /* 11. Hover Interaction + 12. Shadow Elevation */
+        .info-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--s-accent, var(--primary));
+            /* 3. Neon Glow + 12. Double Shadow */
+            box-shadow: 0 0 25px var(--s-glow-strong, var(--glow)), 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        /* 8. Typography Hierarchy + 6. Flexbox Alignment */
+        .info-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--s-accent, var(--primary));
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            /* 11. individual text highlight */
+            transition: text-shadow 0.3s ease;
+        }
+        /* 3. Neon Glow on individual heading text */
+        .info-card:hover h3 {
+            text-shadow: 0 0 18px var(--s-glow, var(--glow));
+        }
+        .info-card h3 i {
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--s-accent, var(--primary)), var(--s-accent-end, var(--secondary)));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: filter 0.3s ease;
+        }
+        .info-card:hover h3 i {
+            filter: drop-shadow(0 0 6px var(--s-glow, var(--glow)));
+        }
+        /* 7. Icon-Based List */
+        .info-card ul { list-style: none; }
+        .info-card li {
+            /* 9. Color Contrast - dimmed list text */
+            color: var(--text-dim);
+            /* 6. Flexbox Alignment */
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            /* 10. Spacing System */
+            padding: 0.5rem 0;
+            border-radius: 4px;
+            /* 11. individual text highlight transition (base: no delay for instant return) */
+            transition: color 0.3s ease 0s, text-shadow 0.3s ease 0s, padding-left 0.3s ease 0s;
+        }
+        .info-card li i {
+            /* 9. Color Contrast - accent icon */
+            color: var(--s-accent-end, var(--accent));
+            flex-shrink: 0;
+            transition: color 0.3s ease 0s, text-shadow 0.3s ease 0s;
+        }
+        /* === INDIVIDUAL TEXT HIGHLIGHT ON CARD HOVER - cascading stagger === */
+        .info-card:hover li:nth-child(1) { transition-delay: 0s; }
+        .info-card:hover li:nth-child(2) { transition-delay: 0.04s; }
+        .info-card:hover li:nth-child(3) { transition-delay: 0.08s; }
+        .info-card:hover li:nth-child(4) { transition-delay: 0.12s; }
+        .info-card:hover li:nth-child(5) { transition-delay: 0.16s; }
+        .info-card:hover li:nth-child(1) i { transition-delay: 0s; }
+        .info-card:hover li:nth-child(2) i { transition-delay: 0.04s; }
+        .info-card:hover li:nth-child(3) i { transition-delay: 0.08s; }
+        .info-card:hover li:nth-child(4) i { transition-delay: 0.12s; }
+        .info-card:hover li:nth-child(5) i { transition-delay: 0.16s; }
+        /* All list items glow on card hover */
+        .info-card:hover li {
+            color: var(--text);
+            text-shadow: 0 0 8px var(--s-glow, var(--glow));
+        }
+        .info-card:hover li i {
+            color: var(--s-accent, var(--primary));
+            text-shadow: 0 0 10px var(--s-glow, var(--glow));
+        }
+        /* Individual list item hover (within card hover) - extra emphasis */
+        .info-card:hover li:hover {
+            color: var(--s-accent, var(--primary));
+            text-shadow: 0 0 14px var(--s-glow-strong, var(--glow));
+            padding-left: 8px;
+        }
+        /* Individual list item hover without card hover - subtle */
+        .info-card li:hover {
+            color: var(--text);
+        }
+        /* Info card paragraph text */
+        .info-card p {
+            color: var(--text-dim);
+            line-height: 1.8;
+            /* 11. individual text highlight transition */
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+        .info-card:hover p {
+            color: var(--text);
+            text-shadow: 0 0 6px var(--s-glow, var(--glow));
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* ========== STEP CARD - ALL 14 FEATURES ========== */
+        .step-card {
+            /* 1. Glassmorphism */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(26, 46, 74, 0.4));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* 5. Rounded Corners */
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            padding: 3.5rem 2rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            backface-visibility: hidden;
+            /* 10. Spacing System */
+            /* 11. Hover Interaction */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        /* 4. Gradient Border / Highlight Line */
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--s-accent, var(--primary)), var(--s-accent-end, var(--secondary)), transparent);
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .step-card:hover::before { opacity: 1; }
+        /* 11. Hover Interaction + 12. Shadow Elevation */
+        .step-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--s-accent, var(--primary));
+            /* 3. Neon Glow + 12. Double Shadow */
+            box-shadow: 0 0 25px var(--s-glow-strong, var(--glow)), 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        .step-number {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--s-accent, var(--primary)), var(--s-accent-end, var(--secondary)));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--dark);
+            box-shadow: 0 5px 20px var(--s-glow, var(--glow));
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .step-card:hover .step-number {
+            transform: translateX(-50%) scale(1.15);
+            box-shadow: 0 5px 25px var(--s-glow-strong, var(--glow));
+        }
+        .step-icon {
+            font-size: 2.5rem;
+            color: var(--s-accent-end, var(--secondary));
+            margin: 0.5rem 0 1rem;
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
+        }
+        .step-card:hover .step-icon {
+            transform: scale(1.15);
+            text-shadow: 0 0 20px var(--s-glow-strong, var(--glow));
+        }
+        /* 8. Typography Hierarchy */
+        .step-card h4 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            /* 11. individual text highlight */
+            transition: text-shadow 0.3s ease;
+        }
+        /* 3. Neon Glow on individual heading */
+        .step-card:hover h4 {
+            text-shadow: 0 0 18px var(--s-glow, var(--glow));
+        }
+        .step-card p {
+            color: var(--text-dim);
+            /* 11. individual text highlight transition */
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+        .step-card:hover p {
+            color: var(--text);
+            text-shadow: 0 0 8px var(--s-glow, var(--glow));
+        }
+
+        /* ========== CTA SECTION - ALL 14 FEATURES ========== */
+        .cta-section {
+            /* 1. Glassmorphism */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.5), rgba(26, 46, 74, 0.3));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* 5. Rounded Corners */
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            padding: 3rem;
+            text-align: center;
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+            backface-visibility: hidden;
+            /* 10. Spacing System */
+            /* 11. Hover Interaction */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        /* existing ::before for radial glow */
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, var(--s-glow, rgba(0, 224, 255, 0.08)) 0%, transparent 70%);
+            opacity: 0.5;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .cta-section:hover::before { opacity: 0.8; }
+        /* 4. Gradient Border / Highlight Line */
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--s-accent, var(--primary)), var(--s-accent-end, var(--secondary)), transparent);
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .cta-section:hover::after { opacity: 1; }
+        /* 11. Hover + 12. Shadow Elevation */
+        .cta-section:hover {
+            border-color: var(--s-accent, var(--primary));
+            /* 3. Neon Glow + 12. Double Shadow */
+            box-shadow: 0 0 30px var(--s-glow, var(--glow)), 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        .cta-content { position: relative; z-index: 1; }
+        /* 8. Typography Hierarchy */
+        .cta-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--s-accent, var(--primary)), var(--s-accent-end, var(--secondary)));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: filter 0.3s ease;
+        }
+        .cta-section:hover .cta-content h2 {
+            filter: drop-shadow(0 0 8px var(--s-glow, var(--glow)));
+        }
+        .cta-content p {
+            /* 9. Color Contrast - muted */
+            color: var(--muted-text);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            /* 11. individual text highlight transition */
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+        /* 3. Neon Glow on individual text */
+        .cta-section:hover .cta-content p {
+            color: var(--text-dim);
+            text-shadow: 0 0 8px var(--s-glow, var(--glow));
+        }
+
+        .contact { background: linear-gradient(135deg, rgba(8, 12, 36, 0.95), rgba(17, 26, 58, 0.95)); }
+
+        footer {
+            background: var(--darkest);
+            padding: 3rem 3% 1rem;
+            border-top: 1px solid rgba(0, 224, 255, 0.1);
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-section h3 { color: var(--primary); margin-bottom: 1rem; }
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { padding: 0.3rem 0; }
+        .footer-section a { color: var(--muted-text); text-decoration: none; transition: color 0.3s ease; }
+        .footer-section a:hover { color: var(--primary); text-shadow: 0 0 5px var(--glow); }
+        .footer-section p { color: var(--muted-text); line-height: 1.8; }
+        .footer-section p i { margin-right: 0.5rem; color: var(--primary); }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 224, 255, 0.1);
+            color: var(--muted-text);
+        }
+        .footer-bottom p { margin-bottom: 0.3rem; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--darkest); }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 5px;
+            box-shadow: 0 0 10px var(--glow);
+        }
+        ::-webkit-scrollbar-thumb:hover { background: linear-gradient(135deg, var(--secondary), var(--primary)); }
+
+        @media (max-width: 1200px) {
+            .hero h1 { font-size: 3.2rem; }
+            .hero p { font-size: 1.3rem; }
+            .section-title { font-size: 2.5rem; }
+            .nav-links { gap: 1.5rem; }
+        }
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1.2rem; }
+            .section-title { font-size: 2.2rem; }
+            .section-subtitle { font-size: 1.1rem; }
+            .info-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+            .programs-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+            .cta-section { padding: 2.5rem 1.5rem; }
+            .cta-content h2 { font-size: 1.7rem; }
+            .btn { padding: 0.85rem 1.6rem; font-size: 0.95rem; }
+            .quick-nav { right: 10px; gap: 8px; }
+            .quick-nav-item { width: 42px; height: 42px; }
+            .quick-nav-item[data-tooltip]::before { display: none; }
+            .footer-content { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed; top: 0; right: -100%;
+                width: 80%; max-width: 320px; height: 100vh;
+                background: rgba(8, 12, 36, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 5rem 2rem 2rem;
+                transition: right 0.4s ease;
+                gap: 0;
+                border-left: 1px solid rgba(0, 224, 255, 0.1);
+                overflow-y: auto;
+            }
+            .nav-links.active { right: 0; }
+            .nav-links li { border-bottom: 1px solid rgba(148, 163, 184, 0.08); }
+            .nav-links a { display: block; padding: 1rem 0; font-size: 1.1rem; }
+            .nav-links li:last-child a { border-bottom: none; }
+            .menu-toggle { display: flex; }
+            .quick-nav { display: none; }
+            .hero { min-height: 100vh; height: auto; padding: 120px 3% 60px; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1.05rem; margin-bottom: 1.5rem; }
+            .section { padding: 60px 4%; }
+            .section-title { font-size: 1.9rem; }
+            .section-subtitle { font-size: 1rem; margin-bottom: 2rem; }
+            .info-grid { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+            .programs-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; margin-bottom: 2rem; }
+            .steps { grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 2rem; }
+            .step-card { max-width: 400px; margin: 0 auto; padding: 3rem 1.5rem 1.5rem; }
+            .program-tabs { gap: 0.6rem; margin-bottom: 2rem; }
+            .tab-btn { padding: 0.6rem 1.1rem; font-size: 0.85rem; }
+            .program-card { padding: 1.5rem; }
+            .program-icon { font-size: 2.5rem; margin-bottom: 0.7rem; }
+            .program-card h3 { font-size: 1.25rem; margin-bottom: 0.3rem; }
+            .program-card p { font-size: 0.9rem; margin-bottom: 1rem; }
+            .info-card { padding: 1.5rem; }
+            .info-card h3 { font-size: 1.25rem; }
+            .info-card li { font-size: 0.9rem; padding: 0.35rem 0; }
+            .cta-section { padding: 2rem 1.2rem; margin-top: 2rem; }
+            .cta-content h2 { font-size: 1.4rem; }
+            .cta-content p { font-size: 1rem; margin-bottom: 1.5rem; }
+            .btn-group { gap: 0.7rem; flex-direction: column; align-items: center; }
+            .btn { width: 100%; max-width: 320px; justify-content: center; padding: 0.75rem 1.3rem; font-size: 0.9rem; }
+            .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
+            footer { padding: 2rem 4% 1rem; }
+            .logo { font-size: 1.5rem; }
+            .nav-container { padding: 0.9rem 4%; }
+            .footer-section h3 { font-size: 1.1rem; }
+            .footer-section p, .footer-section a { font-size: 0.9rem; }
+            .footer-bottom p { font-size: 0.8rem; }
+        }
+        @media (max-width: 576px) {
+            .hero { padding: 110px 5% 50px; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 0.95rem; }
+            .hero-content { padding: 1rem 0; }
+            .section { padding: 50px 5%; }
+            .section-title { font-size: 1.6rem; }
+            .section-subtitle { font-size: 0.95rem; margin-bottom: 1.5rem; }
+            .programs-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .program-card { padding: 1.3rem; }
+            .program-icon { font-size: 2.2rem; margin-bottom: 0.7rem; }
+            .program-card h3 { font-size: 1.15rem; }
+            .program-card p { font-size: 0.9rem; }
+            .program-tabs { gap: 0.5rem; margin-bottom: 1.5rem; }
+            .tab-btn { padding: 0.5rem 0.9rem; font-size: 0.8rem; border-radius: 20px; }
+            .info-card { padding: 1.2rem; }
+            .info-card h3 { font-size: 1.1rem; margin-bottom: 0.8rem; }
+            .info-card li { font-size: 0.9rem; padding: 0.35rem 0; }
+            .info-card p { font-size: 0.9rem; }
+            .step-card { padding: 2.5rem 1.2rem 1.2rem; }
+            .step-icon { font-size: 2rem; margin: 0.5rem 0 0.8rem; }
+            .step-card h4 { font-size: 1.05rem; }
+            .step-card p { font-size: 0.9rem; }
+            .step-number { width: 35px; height: 35px; top: 10px; font-size: 0.9rem; }
+            .cta-section { padding: 1.5rem 1rem; margin-top: 1.5rem; border-radius: 15px; }
+            .cta-content h2 { font-size: 1.2rem; }
+            .cta-content p { font-size: 0.9rem; margin-bottom: 1.2rem; }
+            .btn { font-size: 0.88rem; padding: 0.7rem 1rem; }
+            .logo { font-size: 1.3rem; }
+            .nav-container { padding: 0.8rem 5%; }
+            .menu-toggle span { width: 22px; height: 2.5px; }
+            footer { padding: 1.5rem 5% 1rem; }
+            .footer-section h3 { font-size: 1.1rem; }
+            .footer-section p, .footer-section a { font-size: 0.9rem; }
+            .footer-bottom p { font-size: 0.8rem; }
+        }
+        @media (max-width: 380px) {
+            .hero h1 { font-size: 1.55rem; }
+            .hero p { font-size: 0.88rem; }
+            .section-title { font-size: 1.4rem; }
+            .section-subtitle { font-size: 0.88rem; }
+            .tab-btn { padding: 0.45rem 0.75rem; font-size: 0.75rem; }
+            .program-card { padding: 1.1rem; }
+            .program-card h3 { font-size: 1.05rem; }
+            .program-card p { font-size: 0.85rem; }
+            .info-card { padding: 1rem; }
+            .info-card h3 { font-size: 1rem; }
+            .info-card li { font-size: 0.85rem; }
+            .cta-content h2 { font-size: 1.1rem; }
+            .btn { font-size: 0.83rem; padding: 0.7rem 1rem; }
+            .logo { font-size: 1.15rem; }
+            .step-card { padding: 2.2rem 1rem 1rem; }
+            .step-number { width: 30px; height: 30px; top: 8px; font-size: 0.8rem; }
+            .step-icon { font-size: 1.8rem; }
+        }
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero { min-height: auto; height: auto; padding: 100px 5% 40px; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; margin-bottom: 1rem; }
+            .section { padding: 40px 5%; }
+            .section-title { font-size: 1.8rem; }
+            .cta-section { padding: 1.5rem; margin-top: 1.5rem; }
+        }
+
+        /* ========== TOUCH DEVICE SAFETY: RESET ALL HOVER EFFECTS ========== */
+        @media (hover: none) and (pointer: coarse) {
+            .program-card:hover { transform: none; box-shadow: none; border-color: var(--border); }
+            .program-card:hover::before { opacity: 0.4; }
+            .program-card:hover h3 { text-shadow: none; }
+            .program-card:hover p { color: var(--text-dim); text-shadow: none; }
+            .program-card:hover .program-icon { transform: none; text-shadow: none; }
+            .info-card:hover { transform: none; box-shadow: none; border-color: var(--border); }
+            .info-card:hover::before { opacity: 0.4; }
+            .info-card:hover h3 { text-shadow: none; }
+            .info-card:hover h3 i { filter: none; }
+            .info-card:hover li { color: var(--text-dim); text-shadow: none; padding-left: inherit; transition-delay: 0s; }
+            .info-card:hover li i { color: var(--s-accent-end, var(--accent)); text-shadow: none; transition-delay: 0s; }
+            .info-card:hover li:hover { color: var(--text); text-shadow: none; padding-left: inherit; }
+            .info-card:hover p { color: var(--text-dim); text-shadow: none; }
+            .step-card:hover { transform: none; box-shadow: none; border-color: var(--border); }
+            .step-card:hover::before { opacity: 0.4; }
+            .step-card:hover .step-number { transform: translateX(-50%); box-shadow: 0 5px 20px var(--s-glow, var(--glow)); }
+            .step-card:hover .step-icon { transform: none; text-shadow: none; }
+            .step-card:hover h4 { text-shadow: none; }
+            .step-card:hover p { color: var(--text-dim); text-shadow: none; }
+            .cta-section:hover { box-shadow: none; border-color: var(--border); }
+            .cta-section:hover::after { opacity: 0.4; }
+            .cta-section:hover::before { opacity: 0.5; }
+            .cta-section:hover .cta-content h2 { filter: none; }
+            .cta-section:hover .cta-content p { color: var(--muted-text); text-shadow: none; }
+            .btn-primary:hover, .btn-secondary:hover, .btn-white:hover { transform: none; }
+            .tab-btn:hover { transform: none; }
+        }
+
+        /* ========== REDUCED MOTION: DISABLE ALL TRANSITIONS ========== */
+        @media (prefers-reduced-motion: reduce) {
+            .particle { animation: none; display: none; }
+            .hero h1 { animation: none; }
+            .info-card, .program-card, .step-card, .cta-section, .btn, .tab-btn, #loading, #navbar {
+                transition: none;
+            }
+            .info-card::before, .program-card::before, .step-card::before, .cta-section::after, .cta-section::before {
+                transition: none;
+            }
+            .info-card h3, .program-card h3, .step-card h4, .cta-content h2 {
+                transition: none;
+            }
+            .info-card h3 i {
+                transition: none;
+            }
+            .info-card li, .info-card li i, .info-card p {
+                transition: none;
+            }
+            .program-card p, .program-icon, .step-card p, .step-icon, .step-number {
+                transition: none;
+            }
+            .cta-content p {
+                transition: none;
+            }
+        }
+
+        /* ========== PRINT: CLEAN OUTPUT ========== */
+        @media print {
+            .quick-nav, #particles, #progressBar, #loading, #navbar, .menu-toggle { display: none !important; }
+            .section::before { display: none; }
+            .hero { min-height: auto; padding: 1rem 0; }
+            .hero::before { display: none; }
+            body { background: white; color: black; }
+            .info-card, .program-card, .step-card, .cta-section {
+                border: 1px solid #ccc;
+                box-shadow: none;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+            .info-card::before, .program-card::before, .step-card::before, .cta-section::after, .cta-section::before {
+                display: none;
+            }
+            .section-title, .logo, .cta-content h2, .hero h1 { -webkit-text-fill-color: initial; color: #333; }
+            .info-card h3, .program-card h3, .step-card h4 { color: #555; text-shadow: none; }
+            .info-card h3 i, .step-icon, .program-icon { -webkit-text-fill-color: initial; color: #0a8; text-shadow: none; }
+            .info-card li i { color: #0a8; }
+            .info-card li, .program-card p, .step-card p, .cta-content p, .hero p,
+            .section-subtitle, .info-card p, .footer-section p, .footer-bottom p,
+            .footer-section a { color: #666; text-shadow: none; }
+            .step-number, .tab-btn.active { background: #555; color: white; box-shadow: none; }
+            .btn, .btn-group { display: none; }
+            .program-tabs { display: none; }
+            footer { background: #f5f5f5; border-top-color: #ccc; }
+            .footer-section h3 { color: #555; }
+            .step-card { padding-top: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">
+        <div class="loader"></div>
+    </div>
+
+    <div id="progressBar"></div>
+
+    <div class="bg-animation"></div>
+    <div id="particles"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">SAGE University</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#programs">Programs</a></li>
+                <li><a href="#campus">Campus Life</a></li>
+                <li><a href="#facilities">Facilities</a></li>
+                <li><a href="#placements">Placements</a></li>
+                <li><a href="#admission">Admission</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="quick-nav">
+        <div class="quick-nav-item active" data-tooltip="Home">
+            <i class="fas fa-home"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Programs">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Campus">
+            <i class="fas fa-university"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Facilities">
+            <i class="fas fa-building"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Placements">
+            <i class="fas fa-briefcase"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Admission">
+            <i class="fas fa-user-plus"></i>
+        </div>
+        <div class="quick-nav-item" data-tooltip="Contact">
+            <i class="fas fa-phone"></i>
+        </div>
+    </div>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>SAGE University</h1>
+            <p>Indore, Madhya Pradesh - Where Excellence Meets Innovation</p>
+            <div class="btn-group">
+                <a href="#admission" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    Apply Now
+                </a>
+                <a href="#programs" class="btn btn-secondary">
+                    <i class="fas fa-book"></i>
+                    Explore Programs
+                </a>
+                <a href="tel:18001234567" class="btn btn-white">
+                    <i class="fas fa-phone"></i>
+                    Call: 1800-123-4567
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="programs">
+        <div class="container">
+            <h2 class="section-title">Academic Programs</h2>
+            <p class="section-subtitle">Industry-Focused Regular Courses</p>
+            
+            <div class="program-tabs">
+                <button class="tab-btn active" data-category="engineering">Engineering</button>
+                <button class="tab-btn" data-category="management">Management</button>
+                <button class="tab-btn" data-category="law">Law</button>
+                <button class="tab-btn" data-category="pharmacy">Pharmacy</button>
+                <button class="tab-btn" data-category="design">Design</button>
+            </div>
+
+            <div class="programs-grid">
+                <div class="program-card" data-category="engineering">
+                    <div class="program-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>B.Tech CSE</h3>
+                    <p>4 Years • Computer Science Engineering</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="engineering">
+                    <div class="program-icon"><i class="fas fa-microchip"></i></div>
+                    <h3>B.Tech ECE</h3>
+                    <p>4 Years • Electronics & Communication</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="engineering">
+                    <div class="program-icon"><i class="fas fa-cogs"></i></div>
+                    <h3>B.Tech Mechanical</h3>
+                    <p>4 Years • Mechanical Engineering</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="engineering">
+                    <div class="program-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>B.Tech Civil</h3>
+                    <p>4 Years • Civil Engineering</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="management">
+                    <div class="program-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>BBA</h3>
+                    <p>3 Years • Business Administration</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="management">
+                    <div class="program-icon"><i class="fas fa-briefcase"></i></div>
+                    <h3>MBA</h3>
+                    <p>2 Years • Master of Business Admin</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="law">
+                    <div class="program-icon"><i class="fas fa-balance-scale"></i></div>
+                    <h3>BA LLB</h3>
+                    <p>5 Years • Integrated Law Program</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="law">
+                    <div class="program-icon"><i class="fas fa-gavel"></i></div>
+                    <h3>LLB</h3>
+                    <p>3 Years • Bachelor of Law</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="pharmacy">
+                    <div class="program-icon"><i class="fas fa-pills"></i></div>
+                    <h3>B.Pharma</h3>
+                    <p>4 Years • Bachelor of Pharmacy</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="pharmacy">
+                    <div class="program-icon"><i class="fas fa-flask"></i></div>
+                    <h3>D.Pharma</h3>
+                    <p>2 Years • Diploma in Pharmacy</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="design">
+                    <div class="program-icon"><i class="fas fa-palette"></i></div>
+                    <h3>B.Des</h3>
+                    <p>4 Years • Bachelor of Design</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="program-card" data-category="design">
+                    <div class="program-icon"><i class="fas fa-paint-brush"></i></div>
+                    <h3>BFA</h3>
+                    <p>3 Years • Bachelor of Fine Arts</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Discover Your Perfect Program!</h2>
+                    <p>Get Expert Career Guidance</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                            Explore All Programs
+                        </a>
+                        <a href="tel:18001234567" class="btn btn-white">
+                            <i class="fas fa-phone"></i>
+                            Talk to Counselor
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="campus">
+        <div class="container">
+            <h2 class="section-title">Dynamic Campus Life</h2>
+            <p class="section-subtitle">Experience Excellence in Campus Living</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-user-friends"></i> Student Activities</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 30+ Active Student Clubs</li>
+                        <li><i class="fas fa-check"></i> Annual Cultural Fest - SAGE Fiesta</li>
+                        <li><i class="fas fa-check"></i> Technical Symposiums</li>
+                        <li><i class="fas fa-check"></i> Sports Tournaments</li>
+                        <li><i class="fas fa-check"></i> Leadership Development Programs</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-bed"></i> Hostel Facilities</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> AC & Non-AC Hostels</li>
+                        <li><i class="fas fa-check"></i> 24/7 Security & CCTV</li>
+                        <li><i class="fas fa-check"></i> Multi-Cuisine Mess</li>
+                        <li><i class="fas fa-check"></i> Gym & Recreation</li>
+                        <li><i class="fas fa-check"></i> High-Speed WiFi</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-trophy"></i> Sports & Fitness</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Cricket Ground</li>
+                        <li><i class="fas fa-check"></i> Football & Hockey Fields</li>
+                        <li><i class="fas fa-check"></i> Basketball & Volleyball Courts</li>
+                        <li><i class="fas fa-check"></i> Indoor Sports Complex</li>
+                        <li><i class="fas fa-check"></i> Swimming Pool</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Join Our Thriving Community!</h2>
+                    <p>Learn, Grow & Excel Together</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-video"></i>
+                            Virtual Tour
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            <i class="fas fa-calendar"></i>
+                            Upcoming Events
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="facilities">
+        <div class="container">
+            <h2 class="section-title">State-of-the-Art Facilities</h2>
+            <p class="section-subtitle">World-Class Infrastructure for Learning</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-flask"></i> Advanced Laboratories</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Computer Science Labs</li>
+                        <li><i class="fas fa-check"></i> Physics & Chemistry Labs</li>
+                        <li><i class="fas fa-check"></i> Electronics Workshops</li>
+                        <li><i class="fas fa-check"></i> Mechanical Workshops</li>
+                        <li><i class="fas fa-check"></i> Pharmacy Research Labs</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-book-open"></i> Digital Library</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 1,00,000+ Books</li>
+                        <li><i class="fas fa-check"></i> E-Library & Digital Resources</li>
+                        <li><i class="fas fa-check"></i> International Journals</li>
+                        <li><i class="fas fa-check"></i> Online Platforms</li>
+                        <li><i class="fas fa-check"></i> 24/7 Study Halls</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-university"></i> Academic Infrastructure</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Smart Classrooms</li>
+                        <li><i class="fas fa-check"></i> 2000-Seater Auditorium</li>
+                        <li><i class="fas fa-check"></i> Conference Halls</li>
+                        <li><i class="fas fa-check"></i> Moot Court</li>
+                        <li><i class="fas fa-check"></i> Incubation Center</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Explore Our Modern Campus!</h2>
+                    <p>Premium Learning Environment</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-tour"></i>
+                            360° Tour
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            <i class="fas fa-info-circle"></i>
+                            Know More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="placements">
+        <div class="container">
+            <h2 class="section-title">Campus Placements</h2>
+            <p class="section-subtitle">300+ Companies Recruit from Our Campus</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-handshake"></i> Placement Assistance</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Dedicated Placement Cell</li>
+                        <li><i class="fas fa-check"></i> Resume Building</li>
+                        <li><i class="fas fa-check"></i> GD & PI Prep</li>
+                        <li><i class="fas fa-check"></i> Aptitude Training</li>
+                        <li><i class="fas fa-check"></i> Internship Programs</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-chart-bar"></i> Top Recruiters</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> TCS, Infosys, Wipro, HCL</li>
+                        <li><i class="fas fa-check"></i> Tech Mahindra, Capgemini</li>
+                        <li><i class="fas fa-check"></i> Amazon, Microsoft, Google</li>
+                        <li><i class="fas fa-check"></i> Banking Sector</li>
+                        <li><i class="fas fa-check"></i> Pharma Companies</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-rupee-sign"></i> Statistics</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 95% Placement Rate</li>
+                        <li><i class="fas fa-check"></i> Average: 6-12 LPA</li>
+                        <li><i class="fas fa-check"></i> Highest: 30+ LPA</li>
+                        <li><i class="fas fa-check"></i> 1200+ Offers/Year</li>
+                        <li><i class="fas fa-check"></i> Startup Support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Build Your Career!</h2>
+                    <p>Get Placed in Top Companies</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-briefcase"></i>
+                            Placement Report
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            <i class="fas fa-phone-alt"></i>
+                            Placement Cell
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="admission">
+        <div class="container">
+            <h2 class="section-title">Admission Process</h2>
+            <p class="section-subtitle">Your Gateway to Excellence</p>
+            
+            <div class="steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-edit"></i></div>
+                    <h4>Online Application</h4>
+                    <p>Fill the application form with accurate details</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-file-alt"></i></div>
+                    <h4>Entrance Exam</h4>
+                    <p>Appear for SAGE Entrance Test</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+                    <h4>Counseling</h4>
+                    <p>Verification and fee payment</p>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-list-check"></i> Eligibility</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 10+2 with 60% for UG</li>
+                        <li><i class="fas fa-check"></i> Bachelor's for PG</li>
+                        <li><i class="fas fa-check"></i> Valid Score Required</li>
+                        <li><i class="fas fa-check"></i> Age: 17-25 Years</li>
+                        <li><i class="fas fa-check"></i> All States</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-file-upload"></i> Documents</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 10th & 12th Marks</li>
+                        <li><i class="fas fa-check"></i> Transfer Certificate</li>
+                        <li><i class="fas fa-check"></i> Score Card</li>
+                        <li><i class="fas fa-check"></i> Character Certificate</li>
+                        <li><i class="fas fa-check"></i> Passport Photos</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-rupee-sign"></i> Fee Structure</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Competitive Fees</li>
+                        <li><i class="fas fa-check"></i> Merit Scholarships</li>
+                        <li><i class="fas fa-check"></i> Loan Assistance</li>
+                        <li><i class="fas fa-check"></i> Transparent Policy</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Begin at SAGE University!</h2>
+                    <p>Admissions Open 2024-25</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-user-plus"></i>
+                            Apply Now
+                        </a>
+                        <a href="tel:18001234567" class="btn btn-secondary">
+                            <i class="fas fa-phone"></i>
+                            Call: 1800-123-4567
+                        </a>
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-download"></i>
+                            Brochure
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="section-subtitle">We're Here to Guide You</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-phone-alt"></i> Contact</h3>
+                    <p>Admissions: 1800-123-4567 (Toll-Free)<br>
+                    Campus: +91-731-3333333<br>
+                    WhatsApp: +91-9876543210</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-envelope"></i> Email</h3>
+                    <p>admissions@sageuniversity.in<br>
+                    info@sageuniversity.in<br>
+                    support@sageuniversity.in</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
+                    <p>SAGE University<br>
+                    Khandwa Road, Indore - 452015<br>
+                    Madhya Pradesh, India</p>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Visit Our Campus!</h2>
+                    <p>World-Class Education</p>
+                    <div class="btn-group">
+                        <a href="tel:18001234567" class="btn btn-primary">
+                            <i class="fas fa-phone"></i>
+                            Call Now
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            <i class="fas fa-calendar"></i>
+                            Schedule Visit
+                        </a>
+                        <a href="#" class="btn btn-white">
+                            <i class="fas fa-map"></i>
+                            Directions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SAGE University</h3>
+                    <p>Khandwa Road, Indore - 452015</p>
+                    <p>UGC Recognized University</p>
+                    <p>AICTE Approved</p>
+                    <p>NAAC 'A+' Grade</p>
+                    <p>#1 Private University in MP</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#campus">Campus Life</a></li>
+                        <li><a href="#facilities">Facilities</a></li>
+                        <li><a href="#placements">Placements</a></li>
+                        <li><a href="#admission">Admission</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Popular Courses</h3>
+                    <ul>
+                        <li><a href="#">B.Tech CSE</a></li>
+                        <li><a href="#">B.Tech ECE</a></li>
+                        <li><a href="#">BBA</a></li>
+                        <li><a href="#">MBA</a></li>
+                        <li><a href="#">BA LLB</a></li>
+                        <li><a href="#">B.Pharma</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <p><i class="fab fa-facebook"></i> Facebook</p>
+                    <p><i class="fab fa-youtube"></i> YouTube</p>
+                    <p><i class="fab fa-linkedin"></i> LinkedIn</p>
+                    <p><i class="fab fa-instagram"></i> Instagram</p>
+                    <p><i class="fab fa-twitter"></i> Twitter</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SAGE University, Indore. All Rights Reserved.</p>
+                <p>Premier University in MP | Excellence in Education</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var isMobile = window.innerWidth <= 768;
+            var particleCount = isMobile ? 8 : 15;
+            var particlesContainer = document.getElementById('particles');
+            var frag = document.createDocumentFragment();
+            for (var i = 0; i < particleCount; i++) {
+                var particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = (Math.random() * 100) + '%';
+                particle.style.animationDelay = (Math.random() * 15) + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                frag.appendChild(particle);
+            }
+            particlesContainer.appendChild(frag);
+
+            setTimeout(function() {
+                document.getElementById('loading').classList.add('hide');
+            }, 1000);
+
+            var quickNavItems = document.querySelectorAll('.quick-nav-item');
+            var sections = document.querySelectorAll('section[id]');
+            var progressBar = document.getElementById('progressBar');
+            var navbar = document.getElementById('navbar');
+            var navLinks = document.getElementById('navLinks');
+            var menuToggle = document.getElementById('menuToggle');
+            var menuSpans = menuToggle.querySelectorAll('span');
+            var scrollTicking = false;
+            var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            var sectionData = [];
+            for (var s = 0; s < sections.length; s++) {
+                sectionData.push({
+                    id: sections[s].getAttribute('id'),
+                    top: sections[s].offsetTop - 100,
+                    height: sections[s].offsetHeight
+                });
+            }
+
+            function onScroll() {
+                if (!scrollTicking) {
+                    window.requestAnimationFrame(function() {
+                        var scrollY = window.pageYOffset;
+                        if (docHeight > 0) {
+                            progressBar.style.transform = 'scaleX(' + (scrollY / docHeight) + ')';
+                        }
+                        if (scrollY > 50) { navbar.classList.add('scrolled'); }
+                        else { navbar.classList.remove('scrolled'); }
+                        for (var i = 0; i < sectionData.length; i++) {
+                            if (scrollY >= sectionData[i].top && scrollY < sectionData[i].top + sectionData[i].height) {
+                                var id = sectionData[i].id;
+                                for (var j = 0; j < quickNavItems.length; j++) {
+                                    var tooltip = quickNavItems[j].getAttribute('data-tooltip').toLowerCase().replace(' ', '-');
+                                    if (tooltip === id) { quickNavItems[j].classList.add('active'); }
+                                    else { quickNavItems[j].classList.remove('active'); }
+                                }
+                                break;
+                            }
+                        }
+                        scrollTicking = false;
+                    });
+                    scrollTicking = true;
+                }
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+
+            var resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                    for (var s = 0; s < sections.length; s++) {
+                        sectionData[s].top = sections[s].offsetTop - 100;
+                        sectionData[s].height = sections[s].offsetHeight;
+                    }
+                    if (window.innerWidth > 768 && navLinks.classList.contains('active')) { closeMenu(); }
+                }, 150);
+            });
+
+            for (var q = 0; q < quickNavItems.length; q++) {
+                quickNavItems[q].addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var targetId = this.getAttribute('data-tooltip').toLowerCase().replace(' ', '-');
+                    var target = document.getElementById(targetId);
+                    if (target) { window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' }); }
+                });
+            }
+
+            function closeMenu() {
+                navLinks.classList.remove('active');
+                menuSpans[0].style.transform = 'none';
+                menuSpans[1].style.opacity = '1';
+                menuSpans[2].style.transform = 'none';
+                document.body.style.overflow = '';
+            }
+
+            menuToggle.addEventListener('click', function() {
+                if (navLinks.classList.contains('active')) { closeMenu(); }
+                else {
+                    navLinks.classList.add('active');
+                    menuSpans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    menuSpans[1].style.opacity = '0';
+                    menuSpans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+
+            var navAnchors = document.querySelectorAll('#navLinks a');
+            for (var a = 0; a < navAnchors.length; a++) { navAnchors[a].addEventListener('click', closeMenu); }
+
+            document.addEventListener('click', function(e) {
+                if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !menuToggle.contains(e.target)) { closeMenu(); }
+            });
+
+            var allAnchors = document.querySelectorAll('a[href^="#"]');
+            for (var an = 0; an < allAnchors.length; an++) {
+                allAnchors[an].addEventListener('click', function(e) {
+                    var href = this.getAttribute('href');
+                    if (href.length > 1) {
+                        e.preventDefault();
+                        var target = document.querySelector(href);
+                        if (target) {
+                            var offset = window.innerWidth <= 768 ? 60 : 80;
+                            window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+                        }
+                    }
+                });
+            }
+
+            var tabBtns = document.querySelectorAll('.tab-btn');
+            var programCards = document.querySelectorAll('.program-card');
+
+            for (var t = 0; t < tabBtns.length; t++) {
+                tabBtns[t].addEventListener('click', function() {
+                    var category = this.getAttribute('data-category');
+                    for (var b = 0; b < tabBtns.length; b++) { tabBtns[b].classList.remove('active'); }
+                    this.classList.add('active');
+                    for (var c = 0; c < programCards.length; c++) {
+                        var card = programCards[c];
+                        if (card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        } else { card.style.display = 'none'; }
+                    }
+                });
+            }
+
+            var animatedElements = document.querySelectorAll('.info-card, .cta-section, .program-card, .step-card');
+            var observer = new IntersectionObserver(function(entries) {
+                for (var e = 0; e < entries.length; e++) {
+                    if (entries[e].isIntersecting) {
+                        entries[e].target.style.opacity = '1';
+                        entries[e].target.style.transform = 'translateY(0)';
+                        observer.unobserve(entries[e].target);
+                    }
+                }
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            for (var o = 0; o < animatedElements.length; o++) {
+                animatedElements[o].style.opacity = '0';
+                animatedElements[o].style.transform = 'translateY(30px)';
+                animatedElements[o].style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(animatedElements[o]);
+            }
+
+            tabBtns[0].click();
+        });
+    </script>
+</body>
+</html>
