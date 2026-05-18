@@ -477,7 +477,6 @@
             );
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            /* 2. Gradient Background — layered depth */
             /* 4. Gradient Border via subtle border + highlight */
             border: 1px solid var(--border-subtle);
             /* 5. Rounded Corners */
@@ -754,13 +753,15 @@
         }
 
         /* ==============================================
-           ENHANCED STEP CARDS — All 14 Features
+           ENHANCED STEP CARDS — Fixed Number Overflow
            ============================================== */
         .steps {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
             margin-bottom: 50px;
+            /* Top padding so the protruding step-number circle is never clipped */
+            padding-top: 20px;
         }
 
         .step-card {
@@ -777,7 +778,7 @@
             border: 1px solid var(--border-subtle);
             /* 5. Rounded Corners */
             border-radius: 20px;
-            padding: 35px 30px 30px;
+            padding: 40px 30px 30px;
             text-align: center;
             /* 11. Hover base */
             transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
@@ -785,10 +786,12 @@
                         border-color 0.4s ease,
                         background 0.4s ease;
             position: relative;
-            overflow: hidden;
+            /* overflow: hidden REMOVED — step-number sits at top: -15px
+               and must be visible above the card boundary */
+            overflow: visible;
         }
 
-        /* 4. Top Gradient Highlight Line (using ::after since step-number uses top space) */
+        /* 4. Bottom Gradient Highlight Line */
         .step-card::before {
             content: '';
             position: absolute;
@@ -806,8 +809,10 @@
             opacity: 0;
             transition: opacity 0.4s ease;
             z-index: 2;
+            border-radius: 0 0 20px 20px;
         }
 
+        /* 4. Subtle top inner glow */
         .step-card::after {
             content: '';
             position: absolute;
@@ -854,7 +859,7 @@
 
         .step-number {
             position: absolute;
-            top: -15px;
+            top: -20px;
             left: 50%;
             transform: translateX(-50%);
             width: 40px;
@@ -1203,6 +1208,7 @@
 
             .steps {
                 gap: 20px;
+                padding-top: 20px;
             }
 
             .cta-section {
@@ -1357,14 +1363,15 @@
 
             .steps {
                 grid-template-columns: 1fr;
-                gap: 25px;
+                gap: 35px;
                 max-width: 400px;
                 margin-left: auto;
                 margin-right: auto;
+                padding-top: 25px;
             }
 
             .step-card {
-                padding: 35px 25px 30px;
+                padding: 40px 25px 30px;
             }
 
             .step-icon {
@@ -1501,19 +1508,20 @@
             }
 
             .steps {
-                gap: 20px;
+                gap: 30px;
                 max-width: 100%;
+                padding-top: 22px;
             }
 
             .step-card {
-                padding: 30px 20px 25px;
+                padding: 38px 20px 25px;
             }
 
             .step-number {
                 width: 36px;
                 height: 36px;
                 font-size: 1.1rem;
-                top: -13px;
+                top: -18px;
             }
 
             .step-icon {
@@ -1628,8 +1636,20 @@
                 font-size: 0.88rem;
             }
 
+            .steps {
+                gap: 28px;
+                padding-top: 20px;
+            }
+
             .step-card {
-                padding: 25px 15px 20px;
+                padding: 35px 15px 20px;
+            }
+
+            .step-number {
+                width: 34px;
+                height: 34px;
+                font-size: 1rem;
+                top: -17px;
             }
 
             .step-icon {
@@ -1728,6 +1748,13 @@
                 font-size: 0.85rem;
             }
 
+            .step-number {
+                width: 32px;
+                height: 32px;
+                font-size: 0.95rem;
+                top: -16px;
+            }
+
             .cta-content h2 {
                 font-size: 1.1rem;
             }
@@ -1801,6 +1828,10 @@
 
             .cta-content h2 {
                 font-size: 1.35rem;
+            }
+
+            .steps {
+                padding-top: 18px;
             }
         }
 
@@ -1908,6 +1939,11 @@
 
             .step-number {
                 background: #666;
+                top: 0;
+                transform: translateX(-50%);
+                position: relative;
+                left: 50%;
+                margin: -20px auto 10px;
             }
 
             .step-icon {
@@ -1931,6 +1967,10 @@
 
             .step-card {
                 padding-top: 20px;
+            }
+
+            .steps {
+                padding-top: 0;
             }
         }
     </style>

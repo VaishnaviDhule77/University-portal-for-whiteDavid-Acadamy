@@ -123,9 +123,6 @@
         @keyframes expand { from { width: 0; } to { width: 100px; } }
         .section-title p { color: var(--text-dim); font-size: 1.1rem; }
 
-        /* ============================================
-           ENHANCED OVERVIEW CARDS
-           ============================================ */
         .course-overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
         .overview-card {
             background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -133,19 +130,12 @@
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             text-align: center; position: relative; overflow: hidden;
         }
-        .overview-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
-        }
+        .overview-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; opacity: 0; transition: opacity 0.4s ease; z-index: 2; }
         .overview-card:nth-child(1)::before { background: linear-gradient(90deg, transparent, var(--primary), transparent); }
         .overview-card:nth-child(2)::before { background: linear-gradient(90deg, transparent, var(--secondary), transparent); }
         .overview-card:nth-child(3)::before { background: linear-gradient(90deg, transparent, var(--accent), transparent); }
         .overview-card:nth-child(4)::before { background: linear-gradient(90deg, transparent, var(--cat-blue), transparent); }
-        .overview-card::after {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%);
-            opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0;
-        }
+        .overview-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%); opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0; }
         .overview-card:hover::before { opacity: 1; }
         .overview-card:hover::after { opacity: 1; }
         .overview-card:nth-child(1):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0, 224, 255, 0.15), 0 0 0 1px rgba(0, 224, 255, 0.2), inset 0 1px 0 rgba(0, 224, 255, 0.1); border-color: rgba(0, 224, 255, 0.3); background: rgba(255, 255, 255, 0.06); }
@@ -171,9 +161,6 @@
         .overview-card p { color: var(--text-dim); line-height: 1.6; position: relative; z-index: 1; transition: all 0.4s ease; }
         .overview-card:hover p { color: #c0c8dd; }
 
-        /* ============================================
-           ENHANCED TWO COLUMN CARDS
-           ============================================ */
         .two-column { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem; max-width: 1200px; margin: 0 auto; }
         .column-content {
             background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -181,16 +168,8 @@
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative; overflow: hidden;
         }
-        .column-content::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
-            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
-        }
-        .column-content::after {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%);
-            opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0;
-        }
+        .column-content::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent); opacity: 0; transition: opacity 0.4s ease; z-index: 2; }
+        .column-content::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%); opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0; }
         .column-content:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0, 224, 255, 0.15), 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 224, 255, 0.2), inset 0 1px 0 rgba(0, 224, 255, 0.1); border-color: rgba(0, 224, 255, 0.3); background: rgba(255, 255, 255, 0.06); }
         .column-content:hover::before { opacity: 1; }
         .column-content:hover::after { opacity: 1; }
@@ -201,39 +180,22 @@
         .column-content ul li:last-child { border-bottom: none; }
         .column-content:hover ul li:hover { color: var(--primary); text-shadow: 0 0 10px var(--glow); background: rgba(0, 224, 255, 0.04); padding-left: 15px; transform: translateX(10px); }
 
-        /* ============================================
-           ENHANCED PROCESS STEP CARDS (FIXED)
-           ============================================ */
         .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2.5rem; max-width: 1200px; margin: 0 auto; }
         .step-card {
             background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             padding: 2.5rem 2rem 2rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.07);
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
-            /* Removed overflow: hidden to prevent number clipping */
         }
         .step-card::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(105deg, transparent 35%, rgba(0, 224, 255, 0.08) 50%, transparent 65%);
-            transform: translateX(-100%);
-            opacity: 0; transition: opacity 0.5s ease;
-            z-index: 0; pointer-events: none;
-            border-radius: 20px;
+            transform: translateX(-100%); opacity: 0; transition: opacity 0.5s ease;
+            z-index: 0; pointer-events: none; border-radius: 20px;
         }
-        .step-card:hover::before {
-            animation: scan 0.8s ease-in-out;
-        }
-        @keyframes scan {
-            0% { transform: translateX(-100%); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateX(100%); opacity: 0; }
-        }
-        .step-card::after {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
-            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
-        }
+        .step-card:hover::before { animation: scan 0.8s ease-in-out; }
+        @keyframes scan { 0% { transform: translateX(-100%); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateX(100%); opacity: 0; } }
+        .step-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent); opacity: 0; transition: opacity 0.4s ease; z-index: 2; }
         .step-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0, 224, 255, 0.15), 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 224, 255, 0.2), inset 0 1px 0 rgba(0, 224, 255, 0.1); border-color: rgba(0, 224, 255, 0.25); background: rgba(255, 255, 255, 0.06); }
         .step-card:hover::after { opacity: 1; }
         .step-number {
@@ -251,9 +213,6 @@
         .step-card p { color: var(--text-dim); line-height: 1.6; text-align: center; position: relative; z-index: 1; transition: all 0.4s ease; }
         .step-card:hover p { color: #c0c8dd; }
 
-        /* ============================================
-           ENHANCED CAREER CARDS
-           ============================================ */
         .career-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
         .career-card {
             background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -261,21 +220,14 @@
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative; overflow: hidden;
         }
-        .career-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
-        }
+        .career-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; opacity: 0; transition: opacity 0.4s ease; z-index: 2; }
         .career-card:nth-child(1)::before { background: linear-gradient(90deg, transparent, var(--cat-orange), transparent); }
         .career-card:nth-child(2)::before { background: linear-gradient(90deg, transparent, var(--cat-blue), transparent); }
         .career-card:nth-child(3)::before { background: linear-gradient(90deg, transparent, var(--cat-purple), transparent); }
         .career-card:nth-child(4)::before { background: linear-gradient(90deg, transparent, var(--cat-green), transparent); }
         .career-card:nth-child(5)::before { background: linear-gradient(90deg, transparent, var(--cat-amber), transparent); }
         .career-card:nth-child(6)::before { background: linear-gradient(90deg, transparent, var(--cat-teal), transparent); }
-        .career-card::after {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%);
-            opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0;
-        }
+        .career-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%); opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0; }
         .career-card:hover::before { opacity: 1; }
         .career-card:hover::after { opacity: 1; }
         .career-card:nth-child(1):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(255, 106, 61, 0.15), 0 0 0 1px rgba(255, 106, 61, 0.2), inset 0 1px 0 rgba(255, 106, 61, 0.1); border-color: rgba(255, 106, 61, 0.3); background: rgba(255, 255, 255, 0.06); }
@@ -316,14 +268,15 @@
         .career-card:hover p { color: #c0c8dd; }
 
         /* ============================================
-           ENHANCED COLLEGE CARDS
+           ENHANCED COLLEGE CARDS (FIXED)
            ============================================ */
-        .college-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .college-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; padding-top: 25px; overflow: visible; }
         .college-card {
             background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             padding: 2rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.07);
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative; overflow: hidden;
+            position: relative;
+            overflow: visible;
         }
         .college-card::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
@@ -338,7 +291,11 @@
         .college-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0, 224, 255, 0.15), 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 224, 255, 0.2), inset 0 1px 0 rgba(0, 224, 255, 0.1); border-color: rgba(0, 224, 255, 0.3); background: rgba(255, 255, 255, 0.06); }
         .college-card:hover::before { opacity: 1; }
         .college-card:hover::after { opacity: 1; }
-        .college-rank { position: absolute; top: -10px; right: 20px; background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600; color: var(--darkest); box-shadow: 0 5px 15px var(--glow); flex-shrink: 0; z-index: 1; transition: all 0.4s ease; }
+        .college-rank {
+            position: absolute; top: -10px; right: 20px; background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600; color: var(--darkest);
+            box-shadow: 0 5px 15px var(--glow); flex-shrink: 0; z-index: 1; transition: all 0.4s ease;
+        }
         .college-card:hover .college-rank { transform: scale(1.1); box-shadow: 0 8px 25px rgba(0, 224, 255, 0.5); }
         .college-card h3 { color: var(--text); margin-bottom: 1rem; font-size: 1.3rem; position: relative; z-index: 1; transition: all 0.4s ease; }
         .college-card:hover h3 { color: var(--primary); text-shadow: 0 0 20px rgba(0, 224, 255, 0.5); transform: translateX(5px); }
@@ -351,9 +308,6 @@
         .college-card:hover .college-details span { color: #c0c8dd; }
         .college-card:hover .college-details span strong { color: var(--primary); }
 
-        /* ============================================
-           ENHANCED EXAM CARDS
-           ============================================ */
         .exam-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
         .exam-card {
             background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -361,19 +315,12 @@
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative; overflow: hidden;
         }
-        .exam-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
-        }
+        .exam-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; opacity: 0; transition: opacity 0.4s ease; z-index: 2; }
         .exam-card:nth-child(1)::before { background: linear-gradient(90deg, transparent, var(--cat-blue), #60A5FA, transparent); }
         .exam-card:nth-child(2)::before { background: linear-gradient(90deg, transparent, var(--cat-purple), var(--cat-pink), transparent); }
         .exam-card:nth-child(3)::before { background: linear-gradient(90deg, transparent, var(--cat-teal), #2DD4BF, transparent); }
         .exam-card:nth-child(4)::before { background: linear-gradient(90deg, transparent, var(--cat-orange), var(--cat-amber), transparent); }
-        .exam-card::after {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%);
-            opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0;
-        }
+        .exam-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%); opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0; }
         .exam-card:hover::before { opacity: 1; }
         .exam-card:hover::after { opacity: 1; }
         .exam-card:nth-child(1):hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 15px 50px rgba(59, 130, 246, 0.15), 0 0 0 1px rgba(59, 130, 246, 0.2), inset 0 1px 0 rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3); background: rgba(255, 255, 255, 0.06); }
@@ -407,9 +354,6 @@
         .exam-card:nth-child(3):hover .exam-details li:hover i { filter: drop-shadow(0 0 8px rgba(20, 184, 166, 0.5)); transform: scale(1.15); }
         .exam-card:nth-child(4):hover .exam-details li:hover i { filter: drop-shadow(0 0 8px rgba(255, 106, 61, 0.5)); transform: scale(1.15); }
 
-        /* ============================================
-           ENHANCED SUBJECT CATEGORY CARDS
-           ============================================ */
         .subjects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
         .subject-category {
             background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -417,21 +361,14 @@
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative; overflow: hidden;
         }
-        .subject-category::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
-        }
+        .subject-category::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; opacity: 0; transition: opacity 0.4s ease; z-index: 2; }
         .subject-category:nth-child(1)::before { background: linear-gradient(90deg, transparent, var(--cat-blue), transparent); }
         .subject-category:nth-child(2)::before { background: linear-gradient(90deg, transparent, var(--cat-purple), transparent); }
         .subject-category:nth-child(3)::before { background: linear-gradient(90deg, transparent, var(--cat-orange), transparent); }
         .subject-category:nth-child(4)::before { background: linear-gradient(90deg, transparent, var(--cat-green), transparent); }
         .subject-category:nth-child(5)::before { background: linear-gradient(90deg, transparent, var(--cat-teal), transparent); }
         .subject-category:nth-child(6)::before { background: linear-gradient(90deg, transparent, var(--cat-amber), transparent); }
-        .subject-category::after {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%);
-            opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0;
-        }
+        .subject-category::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 224, 255, 0.07), transparent 60%); opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0; }
         .subject-category:hover::before { opacity: 1; }
         .subject-category:hover::after { opacity: 1; }
         .subject-category:nth-child(1):hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(59, 130, 246, 0.15), 0 0 0 1px rgba(59, 130, 246, 0.2), inset 0 1px 0 rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3); background: rgba(255, 255, 255, 0.06); }
@@ -457,7 +394,7 @@
         .subject-category:nth-child(6):hover h3 { text-shadow: 0 0 15px rgba(245, 158, 11, 0.5); }
         .subject-list { list-style: none; position: relative; z-index: 1; }
         .subject-list li { padding: 0.5rem 0; padding-left: 1.5rem; color: var(--text-dim); border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.35s ease; position: relative; border-radius: 6px; }
-        .subject-list li::before { content: '▸'; position: absolute; left: 0; transition: all 0.3s ease; }
+        .subject-list li::before { content: '\25B8'; position: absolute; left: 0; transition: all 0.3s ease; }
         .subject-category:nth-child(1) .subject-list li::before { color: var(--cat-blue); }
         .subject-category:nth-child(2) .subject-list li::before { color: var(--cat-purple); }
         .subject-category:nth-child(3) .subject-list li::before { color: var(--cat-orange); }
@@ -468,9 +405,6 @@
         .subject-category:hover .subject-list li:hover { color: var(--text); padding-left: 2rem; background: rgba(255, 255, 255, 0.03); transform: translateX(7px); }
         .subject-category:hover .subject-list li:hover::before { transform: translateX(5px) scale(1.2); filter: drop-shadow(0 0 4px currentColor); }
 
-        /* ============================================
-           ENHANCED TIMELINE CARDS
-           ============================================ */
         .higher-studies-container { max-width: 1200px; margin: 0 auto; }
         .studies-timeline { position: relative; padding: 2rem 0; }
         .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--primary), var(--secondary)); transform: translateX(-50%); box-shadow: 0 0 15px var(--glow); }
@@ -482,11 +416,7 @@
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative; overflow: hidden;
         }
-        .timeline-content::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
-            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
-        }
+        .timeline-content::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent); opacity: 0; transition: opacity 0.4s ease; z-index: 2; }
         .timeline-content:hover { transform: scale(1.03); box-shadow: 0 15px 40px rgba(0, 224, 255, 0.15), 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 224, 255, 0.2), inset 0 1px 0 rgba(0, 224, 255, 0.1); border-color: rgba(0, 224, 255, 0.3); background: rgba(255, 255, 255, 0.06); }
         .timeline-content:hover::before { opacity: 1; }
         .timeline-dot { position: absolute; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 20px var(--glow); z-index: 1; }
@@ -500,9 +430,6 @@
         .timeline-content .specializations span { background: rgba(0, 224, 255, 0.08); color: var(--primary); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.9rem; border: 1px solid rgba(0, 224, 255, 0.15); transition: all 0.3s ease; }
         .timeline-content:hover .specializations span:hover { background: rgba(0, 224, 255, 0.15); border-color: rgba(0, 224, 255, 0.3); box-shadow: 0 0 10px rgba(0, 224, 255, 0.2); transform: translateY(-2px); }
 
-        /* ============================================
-           ENHANCED FEE TABLE
-           ============================================ */
         .table-scroll-wrapper {
             width: 100%; max-width: 1000px; margin: 3rem auto 0; overflow-x: auto;
             -webkit-overflow-scrolling: touch; border-radius: 20px;
@@ -510,11 +437,7 @@
             background: rgba(255, 255, 255, 0.03); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             transition: all 0.4s ease; position: relative; overflow: hidden;
         }
-        .table-scroll-wrapper::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
-            opacity: 0.5; transition: opacity 0.4s ease; z-index: 2;
-        }
+        .table-scroll-wrapper::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent); opacity: 0.5; transition: opacity 0.4s ease; z-index: 2; }
         .table-scroll-wrapper:hover { box-shadow: 0 15px 50px rgba(0, 224, 255, 0.1), 0 0 0 1px rgba(0, 224, 255, 0.15); border-color: rgba(0, 224, 255, 0.2); }
         .table-scroll-wrapper:hover::before { opacity: 1; }
         .fee-table { width: 100%; border-collapse: collapse; min-width: 550px; position: relative; z-index: 1; }
@@ -526,20 +449,13 @@
         .fee-table tbody tr:hover td { color: var(--primary); text-shadow: 0 0 8px var(--glow); }
         .fee-table tbody tr:last-child td { border-bottom: none; }
 
-        /* ============================================
-           ENHANCED FAQ ITEMS
-           ============================================ */
         .faq-container { max-width: 800px; margin: 3rem auto 0; }
         .faq-item {
             background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border-radius: 16px; margin-bottom: 1rem; border: 1px solid rgba(255, 255, 255, 0.07);
             overflow: hidden; transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative;
         }
-        .faq-item::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
-            opacity: 0; transition: opacity 0.4s ease; z-index: 2;
-        }
+        .faq-item::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent); opacity: 0; transition: opacity 0.4s ease; z-index: 2; }
         .faq-item:hover { box-shadow: 0 10px 30px rgba(0, 224, 255, 0.12), 0 0 0 1px rgba(0, 224, 255, 0.18); border-color: rgba(0, 224, 255, 0.22); transform: translateX(5px); }
         .faq-item:hover::before { opacity: 1; }
         .faq-item.active { box-shadow: 0 20px 50px rgba(0, 224, 255, 0.18), 0 0 0 1px rgba(0, 224, 255, 0.25); }
@@ -553,7 +469,6 @@
         .faq-item.active .faq-answer { max-height: 300px; }
         .faq-answer p { padding: 0 1.5rem 1.5rem; color: var(--text-dim); line-height: 1.8; }
 
-        /* CTA Section */
         .cta-section { padding: 5rem 5%; text-align: center; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); position: relative; overflow: hidden; margin-top: 5rem; border: 1px solid rgba(255, 106, 61, 0.15); }
         .cta-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(255, 106, 61, 0.1) 0%, transparent 70%); animation: pulse-bg 3s ease-in-out infinite; }
         @keyframes pulse-bg { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
@@ -562,7 +477,6 @@
         .cta-button { display: inline-block; padding: 1.2rem 3rem; background: linear-gradient(135deg, var(--cta-start), var(--cta-end)); color: white; text-decoration: none; border-radius: 50px; font-size: 1.2rem; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 10px 35px rgba(255, 106, 61, 0.4); position: relative; z-index: 1; }
         .cta-button:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(255, 106, 61, 0.5); }
 
-        /* Footer */
         footer { background: linear-gradient(135deg, rgba(11, 15, 42, 0.96), rgba(7, 11, 26, 0.96)); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 3rem 5% 1rem; border-top: 1px solid var(--border); }
         .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
         .footer-section h3 { font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--primary); }
@@ -576,15 +490,12 @@
         .fade-in-up { opacity: 0; transform: translateY(30px); animation: fadeInUp 0.8s ease forwards; }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-        /* =========================================
-           RESPONSIVE DESIGN
-           ========================================= */
         @media (max-width: 992px) {
             .hero h1 { font-size: 2.8rem; }
             .hero p { font-size: 1.15rem; }
             .section-title h2 { font-size: 2.2rem; }
             .career-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-            .overview-card:hover, .column-content:hover, .career-card:hover, .college-card:hover, .exam-card:hover, .subject-category:hover { transform: translateY(-7px); }
+            .overview-card:hover, .column-content:hover, .career-card:hover, .exam-card:hover, .subject-category:hover { transform: translateY(-7px); }
             .step-card:hover { transform: translateY(-7px); }
         }
 
@@ -605,7 +516,7 @@
             .column-content { padding: 1.5rem; }
             .column-content h3 { font-size: 1.3rem; }
             .course-overview, .process-steps, .career-grid, .college-cards, .exam-cards, .subjects-grid { grid-template-columns: 1fr; }
-            .overview-card, .step-card, .career-card, .college-card, .exam-card, .subject-category { padding: 1.5rem; }
+            .overview-card, .step-card, .career-card, .exam-card, .subject-category { padding: 1.5rem; }
             .timeline-item { flex-direction: column !important; }
             .timeline-content { width: 100%; }
             .timeline-line { left: 20px; }
@@ -620,12 +531,12 @@
             footer { padding: 3rem 4% 1rem; }
             .footer-content { grid-template-columns: 1fr; text-align: center; }
             .footer-section a:hover { transform: none; }
-            .overview-card:hover, .column-content:hover, .career-card:hover, .college-card:hover, .exam-card:hover, .subject-category:hover, .step-card:hover { transform: translateY(-5px); }
+            .overview-card:hover, .column-content:hover, .career-card:hover, .exam-card:hover, .subject-category:hover, .step-card:hover { transform: translateY(-5px); }
             .faq-item:hover { transform: none; }
-            /* Step card number responsive fix */
             .process-steps { gap: 2rem; }
             .step-card { padding: 2.2rem 1.5rem 1.5rem; }
             .step-number { top: -18px; width: 38px; height: 38px; font-size: 1.1rem; }
+            .college-cards { grid-template-columns: 1fr; gap: 1.5rem; padding-top: 0; overflow: visible; }
         }
 
         @media (max-width: 480px) {
@@ -638,13 +549,13 @@
             .section { padding: 2.5rem 4%; }
             .section-title h2 { font-size: 1.5rem; }
             .section-title p { font-size: 0.95rem; }
-            .overview-card, .step-card, .career-card, .college-card, .exam-card, .subject-category, .column-content { padding: 1.2rem; }
-            .career-card h3, .college-card h3, .subject-category h3 { font-size: 1.1rem; }
+            .overview-card, .step-card, .career-card, .exam-card, .subject-category, .column-content { padding: 1.2rem; }
+            .career-card h3, .exam-card h3, .subject-category h3 { font-size: 1.1rem; }
             .salary { font-size: 0.85rem; }
             .quick-nav a { padding: 0.4rem 0.7rem; font-size: 0.85rem; }
             .cta-section h2 { font-size: 1.5rem; }
             .cta-button { padding: 0.9rem 1.5rem; font-size: 1rem; }
-            .overview-card:hover, .column-content:hover, .career-card:hover, .college-card:hover, .exam-card:hover, .subject-category:hover, .step-card:hover { transform: translateY(-3px); }
+            .overview-card:hover, .column-content:hover, .career-card:hover, .exam-card:hover, .subject-category:hover, .step-card:hover { transform: translateY(-3px); }
             .college-card:hover { transform: none; }
             .process-steps { gap: 1.5rem; }
             .step-card { padding: 2rem 1.2rem 1.2rem; }
@@ -896,7 +807,7 @@
                 <div class="career-card">
                     <h3>Neurological Physiotherapist</h3>
                     <div class="salary">Salary: ₹4-7 LPA</div>
-                    <p>Treat patients with stroke, spinal cord injuries, and other neurological conditions affecting movement.</p>
+                    <p>Treat patients with stroke, spinal cord injuries, and other neurological conditions.</p>
                 </div>
                 <div class="career-card">
                     <h3>Orthopedic Physiotherapist</h3>
@@ -942,7 +853,7 @@
                         <div class="timeline-content">
                             <h3>Ph.D. in Physiotherapy</h3>
                             <div class="duration">3-5 Years</div>
-                            <p>Doctoral program focusing on research, academia, and advanced clinical practice in physiotherapy.</p>
+                            <p>Doctoral program focusing on research, academia, and advanced clinical practice.</p>
                             <div class="specializations"><span>Clinical Research</span><span>Academic Leadership</span><span>Healthcare Management</span></div>
                         </div>
                         <div class="timeline-dot"></div>
@@ -951,7 +862,7 @@
                         <div class="timeline-content">
                             <h3>Fellowship Programs</h3>
                             <div class="duration">6 Months - 1 Year</div>
-                            <p>Advanced clinical fellowships for super-specialization in cutting-edge physiotherapy techniques.</p>
+                            <p>Advanced clinical fellowships for super-specialization in cutting-edge techniques.</p>
                             <div class="specializations"><span>Hand Therapy</span><span>Spine Rehabilitation</span><span>Vestibular Therapy</span><span>Oncology Rehab</span></div>
                         </div>
                         <div class="timeline-dot"></div>
@@ -1084,7 +995,6 @@
                     <div class="faq-question"><span>Is NEET mandatory for BPT admission?</span><i class="fas fa-chevron-down"></i></div>
                     <div class="faq-answer"><p>Yes, NEET-UG is mandatory for admission to most government and reputed private colleges. However, some private universities conduct their own entrance tests or offer management quota seats.</p></div>
                 </div>
-                
                 <div class="faq-item">
                     <div class="faq-question"><span>Can I pursue MPT after BPT?</span><i class="fas fa-chevron-down"></i></div>
                     <div class="faq-answer"><p>Yes, after completing BPT and 6 months internship, you can pursue MPT (Master of Physiotherapy) in various specializations like orthopedics, neurology, sports, cardiopulmonary, etc.</p></div>
@@ -1154,7 +1064,7 @@
                 p.style.animationDuration = (15 + Math.random() * 10) + 's';
                 const color = colors[Math.floor(Math.random() * colors.length)];
                 p.style.background = color;
-                p.style.boxShadow = `0 0 10px ${color}`;
+                p.style.boxShadow = '0 0 10px ' + color;
                 c.appendChild(p);
             }
         }
@@ -1223,16 +1133,15 @@
             });
         });
 
-        // Mouse-follow glow effect on applicable cards
         document.addEventListener('mousemove', (e) => {
-            const cards = document.querySelectorAll('.overview-card, .column-content, .career-card, .college-card, .exam-card, .subject-category');
+            const cards = document.querySelectorAll('.overview-card, .column-content, .career-card, .exam-card, .subject-category');
             cards.forEach(card => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
                 if (e.clientX >= rect.left - 50 && e.clientX <= rect.right + 50 && e.clientY >= rect.top - 50 && e.clientY <= rect.bottom + 50) {
-                    card.style.setProperty('--mouse-x', `${x}px`);
-                    card.style.setProperty('--mouse-y', `${y}px`);
+                    card.style.setProperty('--mouse-x', x + 'px');
+                    card.style.setProperty('--mouse-y', y + 'px');
                 }
             });
         });
@@ -1251,7 +1160,7 @@
         document.querySelectorAll('.timeline-item').forEach((item, i) => {
             item.style.opacity = '0';
             item.style.transform = i % 2 === 1 ? 'translateX(50px)' : 'translateX(-50px)';
-            item.style.transition = `all 0.8s ease ${i * 0.2}s`;
+            item.style.transition = 'all 0.8s ease ' + (i * 0.2) + 's';
             timelineObserver.observe(item);
         });
     </script>
