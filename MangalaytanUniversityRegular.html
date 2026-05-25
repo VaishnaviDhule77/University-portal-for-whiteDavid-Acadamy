@@ -339,50 +339,73 @@
         }
         .course-category:hover p { color: var(--text); text-shadow: 0 0 6px var(--glow); }
 
-        .timeline { position: relative; padding: 2rem 0; }
-        .timeline::before {
-            content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
-            background: var(--gradient); transform: translateX(-50%); box-shadow: 0 0 15px var(--glow);
-        }
-        .timeline-item {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 3rem; position: relative;
-        }
-        .timeline-item:nth-child(even) { flex-direction: row-reverse; }
-        .timeline-content {
-            width: 45%; background: rgba(17, 26, 58, 0.6);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            padding: 2rem; border-radius: 15px; border: 1px solid var(--border);
-            transition: all 0.3s ease; position: relative; overflow: hidden;
-        }
-        .timeline-content::after {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
-            opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
-        }
-        .timeline-content:hover::after { opacity: 1; }
-        .timeline-content:hover {
-            box-shadow: 0 20px 45px var(--glow), 0 15px 50px rgba(0,0,0,0.4);
-            border-color: rgba(0, 224, 255, 0.3);
-        }
-        .timeline-content h3 {
-            color: var(--primary); margin-bottom: 0.5rem;
-            transition: text-shadow 0.3s ease;
-        }
-        .timeline-content:hover h3 { text-shadow: 0 0 18px var(--glow); }
-        .timeline-content p {
-            color: var(--text-muted); transition: color 0.3s ease, text-shadow 0.3s ease;
-        }
-        .timeline-content:hover p { color: var(--text-dim); text-shadow: 0 0 6px var(--glow); }
-        .timeline-dot {
-            width: 20px; height: 20px; background: var(--primary); border-radius: 50%;
-            position: absolute; left: 50%; transform: translateX(-50%);
-            box-shadow: 0 0 25px var(--glow); flex-shrink: 0;
-        }
-        .timeline-year {
-            width: 45%; text-align: center; font-size: 1.5rem; font-weight: bold;
-            color: var(--primary);
-        }
+       .timeline { position: relative; padding: 2rem 0; }
+.timeline::before {
+    content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+    background: var(--gradient); transform: translateX(-50%); box-shadow: 0 0 15px var(--glow);
+}
+.timeline-item {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 3rem; position: relative;
+}
+.timeline-item:nth-child(even) { flex-direction: row-reverse; }
+
+.timeline-content {
+    width: 45%; background: rgba(17, 26, 58, 0.6);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    padding: 2rem; border-radius: 15px; border: 1px solid var(--border);
+    transition: all 0.3s ease; position: relative; overflow: hidden;
+}
+.timeline-content::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+    opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+}
+.timeline-content:hover::after { opacity: 1; }
+.timeline-content:hover {
+    box-shadow: 0 20px 45px var(--glow), 0 15px 50px rgba(0,0,0,0.4);
+    border-color: rgba(0, 224, 255, 0.3);
+}
+.timeline-content h3 {
+    color: var(--primary); margin-bottom: 0.5rem;
+    transition: text-shadow 0.3s ease;
+}
+.timeline-content:hover h3 { text-shadow: 0 0 18px var(--glow); }
+.timeline-content p {
+    color: var(--text-muted); transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+.timeline-content:hover p { color: var(--text-dim); text-shadow: 0 0 6px var(--glow); }
+
+.timeline-dot {
+    width: 20px; height: 20px; background: var(--primary); border-radius: 50%;
+    position: absolute; left: 50%; transform: translateX(-50%);
+    box-shadow: 0 0 25px var(--glow); flex-shrink: 0;
+}
+
+/* ==========================================
+   FIXED SECTION FOR LABELS
+   ========================================== */
+.timeline-year {
+    width: 45%; 
+    font-size: 1.8rem; /* Made slightly larger to stand out nicely as key steps */
+    font-weight: bold;
+    color: var(--primary);
+    box-sizing: border-box;
+}
+
+/* Odd rows: content is on left, text label is on the RIGHT. 
+   Align text left so it sits right against the center timeline. */
+.timeline-item:nth-child(odd) .timeline-year {
+    text-align: left;
+    padding-left: 40px; /* Space between the text and the timeline line */
+}
+
+/* Even rows: content is on right (due to row-reverse), text label is on the LEFT.
+   Align text right so it sits right against the center timeline. */
+.timeline-item:nth-child(even) .timeline-year {
+    text-align: right;
+    padding-right: 40px; /* Space between the text and the timeline line */
+}
 
         .campus-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
         .campus-card {
@@ -1064,7 +1087,7 @@
                 <div class="timeline-item"><div class="timeline-content"><h3>Step 2: Entrance Test</h3><p>Appear for MUET (Mangalayatan University Entrance Test) or submit valid national test scores.</p></div><div class="timeline-dot"></div><div class="timeline-year">Test</div></div>
                 <div class="timeline-item"><div class="timeline-content"><h3>Step 3: Counseling</h3><p>Attend counseling session for document verification and course selection based on merit.</p></div><div class="timeline-dot"></div><div class="timeline-year">Counsel</div></div>
                 <div class="timeline-item"><div class="timeline-content"><h3>Step 4: Admission</h3><p>Complete admission formalities, pay fee, and join orientation program to begin your journey.</p></div><div class="timeline-dot"></div><div class="timeline-year">Join</div></div>
-            </div>
+            </div><br>
             <div class="info-grid">
                 <div class="info-card"><h3><i class="fas fa-file-alt"></i> Eligibility Criteria</h3><ul><li><i class="fas fa-check"></i> 10+2 with minimum 50% for UG</li><li><i class="fas fa-check"></i> Graduation for PG programs</li><li><i class="fas fa-check"></i> Valid entrance score</li><li><i class="fas fa-check"></i> Age limit as per program</li><li><i class="fas fa-check"></i> English proficiency</li><li><i class="fas fa-check"></i> Medical fitness</li><li><i class="fas fa-check"></i> Character certificate</li><li><i class="fas fa-check"></i> Migration certificate</li></ul></div>
                 <div class="info-card"><h3><i class="fas fa-rupee-sign"></i> Fee Structure</h3><ul><li><i class="fas fa-check"></i> Affordable fee structure</li><li><i class="fas fa-check"></i> Scholarship available</li><li><i class="fas fa-check"></i> EMI payment option</li><li><i class="fas fa-check"></i> Education loan support</li><li><i class="fas fa-check"></i> Merit-based fee waiver</li><li><i class="fas fa-check"></i> Sports quota discount</li><li><i class="fas fa-check"></i> Sibling concession</li><li><i class="fas fa-check"></i> Alumni referral benefit</li></ul></div>
