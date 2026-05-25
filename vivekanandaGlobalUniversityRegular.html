@@ -375,58 +375,84 @@
             border: 1px solid rgba(59, 130, 246, 0.15);
         }
 
-        .stat-item {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
+/* =========================================================
+   NEW / UPDATED: Parent wrapper for the stats elements.
+   Add this class name to the <div> wrapping your stats items.
+   ========================================================= */
+.stats-card {
+    display: flex;
+    flex-direction: row;          /* Puts items side-by-side horizontally */
+    justify-content: space-around; /* Distributes them evenly beneath the image */
+    align-items: center;
+    width: 100%;                  /* Matches the width of the image above it */
+    margin-top: 2rem;             /* Clear space pushing it safely underneath the image */
+    background: rgba(17, 26, 58, 0.4); /* Matches your platform's glassy theme appearance */
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 1.5rem 1rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
 
-        .stat-item:last-child { margin-bottom: 0; }
+/* =========================================================
+   UPDATED ORIGINAL CLASSES
+   ========================================================= */
+.stat-item {
+    text-align: center;
+    /* FIXED: Removed margin-bottom so they line up cleanly on a horizontal axis */
+    margin-bottom: 0; 
+    flex: 1; /* Gives equal sharing space to all three segments */
+}
 
-        .stat-number {
-            font-size: 1.8rem;
-            font-weight: bold;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+/* Disabled your previous vertical layout margin reset override */
+.stat-item:last-child { margin-bottom: 0; }
 
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--muted);
-            opacity: 0.8;
-        }
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: bold;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-        .section {
-            padding: 5rem 0;
-            position: relative;
-        }
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    opacity: 0.8;
+    margin-top: 0.25rem; /* Slight separation between numbers and captions */
+}
 
-        .section:nth-child(even) {
-            background: rgba(59, 130, 246, 0.02);
-        }
+.section {
+    padding: 5rem 0;
+    position: relative;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+.section:nth-child(even) {
+    background: rgba(59, 130, 246, 0.02);
+}
 
-        .section-title {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 1rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
 
-        .section-subtitle {
-            text-align: center;
-            color: var(--muted);
-            opacity: 0.8;
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
-        }
+.section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--muted);
+    opacity: 0.8;
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+}
 
         /* ==========================================
            ENHANCED INTERACTIVE CARD SYSTEM
@@ -772,6 +798,14 @@
         }
 
         .step-card:hover p { color: var(--light); }
+
+        .hero-image-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px; /* Adjust based on your design preferences */
+}
 
         /* CTA Section */
         .cta-section {
@@ -1205,52 +1239,55 @@
         .placement-stat:hover .stat-label { color: var(--light); opacity: 1; }
 
         /* Recruiters Grid */
-        .recruiters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
+.recruiters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
 
-        .recruiter-logo {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 1.5rem;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100px;
-            border: 1px solid rgba(148, 163, 184, 0.08);
-            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-                        box-shadow 0.4s ease,
-                        border-color 0.4s ease,
-                        background 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
+.recruiter-logo {
+    background: rgba(255, 255, 255, 0.03);
+    /* FIXED: Reduced padding from 1.5rem to 1rem to give the image more space inside */
+    padding: 1rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* FIXED: Increased container height from 100px to 120px */
+    height: 150px;
+    border: 1px solid rgba(148, 163, 184, 0.08);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.4s ease,
+                border-color 0.4s ease,
+                background 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
 
-        .recruiter-logo:hover {
-            transform: translateY(-6px);
-            box-shadow:
-                0 16px 45px rgba(59, 130, 246, 0.12),
-                0 0 25px rgba(59, 130, 246, 0.06),
-                inset 0 1px 0 rgba(255, 255, 255, 0.04);
-            border-color: rgba(59, 130, 246, 0.25);
-            background: rgba(59, 130, 246, 0.08);
-        }
+.recruiter-logo:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 16px 45px rgba(59, 130, 246, 0.12),
+        0 0 25px rgba(59, 130, 246, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    border-color: rgba(59, 130, 246, 0.25);
+    background: rgba(59, 130, 246, 0.08);
+}
 
-        .recruiter-logo img {
-            max-width: 100%;
-            max-height: 60px;
-            filter: grayscale(100%) brightness(0.6);
-            transition: filter 0.4s ease, transform 0.4s ease;
-        }
+.recruiter-logo img {
+    /* FIXED: Swapped max-width for explicit scaling and increased max-height from 60px to 75px */
+    width: 100%;
+    max-height: 120px;
+    object-fit: contain; /* Prevents logos from stretching out of aspect ratio */
+    filter: grayscale(100%) brightness(0.6);
+    transition: filter 0.4s ease, transform 0.4s ease;
+}
 
-        .recruiter-logo:hover img {
-            filter: grayscale(0%) brightness(1);
-            transform: scale(1.08);
-        }
-
+.recruiter-logo:hover img {
+    filter: grayscale(0%) brightness(1);
+    transform: scale(1.08);
+}
         /* Testimonials */
         .testimonials-grid {
             display: grid;
@@ -1794,29 +1831,42 @@
         <div class="quick-nav-item" data-title="Contact"><i class="fas fa-phone"></i><span class="quick-nav-tooltip">Contact</span></div>
     </div>
 
-    <section class="hero" id="home">
-        <div id="particles"></div>
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Vivekananda Global University</h1>
-                <p>Where Excellence Meets Opportunity in the Heart of Jaipur</p>
-                <p>NAAC 'A' Grade | UGC Approved | 30+ Acre Green Campus</p>
-                <div class="hero-buttons">
-                    <a href="#" class="btn btn-primary"><i class="fas fa-rocket"></i> Start Your Journey</a>
-                    <a href="#" class="btn btn-secondary"><i class="fas fa-download"></i> Download Brochure</a>
-                </div>
+   <section class="hero" id="home">
+    <div id="particles"></div>
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1>Vivekananda Global University</h1>
+            <p>Where Excellence Meets Opportunity in the Heart of Jaipur</p>
+            <p>NAAC 'A' Grade | UGC Approved | 30+ Acre Green Campus</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-primary"><i class="fas fa-rocket"></i> Start Your Journey</a>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-download"></i> Download Brochure</a>
             </div>
+        </div>
+        
+        <div class="hero-image-wrapper">
             <div class="hero-image">
                 <img src="https://picsum.photos/seed/vgu-campus/600/400" alt="VGU Campus">
-                <div class="hero-stats">
-                    <div class="stat-item"><div class="stat-number">25000+</div><div class="stat-label">Alumni</div></div>
-                    <div class="stat-item"><div class="stat-number">92%</div><div class="stat-label">Placements</div></div>
-                    <div class="stat-item"><div class="stat-number">28 LPA</div><div class="stat-label">Highest Package</div></div>
+            </div>
+            
+            <div class="stats-card">
+                <div class="stat-item">
+                    <div class="stat-number">25000+</div>
+                    <div class="stat-label">Alumni</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">92%</div>
+                    <div class="stat-label">Placements</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">28 LPA</div>
+                    <div class="stat-label">Highest Package</div>
                 </div>
             </div>
         </div>
-    </section>
 
+    </div>
+</section>
     <section class="section" id="about">
         <div class="container">
             <h2 class="section-title">About VGU Jaipur</h2>
