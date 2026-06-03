@@ -85,9 +85,6 @@
         .section-title{text-align:center;font-size:2.5rem;margin-bottom:1rem;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}
         .section-subtitle{text-align:center;color:var(--text-muted);margin-bottom:3rem;font-size:1.1rem}
 
-        /* ======================================================================
-           CARD BASE STYLES
-           ====================================================================== */
         .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:1.5rem;margin-top:3rem}
         .info-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;padding:2rem;backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden}
         .info-card h3{color:var(--primary);margin-bottom:1rem;font-size:1.3rem;display:flex;align-items:center;gap:.5rem;font-weight:600;position:relative;z-index:2;transition:all .35s ease}
@@ -135,15 +132,137 @@
         .comparison-card.featured{border-color:var(--border-accent);box-shadow:0 10px 40px var(--glow);transform:scale(1.05)}
         .comparison-card.featured::before{background:linear-gradient(135deg,rgba(0,224,255,.1),rgba(44,230,194,.05));opacity:1}
 
-        .timeline{position:relative;padding:2rem 0}
-        .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--primary),var(--secondary),transparent);transform:translateX(-50%);box-shadow:0 0 15px var(--glow)}
-        .timeline-item{position:relative;margin:2rem 0;display:flex;align-items:center}
-        .timeline-item:nth-child(odd){flex-direction:row-reverse}
-        .timeline-content{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;margin:0 2rem;padding:1.5rem;backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden}
-        .timeline-content h4{color:var(--text);font-weight:600;transition:all .35s ease;position:relative;z-index:2}
-        .timeline-content .date{color:var(--primary);font-size:.9rem;margin-bottom:.5rem;position:relative;z-index:2;transition:all .35s ease}
-        .timeline-content p{color:var(--text-dim);font-size:.95rem;transition:all .35s ease;position:relative;z-index:2}
-        .timeline-dot{position:absolute;left:50%;transform:translateX(-50%);width:20px;height:20px;background:var(--gradient);border-radius:50%;box-shadow:0 0 20px var(--glow)}
+        /* ======================================================================
+           TIMELINE — REBUILT: centered dots, connectors, consistent alignment
+           ====================================================================== */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        /* Vertical line — z-index above cards so it never looks broken */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--primary), var(--secondary), transparent);
+            transform: translateX(-50%);
+            box-shadow: 0 0 15px var(--glow), 0 0 35px var(--glow);
+            z-index: 6;
+        }
+
+        /* Each row — full width, consistent gap */
+        .timeline-item {
+            position: relative;
+            width: 100%;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Odd rows: card on the LEFT */
+        .timeline-item:nth-child(odd) {
+            justify-content: flex-start;
+            padding-right: calc(50% + 35px);
+        }
+
+        /* Even rows: card on the RIGHT */
+        .timeline-item:nth-child(even) {
+            justify-content: flex-end;
+            padding-left: calc(50% + 35px);
+        }
+
+        /* Card — constrained width, never covers center line */
+        .timeline-content {
+            width: 100%;
+            max-width: 420px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            transition: all .4s cubic-bezier(.25,.46,.45,.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-content h4 {
+            color: var(--text);
+            font-weight: 600;
+            transition: all .35s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-content .date {
+            color: var(--primary);
+            font-size: .9rem;
+            margin-bottom: .5rem;
+            position: relative;
+            z-index: 2;
+            transition: all .35s ease;
+        }
+
+        .timeline-content p {
+            color: var(--text-dim);
+            font-size: .95rem;
+            transition: all .35s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Dot — perfectly centered on the vertical line, above everything */
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 22px;
+            height: 22px;
+            background: var(--gradient);
+            border-radius: 50%;
+            border: 3px solid var(--dark);
+            box-shadow: 0 0 15px var(--glow), 0 0 35px var(--glow), 0 0 55px var(--glow-accent);
+            z-index: 8;
+        }
+
+        /* Connector line: odd items (card left → dot) */
+        .timeline-item:nth-child(odd)::after {
+            content: '';
+            position: absolute;
+            left: calc(50% - 35px);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(0,224,255,.04), var(--primary));
+            box-shadow: 0 0 8px var(--glow);
+            z-index: 5;
+        }
+
+        /* Connector line: even items (dot → card right) */
+        .timeline-item:nth-child(even)::after {
+            content: '';
+            position: absolute;
+            left: calc(50% + 11px);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), rgba(0,224,255,.04));
+            box-shadow: 0 0 8px var(--glow);
+            z-index: 5;
+        }
 
         .campus-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:1.5rem;margin-top:3rem}
         .campus-card{background:linear-gradient(135deg,var(--elevated),var(--elevated-light));border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative}
@@ -270,56 +389,35 @@
         .company-item:hover{transform:translateY(-5px);background:var(--glass-bg-hover);border-color:var(--border-accent);color:var(--primary);text-shadow:0 0 15px var(--glow);box-shadow:0 15px 45px var(--glow),0 0 30px var(--glow-accent)}
 
         /* ======================================================================
-           INDIVIDUAL TEXT HOVER — Each text element highlights INDEPENDENTLY
-           when you hover directly over it (not just the parent card)
+           INDIVIDUAL TEXT HOVER
            ====================================================================== */
-
-        /* ── INFO CARD: each li highlights on its own ───────────────────── */
         .info-card ul li:hover{color:var(--text);background:rgba(0,224,255,.04);padding-left:12px;text-shadow:0 0 12px rgba(0,224,255,.15)}
         .info-card ul li:hover i{color:var(--primary);text-shadow:0 0 10px var(--glow);transform:scale(1.25) translateX(2px)}
         .info-card h3:hover{text-shadow:0 0 20px var(--glow);filter:brightness(1.15)}
         .info-card h3:hover i{color:var(--secondary);text-shadow:0 0 14px var(--glow-accent);transform:scale(1.15) rotate(-5deg)}
-
-        /* ── HIGHLIGHT BOX: each li highlights on its own ───────────────── */
         .highlight-box ul li:hover{color:var(--text);background:rgba(0,224,255,.04);padding-left:20px;text-shadow:0 0 12px rgba(0,224,255,.15)}
         .highlight-box ul li:hover::before{color:var(--primary);text-shadow:0 0 10px var(--glow);transform:translateX(4px)}
         .highlight-box h4:hover{text-shadow:0 0 20px var(--glow);filter:brightness(1.15)}
         .highlight-box h4:hover i{color:var(--secondary);text-shadow:0 0 14px var(--glow-accent);transform:scale(1.15) rotate(-5deg)}
-
-        /* ── CTA SECTION: each text highlights on its own ──────────────── */
         .cta-content h2:hover{filter:brightness(1.25) drop-shadow(0 0 20px var(--glow))}
         .cta-content p:hover{color:var(--text);text-shadow:0 0 16px rgba(0,224,255,.15)}
-
-        /* ── COURSE CATEGORY: each text highlights on its own ──────────── */
         .course-category i:hover{transform:scale(1.2) translateY(-5px) rotate(-3deg)}
         .course-category h3:hover{color:var(--primary);text-shadow:0 0 20px var(--glow);transform:scale(1.03)}
         .course-category p:hover{color:var(--text-dim);text-shadow:0 0 14px rgba(0,224,255,.12)}
-
-        /* ── COMPARISON CARD: each text highlights on its own ──────────── */
         .comparison-card h3:hover{text-shadow:0 0 20px var(--glow);filter:brightness(1.15)}
         .comparison-card .price:hover{filter:drop-shadow(0 0 22px var(--glow));transform:scale(1.05)}
         .comparison-card .price span:hover{color:var(--text-dim);text-shadow:0 0 12px rgba(0,224,255,.12)}
         .comparison-card ul li:hover{color:var(--text);background:rgba(0,224,255,.04);padding-left:12px;text-shadow:0 0 12px rgba(0,224,255,.15)}
-
-        /* ── TIMELINE: each text highlights on its own ──────────────────── */
         .timeline-content h4:hover{color:var(--primary);text-shadow:0 0 20px var(--glow)}
         .timeline-content .date:hover{text-shadow:0 0 16px var(--glow);filter:brightness(1.15)}
         .timeline-content p:hover{color:var(--text);text-shadow:0 0 14px rgba(0,224,255,.15)}
-
-        /* ── CAMPUS CARD: each text highlights on its own ──────────────── */
         .campus-card-content h4:hover{text-shadow:0 0 20px var(--glow);filter:brightness(1.15)}
         .campus-card-content p:hover{color:var(--text-dim);text-shadow:0 0 14px rgba(0,224,255,.12)}
-
-        /* ── STAT CARD: each text highlights on its own ─────────────────── */
         .stat-number:hover{filter:drop-shadow(0 0 25px var(--glow));transform:scale(1.08)}
         .stat-label:hover{color:var(--text-dim);text-shadow:0 0 12px rgba(0,224,255,.12)}
-
-        /* ── FACILITY ITEM: each text highlights on its own ─────────────── */
         .facility-item i:hover{transform:scale(1.2) translateY(-5px) rotate(-3deg)}
         .facility-item h4:hover{color:var(--primary);text-shadow:0 0 20px var(--glow);transform:scale(1.03)}
         .facility-item p:hover{color:var(--text-dim);text-shadow:0 0 14px rgba(0,224,255,.12)}
-
-        /* ── PLACEMENT STAT: each text highlights on its own ────────────── */
         .placement-number:hover{filter:drop-shadow(0 0 25px var(--glow));transform:scale(1.08)}
         .placement-label:hover{color:var(--text-dim);text-shadow:0 0 12px rgba(0,224,255,.12)}
 
@@ -338,7 +436,30 @@
             .hero h1{font-size:2.5rem}.hero p{font-size:1.1rem}.section{padding:60px 0}.section-title{font-size:2rem}.section-subtitle{font-size:1rem;margin-bottom:2rem}.cta-content h2{font-size:1.8rem}.cta-content p{font-size:1rem}
             .info-grid{grid-template-columns:1fr;gap:1.5rem;margin-top:2rem}.course-categories{grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:2rem}.comparison-grid{grid-template-columns:1fr;gap:1.5rem;margin-top:2rem}.campus-grid{grid-template-columns:1fr;gap:1.5rem;margin-top:2rem}.stats-grid{grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:2rem}.placement-stats{grid-template-columns:repeat(2,1fr);gap:1rem;margin:2rem 0}.companies-grid{grid-template-columns:repeat(3,1fr);gap:.75rem}
             .highlight-box{padding:1.5rem;margin:2rem 0}.highlight-box ul{grid-template-columns:1fr}
-            .timeline::before{left:20px}.timeline-item{flex-direction:column!important;margin-left:50px;margin-bottom:1.5rem}.timeline-content{margin:0;padding:1.25rem}.timeline-dot{left:20px;width:16px;height:16px}
+
+            /* ── Timeline: single-column left-aligned ──────────────────── */
+            .timeline{max-width:100%}
+            .timeline::before{left:20px}
+            .timeline-item,
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even){
+                flex-direction:column!important;
+                justify-content:flex-start!important;
+                padding-left:55px!important;
+                padding-right:0!important;
+                margin-left:0;
+                margin-bottom:2rem;
+            }
+            .timeline-content{margin:0;max-width:100%;padding:1.25rem}
+            .timeline-dot{left:20px;width:16px;height:16px;border-width:2px}
+            .timeline-item::after,
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after{
+                left:28px!important;
+                width:27px!important;
+                background:linear-gradient(90deg,var(--primary),rgba(0,224,255,.04))!important;
+            }
+
             .quick-nav{right:10px;gap:8px}.quick-nav-item{width:38px;height:38px}.quick-nav-item i{font-size:14px}.quick-nav-item .tooltip{display:none}
             .cta-section{padding:2rem 1.5rem}.footer-content{grid-template-columns:1fr;gap:1.5rem}.facilities-grid{grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:2rem}
         }
@@ -351,7 +472,22 @@
             .comparison-card{padding:1.5rem}.price{font-size:1.75rem}.stat-number{font-size:2rem}.placement-number{font-size:2rem}
             .companies-grid{grid-template-columns:repeat(2,1fr);gap:.5rem}.company-item{padding:.75rem .5rem;font-size:.85rem}
             .highlight-box{padding:1.25rem;margin:1.5rem 0}.cta-section{padding:1.5rem 1rem;border-radius:15px}.cta-content h2{font-size:1.5rem}.cta-content p{font-size:.95rem;margin-bottom:1.5rem}
-            .timeline::before{left:15px}.timeline-item{margin-left:40px}.timeline-dot{left:15px;width:14px;height:14px}.timeline-content h4{font-size:1rem}.timeline-content p{font-size:.9rem}
+
+            /* ── Timeline: tighter mobile spacing ────────────────────────── */
+            .timeline::before{left:15px}
+            .timeline-item,
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even){padding-left:45px!important}
+            .timeline-dot{left:15px;width:14px;height:14px;border-width:2px}
+            .timeline-item::after,
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after{
+                left:22px!important;
+                width:23px!important;
+            }
+            .timeline-content h4{font-size:1rem}
+            .timeline-content p{font-size:.9rem}
+
             .quick-nav{right:8px;gap:6px}.quick-nav-item{width:34px;height:34px;border-width:1px}.quick-nav-item i{font-size:12px}
             .campus-card-img img{height:180px}.campus-card-content{padding:1.25rem}
             .facilities-grid{grid-template-columns:1fr;gap:1rem;margin-top:1.5rem}.facility-item{padding:1.5rem}.facility-item i{font-size:2.5rem}
