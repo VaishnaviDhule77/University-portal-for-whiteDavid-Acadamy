@@ -624,6 +624,70 @@
         .form-group select:invalid { color: var(--text-dim); opacity: 0.6; }
         .form-submit { margin-top: 0.5rem; }
         .form-submit .btn { width: 100%; text-align: center; padding: 1rem; font-size: 1rem; }
+        
+        /* Checkbox Group Styles */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            padding: 0.8rem 1rem;
+            background-color: #111827;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-item:hover {
+            border-color: var(--border-accent);
+            background-color: rgba(17, 24, 39, 0.8);
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+        
+        .checkbox-item label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            cursor: pointer;
+            margin: 0;
+        }
+        
+        .checkbox-item.checked {
+            border-color: var(--primary);
+            background-color: rgba(0, 224, 255, 0.05);
+            box-shadow: 0 0 10px var(--glow-primary);
+        }
+        
+        .checkbox-item.checked label {
+            color: var(--text);
+        }
+        
+        .specific-inquiry-container {
+            display: none;
+            margin-top: 0.5rem;
+            padding: 1rem;
+            background-color: rgba(17, 24, 39, 0.5);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+        
+        .specific-inquiry-container.active {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
 
         /* Footer */
         footer { background: linear-gradient(135deg, var(--dark-secondary), var(--dark)); padding: 3rem 5% 1rem; position: relative; }
@@ -724,6 +788,9 @@
             .slider-arrow.next { right: 2px; }
             .testimonials-slider-wrapper { padding: 0 8px; }
             .testimonials-track .testimonial-card { padding: 1.5rem; }
+            .checkbox-item {
+                padding: 0.6rem 0.8rem;
+            }
         }
     </style>
 </head>
@@ -916,125 +983,213 @@
                     </div>
                     <div class="testimonial-card">
                         <i class="fas fa-quote-left quote-icon"></i>
-                        <p class="testimonial-text">"Their mock interview sessions and SOP writing workshops were incredibly helpful. I secured admission with a scholarship!"</p>
-                        <div class="testimonial-author"><div class="author-avatar">AM</div><div class="author-info"><h4>Anjali Mehta</h4><p>B.Des - NIFT Delhi</p><div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div></div>
+                        <p class="testimonial-text">"Their mock interview sessions and SOP writing workshops were incredibly helpful. I secured admission to my top choice university."</p>
+                        <div class="testimonial-author"><div class="author-avatar">AV</div><div class="author-info"><h4>Ananya Verma</h4><p>MS - MIT</p><div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div></div>
                     </div>
                 </div>
             </div>
-            <button class="slider-arrow prev" id="sliderPrev" aria-label="Previous testimonial"><i class="fas fa-chevron-left"></i></button>
-            <button class="slider-arrow next" id="sliderNext" aria-label="Next testimonial"><i class="fas fa-chevron-right"></i></button>
+            <button class="slider-arrow prev" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-arrow next" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
             <div class="slider-dots" id="sliderDots"></div>
         </div>
     </section>
 
     <!-- Courses Section -->
     <section id="courses">
-        <div class="section-title"><h2>Our Courses</h2><p>Choose from a wide range of programs</p></div>
-        <div class="course-category" id="regular-courses">
-            <h3 style="text-align: center; margin-bottom: 2rem; color: var(--primary); font-weight: 600;">Regular Courses</h3>
-            <div class="course-tabs">
-                <div class="course-tab active" data-tab="regular-engineering">Engineering</div>
-                <div class="course-tab" data-tab="regular-medical">Medical</div>
-                <div class="course-tab" data-tab="regular-management">Management</div>
-                <div class="course-tab" data-tab="regular-arts">Arts & Others</div>
-            </div>
-            <div class="course-content active" id="regular-engineering-courses">
-                <div class="course-grid">
-                    <div class="course-card" onclick="window.location.href='btech.html'"><img src="https://picsum.photos/seed/btech/400/200.jpg" alt="B.Tech" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">B.Tech</h3><p class="course-description">Bachelor of Technology in various specializations</p><div class="course-duration"><i class="fas fa-clock"></i><span>4 Years</span></div></div></div>
-                    <div class="course-card" onclick="window.location.href='bca.html'"><img src="https://picsum.photos/seed/bca/400/200.jpg" alt="BCA" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">BCA</h3><p class="course-description">Bachelor of Computer Applications</p><div class="course-duration"><i class="fas fa-clock"></i><span>3 Years</span></div></div></div>
-                </div>
-            </div>
-            <div class="course-content" id="regular-medical-courses">
-                <div class="course-grid">
-                    <div class="course-card" onclick="window.location.href='bpharma.html'"><img src="https://picsum.photos/seed/bpharma/400/200.jpg" alt="B.Pharma" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">B.Pharma</h3><p class="course-description">Bachelor of Pharmacy</p><div class="course-duration"><i class="fas fa-clock"></i><span>4 Years</span></div></div></div>
-                    <div class="course-card" onclick="window.location.href='bpt.html'"><img src="https://picsum.photos/seed/bpt/400/200.jpg" alt="BPT" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">BPT</h3><p class="course-description">Bachelor of Physiotherapy</p><div class="course-duration"><i class="fas fa-clock"></i><span>4.5 Years</span></div></div></div>
-                    <div class="course-card" onclick="window.location.href='bscNursing.html'"><img src="https://picsum.photos/seed/bscnursing/400/200.jpg" alt="B.Sc Nursing" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">B.Sc Nursing</h3><p class="course-description">Bachelor of Science in Nursing</p><div class="course-duration"><i class="fas fa-clock"></i><span>4 Years</span></div></div></div>
-                </div>
-            </div>
-            <div class="course-content" id="regular-management-courses">
-                <div class="course-grid">
-                    <div class="course-card" onclick="window.location.href='bba.html'"><img src="https://picsum.photos/seed/bba/400/200.jpg" alt="BBA" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">BBA</h3><p class="course-description">Bachelor of Business Administration</p><div class="course-duration"><i class="fas fa-clock"></i><span>3 Years</span></div></div></div>
-                    <div class="course-card" onclick="window.location.href='bhmct.html'"><img src="https://picsum.photos/seed/bhm/400/200.jpg" alt="BHM/BHMCT" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">BHM/BHMCT</h3><p class="course-description">Bachelor of Hotel Management & Catering Technology</p><div class="course-duration"><i class="fas fa-clock"></i><span>4 Years</span></div></div></div>
-                </div>
-            </div>
-            <div class="course-content" id="regular-arts-courses">
-                <div class="course-grid">
-                    <div class="course-card" onclick="window.location.href='ba.html'"><img src="https://picsum.photos/seed/ba/400/200.jpg" alt="B.A" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">B.A</h3><p class="course-description">Bachelor of Arts in various specializations</p><div class="course-duration"><i class="fas fa-clock"></i><span>3 Years</span></div></div></div>
-                    <div class="course-card" onclick="window.location.href='bcom.html'"><img src="https://picsum.photos/seed/bcom/400/200.jpg" alt="B.Com" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">B.Com</h3><p class="course-description">Bachelor of Commerce</p><div class="course-duration"><i class="fas fa-clock"></i><span>3 Years</span></div></div></div>
-                    <div class="course-card" onclick="window.location.href='bscAgriculture.html'"><img src="https://picsum.photos/seed/bagri/400/200.jpg" alt="B.Sc Agriculture" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">B.Sc Agriculture</h3><p class="course-description">Bachelor of Science in Agriculture</p><div class="course-duration"><i class="fas fa-clock"></i><span>4 Years</span></div></div></div>
-                    <div class="course-card" onclick="window.location.href='ballb.html'"><img src="https://picsum.photos/seed/ballb/400/200.jpg" alt="BA LL.B" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">BA LL.B</h3><p class="course-description">Integrated Bachelor of Arts and Law</p><div class="course-duration"><i class="fas fa-clock"></i><span>5 Years</span></div></div></div>
-                    <div class="course-card" onclick="window.location.href='bjmc.html'"><img src="https://picsum.photos/seed/bjmc/400/200.jpg" alt="BJMC" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">BJMC</h3><p class="course-description">Bachelor of Journalism & Mass Communication</p><div class="course-duration"><i class="fas fa-clock"></i><span>3 Years</span></div></div></div>
-                    <div class="course-card" onclick="window.location.href='blib.html'"><img src="https://picsum.photos/seed/bli/400/200.jpg" alt="B.Lib" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">B.Lib</h3><p class="course-description">Bachelor of Library Science</p><div class="course-duration"><i class="fas fa-clock"></i><span>1 Year</span></div></div></div>
-                    <div class="course-card" onclick="window.location.href='bfc.html'"><img src="https://picsum.photos/seed/bfc/400/200.jpg" alt="BFC" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">BFC</h3><p class="course-description">Bachelor of Fashion Communication</p><div class="course-duration"><i class="fas fa-clock"></i><span>4 Years</span></div></div></div>
-                </div>
-            </div>
+        <div class="section-title">
+            <h2>Our Courses</h2>
+            <p>Explore our wide range of educational programs</p>
         </div>
-        <div class="course-category" id="online-courses">
-            <h3 style="text-align: center; margin-bottom: 2rem; color: var(--accent-purple); font-weight: 600;">Online Courses</h3>
+        <div class="course-category">
             <div class="course-tabs">
-                <div class="course-tab active" data-tab="online-it">IT & Software</div>
-                <div class="course-tab" data-tab="online-management">Management</div>
-                <div class="course-tab" data-tab="online-data">Data Science</div>
+                <div class="course-tab active" data-tab="regular-courses">Regular Courses</div>
+                <div class="course-tab" data-tab="online-courses">Online Courses</div>
+                <div class="course-tab" data-tab="distance-courses">Distance Learning</div>
             </div>
-            <div class="course-content active" id="online-it-courses"><div class="course-grid"><div class="course-card" onclick="window.location.href='bca.html'" style="width: 100%;"><img src="https://picsum.photos/seed/bca/400/200.jpg" alt="BCA" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">BCA</h3><p class="course-description">Bachelor of Computer Applications</p><div class="course-duration"><i class="fas fa-clock"></i><span>3 Years</span></div></div></div></div></div>
-            <div class="course-content" id="online-management-courses"><div class="course-grid"><div class="course-card" onclick="window.location.href='bba.html'" style="width: 100%;"><img src="https://picsum.photos/seed/bba/400/200.jpg" alt="BBA" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">BBA</h3><p class="course-description">Bachelor of Business Administration</p><div class="course-duration"><i class="fas fa-clock"></i><span>3 Years</span></div></div></div></div></div>
-            <div class="course-content" id="online-data-courses"><div class="course-grid"><div class="course-card" onclick="window.location.href='ba.html'" style="width: 100%;"><img src="https://picsum.photos/seed/ba/400/200.jpg" alt="B.A" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">B.A</h3><p class="course-description">Bachelor of Arts in various specializations</p><div class="course-duration"><i class="fas fa-clock"></i><span>3 Years</span></div></div></div></div></div>
-        </div>
-        <div class="course-category" id="distance-courses">
-            <h3 style="text-align: center; margin-bottom: 2rem; color: var(--accent-teal); font-weight: 600;">Distance Courses</h3>
-            <div class="course-tabs"><div class="course-tab active" data-tab="distance-it">IT & Software</div></div>
-            <div class="course-content active" id="distance-it-courses"><div class="course-grid"><div class="course-card" onclick="window.location.href='bca.html'" style="width: 100%;"><img src="https://picsum.photos/seed/bca/400/200.jpg" alt="BCA" class="course-image" loading="lazy"><div class="course-info"><h3 class="course-title">BCA</h3><p class="course-description">Bachelor of Computer Applications</p><div class="course-duration"><i class="fas fa-clock"></i><span>3 Years</span></div></div></div></div></div>
+            <div class="course-content active" id="regular-courses">
+                <div class="course-grid">
+                    <div class="course-card">
+                        <img src="https://picsum.photos/seed/engineering/400/200.jpg" alt="Engineering" class="course-image">
+                        <div class="course-info">
+                            <h3 class="course-title">Engineering & Technology</h3>
+                            <p class="course-description">B.Tech, M.Tech in various specializations including Computer Science, Mechanical, Civil, and more.</p>
+                            <div class="course-duration"><i class="fas fa-clock"></i> 4 Years (B.Tech) / 2 Years (M.Tech)</div>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="https://picsum.photos/seed/medical/400/200.jpg" alt="Medical" class="course-image">
+                        <div class="course-info">
+                            <h3 class="course-title">Medical & Healthcare</h3>
+                            <p class="course-description">MBBS, BDS, Nursing, Pharmacy, and other healthcare programs at top medical institutions.</p>
+                            <div class="course-duration"><i class="fas fa-clock"></i> 4.5 - 5.5 Years</div>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="https://picsum.photos/seed/business/400/200.jpg" alt="Business" class="course-image">
+                        <div class="course-info">
+                            <h3 class="course-title">Business & Management</h3>
+                            <p class="course-description">BBA, MBA, and specialized management programs in Marketing, Finance, HR, and Operations.</p>
+                            <div class="course-duration"><i class="fas fa-clock"></i> 3 Years (BBA) / 2 Years (MBA)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="course-content" id="online-courses">
+                <div class="course-grid">
+                    <div class="course-card">
+                        <img src="https://picsum.photos/seed/digitalmarketing/400/200.jpg" alt="Digital Marketing" class="course-image">
+                        <div class="course-info">
+                            <h3 class="course-title">Digital Marketing</h3>
+                            <p class="course-description">Comprehensive digital marketing course covering SEO, SEM, Social Media Marketing, and Analytics.</p>
+                            <div class="course-duration"><i class="fas fa-clock"></i> 3 - 6 Months</div>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="https://picsum.photos/seed/datascience/400/200.jpg" alt="Data Science" class="course-image">
+                        <div class="course-info">
+                            <h3 class="course-title">Data Science & AI</h3>
+                            <p class="course-description">Learn data analysis, machine learning, and artificial intelligence with hands-on projects.</p>
+                            <div class="course-duration"><i class="fas fa-clock"></i> 6 - 12 Months</div>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="https://picsum.photos/seed/webdev/400/200.jpg" alt="Web Development" class="course-image">
+                        <div class="course-info">
+                            <h3 class="course-title">Web Development</h3>
+                            <p class="course-description">Full-stack web development course covering HTML, CSS, JavaScript, React, Node.js, and more.</p>
+                            <div class="course-duration"><i class="fas fa-clock"></i> 4 - 8 Months</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="course-content" id="distance-courses">
+                <div class="course-grid">
+                    <div class="course-card">
+                        <img src="https://picsum.photos/seed/mbadistance/400/200.jpg" alt="Distance MBA" class="course-image">
+                        <div class="course-info">
+                            <h3 class="course-title">Distance MBA</h3>
+                            <p class="course-description">Flexible MBA program for working professionals with specialization options in various domains.</p>
+                            <div class="course-duration"><i class="fas fa-clock"></i> 2 Years</div>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="https://picsum.photos/seed/badistance/400/200.jpg" alt="Distance BA" class="course-image">
+                        <div class="course-info">
+                            <h3 class="course-title">Distance BA</h3>
+                            <p class="course-description">Bachelor of Arts program through distance learning with multiple specialization options.</p>
+                            <div class="course-duration"><i class="fas fa-clock"></i> 3 Years</div>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="https://picsum.photos/seed/bscdistance/400/200.jpg" alt="Distance BSc" class="course-image">
+                        <div class="course-info">
+                            <h3 class="course-title">Distance BSc</h3>
+                            <p class="course-description">Bachelor of Science program through distance learning in various science disciplines.</p>
+                            <div class="course-duration"><i class="fas fa-clock"></i> 3 Years</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Universities Section -->
     <section id="universities">
-        <div class="section-title"><h2>Partner Universities</h2><p>Top institutions we work with</p></div>
-        <div class="course-tabs"><div class="course-tab active" data-tab="regular-courses">Offering Regular Courses</div></div>
-        <div class="course-content active" id="regular-courses">
-           <div class="course-grid">
-            <div class="course-card" onclick="window.location.href='JaipurUniversityRegular.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-university" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem; filter: drop-shadow(0 0 10px var(--glow-primary));"></i><h3 class="course-title">Jaipur University</h3><p class="course-description">Jaipur, India</p></div></div>
-            <div class="course-card" onclick="window.location.href='MangalaytanUniversityRegular.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-graduation-cap" style="font-size: 3rem; color: var(--accent-blue); margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));"></i><h3 class="course-title">Mangalaytan University</h3><p class="course-description">Aligarh,UP, India</p></div></div>
-            <div class="course-card" onclick="window.location.href='subhartiUniversityRegular.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-book" style="font-size: 3rem; color: var(--accent-purple); margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.3));"></i><h3 class="course-title">Subharti University</h3><p class="course-description">Meerut, India</p></div></div>
-            <div class="course-card" onclick="window.location.href='vivekanandaGlobalUniversityRegular.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-microscope" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.3));"></i><h3 class="course-title">vivekananda Global University</h3><p class="course-description">Chennai, Jaipur</p></div></div>
-            <div class="course-card" onclick="window.location.href='martinUniversity.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-microscope" style="font-size: 3rem; color: var(--accent-orange); margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(255, 106, 61, 0.3));"></i><h3 class="course-title">Usha Martin University</h3><p class="course-description">Ranchi,India</p></div></div>
-            <div class="course-card" onclick="window.location.href='SRMUniversity.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-microscope" style="font-size: 3rem; color: var(--accent-teal); margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(20, 184, 166, 0.3));"></i><h3 class="course-title">SRM University</h3><p class="course-description">Delhi-NCR,India</p></div></div>
-            <div class="course-card" onclick="window.location.href='SandeepUniversity.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-microscope" style="font-size: 3rem; color: var(--accent-amber); margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.3));"></i><h3 class="course-title">Sandeep University</h3><p class="course-description">Madhubani, Bihar,India</p></div></div>
-             <div class="course-card" onclick="window.location.href='SAGEUniversity.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-microscope" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem; filter: drop-shadow(0 0 10px var(--glow-primary));"></i><h3 class="course-title">SAGE University</h3><p class="course-description">Indore, Madhya Pradesh,India</p></div></div>
-            <div class="course-card" onclick="window.location.href='MarwadiUniversity.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-microscope" style="font-size: 3rem; color: var(--accent-blue); margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));"></i><h3 class="course-title">Marwadi University</h3><p class="course-description">Rajkot,Gujarat,India</p></div></div>
-            <div class="course-card" onclick="window.location.href='MangalmayUniversity.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-microscope" style="font-size: 3rem; color: var(--accent-purple); margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.3));"></i><h3 class="course-title">Mangalmay University</h3><p class="course-description">Noida,Delhi-NCR,India</p></div></div>
-            <div class="course-card" onclick="window.location.href='ArkaJainUniversity.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-microscope" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.3));"></i><h3 class="course-title">Arka Jain University</h3><p class="course-description">Jharkand,India</p></div></div>
+        <div class="section-title">
+            <h2>Top Partner Universities</h2>
+            <p>We have partnerships with prestigious institutions across the globe</p>
         </div>
-        <br><br>
-         <div class="course-tabs"><div class="course-tab active" data-tab="online-courses">Offering Online Courses</div></div>
-         <div class="course-content active" id="online-courses">
         <div class="course-grid">
-            <div class="course-card" onclick="window.location.href='JaipurUniversityOnline.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-university" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem; filter: drop-shadow(0 0 10px var(--glow-primary));"></i><h3 class="course-title">Jaipur University</h3><p class="course-description">Jaipur, India</p></div></div>
-            <div class="course-card" onclick="window.location.href='MangalaytanUniversityOnline.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-graduation-cap" style="font-size: 3rem; color: var(--accent-blue); margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));"></i><h3 class="course-title">Mangalaytan University</h3><p class="course-description">Aligarh,UP, India</p></div></div>
-            <div class="course-card" onclick="window.location.href='subhartiUniversityOnline.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-book" style="font-size: 3rem; color: var(--accent-purple); margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.3));"></i><h3 class="course-title">Subharti University</h3><p class="course-description">Meerut, India</p></div></div>
-             <div class="course-card" onclick="window.location.href='vivekanandaGlobalUniversityOnline.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-microscope" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.3));"></i><h3 class="course-title">vivekananda Global University</h3><p class="course-description">Chennai, Jaipur</p></div></div>
-        </div><br><br>
-        <div class="course-tabs"><div class="course-tab active" data-tab="distance-courses">Offering Distance Courses</div></div>
-         <div class="course-content active" id="distance-courses">
-        <div class="course-grid">
-            <div class="course-card" onclick="window.location.href='JaipurUniversityDistance.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-university" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem; filter: drop-shadow(0 0 10px var(--glow-primary));"></i><h3 class="course-title">Jaipur University</h3><p class="course-description">Jaipur, India</p></div></div>
-            <div class="course-card" onclick="window.location.href='MangalaytanUniversityDistance.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-graduation-cap" style="font-size: 3rem; color: var(--accent-blue); margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));"></i><h3 class="course-title">Mangalaytan University</h3><p class="course-description">Aligarh,UP, India</p></div></div>
-             <div class="course-card" onclick="window.location.href='vivekanandaGlobalUniversityDistance.html'"><div class="course-info" style="text-align: center;"><i class="fas fa-microscope" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.3));"></i><h3 class="course-title">vivekananda Global University</h3><p class="course-description">Chennai, Jaipur</p></div></div>
+            <div class="course-card">
+                <img src="https://picsum.photos/seed/iitdelhi/400/200.jpg" alt="IIT Delhi" class="course-image">
+                <div class="course-info">
+                    <h3 class="course-title">IIT Delhi</h3>
+                    <p class="course-description">Indian Institute of Technology Delhi is one of the premier engineering institutes in India.</p>
+                    <div class="course-duration"><i class="fas fa-map-marker-alt"></i> New Delhi, India</div>
+                </div>
+            </div>
+            <div class="course-card">
+                <img src="https://picsum.photos/seed/iimbangalore/400/200.jpg" alt="IIM Bangalore" class="course-image">
+                <div class="course-info">
+                    <h3 class="course-title">IIM Bangalore</h3>
+                    <p class="course-description">Indian Institute of Management Bangalore is among the top business schools in Asia.</p>
+                    <div class="course-duration"><i class="fas fa-map-marker-alt"></i> Bangalore, India</div>
+                </div>
+            </div>
+            <div class="course-card">
+                <img src="https://picsum.photos/seed/aiimsdelhi/400/200.jpg" alt="AIIMS Delhi" class="course-image">
+                <div class="course-info">
+                    <h3 class="course-title">AIIMS Delhi</h3>
+                    <p class="course-description">All India Institute of Medical Sciences is India's premier medical research and education institution.</p>
+                    <div class="course-duration"><i class="fas fa-map-marker-alt"></i> New Delhi, India</div>
+                </div>
+            </div>
+            <div class="course-card">
+                <img src="https://picsum.photos/seed/stanford/400/200.jpg" alt="Stanford University" class="course-image">
+                <div class="course-info">
+                    <h3 class="course-title">Stanford University</h3>
+                    <p class="course-description">One of the world's leading research and teaching institutions located in California, USA.</p>
+                    <div class="course-duration"><i class="fas fa-map-marker-alt"></i> California, USA</div>
+                </div>
+            </div>
+            <div class="course-card">
+                <img src="https://picsum.photos/seed/mit/400/200.jpg" alt="MIT" class="course-image">
+                <div class="course-info">
+                    <h3 class="course-title">MIT</h3>
+                    <p class="course-description">Massachusetts Institute of Technology is a world-renowned institution for science, engineering, and technology.</p>
+                    <div class="course-duration"><i class="fas fa-map-marker-alt"></i> Massachusetts, USA</div>
+                </div>
+            </div>
+            <div class="course-card">
+                <img src="https://picsum.photos/seed/oxford/400/200.jpg" alt="University of Oxford" class="course-image">
+                <div class="course-info">
+                    <h3 class="course-title">University of Oxford</h3>
+                    <p class="course-description">The oldest university in the English-speaking world and one of the most prestigious globally.</p>
+                    <div class="course-duration"><i class="fas fa-map-marker-alt"></i> Oxford, UK</div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact-section">
-        <div class="section-title"><h2>Contact Us</h2><p>We'd love to hear from you. Get in touch with us!</p></div>
-        <div class="contact-container">
+    <section id="contact">
+        <div class="section-title">
+            <h2>Get In Touch</h2>
+            <p>We'd love to hear from you</p>
+        </div>
+        <div class="contact-container" id="contact-section">
             <div class="contact-info">
-                <h3>Get In Touch</h3>
-                <p>Have questions about admissions, courses, or universities? Our team is here to help you with all your educational guidance needs.</p>
+                <h3>Contact Information</h3>
+                <p>Fill out the form and our team will get back to you within 24 hours. Whether you're inquiring about courses, universities, or need general guidance, we're here to help.</p>
                 <div class="contact-details">
-                    <div class="contact-detail"><div class="contact-detail-icon"><i class="fas fa-phone"></i></div><div class="contact-detail-text"><h4>Phone</h4><p>+91 9876543210</p></div></div>
-                    <div class="contact-detail"><div class="contact-detail-icon"><i class="fas fa-envelope"></i></div><div class="contact-detail-text"><h4>Email</h4><p>info@whitedavidacademy.com</p></div></div>
-                    <div class="contact-detail"><div class="contact-detail-icon"><i class="fas fa-map-marker-alt"></i></div><div class="contact-detail-text"><h4>Address</h4><p>Delhi, India</p></div></div>
-                    <div class="contact-detail"><div class="contact-detail-icon"><i class="fas fa-clock"></i></div><div class="contact-detail-text"><h4>Working Hours</h4><p>Mon-Sat: 9:00 AM - 6:00 PM</p></div></div>
+                    <div class="contact-detail">
+                        <div class="contact-detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="contact-detail-text">
+                            <h4>Visit Us</h4>
+                            <p>123 Education Street, Knowledge City, 110001</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="contact-detail-icon"><i class="fas fa-phone-alt"></i></div>
+                        <div class="contact-detail-text">
+                            <h4>Call Us</h4>
+                            <p>+91 98765 43210</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="contact-detail-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="contact-detail-text">
+                            <h4>Email Us</h4>
+                            <p>info@whitedavidacademy.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="contact-detail-icon"><i class="fas fa-clock"></i></div>
+                        <div class="contact-detail-text">
+                            <h4>Working Hours</h4>
+                            <p>Mon - Sat: 9:00 AM - 7:00 PM</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="contact-social">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -1045,312 +1200,523 @@
             </div>
             <div class="contact-form-container">
                 <form class="contact-form" id="contactForm">
-                    <div class="form-row">
-                        <div class="form-group"><label for="name">Full Name</label><input type="text" id="name" name="name" placeholder="Your full name" required></div>
-                        <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" name="email" placeholder="Your email address" required></div>
+                    <div class="form-group">
+                        <label for="inquiry-types">Inquiry Types (Select all that apply)</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item" data-type="courses">
+                                <input type="checkbox" id="inquiry-courses" name="inquiry-types" value="courses">
+                                <label for="inquiry-courses">Course Information</label>
+                                <div class="specific-inquiry-container" id="courses-inquiry-container">
+                                    <label for="specific-course">Specific Course:</label>
+                                    <select id="specific-course" name="specific-course">
+                                        <option value="" disabled selected>Select a course</option>
+                                        <option value="BA">BA</option>
+                                       <option value="BALLB">BALLB</option>
+                                       <option value="BBA">BBA</option>
+                                        <option value="BCA">BCA</option>
+                                      <option value="BCom">BCom</option>
+                                       <option value="BED">BED</option>
+                                      <option value="BFC">BFC</option>
+                                     <option value="BHMCT">BHMCT</option>
+                                      <option value="BJMC">BJMC</option>
+                                      <option value="Blib">Blib</option>
+                                      <option value="Bpharma">Bpharma</option>
+                                      <option value="Bpt">Bpt</option>
+                                      <option value="Bsc Agriculture">Bsc Agriculture</option>
+                                      <option value="Bsc nursing">Bsc nursing</option>
+                                      <option value="Btech">Btech</option>
+                                      <option value="Online BA">Online BA</option>
+                                      <option value="Online BALLB">Online BALLB</option>
+                                      <option value="Online BBA">Online BBA</option>
+                                      <option value="Online BCA">Online BCA</option>
+                                      <option value="Online BCom">Online BCom</option>
+                                      <option value="Online BED">Online BED</option>
+                                      <option value="Online BFC">Online BFC</option>
+                                      <option value="Online BHMCT">Online BHMCT</option>
+                                      <option value="Online BJMC">Online BJMC</option>
+                                      <option value="Online Blib">Online Blib</option>
+                                      <option value="Online Bpharma">Online Bpharma</option>
+                                      <option value="Online Bpt">Online Bpt</option>
+                                      <option value="Online Bsc Agriculture">Online Bsc Agriculture</option>
+                                      <option value="Online Bsc nursing">Online Bsc nursing</option>
+                                      <option value="Online Btech">Online Btech</option>
+                                      <option value="Distance BA">Distance BA</option>
+                                      <option value="Distance BALLB">Distance BALLB</option>
+                                      <option value="Distance BBA">Distance BBA</option>
+                                      <option value="Distance BCA">Distance BCA</option>
+                                      <option value="Distance BCom">Distance BCom</option>
+                                      <option value="Distance BED">Distance BED</option>0
+                                      <option value="Distance BFC">Distance BFC</option>
+                                      <option value="Distance BHMCT">Distance BHMCT</option>
+                                      <option value="Distance BJMC">Distance BJMC</option>
+                                      <option value="Distance Blib">Distance Blib</option>
+                                      <option value="Distance Bpharma">Distance Bpharma</option>
+                                      <option value="Distance Bpt">Distance Bpt</option>
+                                      <option value="Distance Bsc Agriculture">Distance Bsc Agriculture</option>
+                                      <option value="Distance Bsc nursing">Distance Bsc nursing</option>
+                                      <option value="Distance Btech">Distance Btech</option>
+
+                                        <option value="other-course">Other Course</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="checkbox-item" data-type="universities">
+                                <input type="checkbox" id="inquiry-universities" name="inquiry-types" value="universities">
+                                <label for="inquiry-universities">University Information</label>
+                                <div class="specific-inquiry-container" id="universities-inquiry-container">
+                                    <label for="specific-university">Specific University:</label>
+                                    <select id="specific-university" name="specific-university">
+                                        <option value="" disabled selected>Select a university</option>
+
+                                        <option value="ArkaJainUniversity">ArkaJainUniversity</option>
+                                        <option value="SRMUniversity">SRMUniversity</option>
+                                        <option value="SandeepUniversity">SandeepUniversity</option>
+                                        <option value="SAGEUniversity">SAGEUniversity</option>
+                                        <option value="MarwadiUniversity">MarwadiUniversity</option>
+                                       <option value="martinUniversity">martinUniversity</option>
+                                        <option value="vivekanandaGlobalUniversityRegular">vivekanandaGlobalUniversityRegular</option>
+                                        <option value="subhartiUniversityRegular">subhartiUniversityRegular</option>
+                                        <option value="MangalaytanUniversityRegular">MangalaytanUniversityRegular</option>
+                                        <option value="JaipurUniversityRegular">JaipurUniversityRegular</option>
+                                        <option value="vivekanandaGlobalUniversityOnline">vivekanandaGlobalUniversityOnline</option>
+                                        <option value="subhartiUniversityOnline">subhartiUniversityOnline</option>
+                                        <option value="MangalaytanUniversityOnline">MangalaytanUniversityOnline</option>
+                                        <option value="JaipurUniversityOnline">JaipurUniversityOnline</option>
+                                        <option value="vivekanandaGlobalUniversityDistance">vivekanandaGlobalUniversityDistance</option>
+                                        <option value="MangalaytanUniversityDistance">MangalaytanUniversityDistance</option>
+                                        <option value="JaipurUniversityDistance">JaipurUniversityDistance</option>
+
+                                        <option value="other-university">Other University</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="checkbox-item" data-type="admission">
+                                <input type="checkbox" id="inquiry-admission" name="inquiry-types" value="admission">
+                                <label for="inquiry-admission">Admission Support</label>
+                                <div class="specific-inquiry-container" id="admission-inquiry-container">
+                                    <label for="specific-admission">Support Type:</label>
+                                    <select id="specific-admission" name="specific-admission">
+                                        <option value="" disabled selected>Select support type</option>
+                                        <option value="university-selection">University Selection</option>
+                                        <option value="application-assistance">Application Assistance</option>
+                                        <option value="document-verification">Document Verification</option>
+                                        <option value="visa-processing">Visa Processing</option>
+                                        <option value="accommodation">Accommodation</option>
+                                        <option value="financial-aid">Financial Aid</option>
+                                        <option value="other-support">Other Support</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="checkbox-item" data-type="general">
+                                <input type="checkbox" id="inquiry-general" name="inquiry-types" value="general">
+                                <label for="inquiry-general">General Inquiry</label>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group"><label for="phone">Phone Number</label><input type="tel" id="phone" name="phone" placeholder="Your phone number" required></div>
-                        <div class="form-group"><label for="subject">Subject</label><select id="subject" name="subject" required><option value="" disabled selected>Select a subject</option><option value="admission">Admission Query</option><option value="course">Course Information</option><option value="university">University Details</option><option value="fees">Fee Structure</option><option value="other">Other</option></select></div>
+                        <div class="form-group">
+                            <label for="first-name">First Name</label>
+                            <input type="text" id="first-name" name="first-name" placeholder="Enter your first name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Last Name</label>
+                            <input type="text" id="last-name" name="last-name" placeholder="Enter your last name" required>
+                        </div>
                     </div>
-                    <div class="form-group"><label for="message">Message</label><textarea id="message" name="message" placeholder="How can we help you?" required></textarea></div>
-                    <div class="form-submit"><button type="submit" class="btn btn-primary">Send Message</button></div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="How can we help you?" required></textarea>
+                    </div>
+                    <div class="form-submit">
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </div>
                 </form>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer id="contact">
+    <footer>
         <div class="footer-content">
             <div class="footer-about">
                 <h3>Whitedavid Academy</h3>
-                <p>Your trusted partner for educational guidance and admission assistance.</p>
-                <div class="social-links"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-linkedin"></i></a></div>
+                <p>Your trusted partner for educational guidance and career counseling. We help students find the right path to academic success.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
             </div>
             <div class="footer-links">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#admission-support">Admission Support</a></li>
-                    <li><a href="#why-choose">Why Choose Us</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#regular-courses">Regular Courses</a></li>
-                    <li><a href="#online-courses">Online Courses</a></li>
-                    <li><a href="#distance-courses">Distance Courses</a></li>
+                    <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="#courses"><i class="fas fa-chevron-right"></i> Courses</a></li>
+                    <li><a href="#universities"><i class="fas fa-chevron-right"></i> Universities</a></li>
+                    <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Our Services</h3>
+                <ul>
+                    <li><a href="#admission-support"><i class="fas fa-chevron-right"></i> Admission Support</a></li>
+                    <li><a href="#why-choose"><i class="fas fa-chevron-right"></i> Career Counseling</a></li>
+                    <li><a href="#courses"><i class="fas fa-chevron-right"></i> Course Guidance</a></li>
+                    <li><a href="#universities"><i class="fas fa-chevron-right"></i> University Selection</a></li>
+                    <li><a href="#testimonials"><i class="fas fa-chevron-right"></i> Student Reviews</a></li>
                 </ul>
             </div>
             <div class="footer-links">
                 <h3>Contact Info</h3>
                 <ul>
-                    <li><i class="fas fa-phone"></i> +91 9876543210</li>
-                    <li><i class="fas fa-envelope"></i> info@whitedavidacademy.com</li>
-                    <li><i class="fas fa-map-marker-alt"></i> Delhi, India</li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Education Street</a></li>
+                    <li><a href="#"><i class="fas fa-phone-alt"></i> +91 98765 43210</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> info@whitedavidacademy.com</a></li>
+                    <li><a href="#"><i class="fas fa-clock"></i> Mon - Sat: 9AM - 7PM</a></li>
                 </ul>
             </div>
         </div>
-        <div class="footer-bottom"><p>&copy; 2024 Whitedavid Academy. All Rights Reserved.</p></div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Whitedavid Academy. All Rights Reserved.</p>
+        </div>
     </footer>
 
-    <!-- Scroll to Top -->
+    <!-- Scroll to Top Button -->
     <div id="scrollTop"><i class="fas fa-arrow-up"></i></div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Particles
-            var particlesContainer = document.getElementById('particles');
-            for (var i = 0; i < 25; i++) {
-                var particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-                var colors = ['#00E0FF', '#2CE6C2', '#3B82F6', '#A855F7'];
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.boxShadow = '0 0 6px ' + particle.style.background;
-                particlesContainer.appendChild(particle);
+        // DOM Elements
+        const header = document.getElementById('header');
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        const scrollTopBtn = document.getElementById('scrollTop');
+        const contactForm = document.getElementById('contactForm');
+        const checkboxItems = document.querySelectorAll('.checkbox-item');
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
             }
 
-            // Mobile menu
-            var menuToggle = document.getElementById('menuToggle');
-            var navLinks = document.getElementById('navLinks');
-            menuToggle.addEventListener('click', function() {
-                navLinks.classList.toggle('active');
-                menuToggle.classList.toggle('active');
-            });
-            document.querySelectorAll('.nav-links a').forEach(function(link) {
-                link.addEventListener('click', function() {
-                    navLinks.classList.remove('active');
-                    menuToggle.classList.remove('active');
-                });
-            });
-
-            // Throttled Scroll
-            var header = document.getElementById('header');
-            var scrollTopBtn = document.getElementById('scrollTop');
-            var quickNavLinks = document.querySelectorAll('.quick-nav a');
-            var sections = document.querySelectorAll('section[id]');
-            var ticking = false;
-
-            function updateScroll() {
-                if (window.scrollY > 50) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); }
-                if (window.pageYOffset > 500) { scrollTopBtn.classList.add('active'); } else { scrollTopBtn.classList.remove('active'); }
-                var current = '';
-                sections.forEach(function(section) {
-                    if (window.scrollY >= section.offsetTop - 150) { current = section.getAttribute('id'); }
-                });
-                if (current) {
-                    quickNavLinks.forEach(function(link) {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').slice(1) === current) { link.classList.add('active'); }
-                    });
-                }
-                ticking = false;
+            // Scroll to top button visibility
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('active');
+            } else {
+                scrollTopBtn.classList.remove('active');
             }
-            window.addEventListener('scroll', function() { if (!ticking) { window.requestAnimationFrame(updateScroll); ticking = true; } });
-            scrollTopBtn.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        });
 
-            // Course tabs
-            document.querySelectorAll('.course-category').forEach(function(category) {
-                var tabs = category.querySelectorAll('.course-tab');
-                var contents = category.querySelectorAll('.course-content');
-                tabs.forEach(function(tab) {
-                    tab.addEventListener('click', function() {
-                        var targetTab = this.getAttribute('data-tab');
-                        tabs.forEach(function(t) { t.classList.remove('active'); });
-                        contents.forEach(function(c) { c.classList.remove('active'); });
-                        this.classList.add('active');
-                        var targetContent = category.querySelector('#' + targetTab + '-courses');
-                        if (targetContent) { targetContent.classList.add('active'); }
-                        else if (targetTab === 'regular-courses') { var el = category.querySelector('#regular-courses'); if (el) el.classList.add('active'); }
-                        else if (targetTab === 'online-courses') { var el = category.querySelector('#online-courses'); if (el) el.classList.add('active'); }
-                        else if (targetTab === 'distance-courses') { var el = category.querySelector('#distance-courses'); if (el) el.classList.add('active'); }
-                    });
-                });
+        // Mobile menu toggle
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
             });
+        });
 
-            // Smooth scrolling
-            document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    var target = document.querySelector(this.getAttribute('href'));
-                    if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-                });
+        // Scroll to top functionality
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
+        });
 
-            // =============================================
-            // COUNTER ANIMATION - Enhanced
-            // =============================================
-            var counters = document.querySelectorAll('.stat-number[data-target]');
-            var countersAnimated = false;
-
-            // Format number with commas (e.g. 1000 -> 1,000)
-            function formatNumber(num) {
-                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-            }
-
-            // Ease-out cubic for smooth deceleration
-            function easeOutCubic(t) {
-                return 1 - Math.pow(1 - t, 3);
-            }
-
-            function animateCounter(counter) {
-                var target = parseInt(counter.getAttribute('data-target'), 10);
-                var suffix = counter.getAttribute('data-suffix') || '+';
-                var duration = 2200;
-                var startTime = null;
-
-                function step(timestamp) {
-                    if (!startTime) startTime = timestamp;
-                    var elapsed = timestamp - startTime;
-                    var progress = Math.min(elapsed / duration, 1);
-                    // Apply easing
-                    var easedProgress = easeOutCubic(progress);
-                    var currentVal = Math.round(easedProgress * target);
-
-                    counter.textContent = formatNumber(currentVal) + suffix;
-
-                    if (progress < 1) {
-                        requestAnimationFrame(step);
-                    } else {
-                        counter.textContent = formatNumber(target) + suffix;
+        // Checkbox items click handling
+        checkboxItems.forEach(item => {
+            const checkbox = item.querySelector('input[type="checkbox"]');
+            const specificContainer = item.querySelector('.specific-inquiry-container');
+            
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    item.classList.add('checked');
+                    if (specificContainer) {
+                        specificContainer.classList.add('active');
                     }
-                }
-
-                requestAnimationFrame(step);
-            }
-
-            function animateAllCounters() {
-                counters.forEach(function(counter) {
-                    animateCounter(counter);
-                });
-            }
-
-            // Intersection Observer - triggers when section is 30% visible
-            var statsSection = document.querySelector('.stats-section');
-            if (statsSection) {
-                var observer = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting && !countersAnimated) {
-                            countersAnimated = true;
-                            animateAllCounters();
+                } else {
+                    item.classList.remove('checked');
+                    if (specificContainer) {
+                        specificContainer.classList.remove('active');
+                        // Reset the select inside
+                        const select = specificContainer.querySelector('select');
+                        if (select) {
+                            select.selectedIndex = 0;
                         }
-                    });
-                }, { threshold: 0.3 });
-                observer.observe(statsSection);
-            }
+                    }
+                }
+            });
+        });
 
-            // Contact form
-            var contactForm = document.getElementById('contactForm');
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    var btn = this.querySelector('.btn');
-                    var originalText = btn.textContent;
-                    btn.textContent = 'Message Sent!';
-                    btn.style.background = 'linear-gradient(135deg, #22C55E, #4ADE80)';
-                    setTimeout(function() {
-                        btn.textContent = originalText;
-                        btn.style.background = '';
-                        contactForm.reset();
-                    }, 2500);
+        // Form submission handler
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const formDataObj = {};
+            
+            // Handle inquiry types (multiple)
+            const inquiryTypes = [];
+            formData.getAll('inquiry-types').forEach(type => {
+                inquiryTypes.push(type);
+            });
+            
+            formDataObj.inquiryTypes = inquiryTypes;
+            formDataObj.firstName = formData.get('first-name');
+            formDataObj.lastName = formData.get('last-name');
+            formDataObj.email = formData.get('email');
+            formDataObj.phone = formData.get('phone');
+            formDataObj.message = formData.get('message');
+            
+            // Add specific inquiries if selected
+            if (inquiryTypes.includes('courses')) {
+                formDataObj.specificCourse = formData.get('specific-course');
+            }
+            if (inquiryTypes.includes('universities')) {
+                formDataObj.specificUniversity = formData.get('specific-university');
+            }
+            if (inquiryTypes.includes('admission')) {
+                formDataObj.specificAdmission = formData.get('specific-admission');
+            }
+            
+            // Here you would typically send the form data to a server
+            console.log('Form submitted:', formDataObj);
+            
+            // Show success message
+            alert('Thank you for your inquiry! Our team will get back to you within 24 hours.');
+            
+            // Reset form
+            this.reset();
+            checkboxItems.forEach(item => {
+                item.classList.remove('checked');
+                const specificContainer = item.querySelector('.specific-inquiry-container');
+                if (specificContainer) {
+                    specificContainer.classList.remove('active');
+                }
+            });
+        });
+
+        // Particles Background
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 40;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Random position and properties
+            const size = Math.random() * 3 + 1;
+            const posX = Math.random() * 100;
+            const delay = Math.random() * 15;
+            const duration = Math.random() * 10 + 15;
+            const opacity = Math.random() * 0.4 + 0.1;
+            
+            // Random color from the theme
+            const colors = [
+                'rgba(0, 224, 255, ' + opacity + ')',
+                'rgba(44, 230, 194, ' + opacity + ')',
+                'rgba(59, 130, 246, ' + opacity + ')',
+                'rgba(168, 85, 247, ' + opacity + ')',
+                'rgba(255, 106, 61, ' + opacity + ')'
+            ];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = posX + '%';
+            particle.style.background = color;
+            particle.style.boxShadow = '0 0 ' + (size * 2) + 'px ' + color;
+            particle.style.animationDelay = delay + 's';
+            particle.style.animationDuration = duration + 's';
+            
+            particlesContainer.appendChild(particle);
+        }
+
+        // Stats Counter Animation
+        const statNumbers = document.querySelectorAll('.stat-number');
+        let statsAnimated = false;
+        
+        function animateStats() {
+            if (statsAnimated) return;
+            
+            const statsSection = document.querySelector('.stats-section');
+            const statsPosition = statsSection.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.3;
+            
+            if (statsPosition < screenPosition) {
+                statsAnimated = true;
+                
+                statNumbers.forEach(stat => {
+                    const target = parseInt(stat.getAttribute('data-target'));
+                    const suffix = stat.getAttribute('data-suffix') || '';
+                    const duration = 2000;
+                    const step = target / (duration / 16);
+                    let counter = 0;
+                    
+                    const updateCounter = () => {
+                        counter += step;
+                        if (counter < target) {
+                            stat.textContent = Math.ceil(counter) + suffix;
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            stat.textContent = target + suffix;
+                        }
+                    };
+                    
+                    updateCounter();
                 });
             }
+        }
+        
+        window.addEventListener('scroll', animateStats);
 
-            // Testimonials Slider
-            (function() {
-                var track = document.getElementById('testimonialsTrack');
-                if (!track) return;
-                var cards = track.querySelectorAll('.testimonial-card');
-                var prevBtn = document.getElementById('sliderPrev');
-                var nextBtn = document.getElementById('sliderNext');
-                var dotsContainer = document.getElementById('sliderDots');
-                var wrapper = document.getElementById('testimonialsSlider');
-                var currentIndex = 0;
-                var cardsPerView = 3;
-                var autoplayInterval = null;
-                var isTransitioning = false;
+        // Course Tabs Functionality
+        const courseTabs = document.querySelectorAll('.course-tab');
+        const courseContents = document.querySelectorAll('.course-content');
+        
+        courseTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                courseTabs.forEach(t => t.classList.remove('active'));
+                courseContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
 
-                function getCardsPerView() {
-                    if (window.innerWidth <= 768) return 1;
-                    if (window.innerWidth <= 1024) return 2;
-                    return 3;
+        // Testimonials Slider
+        const track = document.getElementById('testimonialsTrack');
+        const prevBtn = document.getElementById('prevSlide');
+        const nextBtn = document.getElementById('nextSlide');
+        const dotsContainer = document.getElementById('sliderDots');
+        const cards = document.querySelectorAll('.testimonial-card');
+        
+        let currentIndex = 0;
+        let cardsPerView = getCardsPerView();
+        let totalSlides = Math.ceil(cards.length / cardsPerView);
+        
+        // Create dots
+        function createDots() {
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('slider-dot');
+                if (i === currentIndex) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            }
+        }
+        
+        // Get number of cards to show based on screen width
+        function getCardsPerView() {
+            if (window.innerWidth <= 768) return 1;
+            if (window.innerWidth <= 1024) return 2;
+            return 3;
+        }
+        
+        // Update slider position
+        function updateSlider() {
+            const cardWidth = cards[0].offsetWidth;
+            const gap = 16; // 1rem gap
+            const offset = currentIndex * (cardsPerView * (cardWidth + gap));
+            track.style.transform = `translateX(-${offset}px)`;
+            
+            // Update dots
+            document.querySelectorAll('.slider-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+        
+        // Go to specific slide
+        function goToSlide(index) {
+            currentIndex = index;
+            if (currentIndex < 0) currentIndex = totalSlides - 1;
+            if (currentIndex >= totalSlides) currentIndex = 0;
+            updateSlider();
+        }
+        
+        // Event listeners for slider controls
+        prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+        nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            cardsPerView = getCardsPerView();
+            totalSlides = Math.ceil(cards.length / cardsPerView);
+            if (currentIndex >= totalSlides) currentIndex = totalSlides - 1;
+            createDots();
+            updateSlider();
+        });
+        
+        // Initialize slider
+        createDots();
+        updateSlider();
+
+        // Quick Navigation Active State
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.quick-nav a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
                 }
-                function getTotalSlides() { return Math.max(1, cards.length - cardsPerView + 1); }
-
-                function buildDots() {
-                    dotsContainer.innerHTML = '';
-                    var total = getTotalSlides();
-                    for (var i = 0; i < total; i++) {
-                        var dot = document.createElement('div');
-                        dot.classList.add('slider-dot');
-                        if (i === currentIndex) dot.classList.add('active');
-                        dot.addEventListener('click', (function(idx) { return function() { goToSlide(idx); }; })(i));
-                        dotsContainer.appendChild(dot);
-                    }
+            });
+            
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === '#' + current) {
+                    item.classList.add('active');
                 }
-                function updateDots() {
-                    var dots = dotsContainer.querySelectorAll('.slider-dot');
-                    for (var i = 0; i < dots.length; i++) {
-                        if (i === currentIndex) dots[i].classList.add('active');
-                        else dots[i].classList.remove('active');
-                    }
-                }
-                function goToSlide(index) {
-                    if (isTransitioning) return;
-                    isTransitioning = true;
-                    var total = getTotalSlides();
-                    if (index < 0) index = 0;
-                    if (index >= total) index = total - 1;
-                    currentIndex = index;
-                    var card = cards[0];
-                    var s = window.getComputedStyle(card);
-                    var w = card.offsetWidth + parseFloat(s.marginLeft) + parseFloat(s.marginRight);
-                    track.style.transform = 'translateX(-' + (currentIndex * w) + 'px)';
-                    updateDots();
-                    setTimeout(function() { isTransitioning = false; }, 500);
-                }
-                function nextSlide() { var t = getTotalSlides(); goToSlide(currentIndex >= t - 1 ? 0 : currentIndex + 1); }
-                function prevSlide() { var t = getTotalSlides(); goToSlide(currentIndex <= 0 ? t - 1 : currentIndex - 1); }
-                function startAutoplay() { stopAutoplay(); autoplayInterval = setInterval(nextSlide, 4500); }
-                function stopAutoplay() { if (autoplayInterval) { clearInterval(autoplayInterval); autoplayInterval = null; } }
+            });
+        });
 
-                nextBtn.addEventListener('click', function() { nextSlide(); startAutoplay(); });
-                prevBtn.addEventListener('click', function() { prevSlide(); startAutoplay(); });
-                wrapper.addEventListener('mouseenter', stopAutoplay);
-                wrapper.addEventListener('mouseleave', startAutoplay);
-
-                var touchStartX = 0, isDragging = false;
-                track.addEventListener('touchstart', function(e) { touchStartX = e.changedTouches[0].screenX; isDragging = true; stopAutoplay(); }, { passive: true });
-                track.addEventListener('touchend', function(e) {
-                    isDragging = false;
-                    var diff = touchStartX - e.changedTouches[0].screenX;
-                    if (Math.abs(diff) > 50) { if (diff > 0) nextSlide(); else prevSlide(); }
-                    startAutoplay();
-                }, { passive: true });
-                track.addEventListener('touchmove', function() { if (isDragging) track.style.pointerEvents = 'none'; }, { passive: true });
-                track.addEventListener('touchend', function() { track.style.pointerEvents = ''; }, { passive: true });
-
-                function handleResize() {
-                    var n = getCardsPerView();
-                    if (n !== cardsPerView) {
-                        cardsPerView = n;
-                        var t = getTotalSlides();
-                        if (currentIndex >= t) currentIndex = t - 1;
-                        track.style.transition = 'none';
-                        var s = window.getComputedStyle(cards[0]);
-                        var w = cards[0].offsetWidth + parseFloat(s.marginLeft) + parseFloat(s.marginRight);
-                        track.style.transform = 'translateX(-' + (currentIndex * w) + 'px)';
-                        void track.offsetHeight;
-                        track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                        buildDots();
-                    }
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerHeight = header.offsetHeight;
+                    const targetPosition = targetElement.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
                 }
-                window.addEventListener('resize', handleResize);
-                cardsPerView = getCardsPerView();
-                buildDots();
-                startAutoplay();
-            })();
+            });
         });
     </script>
 </body>
